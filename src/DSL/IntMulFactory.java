@@ -5,9 +5,9 @@ import funcons.algebras.IntCalcAlg;
 
 public interface IntMulFactory<E> extends IntAddFactory<E>, IntMulAlg<E> {
 
-    IntCalcAlg<E> funconAlg();
+    IntCalcAlg<E> intCalcAlg();
 
     default E multiply(E a, E b) {
-        return funconAlg().multiply(a, b);
+        return intCalcAlg().multiply(a, b);
     }
 }

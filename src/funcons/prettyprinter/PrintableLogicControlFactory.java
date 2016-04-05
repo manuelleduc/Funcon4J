@@ -7,13 +7,17 @@ import funcons.sorts.IPrint;
 import funcons.types.String;
 
 public interface PrintableLogicControlFactory extends
-        LogicIfTrueAlg<IPrint>,
-        SeqAlg<IPrint>,
+        PrintableIntCalcFactory,
         LogicWhileTrueAlg<IPrint> {
 
     @Override
     default IPrint bool(Boolean b) {
         return () -> new String(b);
+    }
+
+    @Override
+    default IPrint effect(IPrint i) {
+        return () -> new String("effect(" + i.print().stringValue() + ")");
     }
 
     @Override

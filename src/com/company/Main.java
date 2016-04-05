@@ -1,34 +1,29 @@
 package com.company;
 
 import DSL.ExpControlFactory;
-
 import DSL.algebras.WhileTrueAlg;
+
 import funcons.algebras.IntCalcAlg;
 import funcons.algebras.LogicIfTrueAlg;
 import funcons.algebras.LogicWhileTrueAlg;
-import funcons.interpreter.LogicIfTrueFactory;
-import funcons.interpreter.IntCalcFactory;
 import funcons.interpreter.LogicWhileTrueFactory;
 import funcons.prettyprinter.PrintableLogicControlFactory;
-import funcons.prettyprinter.PrintableIntCalcFactory;
 import funcons.sorts.IEval;
 import funcons.sorts.IPrint;
 
 public class Main {
 
     public static void main(java.lang.String[] args) {
-        IntCalcAlg<IEval> funcIntCalcAlg = new IntCalcFactory() {};
-        LogicIfTrueAlg<IEval> funcIfTrueAlg = new LogicIfTrueFactory() {};
         LogicWhileTrueAlg<IEval> funcWhileTrueAlg = new LogicWhileTrueFactory() {};
         WhileTrueAlg<IEval> expControlAlg = new ExpControlFactory<IEval>() {
             @Override
-            public IntCalcAlg<IEval> funconAlg() {
-                return funcIntCalcAlg;
+            public IntCalcAlg<IEval> intCalcAlg() {
+                return funcWhileTrueAlg;
             }
 
             @Override
             public LogicIfTrueAlg<IEval> ifTrueAlg() {
-                return funcIfTrueAlg;
+                return funcWhileTrueAlg;
             }
 
             @Override
@@ -37,13 +32,12 @@ public class Main {
             }
         };
 
-        IntCalcAlg<IPrint> funcPrintIntCalcAlg = new PrintableIntCalcFactory() {};
         PrintableLogicControlFactory printableLogicControlFactory = new PrintableLogicControlFactory() {};
 
         WhileTrueAlg<IPrint> printableControlAlg = new ExpControlFactory<IPrint>() {
             @Override
-            public IntCalcAlg<IPrint> funconAlg() {
-                return funcPrintIntCalcAlg;
+            public IntCalcAlg<IPrint> intCalcAlg() {
+                return printableLogicControlFactory;
             }
 
             @Override

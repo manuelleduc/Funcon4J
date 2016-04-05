@@ -1,11 +1,11 @@
 package funcons.algebras;
 
-public interface IntCalcAlg<T> {
-    T lit(java.lang.Integer i);
-    T bool(java.lang.Boolean b);
+public interface IntCalcAlg<E> {
+    E lit(java.lang.Integer i);
+    E bool(java.lang.Boolean b);
 
-    T add(T a, T b);
-    T subtract(T a, T b);
-    T multiply(T a, T b);
-    T divide(T a, T b);
+    E add(E a, E b);
+    E subtract(E a, E b);
+    E multiply(E a, E b);
+    E divide(E a, E b);
 }

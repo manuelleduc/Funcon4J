@@ -4,7 +4,7 @@ import funcons.algebras.LogicIfTrueAlg;
 import funcons.sorts.IEval;
 import funcons.types.Bool;
 
-public interface LogicIfTrueFactory extends EffectFactory, LogicIfTrueAlg<IEval> {
+public interface LogicIfTrueFactory extends SeqFactory, LogicIfTrueAlg<IEval> {
 
     @Override
     default IEval bool(java.lang.Boolean b) {
