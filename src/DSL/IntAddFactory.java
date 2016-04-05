@@ -3,19 +3,15 @@ package DSL;
 import DSL.algebras.IntAddAlg;
 import funcons.algebras.IntCalcAlg;
 
-public class IntAddFactory<T> implements IntAddAlg<T> {
+public interface IntAddFactory<E> extends IntAddAlg<E> {
 
-    private IntCalcAlg<T> funconAlg;
+    IntCalcAlg<E> funconAlg();
 
-    public IntAddFactory(IntCalcAlg<T> funconAlgebra) {
-        funconAlg = funconAlgebra;
+    default E lit(Integer a) {
+        return funconAlg().lit(a);
     }
 
-    public T lit(Integer a) {
-        return funconAlg.lit(a);
-    }
-
-    public T add(T a, T b) {
-        return funconAlg.add(a, b);
+    default E add(E a, E b) {
+        return funconAlg().add(a, b);
     }
 }

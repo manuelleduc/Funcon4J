@@ -1,5 +1,5 @@
 package DSL.algebras;
 
-public interface IfElseAlg<E, S> {
-    S ifElse(E e1, S e2, S e3);
+public interface IfElseAlg<E> extends BoolLogicalAndAlg<E> {
+    E ifElse(E e1, E e2, E e3);
 }

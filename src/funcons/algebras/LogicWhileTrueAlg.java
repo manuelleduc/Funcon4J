@@ -1,5 +1,5 @@
 package funcons.algebras;
 
-public interface LogicWhileTrueAlg<E, C> {
-    C whileTrue(E e, C c);
+public interface LogicWhileTrueAlg<E> {
+    E whileTrue(E e, E c);
 }

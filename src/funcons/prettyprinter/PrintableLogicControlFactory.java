@@ -3,36 +3,31 @@ package funcons.prettyprinter;
 import funcons.algebras.LogicIfTrueAlg;
 import funcons.algebras.LogicWhileTrueAlg;
 import funcons.algebras.SeqAlg;
-import funcons.sorts.IEval;
+import funcons.sorts.IPrint;
 import funcons.types.String;
 
-public class PrintableLogicControlFactory implements
-        LogicIfTrueAlg<IEval<String>, IEval<String>>,
-        SeqAlg<IEval<String>, IEval<String>>,
-        LogicWhileTrueAlg<IEval<String>, IEval<String>> {
+public interface PrintableLogicControlFactory extends
+        LogicIfTrueAlg<IPrint>,
+        SeqAlg<IPrint>,
+        LogicWhileTrueAlg<IPrint> {
 
     @Override
-    public IEval<String> bool(Boolean b) {
+    default IPrint bool(Boolean b) {
         return () -> new String(b);
     }
 
     @Override
-    public IEval<String> command(IEval c) {
-        return () -> new String(c.eval().toString()); // TODO seems hacky?
+    default IPrint ifTrue(IPrint e, IPrint c1, IPrint c2) {
+        return () -> new String("(" + e.print().stringValue() + " ? " + c1.print().stringValue() + " : " + c2.print().stringValue() + ")");
     }
 
     @Override
-    public IEval<String> ifTrue(IEval<String> e, IEval<String> c1, IEval<String> c2) {
-        return () -> new String("(" + e.eval().stringValue() + " ? " + c1.eval().stringValue() + " : " + c2.eval().stringValue() + ")");
+    default IPrint seq(IPrint c, IPrint e) {
+        return () -> new String("(" + c.print().stringValue() + " -> " + e.print().stringValue() + ")");
     }
 
     @Override
-    public IEval<String> seq(IEval<String> c, IEval<String> e) {
-        return () -> new String("(" + c.eval().stringValue() + " -> " + e.eval().stringValue() + ")");
-    }
-
-    @Override
-    public IEval<String> whileTrue(IEval<String> e, IEval<String> c) {
-        return () -> new String("(While " + e.eval().stringValue() + " do " + c.eval().s);
+    default IPrint whileTrue(IPrint e, IPrint c) {
+        return () -> new String("(While " + e.print().stringValue() + " do " + c.print().stringValue() + ")");
     }
 }

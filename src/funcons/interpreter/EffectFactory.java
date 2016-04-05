@@ -3,12 +3,10 @@ package funcons.interpreter;
 import funcons.algebras.EffectAlg;
 import funcons.sorts.IEval;
 import funcons.types.Null;
-import funcons.types.Unit;
 
-public class EffectFactory implements EffectAlg<Unit> {
-
+public interface EffectFactory extends EffectAlg<IEval> {
     @Override
-    public IEval<Unit> effect(IEval<Unit> e) {
+    default IEval effect(IEval e) {
         return Null::new;
     }
 }

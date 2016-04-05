@@ -1,54 +1,80 @@
 package com.company;
 
-import DSL.BoolLogicalAndFactory;
 import DSL.ExpControlFactory;
-import DSL.IntMulFactory;
-import DSL.algebras.BoolLogicalAndAlg;
-import DSL.algebras.IfElseAlg;
-import DSL.algebras.IntMulAlg;
 
 import DSL.algebras.WhileTrueAlg;
+import funcons.algebras.IntCalcAlg;
+import funcons.algebras.LogicIfTrueAlg;
+import funcons.algebras.LogicWhileTrueAlg;
 import funcons.interpreter.LogicIfTrueFactory;
 import funcons.interpreter.IntCalcFactory;
 import funcons.interpreter.LogicWhileTrueFactory;
 import funcons.prettyprinter.PrintableLogicControlFactory;
 import funcons.prettyprinter.PrintableIntCalcFactory;
 import funcons.sorts.IEval;
-import funcons.types.Bool;
-import funcons.types.Number;
-import funcons.types.String;
+import funcons.sorts.IPrint;
 
 public class Main {
 
     public static void main(java.lang.String[] args) {
-        IntMulAlg<IEval<Number>> intExpAlg = new IntMulFactory<>(new IntCalcFactory());
-        BoolLogicalAndAlg<IEval<Bool>> boolExpAlg = new BoolLogicalAndFactory<>(new LogicIfTrueFactory<>());
-        IfElseAlg<IEval<Bool>, IEval<Number>> expControlAlg =
-                new ExpControlFactory<>(new LogicIfTrueFactory<>(), new LogicWhileTrueFactory());
+        IntCalcAlg<IEval> funcIntCalcAlg = new IntCalcFactory() {};
+        LogicIfTrueAlg<IEval> funcIfTrueAlg = new LogicIfTrueFactory() {};
+        LogicWhileTrueAlg<IEval> funcWhileTrueAlg = new LogicWhileTrueFactory() {};
+        WhileTrueAlg<IEval> expControlAlg = new ExpControlFactory<IEval>() {
+            @Override
+            public IntCalcAlg<IEval> funconAlg() {
+                return funcIntCalcAlg;
+            }
 
-        IntMulAlg<IEval<String>> printableIntExpAlg = new IntMulFactory<>(new PrintableIntCalcFactory());
-        BoolLogicalAndAlg<IEval<String>> printableExpMulAlg = new BoolLogicalAndFactory<>(new PrintableLogicControlFactory());
-        ExpControlFactory<IEval<String>, IEval<String>, IEval<String>> printableControlAlg =
-                new ExpControlFactory<>(new PrintableLogicControlFactory(), new PrintableLogicControlFactory());
+            @Override
+            public LogicIfTrueAlg<IEval> ifTrueAlg() {
+                return funcIfTrueAlg;
+            }
+
+            @Override
+            public LogicWhileTrueAlg<IEval> whileTrueAlg() {
+                return funcWhileTrueAlg;
+            }
+        };
+
+        IntCalcAlg<IPrint> funcPrintIntCalcAlg = new PrintableIntCalcFactory() {};
+        PrintableLogicControlFactory printableLogicControlFactory = new PrintableLogicControlFactory() {};
+
+        WhileTrueAlg<IPrint> printableControlAlg = new ExpControlFactory<IPrint>() {
+            @Override
+            public IntCalcAlg<IPrint> funconAlg() {
+                return funcPrintIntCalcAlg;
+            }
+
+            @Override
+            public LogicIfTrueAlg<IPrint> ifTrueAlg() {
+                return printableLogicControlFactory;
+            }
+
+            @Override
+            public LogicWhileTrueAlg<IPrint> whileTrueAlg() {
+                return printableLogicControlFactory;
+            }
+        };
 
         System.out.println("Exp 1");
-        System.out.println(exp1(intExpAlg, boolExpAlg, expControlAlg).eval().intValue());
-        System.out.println(exp1(printableIntExpAlg, printableExpMulAlg, printableControlAlg).eval().stringValue());
+        System.out.println(((funcons.types.Int)exp1(expControlAlg).eval()).intValue());
+        System.out.println(exp1(printableControlAlg).print().stringValue());
         System.out.println();
 
         System.out.println("Exp 2");
-        //System.out.println(exp2(intExpAlg, boolExpAlg, expControlAlg).eval().intValue());
-        System.out.println(exp2(printableIntExpAlg, printableExpMulAlg, printableControlAlg).eval().stringValue());
+        System.out.println(exp2(expControlAlg).eval());
+        System.out.println(exp2(printableControlAlg).print().stringValue());
         System.out.println();
     }
 
-    public static <A, B> A exp1(IntMulAlg<A> intExpAlg, BoolLogicalAndAlg<B> boolExpAlg, IfElseAlg<B, A> ifElseAlg) {
-        return ifElseAlg.ifElse(boolExpAlg.lAnd(boolExpAlg.bool(false), boolExpAlg.bool(true)),
-                intExpAlg.add(intExpAlg.lit(3), intExpAlg.lit(2)),
-                intExpAlg.multiply(intExpAlg.lit(4), intExpAlg.lit(5)));
+    public static <A> A exp1(WhileTrueAlg<A> alg) {
+        return alg.ifElse(alg.lAnd(alg.bool(false), alg.bool(true)),
+                alg.add(alg.lit(3), alg.lit(2)),
+                alg.multiply(alg.lit(4), alg.lit(5)));
     }
 
-    public static <A> A exp2(IntMulAlg<A> intExpAlg, BoolLogicalAndAlg<A> boolExpAlg, WhileTrueAlg<A, A> whileTrueAlg) {
-        return whileTrueAlg.whileTrue(boolExpAlg.bool(false), intExpAlg.add(intExpAlg.lit(3), intExpAlg.lit(4)));
+    public static <A> A exp2(WhileTrueAlg<A> alg) {
+        return alg.whileTrue(alg.bool(false), alg.add(alg.lit(3), alg.lit(4)));
     }
 }

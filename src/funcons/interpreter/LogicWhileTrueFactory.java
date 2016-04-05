@@ -2,16 +2,14 @@ package funcons.interpreter;
 
 import funcons.algebras.LogicWhileTrueAlg;
 import funcons.sorts.IEval;
-import funcons.types.Bool;
 import funcons.types.Null;
-import funcons.types.Unit;
 
-public class LogicWhileTrueFactory extends SeqFactory<Unit> implements LogicWhileTrueAlg<IEval<Bool>, IEval<Unit>> {
+public interface LogicWhileTrueFactory extends SeqFactory, LogicWhileTrueAlg<IEval> {
     @Override
-    public IEval<Unit> whileTrue(IEval<Bool> e, IEval<Unit> c) {
+    default IEval whileTrue(IEval e, IEval c) {
         return ifTrue(
                     e,
-                    seq(c, whileTrue(e, c)),
+                    seq(c, () -> whileTrue(e, c).eval()),
                     Null::new
         );
     }

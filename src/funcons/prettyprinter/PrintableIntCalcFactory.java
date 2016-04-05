@@ -1,42 +1,38 @@
 package funcons.prettyprinter;
 
 import funcons.algebras.IntCalcAlg;
-import funcons.sorts.IEval;
+import funcons.sorts.IPrint;
 import funcons.types.String;
 
-public class PrintableIntCalcFactory implements IntCalcAlg<IEval<String>> {
+public interface PrintableIntCalcFactory extends IntCalcAlg<IPrint> {
 
     @Override
-    public IEval<String> lit(Integer i) {
+    default IPrint lit(Integer i) {
         return () -> new String(i);
     }
 
     @Override
-    public IEval<String> bool(Boolean b) {
+    default IPrint bool(Boolean b) {
         return () -> new String(b);
     }
 
     @Override
-    public IEval<String> add(IEval<String> a, IEval<String> b) {
-        return binaryOp(a, b, "+");
+    default IPrint add(IPrint a, IPrint b) {
+        return () -> new String("(" + a.print().stringValue() + " + " + b.print().stringValue() + ")");
     }
 
     @Override
-    public IEval<String> subtract(IEval<String> a, IEval<String> b) {
-        return binaryOp(a, b, "-");
+    default IPrint subtract(IPrint a, IPrint b) {
+        return () -> new String("(" + a.print().stringValue() + " - " + b.print().stringValue() + ")");
     }
 
     @Override
-    public IEval<String> multiply(IEval<String> a, IEval<String> b) {
-        return binaryOp(a, b, "*");
+    default IPrint multiply(IPrint a, IPrint b) {
+        return () -> new String("(" + a.print().stringValue() + " * " + b.print().stringValue() + ")");
     }
 
     @Override
-    public IEval<String> divide(IEval<String> a, IEval<String> b) {
-        return binaryOp(a, b, "/");
-    }
-
-    private IEval<String> binaryOp(IEval<String> a, IEval<String> b, java.lang.String op) {
-        return () -> new String("(" + a.eval().stringValue() + " " + op + " " + b.eval().stringValue() + ")");
+    default IPrint divide(IPrint a, IPrint b) {
+        return () -> new String("(" + a.print().stringValue() + " / " + b.print().stringValue() + ")");
     }
 }

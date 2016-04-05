@@ -1,5 +1,5 @@
 package DSL.algebras;
 
-public interface WhileTrueAlg<E, C> {
-    C whileTrue(E e, C c);
+public interface WhileTrueAlg<E> extends IfElseAlg<E> {
+    E whileTrue(E e, E c);
 }

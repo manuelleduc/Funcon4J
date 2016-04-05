@@ -1,4 +1,4 @@
 package funcons.types;
 
-public interface Unit {
+public interface Unit extends Value{
 }
