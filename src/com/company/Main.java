@@ -9,10 +9,12 @@ import funcons.algebras.BindAlg;
 import funcons.algebras.IntCalcAlg;
 import funcons.algebras.LogicIfTrueAlg;
 import funcons.algebras.LogicWhileTrueAlg;
+import funcons.interpreter.ApplyFactory;
 import funcons.interpreter.BindFactory;
 import funcons.prettyprinter.PrintableLogicControlFactory;
 import funcons.sorts.IEval;
 import funcons.sorts.IPrint;
+import funcons.types.Abs;
 import funcons.types.Environment;
 
 public class Main {
@@ -88,6 +90,14 @@ public class Main {
             BindFactory fac = new BindFactory() {};
             System.out.println("Supply & Given");
             System.out.println(fac.supply(fac.lit(5), fac.intAdd(fac.given(), fac.lit(10))).eval(new Environment()));
+            System.out.println();
+        }
+
+        {
+            ApplyFactory fac = new ApplyFactory() {};
+            System.out.println("Apply");
+            IEval incr = fac.abs(fac.intAdd(fac.given(), fac.lit(1)));
+            System.out.println(fac.apply(incr, fac.lit(5)).eval(new Environment()));
             System.out.println();
         }
     }
