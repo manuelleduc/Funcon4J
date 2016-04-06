@@ -5,4 +5,6 @@ public interface BindAlg<E> extends LogicWhileTrueAlg<E> {
     E bindValue(E var, E exp);
     E boundValue(E var);
     E scope(E localBindings, E exp);
+    E given();
+    E supply(E exp);
 }

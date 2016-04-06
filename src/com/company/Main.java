@@ -83,6 +83,15 @@ public class Main {
             System.out.println(boundExp(expControlAlg).eval(env));
             System.out.println();
         }
+
+        {
+            BindFactory fac = new BindFactory() {};
+            Environment env1 = (Environment)fac.supply(fac.lit(101)).eval(new Environment());
+            Environment env2 = (Environment)fac.supply(fac.lit(202)).eval(env1);
+            System.out.println("Supply & Given");
+            System.out.println(fac.given().eval(env2));
+            System.out.println();
+        }
     }
 
     public static <A> A exp1(WhileTrueAlg<A> alg) {
