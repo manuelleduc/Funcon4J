@@ -12,6 +12,6 @@ public interface IntAddFactory<E> extends IntAddAlg<E> {
     }
 
     default E add(E a, E b) {
-        return intCalcAlg().add(a, b);
+        return intCalcAlg().intAdd(a, b);
     }
 }

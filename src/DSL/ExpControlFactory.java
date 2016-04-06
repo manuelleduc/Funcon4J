@@ -13,6 +13,6 @@ public interface ExpControlFactory<E> extends BoolLogicalAndFactory<E>, WhileTru
 
     @Override
     default E whileTrue(E e, E c) {
-        return whileTrueAlg().whileTrue(e, c);
+        return whileTrueAlg().whileTrue(e, whileTrueAlg().effect(c));
     }
 }

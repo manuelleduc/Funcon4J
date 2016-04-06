@@ -17,22 +17,22 @@ public interface PrintableIntCalcFactory extends IntCalcAlg<IPrint> {
     }
 
     @Override
-    default IPrint add(IPrint a, IPrint b) {
+    default IPrint intAdd(IPrint a, IPrint b) {
         return () -> new String("(" + a.print().stringValue() + " + " + b.print().stringValue() + ")");
     }
 
     @Override
-    default IPrint subtract(IPrint a, IPrint b) {
+    default IPrint intSubtract(IPrint a, IPrint b) {
         return () -> new String("(" + a.print().stringValue() + " - " + b.print().stringValue() + ")");
     }
 
     @Override
-    default IPrint multiply(IPrint a, IPrint b) {
+    default IPrint intMultiply(IPrint a, IPrint b) {
         return () -> new String("(" + a.print().stringValue() + " * " + b.print().stringValue() + ")");
     }
 
     @Override
-    default IPrint divide(IPrint a, IPrint b) {
+    default IPrint intDivide(IPrint a, IPrint b) {
         return () -> new String("(" + a.print().stringValue() + " / " + b.print().stringValue() + ")");
     }
 }

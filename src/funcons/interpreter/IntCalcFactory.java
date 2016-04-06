@@ -18,22 +18,22 @@ public interface IntCalcFactory extends IntCalcAlg<IEval> {
     }
 
     @Override
-    default IEval add(IEval a, IEval b) {
+    default IEval intAdd(IEval a, IEval b) {
         return () -> new Int(((Int)a.eval()).intValue() + ((Int)b.eval()).intValue());
     }
 
     @Override
-    default IEval subtract(IEval a, IEval b) {
+    default IEval intSubtract(IEval a, IEval b) {
         return () -> new Int(((Int)a.eval()).intValue() - ((Int)b.eval()).intValue());
     }
 
     @Override
-    default IEval multiply(IEval a, IEval b) {
+    default IEval intMultiply(IEval a, IEval b) {
         return () -> new Int(((Int)a.eval()).intValue() * ((Int)b.eval()).intValue());
     }
 
     @Override
-    default IEval divide(IEval a, IEval b) {
+    default IEval intDivide(IEval a, IEval b) {
         return () -> new Int(((Int)a.eval()).intValue() / ((Int)b.eval()).intValue());
     }
 }
