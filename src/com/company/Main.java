@@ -10,6 +10,7 @@ import funcons.interpreter.LogicWhileTrueFactory;
 import funcons.prettyprinter.PrintableLogicControlFactory;
 import funcons.sorts.IEval;
 import funcons.sorts.IPrint;
+import funcons.types.Environment;
 
 public class Main {
 
@@ -52,12 +53,12 @@ public class Main {
         };
 
         System.out.println("Exp 1");
-        System.out.println(((funcons.types.Int)exp1(expControlAlg).eval()).intValue());
+        System.out.println(((funcons.types.Int)exp1(expControlAlg).eval(new Environment())).intValue());
         System.out.println(exp1(printableControlAlg).print().stringValue());
         System.out.println();
 
         System.out.println("Exp 2");
-        System.out.println(exp2(expControlAlg).eval());
+        System.out.println(exp2(expControlAlg).eval(new Environment()));
         System.out.println(exp2(printableControlAlg).print().stringValue());
         System.out.println();
     }
