@@ -6,5 +6,5 @@ public interface BindAlg<E> extends LogicWhileTrueAlg<E> {
     E boundValue(E var);
     E scope(E localBindings, E exp);
     E given();
-    E supply(E exp);
+    E supply(E exp, E x);
 }

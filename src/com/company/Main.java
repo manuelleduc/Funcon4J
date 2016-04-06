@@ -86,10 +86,8 @@ public class Main {
 
         {
             BindFactory fac = new BindFactory() {};
-            Environment env1 = (Environment)fac.supply(fac.lit(101)).eval(new Environment());
-            Environment env2 = (Environment)fac.supply(fac.lit(202)).eval(env1);
             System.out.println("Supply & Given");
-            System.out.println(fac.given().eval(env2));
+            System.out.println(fac.supply(fac.lit(5), fac.intAdd(fac.given(), fac.lit(10))).eval(new Environment()));
             System.out.println();
         }
     }

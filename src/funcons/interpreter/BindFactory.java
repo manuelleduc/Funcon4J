@@ -32,7 +32,7 @@ public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     }
 
     @Override
-    default IEval supply(IEval exp) {
-        return (Environment env) -> env.supply(exp.eval(env));
+    default IEval supply(IEval exp, IEval x) {
+        return (Environment env) -> x.eval(env.supply(exp.eval(env)));
     }
 }
