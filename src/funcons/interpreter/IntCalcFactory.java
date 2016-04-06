@@ -7,7 +7,6 @@ import funcons.types.Environment;
 import funcons.types.Int;
 
 public interface IntCalcFactory extends IntCalcAlg<IEval> {
-
     @Override
     default IEval lit(java.lang.Integer i) {
         return (Environment env) -> new Int(i);

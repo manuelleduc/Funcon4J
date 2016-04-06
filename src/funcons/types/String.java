@@ -20,6 +20,16 @@ public class String implements Value {
     }
 
     @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof String && ((String) other).value.equals(value);
+    }
+
+    @Override
     public java.lang.String toString() {
         return value;
     }

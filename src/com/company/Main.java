@@ -1,12 +1,15 @@
 package com.company;
 
+import DSL.DSLBindFactory;
 import DSL.ExpControlFactory;
+import DSL.algebras.DSLBindAlg;
 import DSL.algebras.WhileTrueAlg;
 
+import funcons.algebras.BindAlg;
 import funcons.algebras.IntCalcAlg;
 import funcons.algebras.LogicIfTrueAlg;
 import funcons.algebras.LogicWhileTrueAlg;
-import funcons.interpreter.LogicWhileTrueFactory;
+import funcons.interpreter.BindFactory;
 import funcons.prettyprinter.PrintableLogicControlFactory;
 import funcons.sorts.IEval;
 import funcons.sorts.IPrint;
@@ -15,8 +18,13 @@ import funcons.types.Environment;
 public class Main {
 
     public static void main(java.lang.String[] args) {
-        LogicWhileTrueAlg<IEval> funcWhileTrueAlg = new LogicWhileTrueFactory() {};
-        WhileTrueAlg<IEval> expControlAlg = new ExpControlFactory<IEval>() {
+        BindAlg<IEval> funcWhileTrueAlg = new BindFactory() {};
+        DSLBindAlg<IEval> expControlAlg = new DSLBindFactory<IEval>() {
+            @Override
+            public BindAlg<IEval> bindAlg() {
+                return funcWhileTrueAlg;
+            }
+
             @Override
             public IntCalcAlg<IEval> intCalcAlg() {
                 return funcWhileTrueAlg;
@@ -61,6 +69,10 @@ public class Main {
         System.out.println(exp2(expControlAlg).eval(new Environment()));
         System.out.println(exp2(printableControlAlg).print().stringValue());
         System.out.println();
+
+        System.out.println("Bind & Bound");
+        System.out.println(boundExp(expControlAlg).eval((Environment)bindStatement(expControlAlg).eval(new Environment())));
+        System.out.println();
     }
 
     public static <A> A exp1(WhileTrueAlg<A> alg) {
@@ -71,5 +83,13 @@ public class Main {
 
     public static <A> A exp2(WhileTrueAlg<A> alg) {
         return alg.whileTrue(alg.bool(false), alg.add(alg.lit(3), alg.lit(4)));
+    }
+
+    public static <A> A bindStatement(DSLBindAlg<A> alg) {
+        return alg.bindValue(alg.var("x"), alg.lit(3));
+    }
+
+    public static <A> A boundExp(DSLBindAlg<A> alg) {
+        return alg.boundValue(alg.var("x"));
     }
 }
