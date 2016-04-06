@@ -70,9 +70,19 @@ public class Main {
         System.out.println(exp2(printableControlAlg).print().stringValue());
         System.out.println();
 
-        System.out.println("Bind & Bound");
-        System.out.println(boundExp(expControlAlg).eval((Environment)bindStatement(expControlAlg).eval(new Environment())));
-        System.out.println();
+        {
+            System.out.println("Bind & Bound");
+            Environment env = (Environment) bindStatement(expControlAlg).eval(new Environment());
+            System.out.println(boundExp(expControlAlg).eval(env));
+            System.out.println();
+        }
+
+        {
+            System.out.println("Scoping");
+            Environment env = (Environment)scopeStatement(expControlAlg).eval(new Environment());
+            System.out.println(boundExp(expControlAlg).eval(env));
+            System.out.println();
+        }
     }
 
     public static <A> A exp1(WhileTrueAlg<A> alg) {
@@ -91,5 +101,11 @@ public class Main {
 
     public static <A> A boundExp(DSLBindAlg<A> alg) {
         return alg.boundValue(alg.var("x"));
+    }
+
+    public static <A> A scopeStatement(DSLBindAlg<A> alg) {
+        A env1 = alg.bindValue(alg.var("x"), alg.lit(3));
+        A env2 = alg.bindValue(alg.var("x"), alg.lit(5));
+        return alg.scope(env2, env1);
     }
 }

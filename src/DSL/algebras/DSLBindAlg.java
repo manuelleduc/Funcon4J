@@ -5,4 +5,5 @@ public interface DSLBindAlg<E> extends WhileTrueAlg<E> {
 
     E bindValue(E var, E exp);
     E boundValue(E var);
+    E scope(E env, E exp);
 }

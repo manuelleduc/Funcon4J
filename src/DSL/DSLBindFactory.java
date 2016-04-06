@@ -21,4 +21,9 @@ public interface DSLBindFactory<E> extends ExpControlFactory<E>, DSLBindAlg<E> {
     default E boundValue(E var) {
         return bindAlg().boundValue(var);
     }
+
+    @Override
+    default E scope(E env, E exp) {
+        return bindAlg().scope(env, exp);
+    }
 }
