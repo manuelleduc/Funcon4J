@@ -1,4 +1,4 @@
 package funcons.signals;
 
-public interface Signal {
+public abstract class Signal extends Exception {
 }

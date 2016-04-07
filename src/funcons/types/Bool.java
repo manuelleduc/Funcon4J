@@ -19,6 +19,16 @@ public class Bool implements Number {
     }
 
     @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Bool && ((Bool) other).value.equals(value);
+    }
+
+    @Override
     public java.lang.String toString() {
         return value.toString();
     }

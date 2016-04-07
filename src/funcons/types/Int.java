@@ -18,6 +18,16 @@ public class Int implements Number {
     }
 
     @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Int && ((Int) other).value.equals(value);
+    }
+
+    @Override
     public java.lang.String toString() {
         return value.toString();
     }

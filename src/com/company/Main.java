@@ -1,25 +1,71 @@
 package com.company;
 
-import DSL.DSLBindFactory;
-import DSL.ExpControlFactory;
 import DSL.algebras.DSLBindAlg;
 import DSL.algebras.WhileTrueAlg;
 
-import funcons.algebras.BindAlg;
-import funcons.algebras.IntCalcAlg;
-import funcons.algebras.LogicIfTrueAlg;
-import funcons.algebras.LogicWhileTrueAlg;
 import funcons.interpreter.ApplyFactory;
-import funcons.interpreter.BindFactory;
-import funcons.prettyprinter.PrintableLogicControlFactory;
+import funcons.interpreter.ElseFactory;
+import funcons.signals.Signal;
 import funcons.sorts.IEval;
-import funcons.sorts.IPrint;
 import funcons.types.Environment;
 
 public class Main {
 
     public static void main(java.lang.String[] args) {
-        BindAlg<IEval> funcWhileTrueAlg = new BindFactory() {};
+        {
+            ApplyFactory fac = new ApplyFactory() {};
+            System.out.println("bind");
+            IEval incr = fac.abs(fac.intAdd(fac.given(), fac.lit(1)));
+            try {
+                System.out.println(fac.apply(incr, fac.boundValue(fac.var("x")))
+                        .eval((Environment)fac.supply(fac.lit(3), fac.bind(fac.var("x")))
+                                .eval(new Environment())));
+            } catch (Signal signal) {
+                signal.printStackTrace();
+            }
+            System.out.println();
+        }
+
+        {
+            ElseFactory fac = new ElseFactory() {};
+            System.out.println("else");
+            IEval equalsZero = fac.seq(fac.only(fac.lit(0)), fac.bool(true));
+            IEval alwaysFalse = fac.seq(fac.any(), fac.bool(false));
+            IEval isZero = fac.preferOver(equalsZero, alwaysFalse);
+            try {
+                System.out.println(fac.apply(isZero, fac.lit(20)).eval(new Environment()));
+            } catch(Signal s) {
+                System.out.println(s);
+            }
+        }
+    }
+
+    public static <A> A exp1(WhileTrueAlg<A> alg) {
+        return alg.ifElse(alg.lAnd(alg.bool(false), alg.bool(true)),
+                alg.add(alg.lit(3), alg.lit(2)),
+                alg.multiply(alg.lit(4), alg.lit(5)));
+    }
+
+    public static <A> A exp2(WhileTrueAlg<A> alg) {
+        return alg.whileTrue(alg.bool(false), alg.add(alg.lit(3), alg.lit(4)));
+    }
+
+    public static <A> A bindStatement(DSLBindAlg<A> alg) {
+        return alg.bindValue(alg.var("x"), alg.lit(3));
+    }
+
+    public static <A> A boundExp(DSLBindAlg<A> alg) {
+        return alg.boundValue(alg.var("x"));
+    }
+
+    public static <A> A scopeStatement(DSLBindAlg<A> alg) {
+        A env1 = alg.bindValue(alg.var("x"), alg.lit(3));
+        A env2 = alg.bindValue(alg.var("x"), alg.lit(5));
+        return alg.scope(env2, env1);
+    }
+
+    /*
+    BindAlg<IEval> funcWhileTrueAlg = new BindFactory() {};
         DSLBindAlg<IEval> expControlAlg = new DSLBindFactory<IEval>() {
             @Override
             public BindAlg<IEval> bindAlg() {
@@ -100,40 +146,5 @@ public class Main {
             System.out.println();
         }
 
-        {
-            ApplyFactory fac = new ApplyFactory() {};
-            System.out.println("bind");
-            IEval incr = fac.abs(fac.intAdd(fac.given(), fac.lit(1)));
-            System.out.println(fac.apply(incr, fac.boundValue(fac.var("x")))
-                    .eval((Environment)fac.supply(fac.lit(3), fac.bind(fac.var("x")))
-                            .eval(new Environment())));
-            //System.out.println(fac.supply(fac.lit(3), fac.bind(fac.var("x")))
-            //        .eval(new Environment()));
-            System.out.println();
-        }
-    }
-
-    public static <A> A exp1(WhileTrueAlg<A> alg) {
-        return alg.ifElse(alg.lAnd(alg.bool(false), alg.bool(true)),
-                alg.add(alg.lit(3), alg.lit(2)),
-                alg.multiply(alg.lit(4), alg.lit(5)));
-    }
-
-    public static <A> A exp2(WhileTrueAlg<A> alg) {
-        return alg.whileTrue(alg.bool(false), alg.add(alg.lit(3), alg.lit(4)));
-    }
-
-    public static <A> A bindStatement(DSLBindAlg<A> alg) {
-        return alg.bindValue(alg.var("x"), alg.lit(3));
-    }
-
-    public static <A> A boundExp(DSLBindAlg<A> alg) {
-        return alg.boundValue(alg.var("x"));
-    }
-
-    public static <A> A scopeStatement(DSLBindAlg<A> alg) {
-        A env1 = alg.bindValue(alg.var("x"), alg.lit(3));
-        A env2 = alg.bindValue(alg.var("x"), alg.lit(5));
-        return alg.scope(env2, env1);
-    }
+     */
 }

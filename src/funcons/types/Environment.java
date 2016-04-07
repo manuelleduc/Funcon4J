@@ -58,4 +58,17 @@ public class Environment implements Value {
     public Value val(Variable name) {
         return map.get(name);
     }
+
+    @Override
+    public int hashCode() {
+        return map.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Environment &&
+                ((Environment) other).map.equals(map) &&
+                ((Environment) other).given.equals(given);
+    }
+
 }
