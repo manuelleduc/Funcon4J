@@ -15,7 +15,7 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
 
     @Override
     default IEval apply(IEval abs, IEval arg) {
-        return supply(arg, (Environment env) -> ((Abs<IEval>)abs.eval(env)).body().eval(env));
+        return supply(arg, unAbs(abs));
         //return (Environment env) -> supply(arg, ((Abs<IEval>)abs.eval(env)).body()).eval(env);
     }
 
@@ -33,5 +33,9 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
     @Override
     default IEval pattAbs(IEval pat, IEval x) {
         return abs(scope(match(given(), pat), x));
+    }
+
+    default IEval unAbs(IEval abs) {
+        return (Environment env) -> ((Abs<IEval>)abs.eval(env)).body().eval(env);
     }
 }

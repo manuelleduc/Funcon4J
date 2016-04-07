@@ -3,6 +3,7 @@ package com.company;
 import DSL.algebras.DSLBindAlg;
 import DSL.algebras.WhileTrueAlg;
 
+import funcons.algebras.ElseAlg;
 import funcons.interpreter.ApplyFactory;
 import funcons.interpreter.ElseFactory;
 import funcons.signals.Signal;
@@ -27,14 +28,14 @@ public class Main {
         }
 
         {
-            ElseFactory fac = new ElseFactory() {};
+            ElseAlg<IEval> alg = new ElseFactory() {};
             System.out.println("else");
-            IEval equalsZero = fac.seq(fac.only(fac.lit(0)), fac.bool(true));
-            IEval alwaysFalse = fac.seq(fac.any(), fac.bool(false));
-            IEval isZero = fac.preferOver(equalsZero, alwaysFalse);
+            IEval equalsZero = alg.abs(alg.seq(alg.only(alg.lit(0)), alg.bool(true)));
+            IEval alwaysFalse = alg.abs(alg.seq(alg.any(), alg.bool(false)));
+            IEval isZero = alg.preferOver(equalsZero, alwaysFalse);
             try {
-                Environment env = (Environment)fac.supply(isZero, fac.bind(fac.var("isZero"))).eval(new Environment());
-                System.out.println(fac.apply(fac.boundValue(fac.var("isZero")), fac.lit(0)).eval(env));
+                Environment env = (Environment)alg.supply(isZero, alg.bind(alg.var("isZero"))).eval(new Environment());
+                System.out.println(alg.apply(alg.boundValue(alg.var("isZero")), alg.lit(0)).eval(env));
             } catch(Signal s) {
                 System.out.println("Error occured: " + s);
             }

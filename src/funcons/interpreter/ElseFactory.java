@@ -53,6 +53,6 @@ public interface ElseFactory extends ApplyFactory, ElseAlg<IEval> {
 
     @Override
     default IEval preferOver(IEval a1, IEval a2) {
-        return abs(else_(a1, a2));
+        return abs(else_(unAbs(a1), unAbs(a2)));
     }
 }
