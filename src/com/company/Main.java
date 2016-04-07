@@ -33,9 +33,10 @@ public class Main {
             IEval alwaysFalse = fac.seq(fac.any(), fac.bool(false));
             IEval isZero = fac.preferOver(equalsZero, alwaysFalse);
             try {
-                System.out.println(fac.apply(isZero, fac.lit(20)).eval(new Environment()));
+                Environment env = (Environment)fac.supply(isZero, fac.bind(fac.var("isZero"))).eval(new Environment());
+                System.out.println(fac.apply(fac.boundValue(fac.var("isZero")), fac.lit(0)).eval(env));
             } catch(Signal s) {
-                System.out.println(s);
+                System.out.println("Error occured: " + s);
             }
         }
     }
