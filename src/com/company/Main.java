@@ -14,7 +14,6 @@ import funcons.interpreter.BindFactory;
 import funcons.prettyprinter.PrintableLogicControlFactory;
 import funcons.sorts.IEval;
 import funcons.sorts.IPrint;
-import funcons.types.Abs;
 import funcons.types.Environment;
 
 public class Main {
@@ -98,6 +97,18 @@ public class Main {
             System.out.println("Apply");
             IEval incr = fac.abs(fac.intAdd(fac.given(), fac.lit(1)));
             System.out.println(fac.apply(incr, fac.lit(5)).eval(new Environment()));
+            System.out.println();
+        }
+
+        {
+            ApplyFactory fac = new ApplyFactory() {};
+            System.out.println("bind");
+            IEval incr = fac.abs(fac.intAdd(fac.given(), fac.lit(1)));
+            System.out.println(fac.apply(incr, fac.boundValue(fac.var("x")))
+                    .eval((Environment)fac.supply(fac.lit(3), fac.bind(fac.var("x")))
+                            .eval(new Environment())));
+            //System.out.println(fac.supply(fac.lit(3), fac.bind(fac.var("x")))
+            //        .eval(new Environment()));
             System.out.println();
         }
     }
