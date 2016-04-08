@@ -44,8 +44,9 @@ public class BindFactoryTest {
     public void testScope() throws Exception {
         IEval env1 = alg.bindValue(alg.var("id"), alg.lit(3));
         IEval env2 = alg.bindValue(alg.var("id"), alg.lit(2));
-        Environment scopedEnv = (Environment)alg.scope(env2, env1).eval(new Environment());
-        assertEquals(((Int)scopedEnv.val(new Variable("id"))).intValue(), new Integer(2));
+
+        Int i = (Int)alg.scope(env2, alg.boundValue(alg.var("id"))).eval((Environment)env1.eval(new Environment()));
+        assertEquals(i.intValue(), new Integer(2));
     }
 
     @Test

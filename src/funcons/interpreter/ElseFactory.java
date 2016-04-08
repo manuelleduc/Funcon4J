@@ -16,14 +16,12 @@ public interface ElseFactory extends ApplyFactory, ElseAlg<IEval> {
 
     @Override
     default IEval only(IEval v) {
-        return ifTrue(equal(given(), v), (Environment env) -> new Environment(), fail());
-        //return abs(ifTrue(equal(given(), v), (Environment env) -> new Environment(), fail()));
+        return abs(ifTrue(equal(given(), v), (Environment env) -> new Environment(), fail()));
     }
 
     @Override
     default IEval any() {
-        return (Environment env) -> new Environment();
-        //return abs((Environment env) -> new Environment());
+        return abs((Environment env) -> new Environment());
     }
 
     @Override

@@ -30,8 +30,8 @@ public class Main {
         {
             ElseAlg<IEval> alg = new ElseFactory() {};
             System.out.println("else");
-            IEval equalsZero = alg.abs(alg.seq(alg.only(alg.lit(0)), alg.bool(true)));
-            IEval alwaysFalse = alg.abs(alg.seq(alg.any(), alg.bool(false)));
+            IEval equalsZero = alg.abs(alg.seq(alg.apply(alg.only(alg.lit(0)), alg.given()), alg.bool(true)));
+            IEval alwaysFalse = alg.abs(alg.seq(alg.apply(alg.any(), alg.given()), alg.bool(false)));
             IEval isZero = alg.preferOver(equalsZero, alwaysFalse);
             try {
                 Environment env = (Environment)alg.apply(alg.bind(alg.var("isZero")), isZero).eval(new Environment());

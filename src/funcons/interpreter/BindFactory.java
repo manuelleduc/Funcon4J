@@ -23,7 +23,7 @@ public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
 
     @Override
     default IEval scope(IEval localBindings, IEval exp) {
-        return (Environment env) -> localBindings.eval(env.extend((Environment)localBindings.eval(env)));
+        return (Environment env) -> exp.eval(env.extend((Environment)localBindings.eval(env)));
     }
 
     @Override
