@@ -12,11 +12,6 @@ public interface PrintableIntCalcFactory extends IntCalcAlg<IPrint> {
     }
 
     @Override
-    default IPrint bool(Boolean b) {
-        return () -> new String(b);
-    }
-
-    @Override
     default IPrint intAdd(IPrint a, IPrint b) {
         return () -> new String("(" + a.print().stringValue() + " + " + b.print().stringValue() + ")");
     }

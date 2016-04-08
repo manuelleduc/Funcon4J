@@ -35,7 +35,7 @@ public class Main {
             IEval isZero = alg.preferOver(equalsZero, alwaysFalse);
             try {
                 Environment env = (Environment)alg.supply(isZero, alg.bind(alg.var("isZero"))).eval(new Environment());
-                System.out.println(alg.apply(alg.boundValue(alg.var("isZero")), alg.lit(0)).eval(env));
+                System.out.println(alg.apply(alg.boundValue(alg.var("isZero")), alg.lit(1)).eval(env));
             } catch(Signal s) {
                 System.out.println("Error occured: " + s);
             }

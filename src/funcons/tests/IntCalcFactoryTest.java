@@ -24,12 +24,6 @@ public class IntCalcFactoryTest {
     }
 
     @Test
-    public void testBool() throws Exception {
-        funcons.types.Bool b = (funcons.types.Bool)alg.bool(false).eval(new Environment());
-        assertEquals(b.boolValue(), false);
-    }
-
-    @Test
     public void testIntAdd() throws Exception {
         funcons.types.Int i = (funcons.types.Int)alg.intAdd(alg.lit(6), alg.lit(3)).eval(new Environment());
         assertEquals(i.intValue(), new Integer(9));
