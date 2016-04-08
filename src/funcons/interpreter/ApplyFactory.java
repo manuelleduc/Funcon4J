@@ -20,19 +20,8 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
     }
 
     @Override
-    default IEval match(IEval exp, IEval pat) {
-        return apply(pat, exp);
-    }
-
-    @Override
     default IEval bind(IEval var) {
-        return bindValue(var, given());
-        //return abs(bindValue(var, given()));
-    }
-
-    @Override
-    default IEval pattAbs(IEval pat, IEval x) {
-        return abs(scope(match(given(), pat), x));
+        return abs(bindValue(var, given()));
     }
 
     default IEval unAbs(IEval abs) {

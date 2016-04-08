@@ -27,6 +27,16 @@ public interface ElseFactory extends ApplyFactory, ElseAlg<IEval> {
     }
 
     @Override
+    default IEval match(IEval exp, IEval pat) {
+        return apply(pat, exp);
+    }
+
+    @Override
+    default IEval pattAbs(IEval pat, IEval x) {
+        return abs(scope(match(given(), pat), x));
+    }
+
+    @Override
     default IEval fail() {
         return (Environment env) -> {
             throw new FailureTrueSignal();

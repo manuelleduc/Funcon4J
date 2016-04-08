@@ -34,22 +34,8 @@ public class ApplyFactoryTest {
     }
 
     @Test
-    public void testMatch() throws Exception {
-
-    }
-
-    @Test
     public void testBind() throws Exception {
-
-    }
-
-    @Test
-    public void testPattAbs() throws Exception {
-
-    }
-
-    @Test
-    public void testUnAbs() throws Exception {
-
+        Environment env = (Environment)alg.apply(alg.bind(alg.var("id")), alg.lit(3)).eval(new Environment());
+        assertEquals(((Int)alg.boundValue(alg.var("id")).eval(env)).intValue(), new Integer(3));
     }
 }

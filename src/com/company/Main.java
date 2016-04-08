@@ -19,7 +19,7 @@ public class Main {
             IEval incr = fac.abs(fac.intAdd(fac.given(), fac.lit(1)));
             try {
                 System.out.println(fac.apply(incr, fac.boundValue(fac.var("x")))
-                        .eval((Environment)fac.supply(fac.lit(3), fac.bind(fac.var("x")))
+                        .eval((Environment)fac.apply(fac.bind(fac.var("x")), fac.lit(3))
                                 .eval(new Environment())));
             } catch (Signal signal) {
                 signal.printStackTrace();
@@ -34,8 +34,8 @@ public class Main {
             IEval alwaysFalse = alg.abs(alg.seq(alg.any(), alg.bool(false)));
             IEval isZero = alg.preferOver(equalsZero, alwaysFalse);
             try {
-                Environment env = (Environment)alg.supply(isZero, alg.bind(alg.var("isZero"))).eval(new Environment());
-                System.out.println(alg.apply(alg.boundValue(alg.var("isZero")), alg.lit(1)).eval(env));
+                Environment env = (Environment)alg.apply(alg.bind(alg.var("isZero")), isZero).eval(new Environment());
+                System.out.println(alg.apply(alg.boundValue(alg.var("isZero")), alg.lit(0)).eval(env));
             } catch(Signal s) {
                 System.out.println("Error occured: " + s);
             }
