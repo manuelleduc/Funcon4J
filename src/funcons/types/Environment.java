@@ -1,28 +1,32 @@
 package funcons.types;
 
-import java.util.HashMap;
-import java.util.Map;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Environment implements Value {
-    private final Map<Variable, Value> map;
+
+    private interface Scope {
+        Value get(Variable name);
+    }
+
+    private final Scope scope;
 
     public Environment(){
-        map = new HashMap<>();
+        scope = (name) -> null;
     }
 
     public Environment(Variable name, Value x) {
-        this();
-        map.put(name, x);
+        scope = (n) -> name.equals(n) ? x : null;
     }
 
     private Environment(Environment env, Variable name, Value x) {
-        map = new HashMap<>(env.map);
-        map.put(name, x);
+        scope = (n) -> name.equals(n) ? x : env.val(name);
     }
 
     private Environment(Environment a, Environment b) {
-        map = new HashMap<>(a.map);
-        map.putAll(b.map);
+        scope = (name) -> {
+            Value result = b.val(name);
+            return result != null ? result : a.val(name);
+        };
     }
 
     public Environment store(Variable name, Value x) {
@@ -34,17 +38,18 @@ public class Environment implements Value {
     }
 
     public Value val(Variable name) {
-        return map.get(name);
+        return scope.get(name);
     }
 
     @Override
     public int hashCode() {
-        return map.hashCode();
+        throw new NotImplementedException();
     }
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof Environment && ((Environment) other).map.equals(map);
+        throw new NotImplementedException();
+        //return other instanceof Environment && ((Environment) other).map.equals(map);
     }
 
 }
