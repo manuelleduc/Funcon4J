@@ -4,10 +4,7 @@ import funcons.Store;
 import funcons.algebras.ApplyAlg;
 import funcons.interpreter.ApplyFactory;
 import funcons.sorts.IEval;
-import funcons.types.Abs;
-import funcons.types.Environment;
-import funcons.types.Int;
-import funcons.types.Null;
+import funcons.types.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,6 +31,21 @@ public class ApplyFactoryTest {
     public void testApply() throws Exception {
         Int i = (Int)alg.apply(alg.abs(alg.intAdd(alg.lit(1), alg.given())), alg.lit(2)).eval(new Environment(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(3));
+    }
+
+    @Test
+    public void testClosure() throws Exception {
+        IEval closure = alg.closure(alg.boundValue(alg.var("foo")), (e,s,g) -> new Environment(new Variable("foo"), new Int(0)));
+        Int i = (Int)closure.eval(new Environment(new Variable("foo"), new Int(1)), new Store(), new Null());
+        assertEquals(i.intValue(), new Integer(0));
+    }
+
+    @Test
+    public void testClose() throws Exception {
+        IEval close = alg.close(alg.abs(alg.boundValue(alg.var("foo"))));
+        Abs<IEval> f = (Abs<IEval>)close.eval(new Environment(new Variable("foo"), new Int(0)), new Store(), new Null());
+        Int i = (Int)f.body().eval(new Environment(new Variable("foo"), new Int(1)), new Store(), new Null());
+        assertEquals(i.intValue(), new Integer(0));
     }
 
     @Test
