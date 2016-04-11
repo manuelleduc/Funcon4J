@@ -4,7 +4,7 @@ import funcons.algebras.IntCalcAlg;
 import funcons.sorts.IEval;
 import funcons.types.Int;
 
-public interface IntCalcFactory extends IntCalcAlg<IEval> {
+public interface IntCalcFactory extends NullFactory, IntCalcAlg<IEval> {
     @Override
     default IEval lit(java.lang.Integer i) {
         return (env, store, given) -> new Int(i);

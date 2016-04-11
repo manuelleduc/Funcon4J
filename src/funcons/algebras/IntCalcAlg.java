@@ -1,6 +1,6 @@
 package funcons.algebras;
 
-public interface IntCalcAlg<E> {
+public interface IntCalcAlg<E> extends NullAlg<E> {
     E lit(java.lang.Integer i);
 
     E intAdd(E a, E b);
