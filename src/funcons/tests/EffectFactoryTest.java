@@ -21,7 +21,7 @@ public class EffectFactoryTest {
 
     @Test
     public void testEffect() throws Exception {
-        Null n = (Null)alg.effect(alg.intAdd(alg.lit(2), alg.lit(3))).eval(new Environment());
+        Null n = (Null)alg.effect(alg.intAdd(alg.lit(2), alg.lit(3))).eval(new Environment(), new Null());
         assertEquals(new Null(), n);
     }
 }

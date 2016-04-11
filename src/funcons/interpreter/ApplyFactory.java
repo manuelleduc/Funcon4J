@@ -4,12 +4,14 @@ import funcons.algebras.ApplyAlg;
 import funcons.sorts.IEval;
 import funcons.types.Abs;
 import funcons.types.Environment;
+import funcons.types.Null;
+import funcons.types.Value;
 
 public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
 
     @Override
     default IEval abs(IEval exp) {
-        return (Environment env) -> new Abs<>(exp);
+        return (env, given) -> new Abs<>(exp);
         //return (Environment env) -> new Abs<>(exp).body().eval(env);
     }
 
@@ -25,6 +27,6 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
     }
 
     default IEval unAbs(IEval abs) {
-        return (Environment env) -> ((Abs<IEval>)abs.eval(env)).body().eval(env);
+        return (env, given) -> ((Abs<IEval>)abs.eval(env, given)).body().eval(env, given);
     }
 }

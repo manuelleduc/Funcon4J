@@ -4,6 +4,7 @@ import funcons.algebras.SeqAlg;
 import funcons.interpreter.SeqFactory;
 import funcons.sorts.IEval;
 import funcons.types.Environment;
+import funcons.types.Null;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class SeqFactoryTest {
 
     @Test
     public void testSeq() throws Exception {
-        funcons.types.Int i = (funcons.types.Int)alg.seq(alg.lit(3), alg.lit(2)).eval(new Environment());
+        funcons.types.Int i = (funcons.types.Int)alg.seq(alg.lit(3), alg.lit(2)).eval(new Environment(), new Null());
         assertEquals(i.intValue(), new Integer(2));
     }
 }

@@ -7,9 +7,9 @@ import funcons.types.Environment;
 public interface SeqFactory extends EffectFactory, SeqAlg<IEval> {
     @Override
     default IEval seq(IEval c, IEval t) {
-        return (Environment env) -> {
-            c.eval(env);
-            return t.eval(env);
+        return (env, given) -> {
+            c.eval(env, given);
+            return t.eval(env, given);
         };
     }
 }

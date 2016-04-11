@@ -4,6 +4,7 @@ import funcons.algebras.IntCalcAlg;
 import funcons.interpreter.IntCalcFactory;
 import funcons.sorts.IEval;
 import funcons.types.Environment;
+import funcons.types.Null;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,31 +20,31 @@ public class IntCalcFactoryTest {
 
     @Test
     public void testLit() throws Exception {
-        funcons.types.Int i = (funcons.types.Int)alg.lit(0).eval(new Environment());
+        funcons.types.Int i = (funcons.types.Int)alg.lit(0).eval(new Environment(), new Null());
         assertEquals(i.intValue(), new Integer(0));
     }
 
     @Test
     public void testIntAdd() throws Exception {
-        funcons.types.Int i = (funcons.types.Int)alg.intAdd(alg.lit(6), alg.lit(3)).eval(new Environment());
+        funcons.types.Int i = (funcons.types.Int)alg.intAdd(alg.lit(6), alg.lit(3)).eval(new Environment(), new Null());
         assertEquals(i.intValue(), new Integer(9));
     }
 
     @Test
     public void testIntSubtract() throws Exception {
-        funcons.types.Int i = (funcons.types.Int)alg.intSubtract(alg.lit(6), alg.lit(3)).eval(new Environment());
+        funcons.types.Int i = (funcons.types.Int)alg.intSubtract(alg.lit(6), alg.lit(3)).eval(new Environment(), new Null());
         assertEquals(i.intValue(), new Integer(3));
     }
 
     @Test
     public void testIntMultiply() throws Exception {
-        funcons.types.Int i = (funcons.types.Int)alg.intMultiply(alg.lit(6), alg.lit(3)).eval(new Environment());
+        funcons.types.Int i = (funcons.types.Int)alg.intMultiply(alg.lit(6), alg.lit(3)).eval(new Environment(), new Null());
         assertEquals(i.intValue(), new Integer(18));
     }
 
     @Test
     public void testIntDivide() throws Exception {
-        funcons.types.Int i = (funcons.types.Int)alg.intDivide(alg.lit(6), alg.lit(3)).eval(new Environment());
+        funcons.types.Int i = (funcons.types.Int)alg.intDivide(alg.lit(6), alg.lit(3)).eval(new Environment(), new Null());
         assertEquals(i.intValue(), new Integer(2));
     }
 }

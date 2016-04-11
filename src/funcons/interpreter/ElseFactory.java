@@ -6,22 +6,23 @@ import funcons.signals.Signal;
 import funcons.sorts.IEval;
 import funcons.types.Bool;
 import funcons.types.Environment;
+import funcons.types.Null;
 
 public interface ElseFactory extends ApplyFactory, ElseAlg<IEval> {
 
     @Override
     default IEval equal(IEval x1, IEval x2) { // TODO hacky?
-        return (Environment env) -> new Bool(x1.eval(env).equals(x2.eval(env)));
+        return (env, given) -> new Bool(x1.eval(env, given).equals(x2.eval(env, given)));
     }
 
     @Override
     default IEval only(IEval v) {
-        return abs(ifTrue(equal(given(), v), (Environment env) -> new Environment(), fail()));
+        return abs(ifTrue(equal(given(), v), (env, given) -> new Environment(), fail()));
     }
 
     @Override
     default IEval any() {
-        return abs((Environment env) -> new Environment());
+        return abs((env, given) -> new Environment());
     }
 
     @Override
@@ -36,25 +37,25 @@ public interface ElseFactory extends ApplyFactory, ElseAlg<IEval> {
 
     @Override
     default IEval fail() {
-        return (Environment env) -> {
+        return (env, given) -> {
             throw new FailureTrueSignal();
         };
     }
 
     @Override
     default IEval throw_(Signal s) {
-        return (Environment env) -> {
+        return (env, given) -> {
             throw s;
         };
     }
 
     @Override
     default IEval else_(IEval x1, IEval x2) {
-        return (Environment env) -> {
+        return (env, given) -> {
             try {
-                return x1.eval(env);
+                return x1.eval(env, given);
             } catch(FailureTrueSignal f) {
-                return x2.eval(env);
+                return x2.eval(env, given);
             }
         };
     }

@@ -6,6 +6,7 @@ import funcons.sorts.IEval;
 import funcons.types.Bool;
 import funcons.types.Environment;
 import funcons.types.Int;
+import funcons.types.Null;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,13 +23,13 @@ public class LogicIfTrueFactoryTest {
 
     @Test
     public void testBool() throws Exception {
-        Bool b = (Bool)alg.bool(false).eval(new Environment());
+        Bool b = (Bool)alg.bool(false).eval(new Environment(), new Null());
         assertEquals(b.boolValue(), false);
     }
 
     @Test
     public void testIfTrue() throws Exception {
-        Int i = (Int)alg.ifTrue(alg.bool(false), alg.lit(2), alg.lit(3)).eval(new Environment());
+        Int i = (Int)alg.ifTrue(alg.bool(false), alg.lit(2), alg.lit(3)).eval(new Environment(), new Null());
         assertEquals(i.intValue(), new Integer(3));
     }
 }

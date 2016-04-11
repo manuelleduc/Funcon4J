@@ -5,5 +5,5 @@ import funcons.types.Environment;
 import funcons.types.Value;
 
 public interface IEval {
-    Value eval(Environment env) throws Signal;
+    Value eval(Environment env, Value given) throws Signal;
 }
