@@ -2,7 +2,6 @@ package funcons.interpreter;
 
 import funcons.algebras.IntCalcAlg;
 import funcons.sorts.IEval;
-import funcons.types.Environment;
 import funcons.types.Int;
 
 public interface IntCalcFactory extends IntCalcAlg<IEval> {
@@ -14,6 +13,11 @@ public interface IntCalcFactory extends IntCalcAlg<IEval> {
     @Override
     default IEval intAdd(IEval a, IEval b) {
         return (env, given) -> new Int(((Int)a.eval(env, given)).intValue() + ((Int)b.eval(env, given)).intValue());
+    }
+
+    @Override
+    default IEval intNegate(IEval x) {
+        return (env, given) -> new Int(-((Int)x.eval(env, given)).intValue());
     }
 
     @Override

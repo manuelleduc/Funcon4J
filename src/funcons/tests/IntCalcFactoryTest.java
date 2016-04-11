@@ -31,6 +31,12 @@ public class IntCalcFactoryTest {
     }
 
     @Test
+    public void testIntNegate() throws Exception {
+        funcons.types.Int i = (funcons.types.Int)alg.intNegate(alg.lit(1)).eval(new Environment(), new Null());
+        assertEquals(i.intValue(), new Integer(-1));
+    }
+
+    @Test
     public void testIntSubtract() throws Exception {
         funcons.types.Int i = (funcons.types.Int)alg.intSubtract(alg.lit(6), alg.lit(3)).eval(new Environment(), new Null());
         assertEquals(i.intValue(), new Integer(3));
