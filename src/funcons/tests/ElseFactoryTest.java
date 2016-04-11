@@ -2,7 +2,7 @@ package funcons.tests;
 
 import funcons.algebras.ElseAlg;
 import funcons.interpreter.ElseFactory;
-import funcons.signals.FailureTrueSignal;
+import funcons.types.FailureTrueException;
 import funcons.sorts.IEval;
 import funcons.types.Bool;
 import funcons.types.Environment;
@@ -10,6 +10,7 @@ import funcons.types.Int;
 import funcons.types.Null;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.runners.statements.Fail;
 
 import static org.junit.Assert.*;
 
@@ -32,7 +33,7 @@ public class ElseFactoryTest {
     public void testFail() throws Exception {
         try {
             alg.fail().eval(new Environment(), new Null());
-        } catch (FailureTrueSignal ignored) {
+        } catch (FailureTrueException ignored) {
             return;
         }
         assertTrue(false);
@@ -83,8 +84,31 @@ public class ElseFactoryTest {
     @Test
     public void testThrow_() throws Exception {
         try {
-            alg.throw_(new FailureTrueSignal()).eval(new Environment(), new Null());
-        } catch(FailureTrueSignal s) {
+            alg.throw_((env, given) -> new FailureTrueException()).eval(new Environment(), new Null());
+        } catch(FailureTrueException s) {
+            return;
+        }
+        assertTrue(false);
+    }
+
+    @Test
+    public void testCatch_() throws Exception {
+        IEval c = alg.catch_(alg.throw_((env, given) -> new FailureTrueException()), alg.abs(alg.given()));
+        FailureTrueException e = (FailureTrueException)c.eval(new Environment(), new Null());
+        assertNotNull(e);
+    }
+
+    @Test
+    public void testCatchElseRethrow() throws Exception {
+        IEval fail = alg.throw_((env, given) -> new FailureTrueException());
+
+        IEval c = alg.catchElseRethrow(fail, alg.abs(alg.given()));
+        FailureTrueException e = (FailureTrueException)c.eval(new Environment(), new Null());
+        assertNotNull(e);
+
+        try {
+            alg.catchElseRethrow(fail, fail).eval(new Environment(), new Null());
+        } catch(FailureTrueException exception) {
             return;
         }
         assertTrue(false);

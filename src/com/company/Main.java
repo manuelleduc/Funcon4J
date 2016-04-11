@@ -6,7 +6,7 @@ import DSL.algebras.WhileTrueAlg;
 import funcons.algebras.ElseAlg;
 import funcons.interpreter.ApplyFactory;
 import funcons.interpreter.ElseFactory;
-import funcons.signals.Signal;
+import funcons.types.FunconException;
 import funcons.sorts.IEval;
 import funcons.types.Environment;
 import funcons.types.Null;
@@ -22,7 +22,7 @@ public class Main {
                 System.out.println(fac.apply(incr, fac.boundValue(fac.var("x")))
                         .eval((Environment)fac.apply(fac.bind(fac.var("x")), fac.lit(3))
                                 .eval(new Environment(), new Null()), new Null()));
-            } catch (Signal signal) {
+            } catch (FunconException signal) {
                 signal.printStackTrace();
             }
             System.out.println();
@@ -37,7 +37,7 @@ public class Main {
             try {
                 Environment env = (Environment)alg.apply(alg.bind(alg.var("isZero")), isZero).eval(new Environment(), new Null());
                 System.out.println(alg.apply(alg.boundValue(alg.var("isZero")), alg.lit(0)).eval(env, new Null()));
-            } catch(Signal s) {
+            } catch(FunconException s) {
                 System.out.println("Error occured: " + s);
             }
         }
