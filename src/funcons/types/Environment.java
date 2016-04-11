@@ -49,7 +49,6 @@ public class Environment implements Value {
     @Override
     public boolean equals(Object other) {
         throw new NotImplementedException();
-        //return other instanceof Environment && ((Environment) other).map.equals(map);
     }
 
 }
