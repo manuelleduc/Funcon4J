@@ -9,8 +9,8 @@ public interface LogicWhileTrueFactory extends LogicIfTrueFactory, LogicWhileTru
     default IEval whileTrue(IEval e, IEval c) {
         return ifTrue(
                     e,
-                    seq(c, (env, given) -> whileTrue(e, c).eval(env, given)),
-                    (env, given) -> new Null()
+                    seq(c, (env, store, given) -> whileTrue(e, c).eval(env, store, given)),
+                    (env, store, given) -> new Null()
         );
     }
 }

@@ -8,18 +8,18 @@ import funcons.types.Environment;
 public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
 
     @Override
-    default IEval equal(IEval x1, IEval x2) { // TODO hacky?
-        return (env, given) -> new Bool(x1.eval(env, given).equals(x2.eval(env, given)));
+    default IEval equal(IEval x1, IEval x2) {
+        return (env, store, given) -> new Bool(x1.eval(env, store, given).equals(x2.eval(env, store, given)));
     }
 
     @Override
     default IEval only(IEval v) {
-        return abs(ifTrue(equal(given(), v), (env, given) -> new Environment(), fail()));
+        return abs(ifTrue(equal(given(), v), (env, store, given) -> new Environment(), fail()));
     }
 
     @Override
     default IEval any() {
-        return abs((env, given) -> new Environment());
+        return abs((env, store, given) -> new Environment());
     }
 
     @Override

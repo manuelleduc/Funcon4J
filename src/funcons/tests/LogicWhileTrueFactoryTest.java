@@ -1,5 +1,6 @@
 package funcons.tests;
 
+import funcons.Store;
 import funcons.algebras.LogicWhileTrueAlg;
 import funcons.interpreter.LogicWhileTrueFactory;
 import funcons.sorts.IEval;
@@ -21,7 +22,7 @@ public class LogicWhileTrueFactoryTest {
 
     @Test
     public void testWhileTrue() throws Exception {
-        Null n = (Null)alg.whileTrue(alg.bool(false), alg.intAdd(alg.lit(2), alg.lit(3))).eval(new Environment(), new Null());
+        Null n = (Null)alg.whileTrue(alg.bool(false), alg.intAdd(alg.lit(2), alg.lit(3))).eval(new Environment(), new Store(), new Null());
         assertEquals(new Null(), n);
     }
 }

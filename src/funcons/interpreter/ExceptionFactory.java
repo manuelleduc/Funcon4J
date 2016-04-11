@@ -9,25 +9,25 @@ public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
 
     @Override
     default IEval fail() {
-        return (env, given) -> {
+        return (env, store, given) -> {
             throw new FailureTrueException();
         };
     }
 
     @Override
     default IEval throw_(IEval s) {
-        return (env, given) -> {
-            throw (FunconException)s.eval(env, given);
+        return (env, store, given) -> {
+            throw (FunconException)s.eval(env, store, given);
         };
     }
 
     @Override
     default IEval catch_(IEval x, IEval abs) {
-        return (env, given) -> {
+        return (env, store, given) -> {
             try {
-                return x.eval(env, given);
+                return x.eval(env, store, given);
             } catch (FunconException e) {
-                return apply(abs, (env1, given1) -> e).eval(env, given);
+                return apply(abs, (env1, store1, given1) -> e).eval(env, store, given);
             }
         };
     }
@@ -39,11 +39,11 @@ public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
 
     @Override
     default IEval else_(IEval x1, IEval x2) {
-        return (env, given) -> {
+        return (env, store, given) -> {
             try {
-                return x1.eval(env, given);
+                return x1.eval(env, store, given);
             } catch(FailureTrueException f) {
-                return x2.eval(env, given);
+                return x2.eval(env, store, given);
             }
         };
     }

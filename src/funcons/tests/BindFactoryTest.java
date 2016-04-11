@@ -1,5 +1,6 @@
 package funcons.tests;
 
+import funcons.Store;
 import funcons.algebras.BindAlg;
 import funcons.interpreter.BindFactory;
 import funcons.sorts.IEval;
@@ -23,21 +24,23 @@ public class BindFactoryTest {
 
     @Test
     public void testVar() throws Exception {
-        Variable v = (Variable)alg.var("foo").eval(new Environment(), new Null());
+        Variable v = (Variable)alg.var("foo").eval(new Environment(), new Store(), new Null());
         assertEquals(v.stringValue(), "foo");
     }
 
     @Test
     public void testBindValue() throws Exception {
-        Environment env = (Environment)alg.bindValue(alg.var("foo"), alg.lit(3)).eval(new Environment(), new Null());
-        Variable v = (Variable)alg.var("foo").eval(new Environment(), new Null());
+        Store store = new Store();
+        Environment env = (Environment)alg.bindValue(alg.var("foo"), alg.lit(3)).eval(new Environment(), store, new Null());
+        Variable v = (Variable)alg.var("foo").eval(new Environment(), store, new Null());
         assertEquals(((Int)env.val(v)).intValue(), new Integer(3));
     }
 
     @Test
     public void testBoundValue() throws Exception {
-        Environment env = (Environment)alg.bindValue(alg.var("foo"), alg.lit(3)).eval(new Environment(), new Null());
-        Int i = (Int)alg.boundValue(alg.var("foo")).eval(env, new Null());
+        Store store = new Store();
+        Environment env = (Environment)alg.bindValue(alg.var("foo"), alg.lit(3)).eval(new Environment(), store, new Null());
+        Int i = (Int)alg.boundValue(alg.var("foo")).eval(env, store, new Null());
         assertEquals(i.intValue(), new Integer(3));
     }
 
@@ -46,13 +49,20 @@ public class BindFactoryTest {
         IEval env1 = alg.bindValue(alg.var("foo"), alg.lit(3));
         IEval env2 = alg.bindValue(alg.var("foo"), alg.lit(2));
 
-        Int i = (Int)alg.scope(env2, alg.boundValue(alg.var("foo"))).eval((Environment)env1.eval(new Environment(), new Null()), new Null());
+        Int i = (Int)alg.scope(env1, alg.scope(env2, alg.boundValue(alg.var("foo")))).eval(new Environment(), new Store(), new Null());
+
         assertEquals(i.intValue(), new Integer(2));
     }
 
     @Test
-    public void testSupplyAndGiven() throws Exception {
-        Int i = (Int)alg.supply(alg.lit(3), alg.given()).eval(new Environment(), new Null());
-        assertEquals(i.intValue(), new Integer(3));
+    public void testGiven() throws Exception {
+        Int i = (Int)alg.given().eval(new Environment(), new Store(), new Int(0));
+        assertEquals(i.intValue(), new Integer(0));
+    }
+
+    @Test
+    public void testSupply() throws Exception {
+        Int i = (Int)alg.supply(alg.lit(0), alg.given()).eval(new Environment(), new Store(), new Null());
+        assertEquals(i.intValue(), new Integer(0));
     }
 }

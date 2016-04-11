@@ -7,8 +7,8 @@ import funcons.types.Null;
 public interface EffectFactory extends IntCalcFactory, EffectAlg<IEval> {
     @Override
     default IEval effect(IEval e) {
-        return (env, given) -> {
-            e.eval(env, given);
+        return (env, store, given) -> {
+            e.eval(env, store, given);
             return new Null();
         };
     }

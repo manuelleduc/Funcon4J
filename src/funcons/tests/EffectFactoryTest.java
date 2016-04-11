@@ -1,5 +1,6 @@
 package funcons.tests;
 
+import funcons.Store;
 import funcons.algebras.EffectAlg;
 import funcons.interpreter.EffectFactory;
 import funcons.sorts.IEval;
@@ -21,7 +22,7 @@ public class EffectFactoryTest {
 
     @Test
     public void testEffect() throws Exception {
-        Null n = (Null)alg.effect(alg.intAdd(alg.lit(2), alg.lit(3))).eval(new Environment(), new Null());
+        Null n = (Null)alg.effect(alg.intAdd(alg.lit(2), alg.lit(3))).eval(new Environment(), new Store(), new Null());
         assertEquals(new Null(), n);
     }
 }

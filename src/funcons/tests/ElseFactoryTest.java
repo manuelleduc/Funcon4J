@@ -1,5 +1,6 @@
 package funcons.tests;
 
+import funcons.Store;
 import funcons.algebras.ElseAlg;
 import funcons.interpreter.ElseFactory;
 import funcons.sorts.IEval;
@@ -23,31 +24,31 @@ public class ElseFactoryTest {
 
     @Test
     public void testEqual() throws Exception {
-        assertTrue(((Bool)alg.equal(alg.lit(3), alg.lit(3)).eval(new Environment(), new Null())).boolValue());
-        assertFalse(((Bool)alg.equal(alg.bool(true), alg.bool(false)).eval(new Environment(), new Null())).boolValue());
+        assertTrue(((Bool)alg.equal(alg.lit(3), alg.lit(3)).eval(new Environment(), new Store(), new Null())).boolValue());
+        assertFalse(((Bool)alg.equal(alg.bool(true), alg.bool(false)).eval(new Environment(), new Store(), new Null())).boolValue());
     }
 
     @Test
     public void testOnly() throws Exception {
-        Bool b = (Bool)alg.seq(alg.apply(alg.only(alg.lit(0)), alg.lit(0)), alg.bool(true)).eval(new Environment(), new Null());
+        Bool b = (Bool)alg.seq(alg.apply(alg.only(alg.lit(0)), alg.lit(0)), alg.bool(true)).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
 
-        b = (Bool)alg.else_(alg.apply(alg.only(alg.lit(0)), alg.lit(1)), alg.bool(false)).eval(new Environment(), new Null());
+        b = (Bool)alg.else_(alg.apply(alg.only(alg.lit(0)), alg.lit(1)), alg.bool(false)).eval(new Environment(), new Store(), new Null());
         assertFalse(b.boolValue());
     }
 
     @Test
     public void testAny() throws Exception {
-        Bool b = (Bool)alg.seq(alg.apply(alg.any(), alg.lit(0)), alg.bool(true)).eval(new Environment(), new Null());
+        Bool b = (Bool)alg.seq(alg.apply(alg.any(), alg.lit(0)), alg.bool(true)).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
     }
 
     @Test
     public void testMatch() throws Exception {
-        Bool b = (Bool)alg.seq(alg.match(alg.lit(0), alg.any()), alg.bool(true)).eval(new Environment(), new Null());
+        Bool b = (Bool)alg.seq(alg.match(alg.lit(0), alg.any()), alg.bool(true)).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
 
-        b = (Bool)alg.else_(alg.match(alg.lit(0), alg.only(alg.lit(1))), alg.bool(false)).eval(new Environment(), new Null());
+        b = (Bool)alg.else_(alg.match(alg.lit(0), alg.only(alg.lit(1))), alg.bool(false)).eval(new Environment(), new Store(), new Null());
         assertFalse(b.boolValue());
     }
 
@@ -56,7 +57,7 @@ public class ElseFactoryTest {
         IEval part1 = alg.bind(alg.var("x"));
         IEval part2 = alg.intAdd(alg.boundValue(alg.var("x")), alg.lit(1));
         IEval incr = alg.pattAbs(part1, part2);
-        Int i = (Int)alg.apply(incr, alg.lit(2)).eval(new Environment(), new Null());
+        Int i = (Int)alg.apply(incr, alg.lit(2)).eval(new Environment(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(3));
     }
 }

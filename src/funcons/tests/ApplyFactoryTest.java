@@ -1,5 +1,6 @@
 package funcons.tests;
 
+import funcons.Store;
 import funcons.algebras.ApplyAlg;
 import funcons.interpreter.ApplyFactory;
 import funcons.sorts.IEval;
@@ -23,20 +24,22 @@ public class ApplyFactoryTest {
 
     @Test
     public void testAbs() throws Exception {
-        Abs<IEval> abs = (Abs<IEval>)alg.abs(alg.lit(1)).eval(new Environment(), new Null());
-        Int result = (Int)abs.body().eval(new Environment(), new Null());
+        Store store = new Store();
+        Abs<IEval> abs = (Abs<IEval>)alg.abs(alg.lit(1)).eval(new Environment(), store, new Null());
+        Int result = (Int)abs.body().eval(new Environment(), store, new Null());
         assertEquals(result.intValue(), new Integer(1));
     }
 
     @Test
     public void testApply() throws Exception {
-        Int i = (Int)alg.apply(alg.abs(alg.intAdd(alg.lit(1), alg.given())), alg.lit(2)).eval(new Environment(), new Null());
+        Int i = (Int)alg.apply(alg.abs(alg.intAdd(alg.lit(1), alg.given())), alg.lit(2)).eval(new Environment(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(3));
     }
 
     @Test
     public void testBind() throws Exception {
-        Environment env = (Environment)alg.apply(alg.bind(alg.var("foo")), alg.lit(3)).eval(new Environment(), new Null());
-        assertEquals(((Int)alg.boundValue(alg.var("foo")).eval(env, new Null())).intValue(), new Integer(3));
+        Store store = new Store();
+        Environment env = (Environment)alg.apply(alg.bind(alg.var("foo")), alg.lit(3)).eval(new Environment(), store, new Null());
+        assertEquals(((Int)alg.boundValue(alg.var("foo")).eval(env, store, new Null())).intValue(), new Integer(3));
     }
 }
