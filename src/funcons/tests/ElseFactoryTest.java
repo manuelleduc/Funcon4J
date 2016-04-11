@@ -82,11 +82,24 @@ public class ElseFactoryTest {
 
     @Test
     public void testThrow_() throws Exception {
-        
+        try {
+            alg.throw_(new FailureTrueSignal()).eval(new Environment(), new Null());
+        } catch(FailureTrueSignal s) {
+            return;
+        }
+        assertTrue(false);
     }
 
     @Test
     public void testPreferOver() throws Exception {
+        IEval f1 = alg.abs(alg.seq(alg.apply(alg.only(alg.lit(0)), alg.given()), alg.bool(true)));
+        IEval f2 = alg.abs(alg.seq(alg.apply(alg.any(), alg.given()), alg.bool(false)));
+        IEval isZero = alg.preferOver(f1, f2);
 
+        Bool b = (Bool)alg.apply(isZero, alg.lit(0)).eval(new Environment(), new Null());
+        assertTrue(b.boolValue());
+
+        b = (Bool)alg.apply(isZero, alg.lit(1)).eval(new Environment(), new Null());
+        assertFalse(b.boolValue());
     }
 }
