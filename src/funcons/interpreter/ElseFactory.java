@@ -31,4 +31,13 @@ public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
     default IEval pattAbs(IEval pat, IEval x) {
         return abs(scope(match(given(), pat), x));
     }
+
+    @Override
+    default IEval pattUnion(IEval pat1, IEval pat2) {
+        return abs((env, store, given) -> {
+            Environment env1 = (Environment)unAbs(pat1).eval(env, store, given);
+            Environment env2 = (Environment)unAbs(pat2).eval(env, store, given);
+            return env1.extend(env2);
+        });
+    }
 }
