@@ -8,8 +8,6 @@ import funcons.types.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.function.BiFunction;
-
 import static org.junit.Assert.*;
 
 public class ElseFactoryTest {

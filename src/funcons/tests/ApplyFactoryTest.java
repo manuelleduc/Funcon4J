@@ -22,6 +22,7 @@ public class ApplyFactoryTest {
     @Test
     public void testAbs() throws Exception {
         Store store = new Store();
+        @SuppressWarnings("unchecked")
         Abs<IEval> abs = (Abs<IEval>)alg.abs(alg.lit(1)).eval(new Environment(), store, new Null());
         Int result = (Int)abs.body().eval(new Environment(), store, new Null());
         assertEquals(result.intValue(), new Integer(1));
@@ -43,6 +44,7 @@ public class ApplyFactoryTest {
     @Test
     public void testClose() throws Exception {
         IEval close = alg.close(alg.abs(alg.boundValue(alg.var("foo"))));
+        @SuppressWarnings("unchecked")
         Abs<IEval> f = (Abs<IEval>)close.eval(new Environment(new Variable("foo"), new Int(0)), new Store(), new Null());
         Int i = (Int)f.body().eval(new Environment(new Variable("foo"), new Int(1)), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(0));

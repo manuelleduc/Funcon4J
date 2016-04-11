@@ -33,6 +33,8 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
     }
 
     default IEval unAbs(IEval abs) {
-        return (env, store, given) -> ((Abs<IEval>)abs.eval(env, store, given)).body().eval(env, store, given);
+        @SuppressWarnings("unchecked")
+        IEval result = (env, store, given) -> ((Abs<IEval>)abs.eval(env, store, given)).body().eval(env, store, given);
+        return result;
     }
 }
