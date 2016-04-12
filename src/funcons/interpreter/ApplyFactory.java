@@ -18,6 +18,11 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
     }
 
     @Override
+    default IEval compose(IEval f, IEval g) {
+        return abs(apply(f, apply(g, given())));
+    }
+
+    @Override
     default IEval closure(IEval x, IEval environment) {
         return (env, store, given) -> x.eval((Environment)environment.eval(env, store, given), store, given);
     }

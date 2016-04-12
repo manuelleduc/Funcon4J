@@ -35,6 +35,14 @@ public class ApplyFactoryTest {
     }
 
     @Test
+    public void testCompose() throws Exception {
+        IEval incr = alg.abs(alg.intAdd(alg.given(), alg.lit(1)));
+        IEval double_ = alg.abs(alg.intMultiply(alg.given(), alg.lit(2)));
+        Int i = (Int)alg.apply(alg.compose(double_, incr), alg.lit(3)).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(8), i.intValue());
+    }
+
+    @Test
     public void testClosure() throws Exception {
         IEval closure = alg.closure(alg.boundValue(alg.var("foo")), (e,s,g) -> new Environment(new Variable("foo"), new Int(0)));
         Int i = (Int)closure.eval(new Environment(new Variable("foo"), new Int(1)), new Store(), new Null());

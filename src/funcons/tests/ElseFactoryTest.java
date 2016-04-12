@@ -47,14 +47,6 @@ public class ElseFactoryTest {
     }
 
     @Test
-    public void testCompose() throws Exception {
-        IEval incr = alg.abs(alg.intAdd(alg.given(), alg.lit(1)));
-        IEval double_ = alg.abs(alg.intMultiply(alg.given(), alg.lit(2)));
-        Int i = (Int)alg.apply(alg.compose(double_, incr), alg.lit(3)).eval(new Environment(), new Store(), new Null());
-        assertEquals(new Integer(8), i.intValue());
-    }
-
-    @Test
     public void testMatch() throws Exception {
         Bool b = (Bool)alg.seq(alg.match(alg.lit(0), alg.any()), alg.bool(true)).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
