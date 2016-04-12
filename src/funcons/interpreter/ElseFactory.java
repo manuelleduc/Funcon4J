@@ -23,6 +23,16 @@ public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
     }
 
     @Override
+    default IEval whenTrue(IEval exp, IEval x) {
+        return ifTrue(exp, x, fail());
+    }
+
+    @Override
+    default IEval compose(IEval f, IEval g) {
+        return abs(apply(f, apply(g, given())));
+    }
+
+    @Override
     default IEval match(IEval exp, IEval pat) {
         return apply(pat, exp);
     }
