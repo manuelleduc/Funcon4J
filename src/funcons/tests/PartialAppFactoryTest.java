@@ -4,10 +4,7 @@ import funcons.Store;
 import funcons.algebras.PartialAppAlg;
 import funcons.interpreter.PartialAppFactory;
 import funcons.sorts.IEval;
-import funcons.types.Environment;
-import funcons.types.Int;
-import funcons.types.Null;
-import funcons.types.Tuple;
+import funcons.types.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -53,5 +50,13 @@ public class PartialAppFactoryTest {
         IEval incr = alg.partialApp(alg.abs(alg.intAdd(alg.project(alg.lit(0), alg.given()), alg.project(alg.lit(1), alg.given()))), alg.lit(1));
         Int i = (Int)alg.apply(incr, alg.lit(2)).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(3), i.intValue());
+    }
+
+    @Test
+    public void testCurry() throws Exception {
+        IEval uncurriedAdd = alg.abs(alg.intAdd(alg.project(alg.lit(0), alg.given()), alg.project(alg.lit(1), alg.given())));
+        Value v = alg.apply(alg.curry(uncurriedAdd), alg.lit(2)).eval(new Environment(), new Store(), new Null());
+        Int i = (Int)alg.apply((x,y,z) -> v, alg.lit(3)).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(5), i.intValue());
     }
 }
