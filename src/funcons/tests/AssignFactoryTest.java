@@ -43,4 +43,13 @@ public class AssignFactoryTest {
         Int i = (Int)alg.assignedValue((e,s,g) -> v).eval(new Environment(), store, new Null());
         assertEquals(new Integer(1), i.intValue());
     }
+
+    @Test
+    public void testAssignedValueIfVar() throws Exception {
+        Int i = (Int)alg.assignedValueIfVar(alg.alloc(alg.lit(0))).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
+
+        i = (Int)alg.assignedValueIfVar(alg.lit(1)).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(1), i.intValue());
+    }
 }
