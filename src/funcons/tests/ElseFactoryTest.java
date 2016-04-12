@@ -5,6 +5,7 @@ import funcons.algebras.ElseAlg;
 import funcons.interpreter.ElseFactory;
 import funcons.sorts.IEval;
 import funcons.types.*;
+import funcons.types.Number;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -85,5 +86,14 @@ public class ElseFactoryTest {
             Int i = (Int)alg.scope(abs2.body(), alg.boundValue(alg.var("foo"))).eval(new Environment(), store, new Null());
             assertEquals(i.intValue(), new Integer(2));
         }
+    }
+
+    @Test
+    public void testPattNonBinding() throws Exception {
+        Store store = new Store();
+        IEval pat = alg.pattNonBinding(alg.bind(alg.var("foo")));
+        Environment env = (Environment)pat.eval(new Environment(), store, new Null());
+        Value null_ = alg.boundValue(alg.var("foo")).eval(env, store, new Null());
+        assertNull(null_);
     }
 }

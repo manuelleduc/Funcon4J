@@ -18,9 +18,13 @@ public class Main {
             IEval incr = fac.abs(fac.intAdd(fac.given(), fac.lit(1)));
             Store store = new Store();
             try {
-                System.out.println(fac.apply(incr, fac.boundValue(fac.var("x")))
-                        .eval((Environment)fac.apply(fac.bind(fac.var("x")), fac.lit(3))
-                                .eval(new Environment(), store, new Null()), store, new Null()));
+                System.out.println(fac.apply(incr, fac.boundValue(fac.var("x"))).eval(
+                                (Environment)fac.apply(fac.bind(fac.var("x")), fac.lit(3)).eval(
+                                    new Environment(),
+                                    store,
+                                    new Null()),
+                                store,
+                                new Null()));
             } catch (FunconException signal) {
                 signal.printStackTrace();
             }

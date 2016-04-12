@@ -40,4 +40,12 @@ public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
             return env1.extend(env2);
         });
     }
+
+    @Override
+    default IEval pattNonBinding(IEval patt) {
+        return (env, store, given) -> {
+            patt.eval(env, store, given);
+            return new Environment();
+        };
+    }
 }
