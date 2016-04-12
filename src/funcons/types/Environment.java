@@ -5,7 +5,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class Environment implements Value {
 
     private interface Scope {
-        Value get(Variable name);
+        Value get(Id name);
     }
 
     private final Scope scope;
@@ -14,11 +14,11 @@ public class Environment implements Value {
         scope = (name) -> null;
     }
 
-    public Environment(Variable name, Value x) {
+    public Environment(Id name, Value x) {
         scope = (n) -> name.equals(n) ? x : null;
     }
 
-    private Environment(Environment env, Variable name, Value x) {
+    private Environment(Environment env, Id name, Value x) {
         scope = (n) -> name.equals(n) ? x : env.val(name);
     }
 
@@ -29,7 +29,7 @@ public class Environment implements Value {
         };
     }
 
-    public Environment store(Variable name, Value x) {
+    public Environment store(Id name, Value x) {
         return new Environment(this, name, x);
     }
 
@@ -37,7 +37,7 @@ public class Environment implements Value {
         return new Environment(this, env);
     }
 
-    public Value val(Variable name) {
+    public Value val(Id name) {
         return scope.get(name);
     }
 

@@ -18,8 +18,8 @@ public class Main {
             IEval incr = fac.abs(fac.intAdd(fac.given(), fac.lit(1)));
             Store store = new Store();
             try {
-                System.out.println(fac.apply(incr, fac.boundValue(fac.var("x"))).eval(
-                                (Environment)fac.apply(fac.bind(fac.var("x")), fac.lit(3)).eval(
+                System.out.println(fac.apply(incr, fac.boundValue(fac.id("x"))).eval(
+                                (Environment)fac.apply(fac.bind(fac.id("x")), fac.lit(3)).eval(
                                     new Environment(),
                                     store,
                                     new Null()),
@@ -39,8 +39,8 @@ public class Main {
             IEval isZero = alg.preferOver(equalsZero, alwaysFalse);
             Store store = new Store();
             try {
-                Environment env = (Environment)alg.apply(alg.bind(alg.var("isZero")), isZero).eval(new Environment(), store, new Null());
-                System.out.println(alg.apply(alg.boundValue(alg.var("isZero")), alg.lit(0)).eval(env, store, new Null()));
+                Environment env = (Environment)alg.apply(alg.bind(alg.id("isZero")), isZero).eval(new Environment(), store, new Null());
+                System.out.println(alg.apply(alg.boundValue(alg.id("isZero")), alg.lit(0)).eval(env, store, new Null()));
             } catch(FunconException s) {
                 System.out.println("Error occured: " + s);
             }

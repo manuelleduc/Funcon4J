@@ -33,8 +33,8 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
     }
 
     @Override
-    default IEval bind(IEval var) {
-        return abs(bindValue(var, given()));
+    default IEval bind(IEval id) {
+        return abs(bindValue(id, given()));
     }
 
     default IEval unAbs(IEval abs) {

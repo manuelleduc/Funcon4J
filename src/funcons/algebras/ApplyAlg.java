@@ -6,5 +6,5 @@ public interface ApplyAlg<E> extends BindAlg<E> {
     E compose(E f, E g);
     E closure(E x, E environment);
     E close(E abs);
-    E bind(E var);
+    E bind(E id);
 }

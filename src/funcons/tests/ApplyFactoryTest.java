@@ -44,24 +44,24 @@ public class ApplyFactoryTest {
 
     @Test
     public void testClosure() throws Exception {
-        IEval closure = alg.closure(alg.boundValue(alg.var("foo")), (e,s,g) -> new Environment(new Variable("foo"), new Int(0)));
-        Int i = (Int)closure.eval(new Environment(new Variable("foo"), new Int(1)), new Store(), new Null());
+        IEval closure = alg.closure(alg.boundValue(alg.id("foo")), (e,s,g) -> new Environment(new Id("foo"), new Int(0)));
+        Int i = (Int)closure.eval(new Environment(new Id("foo"), new Int(1)), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(0));
     }
 
     @Test
     public void testClose() throws Exception {
-        IEval close = alg.close(alg.abs(alg.boundValue(alg.var("foo"))));
+        IEval close = alg.close(alg.abs(alg.boundValue(alg.id("foo"))));
         @SuppressWarnings("unchecked")
-        Abs<IEval> f = (Abs<IEval>)close.eval(new Environment(new Variable("foo"), new Int(0)), new Store(), new Null());
-        Int i = (Int)f.body().eval(new Environment(new Variable("foo"), new Int(1)), new Store(), new Null());
+        Abs<IEval> f = (Abs<IEval>)close.eval(new Environment(new Id("foo"), new Int(0)), new Store(), new Null());
+        Int i = (Int)f.body().eval(new Environment(new Id("foo"), new Int(1)), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(0));
     }
 
     @Test
     public void testBind() throws Exception {
         Store store = new Store();
-        Environment env = (Environment)alg.apply(alg.bind(alg.var("foo")), alg.lit(3)).eval(new Environment(), store, new Null());
-        assertEquals(((Int)alg.boundValue(alg.var("foo")).eval(env, store, new Null())).intValue(), new Integer(3));
+        Environment env = (Environment)alg.apply(alg.bind(alg.id("foo")), alg.lit(3)).eval(new Environment(), store, new Null());
+        assertEquals(((Int)alg.boundValue(alg.id("foo")).eval(env, store, new Null())).intValue(), new Integer(3));
     }
 }

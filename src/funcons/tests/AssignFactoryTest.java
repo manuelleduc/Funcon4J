@@ -4,10 +4,7 @@ import funcons.Store;
 import funcons.algebras.AssignAlg;
 import funcons.interpreter.AssignFactory;
 import funcons.sorts.IEval;
-import funcons.types.Environment;
-import funcons.types.Int;
-import funcons.types.Null;
-import funcons.types.Variable;
+import funcons.types.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,18 +20,27 @@ public class AssignFactoryTest {
     }
 
     @Test
+    public void testAlloc() throws Exception {
+        Store store = new Store();
+        Variable v = (Variable)alg.alloc(alg.lit(0)).eval(new Environment(), store, new Null());
+        assertEquals(new Integer(0), ((Int)store.val(v)).intValue());
+    }
+
+    @Test
     public void testAssign() throws Exception {
         Store store = new Store();
-        alg.assign(alg.var("foo"), alg.lit(0)).eval(new Environment(), store, new Null());
-        Int i = (Int)store.val(new Variable("foo"));
-        assertEquals(i.intValue(), new Integer(0));
+        Variable v = (Variable)alg.alloc(alg.lit(0)).eval(new Environment(), store, new Null());
+        alg.assign((e,s,g) -> v, alg.lit(1)).eval(new Environment(), store, new Null());
+        Int i = (Int)store.val(v);
+        assertEquals(new Integer(1), i.intValue());
     }
 
     @Test
     public void testAssignedValue() throws Exception {
         Store store = new Store();
-        alg.assign(alg.var("foo"), alg.lit(0)).eval(new Environment(), store, new Null());
-        Int i = (Int)alg.assignedValue(alg.var("foo")).eval(new Environment(), store, new Null());
-        assertEquals(i.intValue(), new Integer(0));
+        Variable v = (Variable)alg.alloc(alg.lit(0)).eval(new Environment(), store, new Null());
+        alg.assign((e,s,g) -> v, alg.lit(1)).eval(new Environment(), store, new Null());
+        Int i = (Int)alg.assignedValue((e,s,g) -> v).eval(new Environment(), store, new Null());
+        assertEquals(new Integer(1), i.intValue());
     }
 }

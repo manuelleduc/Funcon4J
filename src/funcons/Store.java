@@ -6,17 +6,32 @@ import funcons.types.Variable;
 import java.util.HashMap;
 
 public class Store {
+    private java.lang.Integer allocCount;
     private HashMap<Variable, Value> map;
 
     public Store() {
         map = new HashMap<>();
+        allocCount = 0;
     }
 
-    public void store(Variable name, Value val) {
-        map.put(name, val);
+    public void store(Variable var, Value val) {
+        map.put(var, val);
     }
 
-    public Value val(Variable name) {
-        return map.get(name);
+    public Value val(Variable var) {
+        return map.get(var);
+    }
+
+    public Variable alloc() {
+        Variable v = new Variable(allocCount);
+        allocCount++;
+        return v;
+    }
+
+    public Variable alloc(Value initialValue) {
+        Variable v = new Variable(allocCount);
+        allocCount++;
+        map.put(v, initialValue);
+        return v;
     }
 }

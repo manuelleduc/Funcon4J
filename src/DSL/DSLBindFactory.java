@@ -9,7 +9,7 @@ public interface DSLBindFactory<E> extends ExpControlFactory<E>, DSLBindAlg<E> {
 
     @Override
     default E var(java.lang.String s) {
-        return bindAlg().var(s);
+        return bindAlg().id(s);
     }
 
     @Override

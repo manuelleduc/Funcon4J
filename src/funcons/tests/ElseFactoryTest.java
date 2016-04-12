@@ -57,8 +57,8 @@ public class ElseFactoryTest {
 
     @Test
     public void testPattAbs() throws Exception {
-        IEval part1 = alg.bind(alg.var("x"));
-        IEval part2 = alg.intAdd(alg.boundValue(alg.var("x")), alg.lit(1));
+        IEval part1 = alg.bind(alg.id("x"));
+        IEval part2 = alg.intAdd(alg.boundValue(alg.id("x")), alg.lit(1));
         IEval incr = alg.pattAbs(part1, part2);
         Int i = (Int)alg.apply(incr, alg.lit(2)).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(3), i.intValue());
@@ -68,27 +68,27 @@ public class ElseFactoryTest {
     public void testPattUnion() throws Exception {
         {
             Store store = new Store();
-            IEval patt1 = alg.abs(alg.bindValue(alg.var("foo"), alg.lit(1)));
-            IEval patt2 = alg.abs(alg.bindValue(alg.var("bar"), alg.lit(2)));
+            IEval patt1 = alg.abs(alg.bindValue(alg.id("foo"), alg.lit(1)));
+            IEval patt2 = alg.abs(alg.bindValue(alg.id("bar"), alg.lit(2)));
 
             @SuppressWarnings("unchecked")
             Abs<IEval> abs = (Abs<IEval>) alg.pattUnion(patt1, patt2).eval(new Environment(), store, new Null());
 
             Int i = (Int) alg.scope(
                     abs.body(),
-                    alg.intAdd(alg.boundValue(alg.var("foo")), alg.boundValue(alg.var("bar")))
+                    alg.intAdd(alg.boundValue(alg.id("foo")), alg.boundValue(alg.id("bar")))
             ).eval(new Environment(), store, new Null());
 
             assertEquals(new Integer(3), i.intValue());
         }
         {
             Store store = new Store();
-            IEval patt1 = alg.abs(alg.bindValue(alg.var("foo"), alg.lit(1)));
-            IEval patt2 = alg.abs(alg.bindValue(alg.var("foo"), alg.lit(2)));
+            IEval patt1 = alg.abs(alg.bindValue(alg.id("foo"), alg.lit(1)));
+            IEval patt2 = alg.abs(alg.bindValue(alg.id("foo"), alg.lit(2)));
 
             @SuppressWarnings("unchecked")
             Abs<IEval> abs2 = (Abs<IEval>) alg.pattUnion(patt1, patt2).eval(new Environment(), store, new Null());
-            Int i = (Int)alg.scope(abs2.body(), alg.boundValue(alg.var("foo"))).eval(new Environment(), store, new Null());
+            Int i = (Int)alg.scope(abs2.body(), alg.boundValue(alg.id("foo"))).eval(new Environment(), store, new Null());
             assertEquals(new Integer(2), i.intValue());
         }
     }
@@ -96,9 +96,9 @@ public class ElseFactoryTest {
     @Test
     public void testPattNonBinding() throws Exception {
         Store store = new Store();
-        IEval pat = alg.pattNonBinding(alg.bind(alg.var("foo")));
+        IEval pat = alg.pattNonBinding(alg.bind(alg.id("foo")));
         Environment env = (Environment)pat.eval(new Environment(), store, new Null());
-        Value null_ = alg.boundValue(alg.var("foo")).eval(env, store, new Null());
+        Value null_ = alg.boundValue(alg.id("foo")).eval(env, store, new Null());
         assertNull(null_);
     }
 }

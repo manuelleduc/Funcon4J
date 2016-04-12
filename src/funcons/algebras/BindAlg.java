@@ -1,9 +1,9 @@
 package funcons.algebras;
 
 public interface BindAlg<E> extends LogicWhileTrueAlg<E> {
-    E var(java.lang.String s);
-    E bindValue(E var, E exp);
-    E boundValue(E var);
+    E id(java.lang.String s);
+    E bindValue(E id, E exp);
+    E boundValue(E id);
     E scope(E localBindings, E exp);
     E given();
     E supply(E exp, E x);
