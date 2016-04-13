@@ -24,13 +24,13 @@ public class LogicIfTrueFactoryTest {
 
     @Test
     public void testBool() throws Exception {
-        Bool b = (Bool)alg.bool(false).eval(new Environment(), new Store(), alg.null_());
+        Bool b = (Bool)alg.bool(false).eval(new Environment(), new Store(), new Null());
         assertEquals(b.boolValue(), false);
     }
 
     @Test
     public void testIfTrue() throws Exception {
-        Int i = (Int)alg.ifTrue(alg.bool(false), alg.lit(2), alg.lit(3)).eval(new Environment(), new Store(), alg.null_());
+        Int i = (Int)alg.ifTrue(alg.bool(false), alg.lit(2), alg.lit(3)).eval(new Environment(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(3));
     }
 }

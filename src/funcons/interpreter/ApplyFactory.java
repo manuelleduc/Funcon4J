@@ -1,9 +1,11 @@
 package funcons.interpreter;
 
+import funcons.Store;
 import funcons.algebras.ApplyAlg;
 import funcons.sorts.IEval;
 import funcons.types.Abs;
 import funcons.types.Environment;
+import funcons.types.Value;
 
 public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
 
@@ -14,12 +16,12 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
 
     @Override
     default IEval apply(IEval abs, IEval arg) {
-        return supply(arg, unAbs(abs));
+        return (env, store, given) -> supply(arg, unAbs(abs, env, store, given)).eval(env, store, given);
     }
 
     @Override
     default IEval compose(IEval f, IEval g) {
-        return (env, store, given) -> abs(apply(f, apply(g, given))).eval(env, store, given);
+        return abs(apply(f, apply(g, given())));
     }
 
     @Override
@@ -29,17 +31,19 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
 
     @Override
     default IEval close(IEval abs) {
-        return (env, store, given) -> abs(closure(unAbs(abs), (e, s, g) -> env)).eval(env, store, given);
+        return (env, store, given) -> abs(closure(unAbs(abs, env, store, given), (e, s, g) -> env)).eval(env, store, given);
     }
 
     @Override
     default IEval bind(IEval id) {
-        return (env, store, given) -> abs(bindValue(id, given)).eval(env, store, given);
+        return abs(bindValue(id, given()));
     }
 
-    default IEval unAbs(IEval abs) {
-        @SuppressWarnings("unchecked")
-        IEval result = (env, store, given) -> ((Abs<IEval>)abs.eval(env, store, given)).body().eval(env, store, given);
-        return result;
+    default IEval unAbs(IEval abs, Environment e, Store s, Value g) {
+        return (env, store, given) -> {
+            @SuppressWarnings("unchecked")
+            IEval result = ((Abs<IEval>)abs.eval(e, s, g)).body();
+            return result.eval(env, store, given);
+        };
     }
 }

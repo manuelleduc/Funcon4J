@@ -4,7 +4,6 @@ import funcons.algebras.BindAlg;
 import funcons.sorts.IEval;
 import funcons.types.Environment;
 import funcons.types.Id;
-import funcons.types.Value;
 
 public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     @Override
@@ -28,12 +27,12 @@ public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     }
 
     @Override
-    default IEval given(Value val) {
-        return (env, store, given) -> val;
+    default IEval given() {
+        return (env, store, given) -> given;
     }
 
     @Override
     default IEval supply(IEval exp, IEval x) {
-        return (env, store, given) -> x.eval(env, store, given(exp.eval(env, store, given)));
+        return (env, store, given) -> x.eval(env, store, exp.eval(env, store, given));
     }
 }

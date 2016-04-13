@@ -27,7 +27,7 @@ public class PrintFactoryTest {
     public void testPrint() throws Exception {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        alg.print(alg.lit(0)).eval(new Environment(), new Store(), alg.null_());
+        alg.print(alg.lit(0)).eval(new Environment(), new Store(), new Null());
         assertEquals("0", outContent.toString());
     }
 }

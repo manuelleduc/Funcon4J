@@ -23,7 +23,7 @@ public class ExceptionFactoryTest {
     @Test
     public void testFail() throws Exception {
         try {
-            alg.fail().eval(new Environment(), new Store(), alg.given(new Null()));
+            alg.fail().eval(new Environment(), new Store(), new Null());
         } catch (FailureTrueException ignored) {
             return;
         }
@@ -32,17 +32,17 @@ public class ExceptionFactoryTest {
 
     @Test
     public void testElse_() throws Exception {
-        Int i = (Int)alg.else_(alg.fail(), alg.lit(3)).eval(new Environment(), new Store(), alg.given(new Null()));
+        Int i = (Int)alg.else_(alg.fail(), alg.lit(3)).eval(new Environment(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(3));
 
-        i = (Int)alg.else_(alg.lit(2), alg.lit(3)).eval(new Environment(), new Store(), alg.given(new Null()));
+        i = (Int)alg.else_(alg.lit(2), alg.lit(3)).eval(new Environment(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(2));
     }
 
     @Test
     public void testThrow_() throws Exception {
         try {
-            alg.throw_((env, store, given) -> new FailureTrueException()).eval(new Environment(), new Store(), alg.given(new Null()));
+            alg.throw_((env, store, given) -> new FailureTrueException()).eval(new Environment(), new Store(), new Null());
         } catch(FailureTrueException s) {
             return;
         }
@@ -51,21 +51,21 @@ public class ExceptionFactoryTest {
 
     @Test
     public void testCatch_() throws Exception {
-        IEval c = alg.catch_(alg.throw_((env, store, given) -> new FailureTrueException()), alg.abs(alg.bool(true)));
-        Bool b = (Bool)c.eval(new Environment(), new Store(), alg.given(new Null()));
-        assertTrue(b.boolValue());
+        IEval c = alg.catch_(alg.throw_((env, store, given) -> new FailureTrueException()), alg.abs(alg.given()));
+        FailureTrueException e = (FailureTrueException)c.eval(new Environment(), new Store(), new Null());
+        assertNotNull(e);
     }
 
     @Test
     public void testCatchElseRethrow() throws Exception {
         IEval fail = alg.throw_((env, store, given) -> new FailureTrueException());
 
-        IEval c = alg.catchElseRethrow(fail, alg.abs(alg.bool(true)));
-        Bool b = (Bool)c.eval(new Environment(), new Store(), alg.given(new Null()));
-        assertTrue(b.boolValue());
+        IEval c = alg.catchElseRethrow(fail, alg.abs(alg.given()));
+        FailureTrueException e = (FailureTrueException)c.eval(new Environment(), new Store(), new Null());
+        assertNotNull(e);
 
         try {
-            alg.catchElseRethrow(fail, fail).eval(new Environment(), new Store(), alg.given(new Null()));
+            alg.catchElseRethrow(fail, fail).eval(new Environment(), new Store(), new Null());
         } catch(FailureTrueException exception) {
             return;
         }
@@ -77,10 +77,10 @@ public class ExceptionFactoryTest {
         IEval f1 = alg.abs(alg.seq(alg.fail(), alg.bool(false)));
         IEval f2 = alg.abs(alg.bool(true));
 
-        Bool b = (Bool)alg.apply(alg.preferOver(f1, f2), alg.lit(0)).eval(new Environment(), new Store(), alg.given(new Null()));
+        Bool b = (Bool)alg.apply(alg.preferOver(f1, f2), alg.lit(0)).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
 
-        b = (Bool)alg.apply(alg.preferOver(f2, f1), alg.lit(1)).eval(new Environment(), new Store(), alg.given(new Null()));
+        b = (Bool)alg.apply(alg.preferOver(f2, f1), alg.lit(1)).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
     }
 }

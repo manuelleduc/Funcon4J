@@ -1,9 +1,9 @@
 package funcons.interpreter;
 
+import funcons.Store;
 import funcons.algebras.PartialAppAlg;
 import funcons.sorts.IEval;
-import funcons.types.Int;
-import funcons.types.Tuple;
+import funcons.types.*;
 
 public interface PartialAppFactory extends AssignFactory, PartialAppAlg<IEval> {
 
@@ -40,16 +40,15 @@ public interface PartialAppFactory extends AssignFactory, PartialAppAlg<IEval> {
     }
 
     @Override
-    default IEval partialApp(IEval abs, IEval x) {
-        return (env, store, given) -> abs(apply(abs, tuple(x, given))).eval(env, store, given);
+    default IEval partialApp(IEval f, IEval x) {
+        return abs(apply(f, tuple(x, given())));
     }
 
     @Override
-    default IEval curry(IEval abs) {
-        // return abs(partialApp(abs, given()));
-        return (env, store, given) -> {
-            IEval f = partialApp(abs, (e,s,g) -> g.eval(e,s,g));
-            return abs(f).eval(env, store, given);
-        };
+    default IEval curry(IEval f) {
+        //return abs(partialApp(f, given()));
+
+        return abs((env, store, given) -> partialApp(f, (e,s,g) -> given).eval(env, store, given));
+        //return abs((env, store, given) -> partialApp(f, (e,s,g) -> given().eval(env, store, given)).eval(env, store, given));
     }
 }

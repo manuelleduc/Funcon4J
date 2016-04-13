@@ -22,15 +22,15 @@ public class AssignFactoryTest {
     @Test
     public void testAlloc() throws Exception {
         Store store = new Store();
-        Variable v = (Variable)alg.alloc(alg.lit(0)).eval(new Environment(), store, alg.given(new Null()));
+        Variable v = (Variable)alg.alloc(alg.lit(0)).eval(new Environment(), store, new Null());
         assertEquals(new Integer(0), ((Int)store.val(v)).intValue());
     }
 
     @Test
     public void testAssign() throws Exception {
         Store store = new Store();
-        Variable v = (Variable)alg.alloc(alg.lit(0)).eval(new Environment(), store, alg.given(new Null()));
-        alg.assign((e,s,g) -> v, alg.lit(1)).eval(new Environment(), store, alg.given(new Null()));
+        Variable v = (Variable)alg.alloc(alg.lit(0)).eval(new Environment(), store, new Null());
+        alg.assign((e,s,g) -> v, alg.lit(1)).eval(new Environment(), store, new Null());
         Int i = (Int)store.val(v);
         assertEquals(new Integer(1), i.intValue());
     }
@@ -38,18 +38,18 @@ public class AssignFactoryTest {
     @Test
     public void testAssignedValue() throws Exception {
         Store store = new Store();
-        Variable v = (Variable)alg.alloc(alg.lit(0)).eval(new Environment(), store, alg.given(new Null()));
-        alg.assign((e,s,g) -> v, alg.lit(1)).eval(new Environment(), store, alg.given(new Null()));
-        Int i = (Int)alg.assignedValue((e,s,g) -> v).eval(new Environment(), store, alg.given(new Null()));
+        Variable v = (Variable)alg.alloc(alg.lit(0)).eval(new Environment(), store, new Null());
+        alg.assign((e,s,g) -> v, alg.lit(1)).eval(new Environment(), store, new Null());
+        Int i = (Int)alg.assignedValue((e,s,g) -> v).eval(new Environment(), store, new Null());
         assertEquals(new Integer(1), i.intValue());
     }
 
     @Test
     public void testAssignedValueIfVar() throws Exception {
-        Int i = (Int)alg.assignedValueIfVar(alg.alloc(alg.lit(0))).eval(new Environment(), new Store(), alg.given(new Null()));
+        Int i = (Int)alg.assignedValueIfVar(alg.alloc(alg.lit(0))).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
 
-        i = (Int)alg.assignedValueIfVar(alg.lit(1)).eval(new Environment(), new Store(), alg.given(new Null()));
+        i = (Int)alg.assignedValueIfVar(alg.lit(1)).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(1), i.intValue());
     }
 }

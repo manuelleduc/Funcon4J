@@ -14,7 +14,7 @@ public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
 
     @Override
     default IEval only(IEval v) {
-        return (env, store, given) -> abs(ifTrue(equal(given, v), (e, s, g) -> new Environment(), fail())).eval(env, store, given);
+        return abs(ifTrue(equal(given(), v), (env, store, given) -> new Environment(), fail()));
     }
 
     @Override
@@ -34,14 +34,14 @@ public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
 
     @Override
     default IEval pattAbs(IEval pat, IEval x) {
-        return (env, store, given) -> abs(scope(match(given, pat), x)).eval(env, store, given);
+        return abs(scope(match(given(), pat), x));
     }
 
     @Override
     default IEval pattUnion(IEval pat1, IEval pat2) {
         return abs((env, store, given) -> {
-            Environment env1 = (Environment)unAbs(pat1).eval(env, store, given);
-            Environment env2 = (Environment)unAbs(pat2).eval(env, store, given);
+            Environment env1 = (Environment)unAbs(pat1, env, store, given).eval(env, store, given);
+            Environment env2 = (Environment)unAbs(pat2, env, store, given).eval(env, store, given);
             return env1.extend(env2);
         });
     }
