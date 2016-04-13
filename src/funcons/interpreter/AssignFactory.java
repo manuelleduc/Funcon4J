@@ -3,7 +3,6 @@ package funcons.interpreter;
 import funcons.algebras.AssignAlg;
 import funcons.sorts.IEval;
 import funcons.types.Null;
-import funcons.types.Id;
 import funcons.types.Value;
 import funcons.types.Variable;
 

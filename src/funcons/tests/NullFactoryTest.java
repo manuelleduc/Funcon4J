@@ -22,7 +22,7 @@ public class NullFactoryTest {
 
     @Test
     public void testNull_() throws Exception {
-        Null n = (Null)alg.null_().eval(new Environment(), new Store(), new Null());
+        Null n = (Null)alg.null_().eval(new Environment(), new Store(), (e,s,g) -> new Null());
         assertEquals(n, new Null());
     }
 }

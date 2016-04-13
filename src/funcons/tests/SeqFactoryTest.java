@@ -22,7 +22,7 @@ public class SeqFactoryTest {
 
     @Test
     public void testSeq() throws Exception {
-        funcons.types.Int i = (funcons.types.Int)alg.seq(alg.lit(3), alg.lit(2)).eval(new Environment(), new Store(), new Null());
+        funcons.types.Int i = (funcons.types.Int)alg.seq(alg.lit(3), alg.lit(2)).eval(new Environment(), new Store(), alg.null_());
         assertEquals(i.intValue(), new Integer(2));
     }
 }

@@ -34,7 +34,7 @@ public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
 
     @Override
     default IEval catchElseRethrow(IEval x, IEval abs) {
-        return catch_(x, preferOver(abs, abs(throw_(given()))));
+        return catch_(x, preferOver(abs, (env, store, given) -> abs(throw_(given)).eval(env, store, given)));
     }
 
     @Override

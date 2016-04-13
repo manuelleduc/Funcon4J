@@ -19,7 +19,7 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
 
     @Override
     default IEval compose(IEval f, IEval g) {
-        return abs(apply(f, apply(g, given())));
+        return (env, store, given) -> abs(apply(f, apply(g, given))).eval(env, store, given);
     }
 
     @Override
@@ -34,7 +34,7 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
 
     @Override
     default IEval bind(IEval id) {
-        return abs(bindValue(id, given()));
+        return (env, store, given) -> abs(bindValue(id, given)).eval(env, store, given);
     }
 
     default IEval unAbs(IEval abs) {

@@ -15,16 +15,16 @@ public class Main {
         {
             ApplyFactory fac = new ApplyFactory() {};
             System.out.println("bind");
-            IEval incr = fac.abs(fac.intAdd(fac.given(), fac.lit(1)));
+            IEval incr = (env, store, given) -> fac.abs(fac.intAdd(given, fac.lit(1))).eval(env, store, given);
             Store store = new Store();
             try {
                 System.out.println(fac.apply(incr, fac.boundValue(fac.id("x"))).eval(
                                 (Environment)fac.apply(fac.bind(fac.id("x")), fac.lit(3)).eval(
                                     new Environment(),
                                     store,
-                                    new Null()),
+                                    fac.null_()),
                                 store,
-                                new Null()));
+                                fac.null_()));
             } catch (FunconException signal) {
                 signal.printStackTrace();
             }
@@ -34,13 +34,17 @@ public class Main {
         {
             ElseAlg<IEval> alg = new ElseFactory() {};
             System.out.println("else");
-            IEval equalsZero = alg.abs(alg.seq(alg.apply(alg.only(alg.lit(0)), alg.given()), alg.bool(true)));
-            IEval alwaysFalse = alg.abs(alg.seq(alg.apply(alg.any(), alg.given()), alg.bool(false)));
+            IEval equalsZero = (env, store, given) ->
+                    alg.abs(alg.seq(alg.apply(alg.only(alg.lit(0)), given), alg.bool(true)))
+                    .eval(env, store, given);
+            IEval alwaysFalse = (env, store, given) ->
+                    alg.abs(alg.seq(alg.apply(alg.any(), given), alg.bool(false)))
+                    .eval(env, store, given);
             IEval isZero = alg.preferOver(equalsZero, alwaysFalse);
             Store store = new Store();
             try {
-                Environment env = (Environment)alg.apply(alg.bind(alg.id("isZero")), isZero).eval(new Environment(), store, new Null());
-                System.out.println(alg.apply(alg.boundValue(alg.id("isZero")), alg.lit(0)).eval(env, store, new Null()));
+                Environment env = (Environment)alg.apply(alg.bind(alg.id("isZero")), isZero).eval(new Environment(), store, alg.null_());
+                System.out.println(alg.apply(alg.boundValue(alg.id("isZero")), alg.lit(0)).eval(env, store, alg.null_()));
             } catch(FunconException s) {
                 System.out.println("Error occured: " + s);
             }
