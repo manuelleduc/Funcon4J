@@ -24,6 +24,15 @@ public class Tuple implements Value {
         val = a;
     }
 
+    private Tuple(Tuple t, Value v) {
+        prev = t;
+        val = v;
+    }
+
+    public Tuple prepend(Value v) {
+        return new Tuple(this, v);
+    }
+
     public Value get(Int i) {
         if (i.intValue() == 0) {
             return val;
@@ -36,6 +45,14 @@ public class Tuple implements Value {
             return new Int(val == null ? 0 : 1);
         }
         return new Int(1 + prev.size().intValue());
+    }
+
+    public Value head() {
+        return val;
+    }
+
+    public Tuple tail() {
+        return prev;
     }
 
     @Override

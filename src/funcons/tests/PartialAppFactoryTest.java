@@ -32,6 +32,12 @@ public class PartialAppFactoryTest {
     }
 
     @Test
+    public void testTuplePrefix() throws Exception {
+        Tuple t = (Tuple)alg.tuplePrefix(alg.lit(5), alg.tuple()).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(5), ((Int)t.get(new Int(0))).intValue());
+    }
+
+    @Test
     public void testProject() throws Exception {
         IEval tup1 = alg.tuple(alg.lit(1));
         IEval tup2 = alg.tuple(alg.lit(1), alg.lit(2));
@@ -53,10 +59,51 @@ public class PartialAppFactoryTest {
     }
 
     @Test
+    public void testPartialAppN() throws Exception {
+        IEval uncurriedAdd = alg.abs(alg.intAdd(alg.project(alg.lit(0), alg.given()), alg.project(alg.lit(1), alg.given())));
+        IEval add2 = alg.partialAppN(uncurriedAdd, alg.lit(2));
+        IEval add2to3 = alg.partialAppN(add2, alg.lit(3));
+        Int i = (Int)alg.apply(add2to3, alg.tuple()).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(5), i.intValue());
+    }
+
+    @Test
     public void testCurry() throws Exception {
         IEval uncurriedAdd = alg.abs(alg.intAdd(alg.project(alg.lit(0), alg.given()), alg.project(alg.lit(1), alg.given())));
         IEval addTwo = alg.apply(alg.curry(uncurriedAdd), alg.lit(2));
         Int i = (Int)alg.apply(addTwo, alg.lit(3)).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(5), i.intValue());
+    }
+
+    @Test
+    public void testCurryN() throws Exception {
+        IEval uncurriedAdd = alg.abs(alg.intAdd(alg.project(alg.lit(0), alg.given()), alg.project(alg.lit(1), alg.given())));
+        IEval curriedAdd = alg.curryN(alg.lit(2), uncurriedAdd);
+        IEval add2 = alg.apply(curriedAdd, alg.lit(2));
+        IEval add2to3 = alg.apply(add2, alg.lit(3));
+        Int i = (Int)alg.apply(add2to3, alg.tuple()).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(5), i.intValue());
+    }
+
+    @Test
+    public void testUncurry() throws Exception {
+        IEval curriedAdd = alg.curry(alg.abs(alg.intAdd(alg.project(alg.lit(0), alg.given()), alg.project(alg.lit(1), alg.given()))));
+        IEval uncurriedAdd = alg.uncurry(curriedAdd);
+        Int i = (Int)alg.apply(uncurriedAdd, alg.tuple(alg.lit(2), alg.lit(3))).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(5), i.intValue());
+    }
+
+    @Test
+    public void testTuplePrefixMatch() throws Exception {
+        IEval onlyZero = alg.abs(alg.seq(alg.match(alg.given(), alg.only(alg.lit(0))), alg.bindValue(alg.id("x"), alg.lit(5))));
+        IEval anything = alg.abs(alg.seq(alg.match(alg.given(), alg.any()), alg.bindValue(alg.id("y"), alg.lit(6))));
+        Environment env = (Environment)alg.tuplePrefixMatch(alg.tuple(alg.lit(0), alg.lit(1), alg.lit(2)), onlyZero, anything)
+                .eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(5), ((Int)env.val(new Id("x"))).intValue());
+        assertEquals(new Integer(6), ((Int)env.val(new Id("y"))).intValue());
+
+        IEval shouldFail = alg.tuplePrefixMatch(alg.tuple(alg.lit(9), alg.lit(1), alg.lit(2)), onlyZero, anything);
+        Bool b = (Bool)alg.catch_(shouldFail, alg.abs(alg.bool(true))).eval(new Environment(), new Store(), new Null());
+        assertTrue(b.boolValue());
     }
 }
