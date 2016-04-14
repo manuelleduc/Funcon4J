@@ -1,32 +1,32 @@
 package funcons.types;
 
 public class Tuple implements Value {
-    private final Tuple prev;
-    private final Value val;
+    private final Tuple tail;
+    private final Value head;
 
     public Tuple() {
-        prev = null;
-        val = null;
+        tail = null;
+        head = null;
     }
 
     public Tuple(Value a) {
-        prev = new Tuple();
-        val = a;
+        tail = new Tuple();
+        head = a;
     }
 
     public Tuple(Value a, Value b) {
-        prev = new Tuple(b);
-        val = a;
+        tail = new Tuple(b);
+        head = a;
     }
 
     public Tuple(Value a, Value b, Value c) {
-        prev = new Tuple(b, c);
-        val = a;
+        tail = new Tuple(b, c);
+        head = a;
     }
 
     private Tuple(Tuple t, Value v) {
-        prev = t;
-        val = v;
+        tail = t;
+        head = v;
     }
 
     public Tuple prepend(Value v) {
@@ -35,29 +35,29 @@ public class Tuple implements Value {
 
     public Value get(Int i) {
         if (i.intValue() == 0) {
-            return val;
+            return head;
         }
-        return prev == null ? null : prev.get(new Int(i.intValue() - 1));
+        return tail == null ? null : tail.get(new Int(i.intValue() - 1));
     }
 
     public Int size() {
-        if (prev == null) {
-            return new Int(val == null ? 0 : 1);
+        if (tail == null) {
+            return new Int(head == null ? 0 : 1);
         }
-        return new Int(1 + prev.size().intValue());
+        return new Int(1 + tail.size().intValue());
     }
 
     public Value head() {
-        return val;
+        return head;
     }
 
     public Tuple tail() {
-        return prev;
+        return tail;
     }
 
     @Override
     public int hashCode() {
-        return (val == null ? 0 : val.hashCode()) + (prev == null ? 0 : 10 * prev.hashCode());
+        return (head == null ? 0 : head.hashCode()) + (tail == null ? 0 : 10 * tail.hashCode());
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Tuple implements Value {
 
         Tuple other = (Tuple)o;
 
-        return (val == null ? other.val == null : val.equals(other.val)) &&
-                (prev == null ? other.prev == null : prev.equals(other.prev));
+        return (head == null ? other.head == null : head.equals(other.head)) &&
+                (tail == null ? other.tail == null : tail.equals(other.tail));
     }
 }

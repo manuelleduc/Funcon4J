@@ -56,4 +56,21 @@ public class List implements Value {
     public List tail() {
         return tail;
     }
+
+    @Override
+    public int hashCode() {
+        return (head == null ? 0 : head.hashCode()) + (tail == null ? 0 : 10 * tail.hashCode());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof List)) {
+            return false;
+        }
+
+        List other = (List)o;
+
+        return (head == null ? other.head == null : head.equals(other.head)) &&
+                (tail == null ? other.tail == null : tail.equals(other.tail));
+    }
 }
