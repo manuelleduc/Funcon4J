@@ -11,6 +11,9 @@ import funcons.types.Null;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.Assert.*;
 
 public class ListFactoryTest {
@@ -36,5 +39,14 @@ public class ListFactoryTest {
     public void testListPrefix() throws Exception {
         List l = (List)alg.listPrefix(alg.lit(0), alg.list(alg.lit(1))).eval(new Environment(), new Store(), new Null());
         assertEquals(l, new List(new Int(0), new Int(1)));
+    }
+
+    @Test
+    public void testApplyToEach() throws Exception {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        IEval printList = alg.applyToEach(alg.abs(alg.print(alg.given())), alg.list(alg.lit(0), alg.lit(1)));
+        printList.eval(new Environment(), new Store(), new Null());
+        assertEquals("01", outContent.toString());
     }
 }
