@@ -1,13 +1,10 @@
 package funcons.interpreter;
 
-import funcons.Store;
-import funcons.algebras.PartialAppAlg;
+import funcons.algebras.TupleAlg;
 import funcons.sorts.IEval;
 import funcons.types.*;
 
-import java.util.EventListener;
-
-public interface PartialAppFactory extends AssignFactory, PartialAppAlg<IEval> {
+public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
 
     @Override
     default IEval tuple() {

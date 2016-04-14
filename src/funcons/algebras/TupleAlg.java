@@ -1,6 +1,6 @@
 package funcons.algebras;
 
-public interface PartialAppAlg<E> extends AssignAlg<E> {
+public interface TupleAlg<E> extends AssignAlg<E> {
     E tuple();
     E tuple(E x);
     E tuple(E x1, E x2);

@@ -1,8 +1,8 @@
 package funcons.tests;
 
 import funcons.Store;
-import funcons.algebras.PartialAppAlg;
-import funcons.interpreter.PartialAppFactory;
+import funcons.algebras.TupleAlg;
+import funcons.interpreter.TupleFactory;
 import funcons.sorts.IEval;
 import funcons.types.*;
 import org.junit.Before;
@@ -10,13 +10,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PartialAppFactoryTest {
+public class TupleFactoryTest {
 
-    private PartialAppAlg<IEval> alg;
+    private TupleAlg<IEval> alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new PartialAppFactory() {};
+        alg = new TupleFactory() {};
     }
 
     @Test
