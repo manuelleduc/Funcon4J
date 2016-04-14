@@ -2,6 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.IntCalcAlg;
 import funcons.sorts.IEval;
+import funcons.types.Bool;
 import funcons.types.Int;
 
 public interface IntCalcFactory extends NullFactory, IntCalcAlg<IEval> {
@@ -34,4 +35,31 @@ public interface IntCalcFactory extends NullFactory, IntCalcAlg<IEval> {
     default IEval intDivide(IEval a, IEval b) {
         return (env, store, given) -> new Int(((Int)a.eval(env, store, given)).intValue() / ((Int)b.eval(env, store, given)).intValue());
     }
+
+    @Override
+    default IEval intModulo(IEval a, IEval b) {
+        return (env, store, given) -> new Int(((Int)a.eval(env, store, given)).intValue() % ((Int)b.eval(env, store, given)).intValue());
+    }
+
+    @Override
+    default IEval intGreater(IEval a, IEval b) {
+        return (env, store, given) -> new Bool(((Int)a.eval(env, store, given)).intValue() > ((Int)b.eval(env, store, given)).intValue());
+    }
+
+    @Override
+    default IEval intSmaller(IEval a, IEval b) {
+        return (env, store, given) -> new Bool(((Int)a.eval(env, store, given)).intValue() < ((Int)b.eval(env, store, given)).intValue());
+    }
+
+    @Override
+    default IEval intGreaterEqual(IEval a, IEval b) {
+        return (env, store, given) -> new Bool(((Int)a.eval(env, store, given)).intValue() >= ((Int)b.eval(env, store, given)).intValue());
+    }
+
+    @Override
+    default IEval intSmallerEqual(IEval a, IEval b) {
+        return (env, store, given) -> new Bool(((Int)a.eval(env, store, given)).intValue() <= ((Int)b.eval(env, store, given)).intValue());
+    }
+
+
 }

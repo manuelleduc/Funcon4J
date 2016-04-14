@@ -35,7 +35,7 @@ public interface ListFactory extends TupleFactory, ListAlg<IEval> {
             Value head = list.head();
             List tail = list.tail();
 
-            if (head == null || tail == null) {
+            if (list.equals(new List())) {
                 return new Null();
             }
 
@@ -50,6 +50,13 @@ public interface ListFactory extends TupleFactory, ListAlg<IEval> {
             Environment e1 = (Environment)match((e, s, g) -> list.head(), p1).eval(env, store, given);
             Environment e2 = (Environment)match((e, s, g) -> list.tail(), p2).eval(env, store, given);
             return e1.extend(e2);
+        };
+    }
+
+    @Override
+    default IEval intClosedInterval(IEval m, IEval n) {
+        return (env, store, given) -> {
+            return new Null();
         };
     }
 }

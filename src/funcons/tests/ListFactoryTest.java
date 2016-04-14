@@ -59,6 +59,5 @@ public class ListFactoryTest {
         IEval shouldFail = alg.listPrefixMatch(alg.list(alg.lit(9), alg.lit(1)), onlyZero, anything);
         Bool b = (Bool)alg.catch_(shouldFail, alg.abs(alg.bool(true))).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
-
     }
 }

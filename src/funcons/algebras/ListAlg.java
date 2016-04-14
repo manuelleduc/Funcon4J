@@ -7,4 +7,5 @@ public interface ListAlg<E> extends TupleAlg<E> {
     E listPrefix(E x, E l);
     E applyToEach(E a, E l);
     E listPrefixMatch(E l, E p1, E p2);
+    E intClosedInterval(E m, E n);
 }

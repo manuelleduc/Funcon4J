@@ -58,6 +58,14 @@ public class List implements Value {
     }
 
     @Override
+    public java.lang.String toString() {
+        return "[" +
+                (head() == null ? "" : head() + ", ") +
+                (tail() == null ? "" : tail()) +
+                "]";
+    }
+
+    @Override
     public int hashCode() {
         return (head == null ? 0 : head.hashCode()) + (tail == null ? 0 : 10 * tail.hashCode());
     }
