@@ -2,6 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.ListAlg;
 import funcons.sorts.IEval;
+import funcons.types.Environment;
 import funcons.types.List;
 import funcons.types.Null;
 import funcons.types.Value;
@@ -39,6 +40,16 @@ public interface ListFactory extends TupleFactory, ListAlg<IEval> {
             }
 
             return seq(apply(a, (e,s,g) -> head), applyToEach(a, (e,s,g) -> tail)).eval(env, store, given);
+        };
+    }
+
+    @Override
+    default IEval listPrefixMatch(IEval l, IEval p1, IEval p2) {
+        return (env, store, given) -> {
+            List list = (List)l.eval(env, store, given);
+            Environment e1 = (Environment)match((e, s, g) -> list.head(), p1).eval(env, store, given);
+            Environment e2 = (Environment)match((e, s, g) -> list.tail(), p2).eval(env, store, given);
+            return e1.extend(e2);
         };
     }
 }

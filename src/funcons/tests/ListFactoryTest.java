@@ -4,10 +4,7 @@ import funcons.Store;
 import funcons.algebras.ListAlg;
 import funcons.interpreter.ListFactory;
 import funcons.sorts.IEval;
-import funcons.types.Environment;
-import funcons.types.Int;
-import funcons.types.List;
-import funcons.types.Null;
+import funcons.types.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,5 +45,20 @@ public class ListFactoryTest {
         IEval printList = alg.applyToEach(alg.abs(alg.print(alg.given())), alg.list(alg.lit(0), alg.lit(1)));
         printList.eval(new Environment(), new Store(), new Null());
         assertEquals("01", outContent.toString());
+    }
+
+    @Test
+    public void testListPrefixMatch() throws Exception {
+        IEval onlyZero = alg.abs(alg.seq(alg.match(alg.given(), alg.only(alg.lit(0))), alg.bindValue(alg.id("x"), alg.lit(5))));
+        IEval anything = alg.abs(alg.seq(alg.match(alg.given(), alg.any()), alg.bindValue(alg.id("y"), alg.lit(6))));
+        Environment env = (Environment)alg.listPrefixMatch(alg.list(alg.lit(0), alg.lit(1)), onlyZero, anything)
+                .eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(5), ((Int)env.val(new Id("x"))).intValue());
+        assertEquals(new Integer(6), ((Int)env.val(new Id("y"))).intValue());
+
+        IEval shouldFail = alg.listPrefixMatch(alg.list(alg.lit(9), alg.lit(1)), onlyZero, anything);
+        Bool b = (Bool)alg.catch_(shouldFail, alg.abs(alg.bool(true))).eval(new Environment(), new Store(), new Null());
+        assertTrue(b.boolValue());
+
     }
 }
