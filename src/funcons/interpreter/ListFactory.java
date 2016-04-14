@@ -2,10 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.ListAlg;
 import funcons.sorts.IEval;
-import funcons.types.Environment;
-import funcons.types.List;
-import funcons.types.Null;
-import funcons.types.Value;
+import funcons.types.*;
 
 public interface ListFactory extends TupleFactory, ListAlg<IEval> {
     @Override
@@ -56,7 +53,14 @@ public interface ListFactory extends TupleFactory, ListAlg<IEval> {
     @Override
     default IEval intClosedInterval(IEval m, IEval n) {
         return (env, store, given) -> {
-            return new Null();
+            Int mValue = (Int)m.eval(env, store, given);
+            Int nValue = (Int)n.eval(env, store, given);
+
+            if (((Bool)intGreater((e,s,g) -> mValue, (e,s,g) -> nValue).eval(env, store, given)).boolValue()) {
+                return new List();
+            }
+
+            return listPrefix(m, intClosedInterval(intAdd((e,s,g) -> mValue, lit(1)), (e,s,g) -> nValue)).eval(env, store, given);
         };
     }
 }

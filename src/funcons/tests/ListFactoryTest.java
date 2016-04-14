@@ -60,4 +60,10 @@ public class ListFactoryTest {
         Bool b = (Bool)alg.catch_(shouldFail, alg.abs(alg.bool(true))).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
     }
+
+    @Test
+    public void testIntClosedInterval() throws Exception {
+        List l = (List)alg.intClosedInterval(alg.lit(0), alg.lit(1)).eval(new Environment(), new Store(), new Null());
+        assertEquals(new List(new Int(0), new Int(1)), l);
+    }
 }
