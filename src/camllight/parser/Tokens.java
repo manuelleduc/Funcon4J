@@ -1,4 +1,4 @@
-package cl.parser;
+package camllight.parser;
 
 import noa.syntax.Skip;
 import noa.syntax.Token;

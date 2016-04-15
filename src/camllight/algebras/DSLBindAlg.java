@@ -1,4 +1,4 @@
-package cl.algebras;
+package camllight.algebras;
 
 public interface DSLBindAlg<E> extends WhileTrueAlg<E> {
     E var(java.lang.String s);

@@ -1,4 +1,4 @@
-package cl.algebras;
+package camllight.algebras;
 
 public interface WhileTrueAlg<E> extends IfElseAlg<E> {
     E whileTrue(E e, E c);

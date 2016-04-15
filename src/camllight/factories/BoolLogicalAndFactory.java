@@ -1,6 +1,6 @@
-package cl.factories;
+package camllight.factories;
 
-import cl.algebras.BoolLogicalAndAlg;
+import camllight.algebras.BoolLogicalAndAlg;
 import funcons.algebras.LogicIfTrueAlg;
 
 public interface BoolLogicalAndFactory<E> extends IntMulFactory<E>, BoolLogicalAndAlg<E> {

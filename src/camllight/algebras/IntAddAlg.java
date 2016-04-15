@@ -1,4 +1,4 @@
-package cl.algebras;
+package camllight.algebras;
 
 import noa.syntax.Level;
 import noa.syntax.Syntax;

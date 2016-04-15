@@ -1,8 +1,8 @@
-package cl;
+package camllight;
 
-import cl.factories.IntAddFactory;
-import cl.parser.CLLexer;
-import cl.parser.CLParser;
+import camllight.factories.IntAddFactory;
+import camllight.parser.CLLexer;
+import camllight.parser.CLParser;
 
 import funcons.Store;
 import funcons.algebras.IntCalcAlg;
@@ -20,7 +20,7 @@ import noa.proxy.Union;
 public class Demo {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <X> X parse(String s, cl.algebras.IntAddAlg alg) {
+    public static <X> X parse(String s, camllight.algebras.IntAddAlg alg) {
         CLLexer lexer = new CLLexer(new ANTLRInputStream(s));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CLParser parser = new CLParser(tokens);
@@ -30,8 +30,8 @@ public class Demo {
 
     private static void testBuilder(String src) throws FunconException {
         System.out.println("## Using builder");
-        Recorder builder = parse(src, Recorder.create(cl.algebras.IntAddAlg.class));
-        IEval eval = builder.build(Union.union(cl.algebras.IntAddAlg.class, new IntAddFactory<IEval>() {
+        Recorder builder = parse(src, Recorder.create(camllight.algebras.IntAddAlg.class));
+        IEval eval = builder.build(Union.union(camllight.algebras.IntAddAlg.class, new IntAddFactory<IEval>() {
             @Override
             public IntCalcAlg<IEval> intCalcAlg() {
                 return new funcons.interpreter.IntCalcFactory() {};

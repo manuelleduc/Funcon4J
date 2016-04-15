@@ -1,16 +1,13 @@
 // Generated from src/cl/parser/ by ANTLR 4.2.2
 
-package cl.parser;
+package camllight.parser;
 import static noa.syntax.demo.Tokens.*;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class CLParser extends Parser {
@@ -44,8 +41,8 @@ public class CLParser extends Parser {
 	public ATN getATN() { return _ATN; }
 
 
-	private cl.algebras.IntAddAlg builder;
-	public void setBuilder(cl.algebras.IntAddAlg builder) { this.builder = builder; }
+	private camllight.algebras.IntAddAlg builder;
+	public void setBuilder(camllight.algebras.IntAddAlg builder) { this.builder = builder; }
 	private static <X> java.util.List<X> lift(String name, java.util.List<?> ctxs, X ...heads) {
 	  java.util.List<X> l = new java.util.ArrayList<X>();
 	  for (X h: heads) { l.add(h); }

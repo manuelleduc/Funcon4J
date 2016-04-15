@@ -1,6 +1,6 @@
-package cl.factories;
+package camllight.factories;
 
-import cl.algebras.DSLBindAlg;
+import camllight.algebras.DSLBindAlg;
 import funcons.algebras.BindAlg;
 
 public interface DSLBindFactory<E> extends ExpControlFactory<E>, DSLBindAlg<E> {

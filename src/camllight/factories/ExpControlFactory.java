@@ -1,6 +1,6 @@
-package cl.factories;
+package camllight.factories;
 
-import cl.algebras.WhileTrueAlg;
+import camllight.algebras.WhileTrueAlg;
 import funcons.algebras.LogicWhileTrueAlg;
 
 public interface ExpControlFactory<E> extends BoolLogicalAndFactory<E>, WhileTrueAlg<E> {

@@ -1,6 +1,6 @@
-package cl.factories;
+package camllight.factories;
 
-import cl.algebras.IntMulAlg;
+import camllight.algebras.IntMulAlg;
 import funcons.algebras.IntCalcAlg;
 
 public interface IntMulFactory<E> extends IntAddFactory<E>, IntMulAlg<E> {

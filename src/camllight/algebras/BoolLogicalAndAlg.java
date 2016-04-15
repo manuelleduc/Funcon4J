@@ -1,4 +1,4 @@
-package cl.algebras;
+package camllight.algebras;
 
 public interface BoolLogicalAndAlg<E> extends IntMulAlg<E> {
 
