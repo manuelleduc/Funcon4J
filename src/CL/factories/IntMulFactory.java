@@ -1,6 +1,6 @@
-package DSL;
+package cl.factories;
 
-import DSL.algebras.IntMulAlg;
+import cl.algebras.IntMulAlg;
 import funcons.algebras.IntCalcAlg;
 
 public interface IntMulFactory<E> extends IntAddFactory<E>, IntMulAlg<E> {

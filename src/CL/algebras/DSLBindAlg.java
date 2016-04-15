@@ -1,4 +1,4 @@
-package DSL.algebras;
+package cl.algebras;
 
 public interface DSLBindAlg<E> extends WhileTrueAlg<E> {
     E var(java.lang.String s);

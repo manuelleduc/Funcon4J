@@ -1,6 +1,6 @@
-package DSL;
+package cl.factories;
 
-import DSL.algebras.WhileTrueAlg;
+import cl.algebras.WhileTrueAlg;
 import funcons.algebras.LogicWhileTrueAlg;
 
 public interface ExpControlFactory<E> extends BoolLogicalAndFactory<E>, WhileTrueAlg<E> {

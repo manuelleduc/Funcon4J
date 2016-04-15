@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class ListFactoryTest {
 
-    ListAlg<IEval> alg;
+    private ListAlg<IEval> alg;
 
     @Before
     public void setUp() throws Exception {

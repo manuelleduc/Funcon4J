@@ -1,6 +1,6 @@
-package DSL;
+package cl.factories;
 
-import DSL.algebras.DSLBindAlg;
+import cl.algebras.DSLBindAlg;
 import funcons.algebras.BindAlg;
 
 public interface DSLBindFactory<E> extends ExpControlFactory<E>, DSLBindAlg<E> {

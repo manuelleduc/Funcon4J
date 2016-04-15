@@ -1,6 +1,6 @@
-package DSL;
+package cl.factories;
 
-import DSL.algebras.BoolLogicalAndAlg;
+import cl.algebras.BoolLogicalAndAlg;
 import funcons.algebras.LogicIfTrueAlg;
 
 public interface BoolLogicalAndFactory<E> extends IntMulFactory<E>, BoolLogicalAndAlg<E> {
