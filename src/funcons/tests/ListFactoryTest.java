@@ -40,11 +40,21 @@ public class ListFactoryTest {
 
     @Test
     public void testApplyToEach() throws Exception {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        IEval printList = alg.applyToEach(alg.abs(alg.print(alg.given())), alg.list(alg.lit(0), alg.lit(1)));
-        printList.eval(new Environment(), new Store(), new Null());
-        assertEquals("01", outContent.toString());
+        {
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            IEval printList = alg.applyToEach(alg.abs(alg.print(alg.given())), alg.list(alg.lit(0), alg.lit(1)));
+            printList.eval(new Environment(), new Store(), new Null());
+            assertEquals("01", outContent.toString());
+        }
+        {
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            IEval printList = alg.applyToEach(alg.abs(alg.bind(alg.id("foo")), alg.effect(alg.print(alg.boundValue(alg.id("foo"))))),
+                    alg.intClosedInterval(alg.lit(0), alg.lit(3)));
+            printList.eval(new Environment(), new Store(), new Null());
+            assertEquals("0123", outContent.toString());
+        }
     }
 
     @Test
