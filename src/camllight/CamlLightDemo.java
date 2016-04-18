@@ -1,11 +1,12 @@
 package camllight;
 
-import camllight.factories.IntAddFactory;
+import camllight.factories.BoolLogicFactory;
+import camllight.factories.ExpControlFactory;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
 
 import funcons.Store;
-import funcons.algebras.IntCalcAlg;
+import funcons.algebras.ListAlg;
 import funcons.sorts.IEval;
 import funcons.types.Environment;
 import funcons.types.FunconException;
@@ -17,10 +18,10 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import noa.proxy.Recorder;
 import noa.proxy.Union;
 
-public class Demo {
+public class CamlLightDemo {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <X> X parse(String s, camllight.algebras.IntAddAlg alg) {
+    public static <X> X parse(String s, camllight.algebras.AllAlg alg) {
         CLLexer lexer = new CLLexer(new ANTLRInputStream(s));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CLParser parser = new CLParser(tokens);
@@ -30,11 +31,11 @@ public class Demo {
 
     private static void testBuilder(String src) throws FunconException {
         System.out.println("## Using builder");
-        Recorder builder = parse(src, Recorder.create(camllight.algebras.IntAddAlg.class));
-        IEval eval = builder.build(Union.union(camllight.algebras.IntAddAlg.class, new IntAddFactory<IEval>() {
+        Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
+        IEval eval = builder.build(Union.union(camllight.algebras.AllAlg.class, new ExpControlFactory<IEval>() {
             @Override
-            public IntCalcAlg<IEval> intCalcAlg() {
-                return new funcons.interpreter.IntCalcFactory() {};
+            public ListAlg<IEval> alg() {
+                return new funcons.interpreter.ListFactory() {};
             }
         }));
         System.out.println("eval " + src + " = " + eval.eval(new Environment(), new Store(), new Null()));
@@ -42,7 +43,7 @@ public class Demo {
 
     public static void main(String[] args) {
         try {
-            testBuilder("2 + 1 + 3");
+            testBuilder("for var = 0 to 10 do 1 done");
         } catch (FunconException e) {
             e.printStackTrace();
         }

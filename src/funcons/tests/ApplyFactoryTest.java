@@ -21,11 +21,20 @@ public class ApplyFactoryTest {
 
     @Test
     public void testAbs() throws Exception {
-        Store store = new Store();
-        @SuppressWarnings("unchecked")
-        Abs<IEval> abs = (Abs<IEval>)alg.abs(alg.lit(1)).eval(new Environment(), store, new Null());
-        Int result = (Int)abs.body().eval(new Environment(), store, new Null());
-        assertEquals(result.intValue(), new Integer(1));
+        {
+            Store store = new Store();
+            @SuppressWarnings("unchecked")
+            Abs<IEval> abs = (Abs<IEval>) alg.abs(alg.lit(1)).eval(new Environment(), store, new Null());
+            Int result = (Int) abs.body().eval(new Environment(), store, new Null());
+            assertEquals(result.intValue(), new Integer(1));
+        }
+        {
+            Store store = new Store();
+            @SuppressWarnings("unchecked")
+            Abs<IEval> abs = (Abs<IEval>) alg.abs(alg.bind(alg.id("foo")), alg.boundValue(alg.id("foo"))).eval(new Environment(), store, new Null());
+            Int result = (Int) abs.body().eval(new Environment(), store, new Int(10));
+            assertEquals(result.intValue(), new Integer(10));
+        }
     }
 
     @Test

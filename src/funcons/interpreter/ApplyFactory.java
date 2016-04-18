@@ -15,6 +15,14 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
     }
 
     @Override
+    default IEval abs(IEval patt, IEval exp) { // TODO Hacky, what is depends(X,Y)?
+        return (env, store, given) -> new Abs<IEval>((e, s, g) -> {
+            Environment environment = (Environment)((Abs<IEval>)patt.eval(e,s,g)).body().eval(e,s,g);
+            return exp.eval(e.extend(environment), s, g);
+        });
+    }
+
+    @Override
     default IEval apply(IEval abs, IEval arg) {
         return (env, store, given) -> supply(arg, unAbs(abs, env, store, given)).eval(env, store, given);
     }
