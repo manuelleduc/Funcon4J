@@ -32,18 +32,18 @@ public class CamlLightDemo {
     private static void testBuilder(String src) throws FunconException {
         System.out.println("## Using builder");
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        IEval eval = builder.build(Union.union(camllight.algebras.AllAlg.class, new ExpControlFactory<IEval>() {
+        IEval eval = builder.build(new ExpControlFactory<IEval>() {
             @Override
             public ListAlg<IEval> alg() {
                 return new funcons.interpreter.ListFactory() {};
             }
-        }));
+        });
         System.out.println("eval " + src + " = " + eval.eval(new Environment(), new Store(), new Null()));
     }
 
     public static void main(String[] args) {
         try {
-            testBuilder("for var = 0 to 10 do 1 done");
+            testBuilder("for x = 1 to 10 do 1 done");
         } catch (FunconException e) {
             e.printStackTrace();
         }

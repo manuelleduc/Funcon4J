@@ -3,6 +3,9 @@ package camllight.algebras;
 import noa.syntax.Syntax;
 
 public interface ExpControlAlg<E> extends BoolLogicAlg<E> {
+    @Syntax("exp = ID")
+    E id(java.lang.String name);
+
     @Syntax("exp = 'if' exp 'then' exp")
     default E if_(E e1, E e2) {
         return ifElse(e1, e2, alg().tuple());
@@ -14,6 +17,6 @@ public interface ExpControlAlg<E> extends BoolLogicAlg<E> {
     @Syntax("exp = 'while' exp 'do' exp 'done'")
     E whileTrue(E e, E c);
 
-    @Syntax("exp = 'for' ID '=' exp 'to' exp 'do' exp 'done'")
+    @Syntax("exp = 'for' exp '=' exp 'to' exp 'do' exp 'done'")
     E for_(E id, E start, E finish, E e3);
 }
