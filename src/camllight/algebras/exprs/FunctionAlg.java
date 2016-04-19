@@ -19,7 +19,7 @@ public interface FunctionAlg<E> extends ExpControlAlg<E> {
         return alg().close(alg().preferOver(pm, alg().abs(alg().throw_(alg().matchFailure()))));
     }
 
-    @Syntax("function = 'fun' pattmatch")
+    @Syntax("function = 'fun' pattmatchsingle")
     default E func(E pm) {
         return function(pm);
     }

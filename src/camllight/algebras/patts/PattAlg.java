@@ -10,8 +10,8 @@ public interface PattAlg<E> extends StartAlg<E> {
         return alg().bind(id);
     }
 
-    @Syntax("patt = '_'")
-    default E pattWildcard() {
+    @Syntax("patt = WILDCARD")
+    default E pattWildcard(String wildcard) {
         return alg().any();
     }
 

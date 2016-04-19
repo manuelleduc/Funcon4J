@@ -15,6 +15,11 @@ public interface Tokens {
         return src.equals("true");
     }
 
+    @Token("'_'")
+    static String wildcard(String src) {
+        return src;
+    }
+
     @Token("[ ]+") @Skip
     void ws();
 
