@@ -29,6 +29,15 @@ public class LogicIfTrueFactoryTest {
     }
 
     @Test
+    public void testNot() throws Exception {
+        Bool b = (Bool)alg.not(alg.bool(true)).eval(new Environment(), new Store(), new Null());
+        assertFalse(b.boolValue());
+
+        b = (Bool)alg.not(alg.bool(false)).eval(new Environment(), new Store(), new Null());
+        assertTrue(b.boolValue());
+    }
+
+    @Test
     public void testIfTrue() throws Exception {
         Int i = (Int)alg.ifTrue(alg.bool(false), alg.lit(2), alg.lit(3)).eval(new Environment(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(3));

@@ -16,6 +16,12 @@ public interface BoolLogicAlg<E> extends IntCalcAlg<E> {
 
     @Syntax("exp = exp ('||' | 'or') exp") @Level(50)
     default E lOr(E e1, E e2) {
+        alg().bool(false);
         return alg().ifTrue(e1, bool(true), e2);
+    }
+
+    @Syntax("exp = 'not' exp")
+    default E lNot(E e1) {
+        return alg().not(e1);
     }
 }
