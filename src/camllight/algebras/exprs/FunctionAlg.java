@@ -14,6 +14,16 @@ public interface FunctionAlg<E> extends ExpControlAlg<E> {
         return f;
     }
 
+    @Syntax("function = '(' function ')'")
+    default E bracketedFunction(E f) {
+        return f;
+    }
+
+    @Syntax("function = 'begin' function 'end'")
+    default E beginEndFunction(E f) {
+        return f;
+    }
+
     @Syntax("function = 'function' pattmatch")
     default E function(E pm) {
         return alg().close(alg().preferOver(pm, alg().abs(alg().throw_(alg().matchFailure()))));

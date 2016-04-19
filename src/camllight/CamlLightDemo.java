@@ -42,7 +42,7 @@ public class CamlLightDemo {
 
     public static void main(String[] args) {
         try {
-            testBuilder("fun _ -> 2 1");
+            testBuilder("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 10");
             //testBuilder("fun 1 -> 4 | 2 -> 5 | 3 -> 6 3");
             //testBuilder("1");
             //testBuilder("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");
