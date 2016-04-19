@@ -83,4 +83,10 @@ public class ExceptionFactoryTest {
         b = (Bool)alg.apply(alg.preferOver(f2, f1), alg.lit(1)).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
     }
+
+    @Test
+    public void testMatchFailure() throws Exception {
+        MatchFailureException e = (MatchFailureException)alg.matchFailure().eval(new Environment(), new Store(), new Null());
+        assertNotNull(e);
+    }
 }

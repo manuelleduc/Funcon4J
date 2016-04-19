@@ -42,11 +42,12 @@ public class CamlLightDemo {
 
     public static void main(String[] args) {
         try {
-            testBuilder("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");
-            testBuilder("not false or true");
+            testBuilder("fun 1 -> 4 | 2 -> 5 | 3 -> 6 3");
+            //testBuilder("1");
+            //testBuilder("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");
+            //testBuilder("not false or true");
         } catch (FunconException e) {
             e.printStackTrace();
         }
     }
 }
-

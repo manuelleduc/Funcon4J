@@ -4,6 +4,7 @@ import funcons.algebras.ExceptionAlg;
 import funcons.sorts.IEval;
 import funcons.types.FailureTrueException;
 import funcons.types.FunconException;
+import funcons.types.MatchFailureException;
 
 public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
 
@@ -12,6 +13,11 @@ public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
         return (env, store, given) -> {
             throw new FailureTrueException();
         };
+    }
+
+    @Override
+    default IEval matchFailure() {
+        return (env, store, given) -> new MatchFailureException();
     }
 
     @Override
