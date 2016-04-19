@@ -20,7 +20,7 @@ public interface BoolLogicAlg<E> extends IntCalcAlg<E> {
         return alg().ifTrue(e1, bool(true), e2);
     }
 
-    @Syntax("exp = 'not' exp")
+    @Syntax("exp = 'not' exp") @Level(70)
     default E lNot(E e1) {
         return alg().not(e1);
     }
