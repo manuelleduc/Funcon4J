@@ -20,8 +20,23 @@ public interface IntCalcAlg<E> {
     E lit(Integer l);
 
     @Syntax("exp = exp '+' exp") @Level(110)
-    E add(E l1, E l2);
+    E intAdd(E l1, E l2);
 
     @Syntax("exp = exp '*' exp") @Level(120)
-    E multiply(E a, E b);
+    E intMultiply(E a, E b);
+
+    @Syntax("exp = exp '>' exp") @Level(80)
+    E intGreater(E e1, E e2);
+
+    @Syntax("exp = exp '<' exp") @Level(80)
+    E intSmaller(E e1, E e2);
+
+    @Syntax("exp = exp '>=' exp") @Level(80)
+    E intGreaterEqual(E e1, E e2);
+
+    @Syntax("exp = exp '<=' exp") @Level(80)
+    E intSmallerEqual(E e1, E e2);
+
+    @Syntax("exp = exp '=' exp") @Level(80)
+    E intEqual(E e1, E e2);
 }

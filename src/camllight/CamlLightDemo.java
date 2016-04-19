@@ -16,7 +16,6 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import noa.proxy.Recorder;
-import noa.proxy.Union;
 
 public class CamlLightDemo {
 
@@ -43,7 +42,7 @@ public class CamlLightDemo {
 
     public static void main(String[] args) {
         try {
-            testBuilder("for x = 1 to 10 do 1 done");
+            testBuilder("begin if 7 < 3 then 1 else 2 + 3 end = 5");
         } catch (FunconException e) {
             e.printStackTrace();
         }
