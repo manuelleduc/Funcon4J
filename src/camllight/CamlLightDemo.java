@@ -5,6 +5,7 @@ import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
 
 import funcons.Store;
+import funcons.algebras.AllAlg;
 import funcons.sorts.IEval;
 import funcons.types.Environment;
 import funcons.types.FunconException;
@@ -30,12 +31,12 @@ public class CamlLightDemo {
     private static void testBuilder(String src) throws FunconException {
         System.out.println("## Using builder");
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        IEval eval = builder.build(Union.union(camllight.algebras.AllAlg.class, new ExpControlAlg<IEval>() {
+        IEval eval = builder.build(new camllight.algebras.AllAlg<IEval>() {
             @Override
             public funcons.algebras.ListAlg<IEval> alg() {
                 return new funcons.interpreter.ListFactory() {};
             }
-        }));
+        });
         System.out.println("eval " + src + " = " + eval.eval(new Environment(), new Store(), new Null()));
     }
 

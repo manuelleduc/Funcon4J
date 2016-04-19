@@ -1,5 +1,6 @@
 package camllight.algebras.base;
 
+import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface StartAlg<E> {
@@ -10,7 +11,7 @@ public interface StartAlg<E> {
         return e;
     }
 
-    @Syntax("exp = ID")
+    @Syntax("ident = ID") @Level(0)
     default E id(java.lang.String name) {
         return alg().id(name);
     }

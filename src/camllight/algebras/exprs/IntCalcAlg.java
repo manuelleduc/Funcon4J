@@ -5,15 +5,20 @@ import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface IntCalcAlg<E> extends StartAlg<E> {
+
+    @Syntax("exp = constant")
+    default E constExp(E e) {
+        return e;
+    }
+
     @Syntax("exp = '(' exp ')'")
-    default E bracketedExp(E e) { return e; }
+    default E bracketedExp(E e) {
+        return e;
+    }
 
     @Syntax("exp = 'begin' exp 'end'")
-    default E beginEndExp(E e) { return e; }
-
-    @Syntax("exp = NUM")
-    default E lit(Integer l) {
-        return alg().lit(l);
+    default E beginEndExp(E e) {
+        return e;
     }
 
     @Syntax("exp = exp '+' exp") @Level(110)
