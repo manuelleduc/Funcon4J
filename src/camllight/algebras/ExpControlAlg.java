@@ -6,6 +6,9 @@ public interface ExpControlAlg<E> extends BoolLogicAlg<E> {
     @Syntax("exp = ID")
     E id(java.lang.String name);
 
+    @Syntax("exp = exp ';' exp")
+    E seq(E e1, E e2);
+
     @Syntax("exp = 'if' exp 'then' exp")
     default E if_(E e1, E e2) {
         return ifElse(e1, e2, alg().tuple());

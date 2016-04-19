@@ -20,13 +20,9 @@ public interface ExpControlFactory<E> extends BoolLogicFactory<E>, camllight.alg
     default E for_(E id, E start, E finish, E e3) {
         return alg().applyToEach(alg().abs(alg().bind(id), alg().effect(e3)), alg().intClosedInterval(start, finish));
     }
+
+    @Override
+    default E seq(E e1, E e2) {
+        return alg().seq(alg().effect(e1), e2);
+    }
 }
-
-
-/*
-expr[[for LI = E1 to E2 do E3 done]] = (71)
-        apply-to-each(
-            abs(
-                bind(id [[LI]])
-                , effect(expr[[E3]])),
-            int-closed-interval(expr[[E1]], expr[[E2]])) */

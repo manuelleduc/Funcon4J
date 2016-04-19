@@ -10,6 +10,12 @@ public interface IntCalcAlg<E> {
     @Syntax("prog = exp")
     E start(E e);
 
+    // Not part of the language, just used for easy testing purposes
+    @Syntax("exp = 'print' exp")
+    default E print(E e) {
+        return alg().print(e);
+    }
+
     @Syntax("exp = '(' exp ')'")
     default E bracketedExp(E e) { return e; }
 
