@@ -1,6 +1,5 @@
 package funcons.interpreter;
 
-import funcons.Store;
 import funcons.algebras.IntCalcAlg;
 import funcons.sorts.IEval;
 import funcons.types.*;

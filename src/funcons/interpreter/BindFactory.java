@@ -2,6 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.BindAlg;
 import funcons.sorts.IEval;
+import funcons.types.Abs;
 import funcons.types.Environment;
 import funcons.types.Id;
 

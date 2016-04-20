@@ -6,6 +6,8 @@ public interface TupleAlg<E> extends AssignAlg<E> {
     E tuple(E x1, E x2);
     E tuple(E x1, E x2, E x3);
     E tuplePrefix(E x, E tup);
+    E tupleHead(E tup); // TODO write test
+    E tupleTail(E tup); // TODO write test
     E project(E index, E tup);
 
     E partialApp(E f, E x);

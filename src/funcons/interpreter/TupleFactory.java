@@ -4,6 +4,8 @@ import funcons.algebras.TupleAlg;
 import funcons.sorts.IEval;
 import funcons.types.*;
 
+import java.util.NoSuchElementException;
+
 public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
 
     @Override
@@ -41,6 +43,30 @@ public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
         };
     }
 
+    @Override
+    default IEval tupleTail(IEval tup) {
+        return (env, store, given) -> {
+            Tuple t = (Tuple)tup.eval(env, store, given);
+            Tuple tail = t.tail();
+            if (tail == null) {
+                throw new NoSuchElementException();
+            }
+            return tail;
+        };
+    }
+
+    @Override
+    default IEval tupleHead(IEval tup) {
+        return (env, store, given) -> {
+            Tuple t = (Tuple)tup.eval(env, store, given);
+            Value head = t.head();
+            if (head == null) {
+                throw new NoSuchElementException();
+            }
+            return head;
+        };
+    }
+
     //@Override
     //default IEval invert(IEval tup) {
     //    return (env, store, given) -> ((Tuple)tup.eval(env, store,given)).invert();
@@ -48,7 +74,7 @@ public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
 
     @Override
     default IEval project(IEval index, IEval tup) {
-        return (env, store, given) -> ((Tuple)tup.eval(env, store, given)).get((Int)index.eval(env, store, given));
+        return (env, store, given) -> ((Tuple) tup.eval(env, store, given)).get((Int) index.eval(env, store, given));
     }
 
     @Override

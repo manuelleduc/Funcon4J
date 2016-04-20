@@ -27,6 +27,15 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
     }
 
     @Override
+    default IEval scopeInner(IEval patt, IEval f) {
+        return (env, store, given) -> new Abs<IEval>((e, s, g) -> {
+            @SuppressWarnings("unchecked")
+            Environment environment = (Environment)((Abs<IEval>)patt.eval(e,s,g)).body().eval(e,s,g);
+            return unAbs(f, e, s, g).eval(e.extend(environment), s, g);
+        });
+    }
+
+    @Override
     default IEval compose(IEval f, IEval g) {
         return abs(apply(f, apply(g, given())));
     }

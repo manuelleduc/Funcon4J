@@ -3,6 +3,8 @@ package camllight.algebras.patternmatching;
 import camllight.algebras.base.StartAlg;
 import noa.syntax.Syntax;
 
+import java.util.Collection;
+
 public interface PattMatchAlg<E> extends StartAlg<E> {
 
     @Syntax("pattmatch = pattmatchsingle")
@@ -30,24 +32,18 @@ public interface PattMatchAlg<E> extends StartAlg<E> {
         return alg().preferOver(head, tail);
     }
 
-    @Syntax("pattmatchcurried = patt patt '->' exp")
-    default E pattMatchCurried(E p1, E p2, E exp) {
-        return alg().curry(pattMatchSingle(
-                alg().pattUnion(
-                        alg().abs(alg().apply(p1, alg().project(alg().lit(0), alg().given()))),
-                        alg().abs(alg().apply(p2, alg().project(alg().lit(1), alg().given())))
-                        ),
-                exp));
+    @Syntax("pattmatchcurried = patt+ '->' exp")
+    default E pattMatchCurriedMulti(Collection<E> ps, E exp) {
+        Integer i = 0;
+        E pattern = alg().any();
+        for (E patt : ps) {
+            pattern = alg().pattUnion(
+                    pattern,
+                    alg().abs(alg().match(alg().project(alg().lit(i), alg().given()), patt))
+            );
+            i++;
+        }
+
+        return alg().curryN(alg().lit(ps.size()), pattMatchSingle(pattern, exp));
     }
 }
-
-/*
-abs[[P1 -> E1]] = (83)
-abs(patt[[P1]], expr[[E1]])
-
-abs[[P1 -> E1 | P2 -> E2...]] = (84)
-prefer-over(abs[[P1 -> E1]], abs[[P2 -> E2...]])
-
-abs[[| P1 -> E1...]] = (85)
-abs[[P1 -> E1...]
- */

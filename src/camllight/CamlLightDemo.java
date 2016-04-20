@@ -5,6 +5,7 @@ import camllight.parser.CLParser;
 
 import funcons.Store;
 import funcons.sorts.IEval;
+import funcons.types.Abs;
 import funcons.types.Environment;
 import funcons.types.FunconException;
 import funcons.types.Null;
@@ -13,7 +14,6 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import noa.proxy.Recorder;
-import org.junit.runner.manipulation.Sortable;
 
 public class CamlLightDemo {
 
@@ -35,14 +35,14 @@ public class CamlLightDemo {
                 return new funcons.interpreter.ListFactory() {};
             }
         });
-        System.out.println("eval " + src + " = " + eval.eval(new Environment(), new Store(), new Null()));
+        Abs<IEval> a =( Abs<IEval>)eval.eval(new Environment(), new Store(), new Null());
+        System.out.println("eval " + src + " = " + a.body().eval(new Environment(), new Store(), new Null()));
     }
 
     public static void main(String[] args) {
         try {
             //testBuilder("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2");
-
-            testBuilder("(fun x y -> x + y) 10 4");
+            testBuilder("(fun a b c d e f -> a + b + c + d + e + f) 1 2 3 4 5 6");
             //testBuilder("fun 1 -> 4 | 2 -> 5 | 3 -> 6 3");
             //testBuilder("1");
             //testBuilder("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");
