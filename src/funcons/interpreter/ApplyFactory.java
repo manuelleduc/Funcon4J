@@ -3,9 +3,7 @@ package funcons.interpreter;
 import funcons.Store;
 import funcons.algebras.ApplyAlg;
 import funcons.sorts.IEval;
-import funcons.types.Abs;
-import funcons.types.Environment;
-import funcons.types.Value;
+import funcons.types.*;
 
 public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
 
@@ -17,6 +15,7 @@ public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
     @Override
     default IEval abs(IEval patt, IEval exp) { // TODO Hacky, what is depends(X,Y)?
         return (env, store, given) -> new Abs<IEval>((e, s, g) -> {
+            @SuppressWarnings("unchecked")
             Environment environment = (Environment)((Abs<IEval>)patt.eval(e,s,g)).body().eval(e,s,g);
             return exp.eval(e.extend(environment), s, g);
         });

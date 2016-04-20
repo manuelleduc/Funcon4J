@@ -1,21 +1,19 @@
 package camllight;
 
-import camllight.algebras.exprs.ExpControlAlg;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
 
 import funcons.Store;
-import funcons.algebras.AllAlg;
 import funcons.sorts.IEval;
 import funcons.types.Environment;
 import funcons.types.FunconException;
 import funcons.types.Null;
 
-import noa.proxy.Union;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import noa.proxy.Recorder;
+import org.junit.runner.manipulation.Sortable;
 
 public class CamlLightDemo {
 
@@ -42,7 +40,9 @@ public class CamlLightDemo {
 
     public static void main(String[] args) {
         try {
-            testBuilder("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 10");
+            //testBuilder("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2");
+
+            testBuilder("(fun x y -> x + y) 10 4");
             //testBuilder("fun 1 -> 4 | 2 -> 5 | 3 -> 6 3");
             //testBuilder("1");
             //testBuilder("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");

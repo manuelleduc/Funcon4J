@@ -29,6 +29,16 @@ public interface PattMatchAlg<E> extends StartAlg<E> {
     default E pattMatchMulti(E head, E tail) {
         return alg().preferOver(head, tail);
     }
+
+    @Syntax("pattmatchcurried = patt patt '->' exp")
+    default E pattMatchCurried(E p1, E p2, E exp) {
+        return alg().curry(pattMatchSingle(
+                alg().pattUnion(
+                        alg().abs(alg().apply(p1, alg().project(alg().lit(0), alg().given()))),
+                        alg().abs(alg().apply(p2, alg().project(alg().lit(1), alg().given())))
+                        ),
+                exp));
+    }
 }
 
 /*

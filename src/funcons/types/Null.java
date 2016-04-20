@@ -11,4 +11,8 @@ public class Null implements Unit {
         return other instanceof Null;
     }
 
+    @Override
+    public java.lang.String toString() {
+        return "NULL";
+    }
 }

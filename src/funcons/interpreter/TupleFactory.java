@@ -41,6 +41,11 @@ public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
         };
     }
 
+    //@Override
+    //default IEval invert(IEval tup) {
+    //    return (env, store, given) -> ((Tuple)tup.eval(env, store,given)).invert();
+    //}
+
     @Override
     default IEval project(IEval index, IEval tup) {
         return (env, store, given) -> ((Tuple)tup.eval(env, store, given)).get((Int)index.eval(env, store, given));

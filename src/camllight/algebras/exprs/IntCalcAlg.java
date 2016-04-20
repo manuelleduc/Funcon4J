@@ -11,6 +11,11 @@ public interface IntCalcAlg<E> extends StartAlg<E> {
         return e;
     }
 
+    @Syntax("exp = ident")
+    default E idExp(E id) { // TODO should include instantiate-if-poly;
+        return alg().boundValue(id);
+    }
+
     @Syntax("exp = '(' exp ')'")
     default E bracketedExp(E e) {
         return e;
