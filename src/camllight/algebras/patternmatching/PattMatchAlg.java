@@ -37,7 +37,6 @@ public interface PattMatchAlg<E> extends StartAlg<E> {
     default E pattMatchCurriedMulti(Collection<E> ps, E exp) {
         Integer i = 0;
         E pattern = alg().any();
-        Iterator<E> it = ps.iterator();
         for (E patt : ps) {
             pattern = alg().pattUnion(
                     pattern,

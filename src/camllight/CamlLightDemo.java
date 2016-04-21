@@ -41,7 +41,7 @@ public class CamlLightDemo {
 
     public static void main(String[] args) {
         try {
-            testBuilder("(fun (a,b) -> a + b) (1,2)");
+            testBuilder("(fun a (b,c) -> a + b + c) 1 (2,3)");
             //testBuilder("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2");
             //testBuilder("(fun a b c d e f -> a + b + c + d + e + f) 1 2 3 4 5 6");
             //testBuilder("fun 1 -> 4 | 2 -> 5 | 3 -> 6 3");

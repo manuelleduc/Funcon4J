@@ -114,9 +114,10 @@ public class TupleFactoryTest {
 
     @Test
     public void testTuplePrefixPatt() throws Exception {
-        IEval pattBindXY = alg.tuplePrefixPatt(alg.bind(alg.id("x")), alg.bind(alg.id("y")));
+        IEval pattBindY = alg.tuplePrefixPatt(alg.bind(alg.id("y")), alg.only(alg.tuple()));
+        IEval pattBindXY = alg.tuplePrefixPatt(alg.bind(alg.id("x")), pattBindY);
         Environment env = (Environment)alg.match(alg.tuple(alg.lit(1), alg.lit(2)), pattBindXY).eval(new Environment(), new Store(), new Null());
         assertEquals(new Int(1), env.val(new Id("x")));
-        assertEquals(new Tuple(new Int(2)), env.val(new Id("y")));
+        assertEquals(new Int(2), env.val(new Id("y")));
     }
 }

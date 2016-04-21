@@ -8,21 +8,21 @@ import java.util.ListIterator;
 public interface TuplePattAlg<E> extends PattAlg<E> {
     @Syntax("patt = '(' patt patttuple+ ')'") // Love your brackets.
     default E pattTuple(E patt, List<E> patts) {
-        E tuple = alg().tuple();
 
         ListIterator<E> it = patts.listIterator(patts.size());
+        E tuple = alg().tuplePrefixPatt(it.previous(), alg().only(alg().tuple()));
         while (it.hasPrevious()) {
-            tuple = alg().tuplePrefix(it.previous(), tuple);
+            tuple = alg().tuplePrefixPatt(it.previous(), tuple);
         }
 
-        return alg().tuplePrefix(patt, tuple);
+        return alg().tuplePrefixPatt(patt, tuple);
     }
 
-/*    @Syntax("patttuple = ',' patt")
+    @Syntax("patttuple = ',' patt")
     default E pattTupleSingle(E patt) {
         return patt;
     }
-
+/*
     //@Syntax("patt = patt ',' patttuple")
     default E commaSeperatedPatt(E p, E pt) {
         return tuplePatt(p, pt);
