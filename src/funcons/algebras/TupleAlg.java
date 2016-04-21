@@ -16,4 +16,5 @@ public interface TupleAlg<E> extends AssignAlg<E> {
     E curryN(E n, E f);
     E uncurry(E abs);
     E tuplePrefixMatch(E tup, E p1, E p2);
+    E tuplePrefixPatt(E p1, E p2);
 }

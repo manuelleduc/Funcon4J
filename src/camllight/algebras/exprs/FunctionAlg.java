@@ -1,8 +1,9 @@
 package camllight.algebras.exprs;
 
+import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface FunctionAlg<E> extends ExpControlAlg<E> {
+public interface FunctionAlg<E> extends TupleAlg<E> {
     @Syntax("exp = function")
     default E functionExpr(E f) {
         return f;
@@ -28,12 +29,12 @@ public interface FunctionAlg<E> extends ExpControlAlg<E> {
         return alg().close(alg().preferOver(pm, alg().abs(alg().throw_(alg().matchFailure()))));
     }
 
-    @Syntax("function = 'fun' pattmatchsingle")
+    @Syntax("function = 'fun' pattmatchsingle") @Level(10)
     default E func(E pm) {
         return function(pm);
     }
 
-    @Syntax("function = 'fun' pattmatchcurried")
+    @Syntax("function = 'fun' pattmatchcurried") @Level(0)
     default E curriedFunc (E pm) {
         return function(pm);
     }

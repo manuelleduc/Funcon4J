@@ -29,12 +29,17 @@ public class TupleFactoryTest {
         assertEquals(new Tuple(new Int(0), new Int(1)), t);
         t = (Tuple)alg.tuple(alg.lit(0), alg.lit(1), alg.lit(2)).eval(new Environment(), new Store(), new Null());
         assertEquals(new Tuple(new Int(0), new Int(1), new Int(2)), t);
+        System.out.println(t);
     }
 
     @Test
     public void testTuplePrefix() throws Exception {
         Tuple t = (Tuple)alg.tuplePrefix(alg.lit(5), alg.tuple()).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(5), ((Int)t.get(new Int(0))).intValue());
+
+        t = (Tuple)alg.tuplePrefix(alg.lit(1), alg.tuplePrefix(alg.lit(2), alg.tuplePrefix(alg.lit(3), alg.tuple())))
+                .eval(new Environment(), new Store(), new Null());
+        assertEquals(t, alg.tuple(alg.lit(1), alg.lit(2), alg.lit(3)).eval(new Environment(), new Store(), new Null()));
     }
 
     @Test
@@ -105,5 +110,13 @@ public class TupleFactoryTest {
         IEval shouldFail = alg.tuplePrefixMatch(alg.tuple(alg.lit(9), alg.lit(1), alg.lit(2)), onlyZero, anything);
         Bool b = (Bool)alg.catch_(shouldFail, alg.abs(alg.bool(true))).eval(new Environment(), new Store(), new Null());
         assertTrue(b.boolValue());
+    }
+
+    @Test
+    public void testTuplePrefixPatt() throws Exception {
+        IEval pattBindXY = alg.tuplePrefixPatt(alg.bind(alg.id("x")), alg.bind(alg.id("y")));
+        Environment env = (Environment)alg.match(alg.tuple(alg.lit(1), alg.lit(2)), pattBindXY).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Int(1), env.val(new Id("x")));
+        assertEquals(new Tuple(new Int(2)), env.val(new Id("y")));
     }
 }

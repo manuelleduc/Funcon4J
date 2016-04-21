@@ -122,4 +122,9 @@ public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
             return e1.extend(e2);
         };
     }
+
+    @Override
+    default IEval tuplePrefixPatt(IEval p1, IEval p2) {
+        return abs(tuplePrefixMatch(given(), p1, p2));
+    }
 }
