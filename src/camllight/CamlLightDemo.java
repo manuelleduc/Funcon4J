@@ -35,8 +35,8 @@ public class CamlLightDemo {
                 return new funcons.interpreter.ListFactory() {};
             }
         });
-        Abs<IEval> a =( Abs<IEval>)eval.eval(new Environment(), new Store(), new Null());
-        System.out.println("eval " + src + " = " + a.body().eval(new Environment(), new Store(), new Null()));
+        //eval = (( Abs<IEval>)eval.eval(new Environment(), new Store(), new Null())).body();
+        System.out.println("eval " + src + " = " + eval.eval(new Environment(), new Store(), new Null()));
     }
 
     public static void main(String[] args) {

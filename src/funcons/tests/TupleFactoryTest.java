@@ -81,7 +81,7 @@ public class TupleFactoryTest {
         IEval curriedAdd = alg.curryN(alg.lit(2), uncurriedAdd);
         IEval add2 = alg.apply(curriedAdd, alg.lit(2));
         IEval add2to3 = alg.apply(add2, alg.lit(3));
-        Int i = (Int)alg.apply(add2to3, alg.tuple()).eval(new Environment(), new Store(), new Null());
+        Int i = (Int)add2to3.eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(5), i.intValue());
     }
 

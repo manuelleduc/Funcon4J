@@ -95,7 +95,20 @@ public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
 
     @Override
     default IEval curryN(IEval n, IEval f) {
-        return abs(
+        return (env, store, given) -> {
+            Int index = (Int)n.eval(env, store, given);
+            if (index.intValue() == 0) {
+                return apply(f, tuple()).eval(env, store, given);
+            }
+
+            return new Abs<IEval>(
+                    (localEnv, localStore, localGiven) -> curryN(
+                            (e,s,g) -> new Int(index.intValue() - 1),
+                            partialAppN(f, (e,s,g) -> localGiven)).eval(localEnv, localStore, localGiven)
+            );
+        };
+
+                /*abs(
                 (env, store, given) -> {
                     Int index = (Int)n.eval(env, store, given);
                     if (index.intValue() == 0) {
@@ -105,7 +118,7 @@ public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
                     return curryN((e,s,g) -> new Int(index.intValue() - 1), partialAppN(f, (e,s,g) -> given))
                             .eval(env, store, given);
                 }
-        );
+        );*/
     }
 
     @Override

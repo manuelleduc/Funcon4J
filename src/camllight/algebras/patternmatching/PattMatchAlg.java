@@ -4,6 +4,7 @@ import camllight.algebras.base.StartAlg;
 import noa.syntax.Syntax;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 public interface PattMatchAlg<E> extends StartAlg<E> {
 
@@ -36,6 +37,7 @@ public interface PattMatchAlg<E> extends StartAlg<E> {
     default E pattMatchCurriedMulti(Collection<E> ps, E exp) {
         Integer i = 0;
         E pattern = alg().any();
+        Iterator<E> it = ps.iterator();
         for (E patt : ps) {
             pattern = alg().pattUnion(
                     pattern,
