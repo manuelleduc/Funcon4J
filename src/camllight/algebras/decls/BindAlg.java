@@ -1,11 +1,12 @@
 package camllight.algebras.decls;
 
 import camllight.algebras.base.StartAlg;
+import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface BindAlg<E> extends StartAlg<E> {
 
-    @Syntax("decl = 'let' decl")
+    @Syntax("decl = 'let' decl") @Level(0)
     default E decl(E dec) {
         return dec;
     }

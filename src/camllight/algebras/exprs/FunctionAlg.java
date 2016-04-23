@@ -4,7 +4,7 @@ import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface FunctionAlg<E> extends TupleAlg<E> {
-    @Syntax("exp = function")
+    @Syntax("exp = function") @Level(0)
     default E functionExpr(E f) {
         return f;
     }
@@ -29,7 +29,7 @@ public interface FunctionAlg<E> extends TupleAlg<E> {
         return alg().close(alg().preferOver(pm, alg().abs(alg().throw_(alg().matchFailure()))));
     }
 
-    @Syntax("function = 'fun' pattmatchsingle") @Level(10)
+    @Syntax("function = 'fun' pattmatchsingle") @Level(1)
     default E func(E pm) {
         return function(pm);
     }
