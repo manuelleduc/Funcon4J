@@ -42,13 +42,13 @@ public class CamlLightDemo {
         try {
             testBuilder("let x = 3 in x + 1");
             testBuilder("let x = 3 in (fun y -> y + x 4)");
-            testBuilder("let x = 3 in (let y = 5 in (x + y))");
+            testBuilder("let x = 3 in (let y = 5 in x + y)");
             testBuilder("(fun a ((b,c), d) -> a + b + c + d) 1 ((2,3),4)");
-            //testBuilder("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2");
-            //testBuilder("(fun a b c d e f -> a + b + c + d + e + f) 1 2 3 4 5 6");
-            //testBuilder("1");
-            //testBuilder("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");
-            //testBuilder("not false or true");
+            testBuilder("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2");
+            testBuilder("(fun a b c d e f -> a + b + c + d + e + f) 1 2 3 4 5 6");
+            testBuilder("1");
+            testBuilder("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");
+            testBuilder("not false or true");
         } catch (FunconException e) {
             e.printStackTrace();
         }
