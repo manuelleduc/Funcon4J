@@ -5,7 +5,6 @@ import camllight.parser.CLParser;
 
 import funcons.Store;
 import funcons.sorts.IEval;
-import funcons.types.Abs;
 import funcons.types.Environment;
 import funcons.types.FunconException;
 import funcons.types.Null;
@@ -26,29 +25,31 @@ public class CamlLightDemo {
         return (X) parser.prog()._prog;
     }
 
-    private static void testBuilder(String src) throws FunconException {
-        System.out.println("## Using builder");
+    private static void interpret(String src) throws FunconException {
+        System.out.println("== Interpreting ==");
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        IEval eval = builder.build(new camllight.algebras.AllAlg<IEval>() {
-            @Override
-            public funcons.algebras.ListAlg<IEval> alg() {
-                return new funcons.interpreter.ListFactory() {};
-            }
-        });
-        System.out.println("eval " + src + " = " + eval.eval(new Environment(), new Store(), new Null()));
+        IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.ListFactory() {});
+        System.out.println(src);
+        System.out.print("Print output: ");
+        funcons.types.Value result = eval.eval(new Environment(), new Store(), new Null());
+        System.out.println();
+        System.out.println("Result: " + result);
+        System.out.println();
     }
 
     public static void main(String[] args) {
         try {
-            testBuilder("let x = 3 in x + 1");
-            testBuilder("let x = 3 in (fun y -> y + x 4)");
-            testBuilder("let x = 3 in (let y = 5 in x + y)");
-            testBuilder("(fun a ((b,c), d) -> a + b + c + d) 1 ((2,3),4)");
-            testBuilder("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2");
-            testBuilder("(fun a b c d e f -> a + b + c + d + e + f) 1 2 3 4 5 6");
-            testBuilder("1");
-            testBuilder("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");
-            testBuilder("not false or true");
+            interpret("let iszero = (fun x -> match x with | 0 -> true | _ -> false) in (iszero 0)");
+            interpret("let x = 3 in x + 1");
+            interpret("let x = 3 in (fun y -> y + x 4)");
+            interpret("let x = 3 in (let y = 5 in x + y)");
+            interpret("(fun a ((b,c), d) -> a + b + c + d) 1 ((2,3),4)");
+            interpret("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2");
+            interpret("(fun a b c d e f -> a + b + c + d + e + f) 1 2 3 4 5 6");
+            interpret("1");
+            interpret("for i = 10 downto 1 do print i done");
+            interpret("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");
+            interpret("not false or true");
         } catch (FunconException e) {
             e.printStackTrace();
         }

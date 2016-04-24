@@ -63,4 +63,9 @@ public interface ListFactory extends TupleFactory, ListAlg<IEval> {
             return listPrefix(m, intClosedInterval(intAdd((e,s,g) -> mValue, lit(1)), (e,s,g) -> nValue)).eval(env, store, given);
         };
     }
+
+    @Override
+    default IEval listReverse(IEval l) {
+        return (env, store, given) -> ((List)l.eval(env, store, given)).reverse();
+    }
 }

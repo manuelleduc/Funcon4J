@@ -49,6 +49,15 @@ public class List implements Value {
         return tail.get(new Int(i.intValue() - 1));
     }
 
+    public List reverse() {
+        java.util.ArrayList<Value> items = this.toArrayList();
+        List list = new List();
+        for (java.util.ListIterator<Value> iterator = items.listIterator(items.size()); iterator.hasPrevious();) {
+            list = list.prepend(iterator.previous());
+        }
+        return list;
+    }
+
     public Value head() {
         return head;
     }
@@ -80,5 +89,16 @@ public class List implements Value {
 
         return (head == null ? other.head == null : head.equals(other.head)) &&
                 (tail == null ? other.tail == null : tail.equals(other.tail));
+    }
+
+    private java.util.ArrayList<Value> toArrayList() {
+        java.util.ArrayList<Value> items = new java.util.ArrayList<>();
+        List cursor = this;
+        while (cursor != null && cursor.head() != null) {
+            items.add(cursor.head());
+            cursor = cursor.tail();
+        }
+        java.util.Collections.reverse(items);
+        return items;
     }
 }

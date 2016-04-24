@@ -9,6 +9,11 @@ public interface FunctionAlg<E> extends TupleAlg<E> {
         return f;
     }
 
+    @Syntax("function = ID")
+    default E functionId(java.lang.String id) {
+        return alg().boundValue(alg().id(id));
+    }
+
     @Syntax("function = function exp")
     default E funcAplication(E e1, E e2) {
         return alg().apply(e1, e2);
@@ -38,12 +43,4 @@ public interface FunctionAlg<E> extends TupleAlg<E> {
     default E curriedFunc (E pm) {
         return function(pm);
     }
-
-    //@Syntax("function = 'fun' patt patt '->' exp")
-    //default
-
-    //expr[[fun P1 P2 -> E]] = (79)
-    //curry(expr[[fun ( P1 , P2 ) -> E]])
-
-    //E match(E f, E e1);
 }

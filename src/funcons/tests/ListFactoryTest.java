@@ -76,4 +76,11 @@ public class ListFactoryTest {
         List l = (List)alg.intClosedInterval(alg.lit(0), alg.lit(1)).eval(new Environment(), new Store(), new Null());
         assertEquals(new List(new Int(0), new Int(1)), l);
     }
+
+    @Test
+    public void testListReverse() throws Exception {
+        List l1 = (List)alg.listReverse(alg.list(alg.lit(2), alg.lit(1))).eval(new Environment(), new Store(), new Null());
+        List l2 = (List)alg.list(alg.lit(1), alg.lit(2)).eval(new Environment(), new Store(), new Null());
+        assertEquals(l2, l1);
+    }
 }

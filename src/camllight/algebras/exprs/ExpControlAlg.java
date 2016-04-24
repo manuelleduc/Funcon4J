@@ -19,8 +19,18 @@ public interface ExpControlAlg<E> extends BoolLogicAlg<E> {
     }
 
     @Syntax("exp = 'for' ident '=' exp 'to' exp 'do' exp 'done'")
-    default E for_(E id, E start, E finish, E e3) {
-        return alg().applyToEach(alg().abs(alg().bind(id), alg().effect(e3)), alg().intClosedInterval(start, finish));
+    default E for_(E id, E start, E finish, E exp) {
+        return alg().applyToEach(alg().abs(alg().bind(id), alg().effect(exp)), alg().intClosedInterval(start, finish));
+    }
+
+    @Syntax("exp = 'for' ident '=' exp 'downto' exp 'do' exp 'done'")
+    default E forDownto(E id, E finish, E start, E exp) {
+        return alg().applyToEach(alg().abs(alg().bind(id), alg().effect(exp)), alg().listReverse(alg().intClosedInterval(start, finish)));
+    }
+
+    @Syntax("exp = 'match' exp 'with' pattmatch")
+    default E matchWith(E exp, E patt) {
+        return alg().apply(alg().preferOver(patt, alg().abs(alg().throw_(alg().matchFailure()))), exp);
     }
 
     @Syntax("exp = exp ';' exp")
