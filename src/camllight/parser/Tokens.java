@@ -23,7 +23,7 @@ public interface Tokens {
     @Token("[ ]+") @Skip
     void ws();
 
-    @Token("[a-z]+") @Level(0)
+    @Token("[a-zA-Z_][a-zA-Z_0-9]*") @Level(0)
     static String id(String src) {
         return src;
     }
