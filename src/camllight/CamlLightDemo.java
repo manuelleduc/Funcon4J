@@ -39,7 +39,8 @@ public class CamlLightDemo {
 
     public static void main(String[] args) {
         try {
-            interpret("let isZero = fun x -> match x with | 0 -> true | _ -> false and x = 0 in isZero x");
+            interpret("let test = function | 0 as y -> y + 1 | _ -> 0 in test 0");
+            //interpret("let isZero = fun x -> match x with | 0 -> true | _ -> false and x = 0 in isZero x");
             /*interpret("let x = 3 in x + 1");
             interpret("let x = 3 in fun y -> y + x 4");
             interpret("let x = 3 in let y = 5 in x + y");
