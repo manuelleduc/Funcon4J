@@ -4,28 +4,7 @@ import camllight.algebras.base.StartAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface IntCalcAlg<E> extends StartAlg<E> {
-
-    @Syntax("exp = constant")
-    default E constExp(E e) {
-        return e;
-    }
-
-    @Syntax("exp = ident")
-    default E idExp(E id) { // TODO should include instantiate-if-poly;
-        return alg().boundValue(id);
-    }
-
-    @Syntax("exp = '(' exp ')'")
-    default E bracketedExp(E e) {
-        return e;
-    }
-
-    @Syntax("exp = 'begin' exp 'end'")
-    default E beginEndExp(E e) {
-        return e;
-    }
-
+public interface IntCalcAlg<E> extends BaseExpAlg<E> {
     @Syntax("exp = exp '+' exp") @Level(110)
     default E intAdd(E l1, E l2) {
         return alg().intAdd(l1, l2);

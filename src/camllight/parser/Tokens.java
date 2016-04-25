@@ -27,4 +27,9 @@ public interface Tokens {
     static String id(String src) {
         return src;
     }
+
+    //@Token("[a-zA-Z_][a-zA-Z_0-9]*") @Level(0)
+    static String type(String src) {
+        return src;
+    }
 }
