@@ -10,13 +10,8 @@ public interface ExpLetAlg<E> extends FunctionAlg<E> {
         return letExp;
     }
 
-    @Syntax("letExp = decl 'in' exp") @Level(0)
+    @Syntax("letExp = decl 'in' exp") @Level(1)
     default E letInExp(E decl, E exp) {
         return alg().scope(decl, exp);
-    }
-
-    @Syntax("andLetExp = decl 'and' decl")
-    default E andLetExp(E d1, E d2) {
-        return null; // TODO
     }
 }
