@@ -1,12 +1,10 @@
-package camllight.algebras.patternmatching;
+package camllight.algebras.patts;
 
-import camllight.algebras.base.StartAlg;
 import noa.syntax.Syntax;
 
 import java.util.Collection;
-import java.util.Iterator;
 
-public interface PattMatchAlg<E> extends StartAlg<E> {
+public interface PattMatchAlg<E> extends TuplePattAlg<E> {
 
     @Syntax("pattmatch = pattmatchsingle")
     default E pattMatch1(E pm) {
@@ -34,17 +32,8 @@ public interface PattMatchAlg<E> extends StartAlg<E> {
     }
 
     @Syntax("pattmatchcurried = patt+ '->' exp")
-    default E pattMatchCurriedMulti(Collection<E> ps, E exp) {
-        Integer i = 0;
-        E pattern = alg().any();
-        for (E patt : ps) {
-            pattern = alg().pattUnion(
-                    pattern,
-                    alg().abs(alg().match(alg().project(alg().lit(i), alg().given()), patt))
-            );
-            i++;
-        }
-
+    default E pattMatchCurriedMulti(java.util.List<E> ps, E exp) {
+        E pattern = this.pattTuple(ps.get(0), ps.subList(1, ps.size()));
         return alg().curryN(alg().lit(ps.size()), pattMatchSingle(pattern, exp));
     }
 }
