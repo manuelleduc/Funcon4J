@@ -5,6 +5,7 @@ import funcons.algebras.ListAlg;
 import funcons.interpreter.ListFactory;
 import funcons.sorts.IEval;
 import funcons.types.*;
+import funcons.types.signals.FailureTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -67,8 +68,12 @@ public class ListFactoryTest {
         assertEquals(new Integer(6), ((Int)env.val(new Id("y"))).intValue());
 
         IEval shouldFail = alg.listPrefixMatch(alg.list(alg.lit(9), alg.lit(1)), onlyZero, anything);
-        Bool b = (Bool)alg.catch_(shouldFail, alg.abs(alg.bool(true))).eval(new Environment(), new Store(), new Null());
-        assertTrue(b.boolValue());
+        try {
+            shouldFail.eval(new Environment(), new Store(), new Null());
+        } catch (FailureTrue f) {
+            return;
+        }
+        assertTrue(false);
     }
 
     @Test

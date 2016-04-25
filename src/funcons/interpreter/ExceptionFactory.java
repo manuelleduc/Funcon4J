@@ -2,16 +2,17 @@ package funcons.interpreter;
 
 import funcons.algebras.ExceptionAlg;
 import funcons.sorts.IEval;
-import funcons.types.FailureTrueException;
-import funcons.types.FunconException;
-import funcons.types.MatchFailureException;
+import funcons.types.signals.FailureTrue;
+import funcons.types.signals.FunconException;
+import funcons.types.signals.MatchFailureException;
+import funcons.types.signals.RunTimeFunconException;
 
 public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
 
     @Override
     default IEval fail() {
         return (env, store, given) -> {
-            throw new FailureTrueException();
+            throw new FailureTrue();
         };
     }
 
@@ -23,7 +24,7 @@ public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
     @Override
     default IEval throw_(IEval s) {
         return (env, store, given) -> {
-            throw (FunconException)s.eval(env, store, given);
+            throw (RunTimeFunconException)s.eval(env, store, given);
         };
     }
 
@@ -32,7 +33,7 @@ public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
         return (env, store, given) -> {
             try {
                 return x.eval(env, store, given);
-            } catch (FunconException e) {
+            } catch (RunTimeFunconException e) {
                 return apply(abs, (env1, store1, given1) -> e).eval(env, store, given);
             }
         };
@@ -48,7 +49,7 @@ public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
         return (env, store, given) -> {
             try {
                 return x1.eval(env, store, given);
-            } catch(FailureTrueException f) {
+            } catch(FailureTrue f) {
                 return x2.eval(env, store, given);
             }
         };

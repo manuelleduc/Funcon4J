@@ -6,7 +6,7 @@ import camllight.parser.CLParser;
 import funcons.Store;
 import funcons.sorts.IEval;
 import funcons.types.Environment;
-import funcons.types.FunconException;
+import funcons.types.signals.FunconException;
 import funcons.types.Null;
 
 import org.antlr.v4.runtime.ANTLRInputStream;

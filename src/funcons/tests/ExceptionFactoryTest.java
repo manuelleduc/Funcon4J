@@ -5,6 +5,8 @@ import funcons.algebras.ExceptionAlg;
 import funcons.interpreter.ExceptionFactory;
 import funcons.sorts.IEval;
 import funcons.types.*;
+import funcons.types.signals.FailureTrue;
+import funcons.types.signals.MatchFailureException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +26,7 @@ public class ExceptionFactoryTest {
     public void testFail() throws Exception {
         try {
             alg.fail().eval(new Environment(), new Store(), new Null());
-        } catch (FailureTrueException ignored) {
+        } catch (FailureTrue ignored) {
             return;
         }
         assertTrue(false);
@@ -42,8 +44,8 @@ public class ExceptionFactoryTest {
     @Test
     public void testThrow_() throws Exception {
         try {
-            alg.throw_((env, store, given) -> new FailureTrueException()).eval(new Environment(), new Store(), new Null());
-        } catch(FailureTrueException s) {
+            alg.throw_(alg.matchFailure()).eval(new Environment(), new Store(), new Null());
+        } catch(MatchFailureException s) {
             return;
         }
         assertTrue(false);
@@ -51,22 +53,22 @@ public class ExceptionFactoryTest {
 
     @Test
     public void testCatch_() throws Exception {
-        IEval c = alg.catch_(alg.throw_((env, store, given) -> new FailureTrueException()), alg.abs(alg.given()));
-        FailureTrueException e = (FailureTrueException)c.eval(new Environment(), new Store(), new Null());
+        IEval c = alg.catch_(alg.throw_(alg.matchFailure()), alg.abs(alg.given()));
+        MatchFailureException e = (MatchFailureException)c.eval(new Environment(), new Store(), new Null());
         assertNotNull(e);
     }
 
     @Test
     public void testCatchElseRethrow() throws Exception {
-        IEval fail = alg.throw_((env, store, given) -> new FailureTrueException());
+        IEval fail = alg.throw_(alg.matchFailure());
 
         IEval c = alg.catchElseRethrow(fail, alg.abs(alg.given()));
-        FailureTrueException e = (FailureTrueException)c.eval(new Environment(), new Store(), new Null());
+        MatchFailureException e = (MatchFailureException)c.eval(new Environment(), new Store(), new Null());
         assertNotNull(e);
 
         try {
             alg.catchElseRethrow(fail, fail).eval(new Environment(), new Store(), new Null());
-        } catch(FailureTrueException exception) {
+        } catch(MatchFailureException exception) {
             return;
         }
         assertTrue(false);
