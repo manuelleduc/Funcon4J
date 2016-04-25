@@ -41,8 +41,8 @@ public class CamlLightDemo {
         try {
             interpret("let isZero = fun x -> match x with | 0 -> true | _ -> false in isZero 0");
             interpret("let x = 3 in x + 1");
-            interpret("let x = 3 in (fun y -> y + x 4)");
-            interpret("let x = 3 in (let y = 5 in x + y)");
+            interpret("let x = 3 in fun y -> y + x 4");
+            interpret("let x = 3 in let y = 5 in x + y");
             interpret("(fun a ((b,c), d) -> a + b + c + d) 1 ((2,3),4)");
             interpret("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2");
             interpret("(fun a b c d e f -> a + b + c + d + e + f) 1 2 3 4 5 6");

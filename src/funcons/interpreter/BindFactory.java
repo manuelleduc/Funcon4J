@@ -36,4 +36,13 @@ public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     default IEval supply(IEval exp, IEval x) {
         return (env, store, given) -> x.eval(env, store, exp.eval(env, store, given));
     }
+
+    @Override
+    default IEval environmentUnion(IEval env1, IEval env2) {
+        return (env, store, given) -> {
+            Environment e1 = (Environment)env1.eval(env, store, given);
+            Environment e2 = (Environment)env2.eval(env, store, given);
+            return e1.extend(e2);
+        };
+    }
 }

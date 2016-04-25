@@ -65,4 +65,13 @@ public class BindFactoryTest {
         Int i = (Int)alg.supply(alg.lit(0), alg.given()).eval(new Environment(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(0));
     }
+
+    @Test
+    public void testEnvironmentUnion() throws Exception {
+        IEval e1 = alg.bindValue(alg.id("x"), alg.lit(1));
+        IEval e2 = alg.bindValue(alg.id("y"), alg.lit(2));
+        Environment env = (Environment)alg.environmentUnion(e1, e2).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(1), ((Int)env.val(new Id("x"))).intValue());
+        assertEquals(new Integer(2), ((Int)env.val(new Id("y"))).intValue());
+    }
 }

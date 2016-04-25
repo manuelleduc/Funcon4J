@@ -7,4 +7,5 @@ public interface BindAlg<E> extends LogicWhileTrueAlg<E> {
     E scope(E localBindings, E exp);
     E given();
     E supply(E exp, E x);
+    E environmentUnion(E env1, E env2);
 }
