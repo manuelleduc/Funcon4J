@@ -29,12 +29,12 @@ public interface ListAlg<E> extends TupleAlg<E> {
         return e;
     }
 
-    @Syntax("explist = exp")
-    default E expListSingle(E e) {
-        return e;
+    @Syntax("explist = exp ';' exp") @Level(0)
+    default E expListDouble(E e1, E e2) {
+        return headTailListExpMulti(e1, alg().list(e2));
     }
 
-    @Syntax("explist = exp ';' explist")
+    @Syntax("explist = exp ';' explist") @Level(1)
     default E expListMulti(E e1, E e2) {
         return headTailListExpMulti(e1, e2);
     }

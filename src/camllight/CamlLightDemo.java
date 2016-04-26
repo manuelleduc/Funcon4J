@@ -38,9 +38,9 @@ public class CamlLightDemo {
     }
 
     public static void main(String[] args) throws FunconException {
-        //interpret("[0 ; 1 ; 2]");
-        //interpret("let headIsZero = function | [0 :: _] -> true | _ -> false in headIsZero [0 ; 1]");
-        interpret("(  )");
+        interpret("[0 ; 1 ; 2]");
+        interpret("let smallerThan = function | [x :: y :: _] -> x < y in smallerThan [0 ; 1]");
+        /*interpret("(  )");
         interpret("[ ]");
         interpret("let test = function (0 | 1) -> true | _ -> false in test 1");
         interpret("(fun (x : int) -> print x ; x + 1) 0");
@@ -57,6 +57,6 @@ public class CamlLightDemo {
         interpret("1");
         interpret("for i = 10 downto 1 do print i done");
         interpret("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5");
-        interpret("not false or true");
+        interpret("not false or true");*/
     }
 }

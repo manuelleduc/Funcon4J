@@ -26,7 +26,7 @@ public interface ListPattAlg<E> extends TuplePattAlg<E> {
 
     @Syntax("patt = '[' patt ']'")
     default E singleElementListPatt(E p) {
-        return headTailListPattMulti(p, alg().list());
+        return headTailListPattMulti(p, alg().only(alg().list()));
     }
 
     @Syntax("patt = '[' pattlist ']'")
