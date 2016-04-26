@@ -5,11 +5,17 @@ import funcons.sorts.IEval;
 import funcons.types.Abs;
 import funcons.types.Environment;
 import funcons.types.Id;
+import funcons.types.NameId;
 
 public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     @Override
     default IEval id(java.lang.String s) {
         return (env, store, given) -> new Id(s);
+    }
+
+    @Override
+    default IEval nameId(java.lang.String namespace, java.lang.String id) {
+        return (env, store, given) -> new NameId(namespace, id);
     }
 
     @Override

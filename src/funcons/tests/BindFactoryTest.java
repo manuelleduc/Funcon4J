@@ -4,10 +4,7 @@ import funcons.Store;
 import funcons.algebras.BindAlg;
 import funcons.interpreter.BindFactory;
 import funcons.sorts.IEval;
-import funcons.types.Environment;
-import funcons.types.Int;
-import funcons.types.Null;
-import funcons.types.Id;
+import funcons.types.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,6 +23,14 @@ public class BindFactoryTest {
     public void testId() throws Exception {
         Id v = (Id)alg.id("foo").eval(new Environment(), new Store(), new Null());
         assertEquals(v.stringValue(), "foo");
+    }
+
+    @Test
+    public void testNameId() throws Exception {
+        NameId v = (NameId)alg.nameId("foo", "bar").eval(new Environment(), new Store(), new Null());
+        assertEquals(new NameId("foo", "bar"), v);
+        assertNotEquals(new NameId("bar", "bar"), v);
+        assertNotEquals(new NameId("bar", "foo"), v);
     }
 
     @Test

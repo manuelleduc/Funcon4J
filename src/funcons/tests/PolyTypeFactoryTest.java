@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class PolyTypeFactoryTest {
 
-    PolyTypeAlg<IEval> alg;
+    private PolyTypeAlg<IEval> alg;
 
     @Before
     public void setUp() throws Exception {
