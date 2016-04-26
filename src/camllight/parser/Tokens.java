@@ -23,13 +23,13 @@ public interface Tokens {
     @Token("[ ]+") @Skip
     void ws();
 
-    @Token("[a-zA-Z_][a-zA-Z_0-9]*") @Level(0)
-    static String id(String src) {
+    @Token("'(' [ ]* ')'")
+    static String nothing(String src) {
         return src;
     }
 
-    //@Token("[a-zA-Z_][a-zA-Z_0-9]*") @Level(0)
-    static String type(String src) {
+    @Token("[a-zA-Z_][a-zA-Z_0-9]*") @Level(0)
+    static String id(String src) {
         return src;
     }
 }

@@ -13,4 +13,9 @@ public interface ConstantsAlg<E> extends StartAlg<E> {
     default E bool(java.lang.Boolean b) {
         return alg().bool(b);
     }
+
+    @Syntax("constant = NOTHING")
+    default E null_(Object o) {
+        return alg().null_();
+    }
 }
