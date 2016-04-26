@@ -34,4 +34,19 @@ public interface PattAlg<E> extends StartAlg<E> {
     default E pattConstant(E constant) {
         return alg().only(constant);
     }
+
+    @Syntax("patt = '(' optionalpattremainder ')'")
+    default E optionalPatt(E p) {
+        return p;
+    }
+
+    @Syntax("optionalpattremainder = patt")
+    default E optionalPattRemainderSingle(E p) {
+        return p;
+    }
+
+    @Syntax("optionalpattremainder = patt '|' optionalpattremainder")
+    default E optionalPattRemainderMulti(E p1, E p2) {
+        return alg().pattNonBinding(alg().preferOver(p1, p2));
+    }
 }

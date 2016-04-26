@@ -38,8 +38,9 @@ public class CamlLightDemo {
     }
 
     public static void main(String[] args) throws FunconException {
-        interpret("(fun (x : int) -> print x ; x + 1) 0");
-        /*interpret("(1 : int)");
+        interpret("let test = function | (0 | 1) -> true | _ -> false in test 1");
+        /*interpret("(fun (x : int) -> print x ; x + 1) 0");
+        interpret("(1 : int)");
         interpret("let test = function | 0 as y -> y + 1 | _ -> 0 in test 0");
         interpret("let isZero = fun x -> match x with | 0 -> true | _ -> false and x = 0 in isZero x");
         interpret("let t = (1,2) and add = fun (x,y) -> x + y in add t");

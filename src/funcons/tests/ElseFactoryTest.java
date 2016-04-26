@@ -97,7 +97,7 @@ public class ElseFactoryTest {
     public void testPattNonBinding() throws Exception {
         Store store = new Store();
         IEval pat = alg.pattNonBinding(alg.bind(alg.id("foo")));
-        Environment env = (Environment)pat.eval(new Environment(), store, new Null());
+        Environment env = (Environment)alg.match(alg.lit(0), pat).eval(new Environment(), store, new Null());
         Value null_ = alg.boundValue(alg.id("foo")).eval(env, store, new Null());
         assertNull(null_);
     }
