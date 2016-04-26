@@ -38,6 +38,8 @@ public class CamlLightDemo {
     }
 
     public static void main(String[] args) throws FunconException {
+        //interpret("[0 ; 1 ; 2]");
+        //interpret("let headIsZero = function | [0 :: _] -> true | _ -> false in headIsZero [0 ; 1]");
         interpret("(  )");
         interpret("[ ]");
         interpret("let test = function (0 | 1) -> true | _ -> false in test 1");

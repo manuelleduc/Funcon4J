@@ -3,8 +3,8 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface FunctionAlg<E> extends TupleAlg<E> {
-    @Syntax("exp = function") @Level(0)
+public interface FunctionAlg<E> extends ListAlg<E> {
+    @Syntax("exp = function") @Level(200)
     default E functionExpr(E f) {
         return f;
     }
