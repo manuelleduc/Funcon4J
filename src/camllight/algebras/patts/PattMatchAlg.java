@@ -2,8 +2,6 @@ package camllight.algebras.patts;
 
 import noa.syntax.Syntax;
 
-import java.util.Collection;
-
 public interface PattMatchAlg<E> extends ListPattAlg<E> {
 
     @Syntax("pattmatch = pattmatchsingle")
