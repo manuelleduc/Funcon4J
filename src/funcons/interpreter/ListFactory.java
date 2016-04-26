@@ -51,6 +51,11 @@ public interface ListFactory extends TupleFactory, ListAlg<IEval> {
     }
 
     @Override
+    default IEval listPrefixPatt(IEval p1, IEval p2) {
+        return abs(listPrefixMatch(given(), p1, p2));
+    }
+
+    @Override
     default IEval intClosedInterval(IEval m, IEval n) {
         return (env, store, given) -> {
             Int mValue = (Int)m.eval(env, store, given);

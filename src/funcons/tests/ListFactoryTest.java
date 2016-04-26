@@ -6,6 +6,7 @@ import funcons.interpreter.ListFactory;
 import funcons.sorts.IEval;
 import funcons.types.*;
 import funcons.types.signals.FailureTrue;
+import funcons.types.signals.MatchFailureException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,6 +72,20 @@ public class ListFactoryTest {
         try {
             shouldFail.eval(new Environment(), new Store(), new Null());
         } catch (FailureTrue f) {
+            return;
+        }
+        assertTrue(false);
+    }
+
+    @Test
+    public void testListPrefixPatt() throws Exception {
+        IEval headIsZero = alg.listPrefixPatt(alg.only(alg.lit(0)), alg.any());
+        Environment env = (Environment)alg.match(alg.list(alg.lit(0), alg.lit(1)), headIsZero).eval(new Environment(), new Store(), new Null());
+        assertNotNull(env);
+
+        try {
+            env = (Environment)alg.match(alg.list(alg.lit(1), alg.lit(0)), headIsZero).eval(new Environment(), new Store(), new Null());
+        } catch(FailureTrue ignore) {
             return;
         }
         assertTrue(false);
