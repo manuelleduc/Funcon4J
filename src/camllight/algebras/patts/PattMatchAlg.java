@@ -4,7 +4,7 @@ import noa.syntax.Syntax;
 
 import java.util.Collection;
 
-public interface PattMatchAlg<E> extends TuplePattAlg<E> {
+public interface PattMatchAlg<E> extends ListPattAlg<E> {
 
     @Syntax("pattmatch = pattmatchsingle")
     default E pattMatch1(E pm) {

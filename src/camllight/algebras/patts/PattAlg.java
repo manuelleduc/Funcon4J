@@ -25,7 +25,7 @@ public interface PattAlg<E> extends StartAlg<E> {
         return alg().pattUnion(patt, alg().bind(id));
     }
 
-    @Syntax("patt = WILDCARD")
+    @Syntax("patt = WILDCARDTOKEN")
     default E pattWildcard(String wildcard) {
         return alg().any();
     }

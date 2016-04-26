@@ -9,9 +9,9 @@ public interface FunctionAlg<E> extends TupleAlg<E> {
         return f;
     }
 
-    @Syntax("function = ID")
-    default E functionId(java.lang.String id) {
-        return alg().boundValue(alg().id(id));
+    @Syntax("function = ident")
+    default E functionId(E id) {
+        return alg().boundValue(id);
     }
 
     @Syntax("function = function exp")

@@ -6,30 +6,35 @@ import noa.syntax.Token;
 
 public interface Tokens {
     @Token("[0-9]+")
-    static int num(String src) {
+    static int numtoken(String src) {
         return Integer.parseInt(src);
     }
 
     @Token("'false' | 'true'")
-    static boolean bool(String src) {
+    static boolean booltoken(String src) {
         return src.equals("true");
     }
 
     @Token("'_'")
-    static String wildcard(String src) {
+    static String wildcardtoken(String src) {
         return src;
     }
 
     @Token("[ ]+") @Skip
     void ws();
 
+    @Token("'[' [ ]* ']'")
+    static String emptylisttoken(String src) {
+        return src;
+    }
+
     @Token("'(' [ ]* ')'")
-    static String nothing(String src) {
+    static String nulltoken(String src) {
         return src;
     }
 
     @Token("[a-zA-Z_][a-zA-Z_0-9]*") @Level(0)
-    static String id(String src) {
+    static String idtoken(String src) {
         return src;
     }
 }

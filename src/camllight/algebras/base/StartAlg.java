@@ -11,12 +11,12 @@ public interface StartAlg<E> {
         return e;
     }
 
-    @Syntax("ident = ID") @Level(0)
+    @Syntax("ident = IDTOKEN") @Level(0)
     default E id(java.lang.String name) {
         return alg().id(name);
     }
 
-    @Syntax("type = ID") @Level(0)
+    @Syntax("type = IDTOKEN") @Level(0)
     default E typeId(java.lang.String name) {
         return alg().type(name);
     }
