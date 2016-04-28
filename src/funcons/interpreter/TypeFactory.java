@@ -3,6 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.TypeAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
+import funcons.values.Int;
 import funcons.values.types.*;
 
 public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
@@ -34,6 +35,49 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     @Override
     default IEval typed(IEval exp, IEval type) {
         return exp;
+    }
+
+    @Override
+    default IEval tupleType() {
+        return (env, store, given) -> new TupleType();
+    }
+
+    @Override
+    default IEval tupleType(IEval x) {
+        return (env, store, given) -> new TupleType((Type)x.eval(env, store, given));
+    }
+
+    @Override
+    default IEval tupleType(IEval x1, IEval x2) {
+        return (env, store, given) -> new TupleType(
+                (Type)x1.eval(env, store, given),
+                (Type)x2.eval(env, store, given));
+    }
+
+    @Override
+    default IEval tupleType(IEval x1, IEval x2, IEval x3) {
+        return (env, store, given) -> new TupleType(
+                (Type)x1.eval(env, store, given),
+                (Type)x2.eval(env, store, given),
+                (Type)x3.eval(env, store, given));
+    }
+
+    @Override
+    default IEval tupleTypePrefix(IEval x, IEval tup) {
+        return (env, store, given) -> {
+            TupleType tt = (TupleType)tup.eval(env, store, given);
+            Type t = (Type)x.eval(env, store, given);
+            return tt.prepend(t);
+        };
+    }
+
+    @Override
+    default IEval projectType(IEval index, IEval tup) {
+        return (env, store, given) -> {
+            TupleType tt = (TupleType)tup.eval(env, store, given);
+            Int i = (Int)index.eval(env, store, given);
+            return tt.get(i);
+        };
     }
 
     @Override

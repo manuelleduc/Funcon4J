@@ -52,6 +52,32 @@ public class TypeFactoryTest {
     }
 
     @Test
+    public void testTupleType() throws Exception {
+        TupleType tt = (TupleType)alg.tupleType().eval(new Environment(), new Store(), new Null());
+        assertEquals(new TupleType(), tt);
+        tt = (TupleType)alg.tupleType(alg.type("foo")).eval(new Environment(), new Store(), new Null());
+        assertEquals(new TupleType(new Type("foo")), tt);
+        tt = (TupleType)alg.tupleType(alg.type("foo"), alg.type("bar")).eval(new Environment(), new Store(), new Null());
+        assertEquals(new TupleType(new Type("foo"), new Type("bar")), tt);
+        tt = (TupleType)alg.tupleType(alg.type("foo"), alg.type("bar"), alg.type("baz")).eval(new Environment(), new Store(), new Null());
+        assertEquals(new TupleType(new Type("foo"), new Type("bar"), new Type("baz")), tt);
+    }
+
+    @Test
+    public void testTupleTypePrefix() throws Exception {
+        IEval tupleType = alg.tupleTypePrefix(alg.type("foo"), alg.tupleType(alg.type("bar")));
+        TupleType tt = (TupleType)tupleType.eval(new Environment(), new Store(), new Null());
+        assertEquals(new TupleType(new Type("foo"), new Type("bar")), tt);
+    }
+
+    @Test
+    public void testProjectType() throws Exception {
+        IEval type = alg.projectType(alg.lit(1), alg.tupleType(alg.type("foo"), alg.type("bar"), alg.type("baz")));
+        Type t = (Type)type.eval(new Environment(), new Store(), new Null());
+        assertEquals(new Type("bar"), t);
+    }
+
+    @Test
     public void testTyped() throws Exception {
         Int i = (Int)alg.typed(alg.lit(0), alg.type("foo")).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
