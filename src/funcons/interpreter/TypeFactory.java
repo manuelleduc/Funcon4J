@@ -2,6 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.TypeAlg;
 import funcons.sorts.IEval;
+import funcons.values.Environment;
 import funcons.values.Tag;
 import funcons.values.types.NomType;
 import funcons.values.types.Token;
@@ -37,6 +38,11 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     @Override
     default IEval newType(IEval name) {
         return (env, store, given) -> new NomType(name.eval(env, store, given), (Token)freshToken().eval(env, store, given));
+    }
+
+    @Override
+    default IEval typeDef(IEval id, IEval type) {
+        return (env, store, given) -> new Environment();
     }
 
     @Override

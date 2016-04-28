@@ -65,6 +65,12 @@ public class TypeFactoryTest {
     }
 
     @Test
+    public void testTypeDef() throws Exception {
+        Environment env = (Environment)alg.typeDef(alg.id("foo"), alg.newType(alg.lit(0))).eval(new Environment(), new Store(), new Null());
+        assertNotNull(env);
+    }
+
+    @Test
     public void testRestrictDomain() throws Exception {
         IEval id = alg.restrictDomain(alg.abs(alg.given()), alg.type("foo"));
         Int i = (Int)alg.apply(id, alg.lit(0)).eval(new Environment(), new Store(), new Null());
