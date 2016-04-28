@@ -3,6 +3,9 @@ package camllight.algebras.typeexprs;
 import camllight.algebras.base.StartAlg;
 import noa.syntax.Syntax;
 
+import java.util.List;
+import java.util.ListIterator;
+
 public interface TypeExpAlg<E> extends StartAlg<E> {
 
     @Syntax("type = '(' type ')'")
@@ -32,5 +35,22 @@ public interface TypeExpAlg<E> extends StartAlg<E> {
     @Syntax("type = '\\'' IDTOKEN")
     default E varType(java.lang.String id) {
         return alg().typeVar(id);
+    }
+
+    @Syntax("type = type tupletypelist+")
+    default E doubleTupleType(E t, List<E> ts) {
+        E tuple = alg().tupleType();
+
+        ListIterator<E> it = ts.listIterator(ts.size());
+        while (it.hasPrevious()) {
+            tuple = alg().tupleTypePrefix(it.previous(), tuple);
+        }
+
+        return alg().tuplePrefix(t, tuple);
+    }
+
+    @Syntax("tupletypelist = '*' type")
+    default E tupleTypeSingle(E type) {
+        return type;
     }
 }
