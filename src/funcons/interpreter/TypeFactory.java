@@ -17,6 +17,11 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     }
 
     @Override
+    default IEval typeVar(java.lang.String name) {
+        return (env, store, given) -> new TypeVar(name);
+    }
+
+    @Override
     default IEval variant(java.lang.String tagName, IEval exp) {
         return (env, store, given) -> new Variant(tagName, exp.eval(env, store, given));
     }

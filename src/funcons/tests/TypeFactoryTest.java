@@ -28,6 +28,12 @@ public class TypeFactoryTest {
     }
 
     @Test
+    public void testTypeVar() throws Exception {
+        TypeVar tv = (TypeVar)alg.typeVar("foo").eval(new Environment(), new Store(), new Null());
+        assertEquals(new TypeVar("foo"), tv);
+    }
+
+    @Test
     public void testTag() throws Exception {
         Tag t = (Tag)alg.tag("foo").eval(new Environment(), new Store(), new Null());
         assertEquals(new Tag("foo"), t);

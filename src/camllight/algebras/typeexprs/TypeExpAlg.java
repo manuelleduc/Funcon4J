@@ -10,14 +10,27 @@ public interface TypeExpAlg<E> extends StartAlg<E> {
         return type;
     }
 
-    @Syntax("type = ident")
-    default E typeId(E id) {
-        return alg().boundType(id);
+    @Syntax("type = IDTOKEN")
+    default E typeId(java.lang.String name) {
+        return alg().boundType(alg().id(name));
+    }
+
+    @Syntax("type = type '->' type")
+    default E functionType(E t1, E t2) {
+        return alg().depends(t1, t2);
     }
 
     /*
-    @Syntax("type = type '->' type")
-    default E functionType(E t1, E t2) {
-        return
-    }*/
+    to-funcons:
+    |[ type[: ~T ~LI :] ]| ->
+    |[ instantiate_type(type[: ~LI :], type_list[: ~T :]) ]|
+    to-funcons:
+    |[ type[: (~T1 , ~T2 ...) ~LI :] ]| ->
+    |[ instantiate_type(type[: ~LI :], type_list[: ~T1 , ~T2 ... :]) ]|
+     */
+
+    @Syntax("type = '\\'' IDTOKEN")
+    default E varType(java.lang.String id) {
+        return alg().typeVar(id);
+    }
 }

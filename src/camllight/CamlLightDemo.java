@@ -38,7 +38,7 @@ public class CamlLightDemo {
     }
 
     public static void main(String[] args) throws FunconException {
-        interpret("let add (x : (int)) y = x + y in add 5 3");
+        interpret("let add (x : (foo -> 'bar)) y = x + y in add 5 3");
         interpret("[0 ; 1 ; 2]");
         interpret("let smallerThan = function | [x :: y :: _] -> x < y in smallerThan [0 ; 1]");
         /*interpret("(  )");
