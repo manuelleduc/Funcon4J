@@ -12,6 +12,14 @@ public class NominalVal implements Value {
         this.value = v;
     }
 
+    public NominalTag tag() {
+        return tag;
+    }
+
+    public Value val() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return obj instanceof NominalVal &&

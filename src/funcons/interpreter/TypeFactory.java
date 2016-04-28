@@ -45,6 +45,14 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     }
 
     @Override
+    default IEval nomValSelect(IEval nomTag, IEval nomVal) {
+        return (env, store, given) -> {
+            NominalVal nVal = (NominalVal)nomVal.eval(env, store, given);
+            return whenTrue(equal(nomTag, (e,s,g) -> nVal.tag()), (e,s,g) -> nVal.val()).eval(env, store, given);
+        };
+    }
+
+    @Override
     default IEval depends(IEval type1, IEval type2) {
         return (env, store, given) -> new Depends((Type)type1.eval(env, store, given), (Type)type2.eval(env, store, given));
     }

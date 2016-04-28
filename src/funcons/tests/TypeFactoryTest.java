@@ -82,6 +82,22 @@ public class TypeFactoryTest {
     }
 
     @Test
+    public void testNomValSelect() throws Exception {
+        Token t = (Token)alg.freshToken().eval(new Environment(), new Store(), new Null());
+        IEval val = alg.nomValSelect(alg.nomTag((e,s,g) -> t), alg.nomVal(alg.nomTag((e,s,g) -> t), alg.lit(0)));
+        Int i = (Int)val.eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
+
+        val = alg.nomValSelect(alg.nomTag(alg.freshToken()), alg.nomVal(alg.nomTag(alg.freshToken()), alg.lit(0)));
+        try {
+            i = (Int)val.eval(new Environment(), new Store(), new Null());
+        } catch(FailureTrue e) {
+            return;
+        }
+        assertTrue(false);
+    }
+
+    @Test
     public void testDepends() throws Exception {
         Depends d = (Depends)alg.depends(alg.type("foo"), alg.type("bar")).eval(new Environment(), new Store(), new Null());
         assertEquals(new Depends(new Type("foo"), new Type("bar")), d);
