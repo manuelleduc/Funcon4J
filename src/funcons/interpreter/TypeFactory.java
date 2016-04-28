@@ -53,6 +53,11 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     }
 
     @Override
+    default IEval scopeNominalCoercion(IEval type1, IEval type2, IEval abs) {
+        return apply(abs, nomTag(freshToken()));
+    }
+
+    @Override
     default IEval depends(IEval type1, IEval type2) {
         return (env, store, given) -> new Depends((Type)type1.eval(env, store, given), (Type)type2.eval(env, store, given));
     }

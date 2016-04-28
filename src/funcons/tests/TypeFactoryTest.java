@@ -98,6 +98,13 @@ public class TypeFactoryTest {
     }
 
     @Test
+    public void testScopeNominalCoercion() throws Exception {
+        IEval val = alg.scopeNominalCoercion(alg.type("foo"), alg.type("bar"), alg.abs(alg.any(), alg.lit(0)));
+        Int i = (Int)val.eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
+    }
+
+    @Test
     public void testDepends() throws Exception {
         Depends d = (Depends)alg.depends(alg.type("foo"), alg.type("bar")).eval(new Environment(), new Store(), new Null());
         assertEquals(new Depends(new Type("foo"), new Type("bar")), d);
