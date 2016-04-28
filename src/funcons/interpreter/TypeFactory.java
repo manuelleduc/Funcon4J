@@ -4,6 +4,8 @@ import funcons.algebras.TypeAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
 import funcons.values.Int;
+import funcons.values.ids.Meta;
+import funcons.values.ids.TypeVar;
 import funcons.values.types.*;
 
 public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
@@ -25,6 +27,11 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     @Override
     default IEval variant(java.lang.String tagName, IEval exp) {
         return (env, store, given) -> new Variant(tagName, exp.eval(env, store, given));
+    }
+
+    @Override
+    default IEval meta(java.lang.String name) {
+        return (env, store, given) -> new Meta(name);
     }
 
     @Override

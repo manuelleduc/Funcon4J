@@ -5,6 +5,8 @@ import funcons.algebras.TypeAlg;
 import funcons.interpreter.TypeFactory;
 import funcons.sorts.IEval;
 import funcons.values.*;
+import funcons.values.ids.Meta;
+import funcons.values.ids.TypeVar;
 import funcons.values.signals.FailureTrue;
 import funcons.values.types.*;
 import org.junit.Before;
@@ -43,6 +45,12 @@ public class TypeFactoryTest {
     public void testVariant() throws Exception {
         Variant v = (Variant)alg.variant("foo", alg.lit(0)).eval(new Environment(), new Store(), new Null());
         assertEquals(new Variant("foo", new Int(0)), v);
+    }
+
+    @Test
+    public void testMeta() throws Exception {
+        Meta m = (Meta)alg.meta("foo").eval(new Environment(), new Store(), new Null());
+        assertEquals(new Meta("foo"), m);
     }
 
     @Test

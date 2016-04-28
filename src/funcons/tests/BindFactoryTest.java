@@ -5,6 +5,8 @@ import funcons.algebras.BindAlg;
 import funcons.interpreter.BindFactory;
 import funcons.sorts.IEval;
 import funcons.values.*;
+import funcons.values.ids.Id;
+import funcons.values.ids.NameId;
 import org.junit.Before;
 import org.junit.Test;
 

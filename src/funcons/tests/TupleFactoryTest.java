@@ -5,6 +5,7 @@ import funcons.algebras.TupleAlg;
 import funcons.interpreter.TupleFactory;
 import funcons.sorts.IEval;
 import funcons.values.*;
+import funcons.values.ids.Id;
 import funcons.values.signals.FailureTrue;
 import org.junit.Before;
 import org.junit.Test;

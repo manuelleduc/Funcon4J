@@ -3,8 +3,8 @@ package funcons.interpreter;
 import funcons.algebras.BindAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
-import funcons.values.Id;
-import funcons.values.NameId;
+import funcons.values.ids.Id;
+import funcons.values.ids.NameId;
 
 public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     @Override

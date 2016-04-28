@@ -5,6 +5,7 @@ import funcons.algebras.ApplyAlg;
 import funcons.interpreter.ApplyFactory;
 import funcons.sorts.IEval;
 import funcons.values.*;
+import funcons.values.ids.Id;
 import org.junit.Before;
 import org.junit.Test;
 

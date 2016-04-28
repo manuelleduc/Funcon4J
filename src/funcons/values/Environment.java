@@ -1,5 +1,6 @@
 package funcons.values;
 
+import funcons.values.ids.Id;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Environment implements Value {

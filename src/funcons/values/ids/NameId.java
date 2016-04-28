@@ -1,4 +1,4 @@
-package funcons.values;
+package funcons.values.ids;
 
 public class NameId extends Id {
     public final java.lang.String namespace;

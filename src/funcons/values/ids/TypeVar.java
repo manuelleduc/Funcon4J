@@ -1,6 +1,4 @@
-package funcons.values.types;
-
-import funcons.values.Id;
+package funcons.values.ids;
 
 public class TypeVar extends Id {
 
