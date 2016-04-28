@@ -13,4 +13,9 @@ public class Type implements Value {
     public boolean equals(Object o) {
         return o instanceof Type && ((Type)o).name.equals(this.name);
     }
+
+    @Override
+    public String toString() {
+        return "Type: " + name.toString();
+    }
 }
