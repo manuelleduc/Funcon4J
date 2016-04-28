@@ -107,9 +107,9 @@ public class TypeFactoryTest {
 
     @Test
     public void testNewType() throws Exception {
-        NomType t1 = (NomType)alg.newType(alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        NominalType t1 = (NominalType)alg.newType(alg.lit(0)).eval(new Environment(), new Store(), new Null());
         assertNotNull(t1);
-        NomType t2 = (NomType)alg.newType(alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        NominalType t2 = (NominalType)alg.newType(alg.lit(0)).eval(new Environment(), new Store(), new Null());
         assertNotEquals(t1, t2);
     }
 

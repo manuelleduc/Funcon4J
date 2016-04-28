@@ -99,7 +99,7 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
 
     @Override
     default IEval newType(IEval name) {
-        return (env, store, given) -> new NomType(name.eval(env, store, given), (Token)freshToken().eval(env, store, given));
+        return (env, store, given) -> new NominalType(name.eval(env, store, given), (Token)freshToken().eval(env, store, given));
     }
 
     @Override

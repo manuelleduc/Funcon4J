@@ -2,11 +2,11 @@ package funcons.values.types;
 
 import funcons.values.Value;
 
-public class NomType extends Type {
+public class NominalType extends Type {
 
     private final Token token;
 
-    public NomType(Value name, Token token) {
+    public NominalType(Value name, Token token) {
         super(name.toString()); // TODO Hacky?
         this.token = token;
     }
@@ -18,6 +18,6 @@ public class NomType extends Type {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof NomType && ((NomType)obj).token.equals(this.token);
+        return obj instanceof NominalType && ((NominalType)obj).token.equals(this.token);
     }
 }
