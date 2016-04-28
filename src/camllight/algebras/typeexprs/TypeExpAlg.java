@@ -9,4 +9,15 @@ public interface TypeExpAlg<E> extends StartAlg<E> {
     default E bracketedType(E type) {
         return type;
     }
+
+    @Syntax("type = ident")
+    default E typeId(E id) {
+        return alg().boundType(id);
+    }
+
+    /*
+    @Syntax("type = type '->' type")
+    default E functionType(E t1, E t2) {
+        return
+    }*/
 }
