@@ -2,7 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.EffectAlg;
 import funcons.sorts.IEval;
-import funcons.types.Null;
+import funcons.values.Null;
 
 public interface EffectFactory extends PrintFactory, EffectAlg<IEval> {
     @Override

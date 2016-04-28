@@ -1,4 +1,4 @@
-package funcons.types;
+package funcons.values;
 
 public class Variable implements Value {
     private java.lang.Integer loc;

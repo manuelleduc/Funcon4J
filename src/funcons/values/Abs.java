@@ -1,4 +1,4 @@
-package funcons.types;
+package funcons.values;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 

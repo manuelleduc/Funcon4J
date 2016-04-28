@@ -1,4 +1,4 @@
-package funcons.types;
+package funcons.values;
 
 public class Int implements Number {
     private java.lang.Integer value;

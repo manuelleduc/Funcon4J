@@ -1,6 +1,6 @@
-package funcons.types.signals;
+package funcons.values.signals;
 
-import funcons.types.Value;
+import funcons.values.Value;
 
 public abstract class FunconException extends Exception implements Value {
 }

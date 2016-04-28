@@ -2,7 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.IntCalcAlg;
 import funcons.sorts.IEval;
-import funcons.types.*;
+import funcons.values.*;
 
 public interface IntCalcFactory extends NullFactory, IntCalcAlg<IEval> {
     @Override

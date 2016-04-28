@@ -4,10 +4,10 @@ import funcons.Store;
 import funcons.algebras.LogicIfTrueAlg;
 import funcons.interpreter.LogicIfTrueFactory;
 import funcons.sorts.IEval;
-import funcons.types.Bool;
-import funcons.types.Environment;
-import funcons.types.Int;
-import funcons.types.Null;
+import funcons.values.Bool;
+import funcons.values.Environment;
+import funcons.values.Int;
+import funcons.values.Null;
 import org.junit.Before;
 import org.junit.Test;
 

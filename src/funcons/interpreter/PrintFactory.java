@@ -2,7 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.PrintAlg;
 import funcons.sorts.IEval;
-import funcons.types.Null;
+import funcons.values.Null;
 
 public interface PrintFactory extends IntCalcFactory, PrintAlg<IEval> {
 

@@ -4,8 +4,8 @@ import funcons.Store;
 import funcons.algebras.TupleAlg;
 import funcons.interpreter.TupleFactory;
 import funcons.sorts.IEval;
-import funcons.types.*;
-import funcons.types.signals.FailureTrue;
+import funcons.values.*;
+import funcons.values.signals.FailureTrue;
 import org.junit.Before;
 import org.junit.Test;
 

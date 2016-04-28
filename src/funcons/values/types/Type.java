@@ -1,4 +1,6 @@
-package funcons.types;
+package funcons.values.types;
+
+import funcons.values.Value;
 
 public class Type implements Value {
     public final java.lang.String name;

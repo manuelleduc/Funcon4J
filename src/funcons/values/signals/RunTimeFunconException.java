@@ -1,4 +1,4 @@
-package funcons.types.signals;
+package funcons.values.signals;
 
 public class RunTimeFunconException extends FunconException {
 }

@@ -4,8 +4,10 @@ import funcons.Store;
 import funcons.algebras.TypeAlg;
 import funcons.interpreter.TypeFactory;
 import funcons.sorts.IEval;
-import funcons.types.*;
-import funcons.types.signals.FailureTrue;
+import funcons.values.*;
+import funcons.values.signals.FailureTrue;
+import funcons.values.types.Type;
+import funcons.values.types.Variant;
 import org.junit.Before;
 import org.junit.Test;
 

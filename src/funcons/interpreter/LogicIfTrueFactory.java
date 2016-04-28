@@ -2,7 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.LogicIfTrueAlg;
 import funcons.sorts.IEval;
-import funcons.types.Bool;
+import funcons.values.Bool;
 
 public interface LogicIfTrueFactory extends SeqFactory, LogicIfTrueAlg<IEval> {
 

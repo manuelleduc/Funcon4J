@@ -2,10 +2,9 @@ package funcons.interpreter;
 
 import funcons.algebras.ExceptionAlg;
 import funcons.sorts.IEval;
-import funcons.types.signals.FailureTrue;
-import funcons.types.signals.FunconException;
-import funcons.types.signals.MatchFailureException;
-import funcons.types.signals.RunTimeFunconException;
+import funcons.values.signals.FailureTrue;
+import funcons.values.signals.MatchFailureException;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
 

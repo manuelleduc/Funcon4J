@@ -2,9 +2,9 @@ package funcons.interpreter;
 
 import funcons.algebras.TypeAlg;
 import funcons.sorts.IEval;
-import funcons.types.Tag;
-import funcons.types.Type;
-import funcons.types.Variant;
+import funcons.values.Tag;
+import funcons.values.types.Type;
+import funcons.values.types.Variant;
 
 public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     @Override

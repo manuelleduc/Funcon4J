@@ -4,7 +4,7 @@ import funcons.Store;
 import funcons.algebras.BindAlg;
 import funcons.interpreter.BindFactory;
 import funcons.sorts.IEval;
-import funcons.types.*;
+import funcons.values.*;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package funcons;
 
-import funcons.types.Value;
-import funcons.types.Variable;
+import funcons.values.Value;
+import funcons.values.Variable;
 
 import java.util.HashMap;
 

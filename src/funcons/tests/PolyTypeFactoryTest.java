@@ -4,9 +4,9 @@ import funcons.Store;
 import funcons.algebras.PolyTypeAlg;
 import funcons.interpreter.PolyTypeFactory;
 import funcons.sorts.IEval;
-import funcons.types.Environment;
-import funcons.types.Int;
-import funcons.types.Null;
+import funcons.values.Environment;
+import funcons.values.Int;
+import funcons.values.Null;
 import org.junit.Before;
 import org.junit.Test;
 

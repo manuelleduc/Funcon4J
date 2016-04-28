@@ -1,4 +1,7 @@
-package funcons.types;
+package funcons.values.types;
+
+import funcons.values.Tag;
+import funcons.values.Value;
 
 public class Variant implements Value {
     public final Tag tag;
@@ -9,7 +12,7 @@ public class Variant implements Value {
         value = v;
     }
 
-    public Variant(funcons.types.String name, Value v) {
+    public Variant(funcons.values.String name, Value v) {
         this(name.stringValue(), v);
     }
 

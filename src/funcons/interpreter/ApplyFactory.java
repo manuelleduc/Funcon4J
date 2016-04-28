@@ -3,7 +3,7 @@ package funcons.interpreter;
 import funcons.Store;
 import funcons.algebras.ApplyAlg;
 import funcons.sorts.IEval;
-import funcons.types.*;
+import funcons.values.*;
 
 public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
 

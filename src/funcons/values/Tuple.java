@@ -1,4 +1,4 @@
-package funcons.types;
+package funcons.values;
 
 public class Tuple implements Value {
     private final Tuple tail;

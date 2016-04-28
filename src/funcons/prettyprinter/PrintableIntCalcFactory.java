@@ -2,7 +2,7 @@ package funcons.prettyprinter;
 
 import funcons.algebras.IntCalcAlg;
 import funcons.sorts.IPrint;
-import funcons.types.String;
+import funcons.values.String;
 
 public interface PrintableIntCalcFactory extends IntCalcAlg<IPrint> {
 

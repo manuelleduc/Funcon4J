@@ -2,7 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.AssignAlg;
 import funcons.sorts.IEval;
-import funcons.types.*;
+import funcons.values.*;
 
 public interface AssignFactory extends ElseFactory, AssignAlg<IEval> {
 

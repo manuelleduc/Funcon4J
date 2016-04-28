@@ -2,8 +2,8 @@ package funcons.interpreter;
 
 import funcons.algebras.ElseAlg;
 import funcons.sorts.IEval;
-import funcons.types.Bool;
-import funcons.types.Environment;
+import funcons.values.Bool;
+import funcons.values.Environment;
 
 public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
 

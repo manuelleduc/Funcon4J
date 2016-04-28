@@ -2,7 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.ListAlg;
 import funcons.sorts.IEval;
-import funcons.types.*;
+import funcons.values.*;
 
 public interface ListFactory extends TupleFactory, ListAlg<IEval> {
     @Override

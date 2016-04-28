@@ -1,6 +1,6 @@
 package funcons.sorts;
 
-import funcons.types.String;
+import funcons.values.String;
 
 public interface IPrint {
     String print();

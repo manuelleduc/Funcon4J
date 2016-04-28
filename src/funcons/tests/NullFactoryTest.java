@@ -4,8 +4,8 @@ import funcons.Store;
 import funcons.algebras.NullAlg;
 import funcons.interpreter.NullFactory;
 import funcons.sorts.IEval;
-import funcons.types.Environment;
-import funcons.types.Null;
+import funcons.values.Environment;
+import funcons.values.Null;
 import org.junit.Before;
 import org.junit.Test;
 

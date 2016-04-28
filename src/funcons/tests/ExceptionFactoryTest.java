@@ -4,9 +4,9 @@ import funcons.Store;
 import funcons.algebras.ExceptionAlg;
 import funcons.interpreter.ExceptionFactory;
 import funcons.sorts.IEval;
-import funcons.types.*;
-import funcons.types.signals.FailureTrue;
-import funcons.types.signals.MatchFailureException;
+import funcons.values.*;
+import funcons.values.signals.FailureTrue;
+import funcons.values.signals.MatchFailureException;
 import org.junit.Before;
 import org.junit.Test;
 

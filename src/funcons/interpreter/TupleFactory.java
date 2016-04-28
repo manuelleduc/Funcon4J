@@ -2,7 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.TupleAlg;
 import funcons.sorts.IEval;
-import funcons.types.*;
+import funcons.values.*;
 
 import java.util.NoSuchElementException;
 

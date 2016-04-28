@@ -1,10 +1,8 @@
 package funcons.prettyprinter;
 
-import funcons.algebras.LogicIfTrueAlg;
 import funcons.algebras.LogicWhileTrueAlg;
-import funcons.algebras.SeqAlg;
 import funcons.sorts.IPrint;
-import funcons.types.String;
+import funcons.values.String;
 
 public interface PrintableLogicControlFactory extends
         PrintableIntCalcFactory,

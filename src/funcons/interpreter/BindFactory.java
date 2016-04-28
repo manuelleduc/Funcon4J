@@ -2,10 +2,9 @@ package funcons.interpreter;
 
 import funcons.algebras.BindAlg;
 import funcons.sorts.IEval;
-import funcons.types.Abs;
-import funcons.types.Environment;
-import funcons.types.Id;
-import funcons.types.NameId;
+import funcons.values.Environment;
+import funcons.values.Id;
+import funcons.values.NameId;
 
 public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     @Override

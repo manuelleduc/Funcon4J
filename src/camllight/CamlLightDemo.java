@@ -5,9 +5,9 @@ import camllight.parser.CLParser;
 
 import funcons.Store;
 import funcons.sorts.IEval;
-import funcons.types.Environment;
-import funcons.types.signals.FunconException;
-import funcons.types.Null;
+import funcons.values.Environment;
+import funcons.values.signals.FunconException;
+import funcons.values.Null;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -31,7 +31,7 @@ public class CamlLightDemo {
         IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.TypeFactory() {});
         System.out.println(src);
         System.out.print("Print output: ");
-        funcons.types.Value result = eval.eval(new Environment(), new Store(), new Null());
+        funcons.values.Value result = eval.eval(new Environment(), new Store(), new Null());
         System.out.println();
         System.out.println("Result: " + result);
         System.out.println();
