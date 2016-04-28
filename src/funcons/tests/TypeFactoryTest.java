@@ -6,10 +6,7 @@ import funcons.interpreter.TypeFactory;
 import funcons.sorts.IEval;
 import funcons.values.*;
 import funcons.values.signals.FailureTrue;
-import funcons.values.types.NomType;
-import funcons.values.types.Token;
-import funcons.values.types.Type;
-import funcons.values.types.Variant;
+import funcons.values.types.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,6 +43,12 @@ public class TypeFactoryTest {
     public void testTyped() throws Exception {
         Int i = (Int)alg.typed(alg.lit(0), alg.type("foo")).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
+    }
+
+    @Test
+    public void testBoundType() throws Exception {
+        Null n = (Null)alg.boundType(alg.id("foo")).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Null(), n);
     }
 
     @Test

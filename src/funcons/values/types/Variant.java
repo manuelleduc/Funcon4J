@@ -1,6 +1,5 @@
 package funcons.values.types;
 
-import funcons.values.Tag;
 import funcons.values.Value;
 
 public class Variant implements Value {

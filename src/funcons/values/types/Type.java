@@ -16,6 +16,6 @@ public class Type implements Value {
 
     @Override
     public String toString() {
-        return "Type: " + name.toString();
+        return "Type: " + name;
     }
 }

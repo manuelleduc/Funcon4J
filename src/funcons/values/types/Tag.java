@@ -1,4 +1,6 @@
-package funcons.values;
+package funcons.values.types;
+
+import funcons.values.Value;
 
 public class Tag implements Value {
     public final java.lang.String name;

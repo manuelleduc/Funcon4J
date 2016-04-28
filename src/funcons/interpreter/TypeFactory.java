@@ -3,7 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.TypeAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
-import funcons.values.Tag;
+import funcons.values.types.Tag;
 import funcons.values.types.NomType;
 import funcons.values.types.Token;
 import funcons.values.types.Type;
@@ -28,6 +28,11 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     @Override
     default IEval typed(IEval exp, IEval type) {
         return exp;
+    }
+
+    @Override
+    default IEval boundType(IEval id) {
+        return null_(); // TODO evaluated statically?
     }
 
     @Override
