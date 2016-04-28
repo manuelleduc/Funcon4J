@@ -15,7 +15,7 @@ public interface StartAlg<E> {
     default E id(java.lang.String name) {
         return alg().id(name);
     }
-    
+
     // Not part of the language, just used for easy testing purposes
     @Syntax("exp = 'print' exp")
     default E print(E e) {

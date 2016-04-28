@@ -3,11 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.TypeAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
-import funcons.values.types.Tag;
-import funcons.values.types.NomType;
-import funcons.values.types.Token;
-import funcons.values.types.Type;
-import funcons.values.types.Variant;
+import funcons.values.types.*;
 
 public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     @Override
@@ -23,6 +19,11 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     @Override
     default IEval variant(java.lang.String tagName, IEval exp) {
         return (env, store, given) -> new Variant(tagName, exp.eval(env, store, given));
+    }
+
+    @Override
+    default IEval depends(IEval type1, IEval type2) {
+        return (env, store, given) -> new Depends((Type)type1.eval(env, store, given), (Type)type2.eval(env, store, given));
     }
 
     @Override

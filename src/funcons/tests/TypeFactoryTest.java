@@ -40,6 +40,12 @@ public class TypeFactoryTest {
     }
 
     @Test
+    public void testDepends() throws Exception {
+        Depends d = (Depends)alg.depends(alg.type("foo"), alg.type("bar")).eval(new Environment(), new Store(), new Null());
+        assertEquals(new Depends(new Type("foo"), new Type("bar")), d);
+    }
+
+    @Test
     public void testTyped() throws Exception {
         Int i = (Int)alg.typed(alg.lit(0), alg.type("foo")).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
