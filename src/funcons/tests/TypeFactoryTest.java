@@ -54,6 +54,34 @@ public class TypeFactoryTest {
     }
 
     @Test
+    public void testNomTag() throws Exception {
+        NominalTag n1 = (NominalTag)alg.nomTag(alg.freshToken()).eval(new Environment(), new Store(), new Null());
+        NominalTag n2 = (NominalTag)alg.nomTag(alg.freshToken()).eval(new Environment(), new Store(), new Null());
+        assertNotEquals(n1, n2);
+
+        Token t = (Token)alg.freshToken().eval(new Environment(), new Store(), new Null());
+        n1 = (NominalTag)alg.nomTag((e,s,g) -> t).eval(new Environment(), new Store(), new Null());
+        n2 = (NominalTag)alg.nomTag((e,s,g) -> t).eval(new Environment(), new Store(), new Null());
+        assertEquals(n1, n2);
+    }
+
+    @Test
+    public void testNomVal() throws Exception {
+        NominalVal n1 = (NominalVal)alg.nomVal(alg.nomTag(alg.freshToken()), alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        NominalVal n2 = (NominalVal)alg.nomVal(alg.nomTag(alg.freshToken()), alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        assertNotEquals(n1, n2);
+
+        NominalTag nt = (NominalTag)alg.nomTag(alg.freshToken()).eval(new Environment(), new Store(), new Null());
+        n1 = (NominalVal)alg.nomVal((e,s,g) -> nt, alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        n2 = (NominalVal)alg.nomVal((e,s,g) -> nt, alg.lit(1)).eval(new Environment(), new Store(), new Null());
+        assertNotEquals(n1, n2);
+
+        n1 = (NominalVal)alg.nomVal((e,s,g) -> nt, alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        n2 = (NominalVal)alg.nomVal((e,s,g) -> nt, alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        assertEquals(n1, n2);
+    }
+
+    @Test
     public void testDepends() throws Exception {
         Depends d = (Depends)alg.depends(alg.type("foo"), alg.type("bar")).eval(new Environment(), new Store(), new Null());
         assertEquals(new Depends(new Type("foo"), new Type("bar")), d);
