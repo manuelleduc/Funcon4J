@@ -6,6 +6,7 @@ import funcons.interpreter.TypeFactory;
 import funcons.sorts.IEval;
 import funcons.values.*;
 import funcons.values.signals.FailureTrue;
+import funcons.values.types.Token;
 import funcons.values.types.Type;
 import funcons.values.types.Variant;
 import org.junit.Before;
@@ -44,6 +45,13 @@ public class TypeFactoryTest {
     public void testTyped() throws Exception {
         Int i = (Int)alg.typed(alg.lit(0), alg.type("foo")).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
+    }
+
+    @Test
+    public void testFreshToken() throws Exception {
+        Token t1 = (Token)alg.freshToken().eval(new Environment(), new Store(), new Null());
+        Token t2 = (Token)alg.freshToken().eval(new Environment(), new Store(), new Null());
+        assertNotEquals(t1, t2);
     }
 
     @Test
