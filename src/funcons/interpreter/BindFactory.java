@@ -43,6 +43,11 @@ public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     }
 
     @Override
+    default IEval environment() {
+        return (env, store, given) -> new Environment();
+    }
+
+    @Override
     default IEval environmentUnion(IEval env1, IEval env2) {
         return (env, store, given) -> {
             Environment e1 = (Environment)env1.eval(env, store, given);

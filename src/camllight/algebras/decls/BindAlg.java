@@ -1,13 +1,11 @@
 package camllight.algebras.decls;
 
-import camllight.algebras.base.StartAlg;
+import camllight.algebras.base.ModuleAlg;
 import camllight.algebras.patts.PattMatchAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-import javax.xml.bind.annotation.XmlElement;
-
-public interface BindAlg<E> extends StartAlg<E>, PattMatchAlg<E> {
+public interface BindAlg<E> extends ModuleAlg<E>, PattMatchAlg<E> {
 
     @Syntax("decl = 'let' decl") @Level(1)
     default E decl(E dec) {

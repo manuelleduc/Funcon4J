@@ -1,10 +1,10 @@
 package camllight.algebras.exprs;
 
-import camllight.algebras.base.StartAlg;
+import camllight.algebras.base.ModuleAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface BaseExpAlg<E> extends StartAlg<E> {
+public interface BaseExpAlg<E> extends ModuleAlg<E> {
     @Syntax("exp = constant") @Level(2700)
     default E constExp(E e) {
         return e;

@@ -1,7 +1,9 @@
 package camllight.algebras;
 
+import camllight.algebras.base.ModuleAlg;
+
 public interface AllAlg<E> extends
-        camllight.algebras.base.StartAlg<E>,
+        ModuleAlg<E>,
         camllight.algebras.constants.ConstantsAlg<E>,
         camllight.algebras.exprs.ExpControlAlg<E>,
         camllight.algebras.decls.GlobalAlg<E>,

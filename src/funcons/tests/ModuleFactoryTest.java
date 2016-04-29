@@ -30,5 +30,4 @@ public class ModuleFactoryTest {
         assertEquals(new Integer(1), ((Int)env.val(new Id("bar"))).intValue());
         assertEquals(new Integer(3), ((Int)env.val(new Id("foo"))).intValue());
     }
-
 }

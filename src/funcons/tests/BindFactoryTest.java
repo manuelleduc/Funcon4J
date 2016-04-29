@@ -74,6 +74,12 @@ public class BindFactoryTest {
     }
 
     @Test
+    public void testEnvironment() throws Exception {
+        Environment env = (Environment)alg.environment().eval(new Environment(), new Store(), new Null());
+        assertNotNull(env);
+    }
+
+    @Test
     public void testEnvironmentUnion() throws Exception {
         IEval e1 = alg.bindValue(alg.id("x"), alg.lit(1));
         IEval e2 = alg.bindValue(alg.id("y"), alg.lit(2));

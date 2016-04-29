@@ -1,6 +1,5 @@
 package camllight.algebras.exprs;
 
-import camllight.algebras.base.StartAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 

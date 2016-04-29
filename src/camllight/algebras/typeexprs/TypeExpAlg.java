@@ -1,12 +1,12 @@
 package camllight.algebras.typeexprs;
 
-import camllight.algebras.base.StartAlg;
+import camllight.algebras.base.ModuleAlg;
 import noa.syntax.Syntax;
 
 import java.util.List;
 import java.util.ListIterator;
 
-public interface TypeExpAlg<E> extends StartAlg<E> {
+public interface TypeExpAlg<E> extends ModuleAlg<E> {
 
     @Syntax("type = '(' type ')'")
     default E bracketedType(E type) {

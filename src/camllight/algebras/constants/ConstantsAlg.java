@@ -1,9 +1,9 @@
 package camllight.algebras.constants;
 
-import camllight.algebras.base.StartAlg;
+import camllight.algebras.base.ModuleAlg;
 import noa.syntax.Syntax;
 
-public interface ConstantsAlg<E> extends StartAlg<E> {
+public interface ConstantsAlg<E> extends ModuleAlg<E> {
     @Syntax("constant = NUMTOKEN")
     default E int_(java.lang.Integer l) {
         return alg().lit(l);

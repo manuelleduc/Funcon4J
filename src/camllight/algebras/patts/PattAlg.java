@@ -1,9 +1,9 @@
 package camllight.algebras.patts;
 
-import camllight.algebras.base.StartAlg;
+import camllight.algebras.base.ModuleAlg;
 import noa.syntax.Syntax;
 
-public interface PattAlg<E> extends StartAlg<E> {
+public interface PattAlg<E> extends ModuleAlg<E> {
 
     @Syntax("patt = '(' patt ')'")
     default E bracketedPatt(E patt) {
