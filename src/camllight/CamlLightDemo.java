@@ -38,8 +38,8 @@ public class CamlLightDemo {
 
     public static void main(String[] args) throws FunconException {
         interpret("let add (x : (foo -> I * can * write * anything * here)) y = x + y in add 5 3;;");
-        interpret("[0 ; 1 ; 2];;");
-        interpret("let smallerThan = function | [x :: y :: _] -> x < y in smallerThan [0 ; 1];;");
+        interpret("[1 ; 2 ; 3] ;; [] ;; () ;; 1 ;;");
+        /*interpret("let smallerThan = function | [x :: y :: _] -> x < y in smallerThan [0 ; 1];;");
         interpret("(  );;");
         interpret("[ ];;");
         interpret("let test = function (0 | 1) -> true | _ -> false in test 1;;");
@@ -57,7 +57,7 @@ public class CamlLightDemo {
         interpret("1;;");
         interpret("for i = 10 downto 1 do print i done;;");
         interpret("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5;;");
-        interpret("not false or true;;");
+        interpret("not false or true;;");*/
 
         //interpret("let countup = function | 10 -> print 10 | _ as x -> (print x ; countup x + 1) in countup 0;;");
     }
