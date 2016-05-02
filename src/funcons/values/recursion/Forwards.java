@@ -3,41 +3,26 @@ package funcons.values.recursion;
 import funcons.values.Map;
 import funcons.values.Value;
 
-public class Forwards extends Map<Fwd, Value> {
+public class Forwards implements Value {
 
-    private final Integer n;
+    private Map<Fwd, Value> map;
+    private Integer n;
 
     public Forwards() {
-        super();
+        map = new Map<>();
         n = 0;
-    }
-
-    public Forwards(Fwd key, Value x) {
-        super(key, x);
-        n = 1;
-    }
-
-    private Forwards(Forwards m, Fwd key, Value x) {
-        super(m, key, x);
-        n = m.n + 1;
-    }
-
-    private Forwards(Forwards a, Forwards b) {
-        super(a, b);
-        n = a.n + b.n;
     }
 
     public Fwd freshFwd() {
         return new Fwd(n);
     }
 
-    @Override
-    public Forwards add(Fwd key, Value x) {
-        return new Forwards(this, key, x);
+    public void add(Fwd key, Value x) {
+        map = map.add(key, x);
+        n++;
     }
 
-    @Override
-    public Forwards extend(Map<Fwd, Value> m) {
-        return new Forwards(this, (Forwards)m);
+    public Value follow(Fwd f) {
+        return map.val(f);
     }
 }
