@@ -3,10 +3,12 @@ package funcons.interpreter;
 import funcons.algebras.MapAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
+import funcons.values.List;
 import funcons.values.Map;
 import funcons.values.Value;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
+import funcons.values.recursion.Forwards;
 
 public interface MapFactory extends LogicWhileTrueFactory, MapAlg<IEval> {
     @Override
@@ -83,10 +85,5 @@ public interface MapFactory extends LogicWhileTrueFactory, MapAlg<IEval> {
             Map m3 = m2.extend(m1);
             return m3;
         };
-    }
-
-    @Override
-    default IEval fwdFresh() {
-        return (env, forward, store, given) -> forward.freshFwd();
     }
 }

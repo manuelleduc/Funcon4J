@@ -3,7 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.ModuleAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
-public interface ModuleFactory extends TypeFactory, ModuleAlg<IEval> {
+public interface ModuleFactory extends PolyTypeFactory, ModuleAlg<IEval> {
 
     @Override
     default IEval accum(IEval environment, IEval decl) {

@@ -28,7 +28,7 @@ public class Forwards extends Map<Fwd, Value> {
     }
 
     public Fwd freshFwd() {
-        return new Fwd(n + 1);
+        return new Fwd(n);
     }
 
     @Override

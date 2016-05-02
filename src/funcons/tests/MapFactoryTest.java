@@ -124,10 +124,4 @@ public class MapFactoryTest {
         assertEquals(new Integer(1), ((Int)map.val(new Id("foo"))).intValue());
         assertEquals(new Integer(2), ((Int)map.val(new Id("bar"))).intValue());
     }
-
-    @Test
-    public void testFwdFresh() throws Exception {
-        Fwd f = (Fwd)alg.fwdFresh().eval(new Environment(), new Forwards(), new Store(), new Null());
-        assertEquals((new Forwards()).freshFwd(), f);
-    }
 }

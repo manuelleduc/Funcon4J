@@ -18,4 +18,9 @@ public class Fwd implements Value {
     public int hashCode() {
         return n.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Forward:" + n;
+    }
 }
