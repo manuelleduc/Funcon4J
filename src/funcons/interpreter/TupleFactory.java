@@ -91,7 +91,7 @@ public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
 
     @Override
     default IEval curry(IEval a) {
-        return abs((env, forward, store, given) -> partialApp(a, (e,f,s,g) -> given).eval(env, new Forwards(), store, given));
+        return abs((env, forward, store, given) -> partialApp(a, (e,f,s,g) -> given).eval(env, forward, store, given));
     }
 
     @Override
