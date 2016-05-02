@@ -9,16 +9,16 @@ public abstract class Map<K, V> implements Value {
 
     private final Scope<K, V> scope;
 
-    public Map(){
+    public Map() {
         scope = (key) -> null;
     }
 
     public Map(K key, V x) {
-        scope = (n) -> key.equals(n) ? x : null;
+        scope = (otherKey) -> key.equals(otherKey) ? x : null;
     }
 
     public Map(Map<K, V> m, K key, V x) {
-        scope = (n) -> key.equals(n) ? x : m.val(key);
+        scope = (otherKey) -> key.equals(otherKey) ? x : m.val(otherKey);
     }
 
     public Map(Map<K, V> a, Map<K, V> b) {

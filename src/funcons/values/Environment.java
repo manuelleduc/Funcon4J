@@ -29,5 +29,4 @@ public class Environment extends Map<Id, Value> {
     public Environment extend(Map<Id, Value> m) {
         return new Environment(this, m);
     }
-
 }

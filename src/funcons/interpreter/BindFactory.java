@@ -4,6 +4,7 @@ import funcons.algebras.BindAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
 import funcons.values.Map;
+import funcons.values.Value;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
 
@@ -46,6 +47,18 @@ public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     @Override
     default IEval environment() {
         return (env, store, given) -> new Environment();
+    }
+
+    @Override
+    default IEval mapUpdate(IEval map, IEval key, IEval e) {
+        return (env, store, given) -> {
+            Map m = (Map)map.eval(env, store, given);
+            Value k = key.eval(env, store, given);
+            Value v = e.eval(env, store, given);
+            @SuppressWarnings("unchecked")
+            Map m2 = m.add(k, v);
+            return m2;
+        };
     }
 
     @Override

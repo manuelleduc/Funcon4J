@@ -106,4 +106,20 @@ public class BindFactoryTest {
         env = (Environment)alg.mapOver(e1, e2).eval(new Environment(), new Store(), new Null());
         assertEquals(new Integer(1), ((Int)env.val(new Id("x"))).intValue());
     }
+
+    @Test
+    public void testMapUpdate() throws Exception {
+        IEval mapEval = alg.mapUpdate(alg.environment(), alg.id("foo"), alg.lit(0));
+        Environment map = (Environment) mapEval.eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(0), ((Int)map.val(new Id("foo"))).intValue());
+
+        mapEval = alg.mapUpdate(mapEval, alg.id("foo"), alg.lit(1));
+        map = (Environment) mapEval.eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(1), ((Int)map.val(new Id("foo"))).intValue());
+
+        mapEval = alg.mapUpdate(mapEval, alg.id("bar"), alg.lit(2));
+        map = (Environment) mapEval.eval(new Environment(), new Store(), new Null());
+        assertEquals(new Integer(1), ((Int)map.val(new Id("foo"))).intValue());
+        assertEquals(new Integer(2), ((Int)map.val(new Id("bar"))).intValue());
+    }
 }
