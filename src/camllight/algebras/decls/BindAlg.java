@@ -29,6 +29,9 @@ public interface BindAlg<E> extends ModuleAlg<E>, PattMatchAlg<E> {
 
     @Syntax("declmono = ident patt+ '=' exp")
     default E declBindMonoFunc(E id, java.util.List<E> patts, E exp) {
+        if (patts.size() == 1) {
+            return alg().bindValue(id, this.pattMatchSingle(patts.get(0), exp));
+        }
         return alg().bindValue(id, pattMatchCurriedMulti(patts, exp));
     }
 

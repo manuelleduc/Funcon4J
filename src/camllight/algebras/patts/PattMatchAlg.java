@@ -1,15 +1,16 @@
 package camllight.algebras.patts;
 
+import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface PattMatchAlg<E> extends ListPattAlg<E> {
 
-    @Syntax("pattmatch = pattmatchsingle")
+    @Syntax("pattmatch = pattmatchsingle") @Level(0)
     default E pattMatch1(E pm) {
         return pm;
     }
 
-    @Syntax("pattmatch = pattmatchmultiple")
+    @Syntax("pattmatch = pattmatchmultiple") @Level(1)
     default E pattMatch2(E pm) {
         return pm;
     }
