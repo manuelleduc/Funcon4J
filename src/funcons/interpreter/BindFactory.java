@@ -49,10 +49,10 @@ public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     }
 
     @Override
-    default IEval mapUnion(IEval env1, IEval env2) {
+    default IEval mapUnion(IEval map1, IEval map2) {
         return (env, store, given) -> {
-            Map m1 = (Map)env1.eval(env, store, given);
-            Map m2 = (Map)env2.eval(env, store, given);
+            Map m1 = (Map)map1.eval(env, store, given);
+            Map m2 = (Map)map2.eval(env, store, given);
             @SuppressWarnings("unchecked")
             Map m3 = m1.extend(m2);
             return m3;
@@ -60,10 +60,10 @@ public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     }
 
     @Override
-    default IEval mapOver(IEval env1, IEval env2) {
+    default IEval mapOver(IEval map1, IEval map2) {
         return (env, store, given) -> {
-            Map m1 = (Map)env1.eval(env, store, given);
-            Map m2 = (Map)env2.eval(env, store, given);
+            Map m1 = (Map)map1.eval(env, store, given);
+            Map m2 = (Map)map2.eval(env, store, given);
             @SuppressWarnings("unchecked")
             Map m3 = m2.extend(m1);
             return m3;
