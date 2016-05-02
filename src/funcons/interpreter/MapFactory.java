@@ -1,15 +1,14 @@
 package funcons.interpreter;
 
-import funcons.algebras.BindAlg;
+import funcons.algebras.MapAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
 import funcons.values.Map;
 import funcons.values.Value;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
-import funcons.values.recursion.Forwards;
 
-public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
+public interface MapFactory extends LogicWhileTrueFactory, MapAlg<IEval> {
     @Override
     default IEval id(java.lang.String s) {
         return (env, forward, store, given) -> new Id(s);

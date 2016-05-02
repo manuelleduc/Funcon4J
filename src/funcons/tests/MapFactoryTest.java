@@ -1,8 +1,8 @@
 package funcons.tests;
 
 import funcons.Store;
-import funcons.algebras.BindAlg;
-import funcons.interpreter.BindFactory;
+import funcons.algebras.MapAlg;
+import funcons.interpreter.MapFactory;
 import funcons.sorts.IEval;
 import funcons.values.*;
 import funcons.values.ids.Id;
@@ -13,13 +13,13 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class BindFactoryTest {
+public class MapFactoryTest {
 
-    private BindAlg<IEval> alg;
+    private MapAlg<IEval> alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new BindFactory() {};
+        alg = new MapFactory() {};
     }
 
     @Test

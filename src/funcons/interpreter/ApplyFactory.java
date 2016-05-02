@@ -6,7 +6,7 @@ import funcons.sorts.IEval;
 import funcons.values.*;
 import funcons.values.recursion.Forwards;
 
-public interface ApplyFactory extends BindFactory, ApplyAlg<IEval> {
+public interface ApplyFactory extends MapFactory, ApplyAlg<IEval> {
 
     @Override
     default IEval abs(IEval exp) {
