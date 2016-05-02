@@ -8,6 +8,7 @@ import funcons.values.*;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
 import funcons.values.recursion.Forwards;
+import funcons.values.recursion.Fwd;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -122,5 +123,11 @@ public class MapFactoryTest {
         map = (Environment) mapEval.eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Integer(1), ((Int)map.val(new Id("foo"))).intValue());
         assertEquals(new Integer(2), ((Int)map.val(new Id("bar"))).intValue());
+    }
+
+    @Test
+    public void testFwdFresh() throws Exception {
+        Fwd f = (Fwd)alg.fwdFresh().eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals((new Forwards()).freshFwd(), f);
     }
 }

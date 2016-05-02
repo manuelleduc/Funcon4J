@@ -12,4 +12,5 @@ public interface MapAlg<E> extends LogicWhileTrueAlg<E> {
     E mapUpdate(E map, E key, E e);
     E mapUnion(E map1, E map2);
     E mapOver(E map1, E map2);
+    E fwdFresh();
 }

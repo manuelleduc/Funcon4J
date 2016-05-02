@@ -84,4 +84,9 @@ public interface MapFactory extends LogicWhileTrueFactory, MapAlg<IEval> {
             return m3;
         };
     }
+
+    @Override
+    default IEval fwdFresh() {
+        return (env, forward, store, given) -> forward.freshFwd();
+    }
 }
