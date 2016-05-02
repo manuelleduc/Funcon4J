@@ -9,6 +9,6 @@ public interface BindAlg<E> extends LogicWhileTrueAlg<E> {
     E given();
     E supply(E exp, E x);
     E environment();
-    E environmentUnion(E env1, E env2);
-    E environmentOver(E env1, E env2);
+    E mapUnion(E env1, E env2);
+    E mapOver(E env1, E env2);
 }

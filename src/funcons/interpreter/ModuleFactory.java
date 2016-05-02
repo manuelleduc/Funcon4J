@@ -10,7 +10,7 @@ public interface ModuleFactory extends TypeFactory, ModuleAlg<IEval> {
     default IEval accum(IEval environment, IEval decl) {
         return (env, store, given) -> {
             Environment currentEnv = (Environment)environment.eval(env, store, given);
-            return scope((e,s,g) -> currentEnv, environmentOver(decl, (e,s,g) -> currentEnv)).eval(env, store, given);
+            return scope((e,s,g) -> currentEnv, mapOver(decl, (e, s, g) -> currentEnv)).eval(env, store, given);
         };
     }
 }

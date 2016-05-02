@@ -14,7 +14,7 @@ public interface BindAlg<E> extends ModuleAlg<E>, PattMatchAlg<E> {
 
     @Syntax("decl = declmono 'and' decl") @Level(0)
     default E andDecl(E d1, E d2) {
-        return alg().environmentUnion(d1, d2);
+        return alg().mapUnion(d1, d2);
     }
 
     @Syntax("decl = declmono")

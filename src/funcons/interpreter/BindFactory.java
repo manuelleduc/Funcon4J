@@ -3,6 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.BindAlg;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
+import funcons.values.Map;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
 
@@ -48,20 +49,24 @@ public interface BindFactory extends LogicWhileTrueFactory, BindAlg<IEval> {
     }
 
     @Override
-    default IEval environmentUnion(IEval env1, IEval env2) {
+    default IEval mapUnion(IEval env1, IEval env2) {
         return (env, store, given) -> {
-            Environment e1 = (Environment)env1.eval(env, store, given);
-            Environment e2 = (Environment)env2.eval(env, store, given);
-            return e1.extend(e2);
+            Map m1 = (Map)env1.eval(env, store, given);
+            Map m2 = (Map)env2.eval(env, store, given);
+            @SuppressWarnings("unchecked")
+            Map m3 = m1.extend(m2);
+            return m3;
         };
     }
 
     @Override
-    default IEval environmentOver(IEval env1, IEval env2) {
+    default IEval mapOver(IEval env1, IEval env2) {
         return (env, store, given) -> {
-            Environment e1 = (Environment)env1.eval(env, store, given);
-            Environment e2 = (Environment)env2.eval(env, store, given);
-            return e2.extend(e1);
+            Map m1 = (Map)env1.eval(env, store, given);
+            Map m2 = (Map)env2.eval(env, store, given);
+            @SuppressWarnings("unchecked")
+            Map m3 = m2.extend(m1);
+            return m3;
         };
     }
 }

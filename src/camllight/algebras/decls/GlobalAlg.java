@@ -1,6 +1,5 @@
 package camllight.algebras.decls;
 
-import funcons.algebras.*;
 import noa.syntax.Syntax;
 
 public interface GlobalAlg<E> extends BindAlg<E> {
@@ -11,7 +10,7 @@ public interface GlobalAlg<E> extends BindAlg<E> {
                 alg().boundType(id),
                 alg().pattAbs(
                         alg().bind(alg().meta("nom_tag")),
-                        alg().environmentUnion(
+                        alg().mapUnion(
                                 alg().bindValue(
                                         alg().id(idToken),
                                         alg().close(alg().abs(alg().nomVal(
