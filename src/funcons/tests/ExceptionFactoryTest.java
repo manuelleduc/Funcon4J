@@ -5,6 +5,7 @@ import funcons.algebras.ExceptionAlg;
 import funcons.interpreter.ExceptionFactory;
 import funcons.sorts.IEval;
 import funcons.values.*;
+import funcons.values.recursion.Forwards;
 import funcons.values.signals.FailureTrue;
 import funcons.values.signals.MatchFailureException;
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class ExceptionFactoryTest {
     @Test
     public void testFail() throws Exception {
         try {
-            alg.fail().eval(new Environment(), new Store(), new Null());
+            alg.fail().eval(new Environment(), new Forwards(), new Store(), new Null());
         } catch (FailureTrue ignored) {
             return;
         }
@@ -34,17 +35,17 @@ public class ExceptionFactoryTest {
 
     @Test
     public void testElse_() throws Exception {
-        Int i = (Int)alg.else_(alg.fail(), alg.lit(3)).eval(new Environment(), new Store(), new Null());
+        Int i = (Int)alg.else_(alg.fail(), alg.lit(3)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(3));
 
-        i = (Int)alg.else_(alg.lit(2), alg.lit(3)).eval(new Environment(), new Store(), new Null());
+        i = (Int)alg.else_(alg.lit(2), alg.lit(3)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(2));
     }
 
     @Test
     public void testThrow_() throws Exception {
         try {
-            alg.throw_(alg.matchFailure()).eval(new Environment(), new Store(), new Null());
+            alg.throw_(alg.matchFailure()).eval(new Environment(), new Forwards(), new Store(), new Null());
         } catch(MatchFailureException s) {
             return;
         }
@@ -54,7 +55,7 @@ public class ExceptionFactoryTest {
     @Test
     public void testCatch_() throws Exception {
         IEval c = alg.catch_(alg.throw_(alg.matchFailure()), alg.abs(alg.given()));
-        MatchFailureException e = (MatchFailureException)c.eval(new Environment(), new Store(), new Null());
+        MatchFailureException e = (MatchFailureException)c.eval(new Environment(), new Forwards(), new Store(), new Null());
         assertNotNull(e);
     }
 
@@ -63,11 +64,11 @@ public class ExceptionFactoryTest {
         IEval fail = alg.throw_(alg.matchFailure());
 
         IEval c = alg.catchElseRethrow(fail, alg.abs(alg.given()));
-        MatchFailureException e = (MatchFailureException)c.eval(new Environment(), new Store(), new Null());
+        MatchFailureException e = (MatchFailureException)c.eval(new Environment(), new Forwards(), new Store(), new Null());
         assertNotNull(e);
 
         try {
-            alg.catchElseRethrow(fail, fail).eval(new Environment(), new Store(), new Null());
+            alg.catchElseRethrow(fail, fail).eval(new Environment(), new Forwards(), new Store(), new Null());
         } catch(MatchFailureException exception) {
             return;
         }
@@ -79,16 +80,16 @@ public class ExceptionFactoryTest {
         IEval f1 = alg.abs(alg.seq(alg.fail(), alg.bool(false)));
         IEval f2 = alg.abs(alg.bool(true));
 
-        Bool b = (Bool)alg.apply(alg.preferOver(f1, f2), alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        Bool b = (Bool)alg.apply(alg.preferOver(f1, f2), alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertTrue(b.boolValue());
 
-        b = (Bool)alg.apply(alg.preferOver(f2, f1), alg.lit(1)).eval(new Environment(), new Store(), new Null());
+        b = (Bool)alg.apply(alg.preferOver(f2, f1), alg.lit(1)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertTrue(b.boolValue());
     }
 
     @Test
     public void testMatchFailure() throws Exception {
-        MatchFailureException e = (MatchFailureException)alg.matchFailure().eval(new Environment(), new Store(), new Null());
+        MatchFailureException e = (MatchFailureException)alg.matchFailure().eval(new Environment(), new Forwards(), new Store(), new Null());
         assertNotNull(e);
     }
 }

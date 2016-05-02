@@ -6,6 +6,7 @@ import funcons.interpreter.NullFactory;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
 import funcons.values.Null;
+import funcons.values.recursion.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class NullFactoryTest {
 
     @Test
     public void testNull_() throws Exception {
-        Null n = (Null)alg.null_().eval(new Environment(), new Store(), new Null());
+        Null n = (Null)alg.null_().eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(n, new Null());
     }
 }

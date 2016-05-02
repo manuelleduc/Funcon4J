@@ -4,22 +4,24 @@ import funcons.algebras.ElseAlg;
 import funcons.sorts.IEval;
 import funcons.values.Bool;
 import funcons.values.Environment;
+import funcons.values.recursion.Forwards;
 
 public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
 
     @Override
     default IEval equal(IEval x1, IEval x2) {
-        return (env, store, given) -> new Bool(x1.eval(env, store, given).equals(x2.eval(env, store, given)));
+        return (env, forward, store, given) ->
+                new Bool(x1.eval(env, forward, store, given).equals(x2.eval(env, forward, store, given)));
     }
 
     @Override
     default IEval only(IEval v) {
-        return abs(ifTrue(equal(given(), v), (env, store, given) -> new Environment(), fail()));
+        return abs(ifTrue(equal(given(), v), (env, forward, store, given) -> new Environment(), fail()));
     }
 
     @Override
     default IEval any() {
-        return abs((env, store, given) -> new Environment());
+        return abs((env, forward, store, given) -> new Environment());
     }
 
     @Override
@@ -39,17 +41,17 @@ public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
 
     @Override
     default IEval pattUnion(IEval pat1, IEval pat2) {
-        return abs((env, store, given) -> {
-            Environment env1 = (Environment)unAbs(pat1, env, store, given).eval(env, store, given);
-            Environment env2 = (Environment)unAbs(pat2, env, store, given).eval(env, store, given);
+        return abs((env, forward, store, given) -> {
+            Environment env1 = (Environment)unAbs(pat1, env, forward, store, given).eval(env, forward, store, given);
+            Environment env2 = (Environment)unAbs(pat2, env, forward, store, given).eval(env, forward, store, given);
             return env1.extend(env2);
         });
     }
 
     @Override
     default IEval pattNonBinding(IEval patt) {
-        return abs((env, store, given) -> {
-            patt.eval(env, store, given);
+        return abs((env, forward, store, given) -> {
+            patt.eval(env, forward, store, given);
             return new Environment();
         });
     }

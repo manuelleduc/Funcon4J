@@ -6,6 +6,7 @@ import funcons.interpreter.PrintFactory;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
 import funcons.values.Null;
+import funcons.values.recursion.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,7 +28,7 @@ public class PrintFactoryTest {
     public void testPrint() throws Exception {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        alg.print(alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        alg.print(alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals("0", outContent.toString());
     }
 }

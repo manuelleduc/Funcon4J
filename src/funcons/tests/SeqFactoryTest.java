@@ -6,6 +6,7 @@ import funcons.interpreter.SeqFactory;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
 import funcons.values.Null;
+import funcons.values.recursion.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class SeqFactoryTest {
 
     @Test
     public void testSeq() throws Exception {
-        funcons.values.Int i = (funcons.values.Int)alg.seq(alg.lit(3), alg.lit(2)).eval(new Environment(), new Store(), new Null());
+        funcons.values.Int i = (funcons.values.Int)alg.seq(alg.lit(3), alg.lit(2)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(i.intValue(), new Integer(2));
     }
 }

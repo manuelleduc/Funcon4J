@@ -7,6 +7,7 @@ import funcons.sorts.IEval;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
+import funcons.values.recursion.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,13 +24,13 @@ public class PolyTypeFactoryTest {
 
     @Test
     public void testInstantiatePoly() throws Exception {
-        Int i = (Int)alg.instantiatePoly(alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        Int i = (Int)alg.instantiatePoly(alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
     }
 
     @Test
     public void testInstantiateIfPoly() throws Exception {
-        Int i = (Int)alg.instantiateIfPoly(alg.lit(0)).eval(new Environment(), new Store(), new Null());
+        Int i = (Int)alg.instantiateIfPoly(alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
     }
 }

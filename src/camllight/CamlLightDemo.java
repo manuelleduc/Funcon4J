@@ -6,6 +6,7 @@ import camllight.parser.CLParser;
 import funcons.Store;
 import funcons.sorts.IEval;
 import funcons.values.Environment;
+import funcons.values.recursion.Forwards;
 import funcons.values.signals.FunconException;
 import funcons.values.Null;
 
@@ -31,7 +32,7 @@ public class CamlLightDemo {
         IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.ModuleFactory() {});
         System.out.println(src);
         System.out.print("Print output: ");
-        eval.eval(new Environment(), new Store(), new Null());
+        eval.eval(new Environment(), new Forwards(), new Store(), new Null());
         System.out.println();
         System.out.println();
     }

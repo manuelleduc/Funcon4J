@@ -8,6 +8,6 @@ public interface NullFactory extends NullAlg<IEval> {
 
     @Override
     default IEval null_() {
-        return (env, store, given) -> new Null();
+        return (env, forward, store, given) -> new Null();
     }
 }
