@@ -124,4 +124,11 @@ public class MapFactoryTest {
         assertEquals(new Integer(1), ((Int)map.val(new Id("foo"))).intValue());
         assertEquals(new Integer(2), ((Int)map.val(new Id("bar"))).intValue());
     }
+
+    @Test
+    public void testMapDomain() throws Exception {
+        IEval mapEval = alg.mapUpdate(alg.environment(), alg.id("foo"), alg.lit(0));
+        List l = (List)alg.mapDomain(mapEval).eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new List(new Id("foo")), l);
+    }
 }

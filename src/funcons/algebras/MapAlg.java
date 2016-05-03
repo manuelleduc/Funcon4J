@@ -10,6 +10,7 @@ public interface MapAlg<E> extends LogicWhileTrueAlg<E> {
     E supply(E exp, E x);
     E environment();
     E mapUpdate(E map, E key, E e);
+    E mapDomain(E map);
     E mapUnion(E map1, E map2);
     E mapOver(E map1, E map2);
 }

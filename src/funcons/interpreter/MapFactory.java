@@ -10,6 +10,8 @@ import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
 import funcons.values.recursion.Forwards;
 
+import java.util.Set;
+
 public interface MapFactory extends LogicWhileTrueFactory, MapAlg<IEval> {
     @Override
     default IEval id(java.lang.String s) {
@@ -62,6 +64,20 @@ public interface MapFactory extends LogicWhileTrueFactory, MapAlg<IEval> {
             @SuppressWarnings("unchecked")
             Map m2 = m.add(k, v);
             return m2;
+        };
+    }
+
+    @Override
+    default IEval mapDomain(IEval map) {
+        return (env, forward, store, given) -> {
+            Map m = (Map)map.eval(env, forward, store, given);
+            @SuppressWarnings("unchecked")
+            Set<Value> keys = m.keys();
+            List l = new List();
+            for (Value key : keys) {
+                l = l.prepend(key);
+            }
+            return l;
         };
     }
 
