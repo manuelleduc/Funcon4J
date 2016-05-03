@@ -9,9 +9,24 @@ public interface IntCalcAlg<E> extends BaseExpAlg<E> {
         return alg().intAdd(l1, l2);
     }
 
+    @Syntax("exp = exp '-' exp") @Level(1511)
+    default E intSub(E l1, E l2) {
+        return alg().intSubtract(l1, l2);
+    }
+
     @Syntax("exp = exp '*' exp") @Level(1512)
     default E intMultiply(E a, E b) {
         return alg().intMultiply(a, b);
+    }
+
+    @Syntax("exp = exp '/' exp") @Level(1512)
+    default E intDivide(E a, E b) {
+        return alg().intDivide(a, b);
+    }
+
+    @Syntax("exp = exp 'mod' exp") @Level(1513)
+    default E intMod(E a, E b) {
+        return alg().intModulo(a, b);
     }
 
     @Syntax("exp = exp '>' exp") @Level(1508)
