@@ -5,7 +5,9 @@ import funcons.algebras.ElseAlg;
 import funcons.interpreter.ElseFactory;
 import funcons.sorts.IEval;
 import funcons.values.*;
+import funcons.values.ids.Id;
 import funcons.values.recursion.Forwards;
+import noa.context.env.Env;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -67,31 +69,18 @@ public class ElseFactoryTest {
 
     @Test
     public void testPattUnion() throws Exception {
-        {
-            Store store = new Store();
-            IEval patt1 = alg.abs(alg.bindValue(alg.id("foo"), alg.lit(1)));
-            IEval patt2 = alg.abs(alg.bindValue(alg.id("bar"), alg.lit(2)));
+        Store store = new Store();
+        IEval patt1 = alg.bind(alg.id("foo"));
+        IEval patt2 = alg.bind(alg.id("bar"));
 
-            @SuppressWarnings("unchecked")
-            Abs<IEval> abs = (Abs<IEval>) alg.pattUnion(patt1, patt2).eval(new Environment(), new Forwards(), store, new Null());
+        Environment env1 = (Environment) alg.match(alg.lit(1), patt1).eval(new Environment(), new Forwards(), store, new Null());
+        assertEquals(new Integer(1), ((Int)env1.val(new Id("foo"))).intValue());
 
-            Int i = (Int) alg.scope(
-                    abs.body(),
-                    alg.intAdd(alg.boundValue(alg.id("foo")), alg.boundValue(alg.id("bar")))
-            ).eval(new Environment(), new Forwards(), store, new Null());
+        @SuppressWarnings("unchecked")
+        Environment env = (Environment)alg.match(alg.lit(1), alg.pattUnion(patt1, patt2)).eval(new Environment(), new Forwards(), store, new Null());
 
-            assertEquals(new Integer(3), i.intValue());
-        }
-        {
-            Store store = new Store();
-            IEval patt1 = alg.abs(alg.bindValue(alg.id("foo"), alg.lit(1)));
-            IEval patt2 = alg.abs(alg.bindValue(alg.id("foo"), alg.lit(2)));
-
-            @SuppressWarnings("unchecked")
-            Abs<IEval> abs2 = (Abs<IEval>) alg.pattUnion(patt1, patt2).eval(new Environment(), new Forwards(), store, new Null());
-            Int i = (Int)alg.scope(abs2.body(), alg.boundValue(alg.id("foo"))).eval(new Environment(), new Forwards(), store, new Null());
-            assertEquals(new Integer(2), i.intValue());
-        }
+        assertEquals(new Integer(1), ((Int)env.val(new Id("foo"))).intValue());
+        assertEquals(new Integer(1), ((Int)env.val(new Id("bar"))).intValue());
     }
 
     @Test
