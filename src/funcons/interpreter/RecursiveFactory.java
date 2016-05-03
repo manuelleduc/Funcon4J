@@ -71,6 +71,11 @@ public interface RecursiveFactory extends ModuleFactory, RecursiveAlg<IEval> {
     }
 
     @Override
+    default IEval recursiveTyped(IEval idTypeMap, IEval decl) {
+        return recursive(mapDomain(idTypeMap), decl);
+    }
+
+    @Override
     default IEval followFwd(IEval fwd) {
         return (env, forward, store, given) -> forward.follow((Fwd)fwd.eval(env, forward, store, given));
     }

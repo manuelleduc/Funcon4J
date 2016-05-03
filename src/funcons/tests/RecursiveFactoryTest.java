@@ -90,4 +90,13 @@ public class RecursiveFactoryTest {
         i = (Int)alg.followIfFwd(alg.lit(1)).eval(env, forwards, new Store(), new Null());
         assertEquals(new Integer(1), i.intValue());
     }
+
+    @Test
+    public void testRecursiveTyped() throws Exception {
+        Forwards forwards = new Forwards();
+        IEval map = alg.mapUpdate(alg.environment(), alg.id("foo"), alg.type("bar"));
+        alg.recursiveTyped(map, alg.bindValue(alg.id("foo"), alg.lit(0)))
+                .eval(new Environment(), forwards, new Store(), new Null());
+        assertEquals(new Integer(0), ((Int)forwards.follow(new Fwd(0))).intValue());
+    }
 }
