@@ -61,8 +61,11 @@ public class RecursiveFactoryTest {
     }
 
     @Test
-    public void testRecursive() throws Exception { // TODO
-    
+    public void testRecursive() throws Exception {
+        Forwards forwards = new Forwards();
+        alg.recursive(alg.list(alg.id("foo")), alg.bindValue(alg.id("foo"), alg.lit(0)))
+                .eval(new Environment(), forwards, new Store(), new Null());
+        assertEquals(new Integer(0), ((Int)forwards.follow(new Fwd(0))).intValue());
     }
 
     @Test
@@ -76,7 +79,15 @@ public class RecursiveFactoryTest {
     }
 
     @Test
-    public void testFollowIfFwd() throws Exception { // TODO
+    public void testFollowIfFwd() throws Exception {
+        Forwards forwards = new Forwards();
+        Environment env = new Environment();
+        env = env.add(new Id("foo"), new Int(0));
+        alg.setForwards(alg.freshFwds(alg.list(alg.id("foo")))).eval(env, forwards, new Store(), new Null());
+        Int i = (Int)alg.followIfFwd((e,f,s,g) -> new Fwd(0)).eval(env, forwards, new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
 
+        i = (Int)alg.followIfFwd(alg.lit(1)).eval(env, forwards, new Store(), new Null());
+        assertEquals(new Integer(1), i.intValue());
     }
 }
