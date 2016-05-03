@@ -33,4 +33,28 @@ public class PolyTypeFactoryTest {
         Int i = (Int)alg.instantiateIfPoly(alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
     }
+
+    @Test
+    public void testGeneralise() throws Exception {
+        Int i = (Int)alg.generalise(alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
+    }
+
+    @Test
+    public void testGeneraliseIfPoly() throws Exception {
+        Int i = (Int)alg.generaliseIfPoly(alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
+    }
+
+    @Test
+    public void testGeneraliseDecl() throws Exception {
+        Int i = (Int)alg.generaliseDecl(alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
+    }
+
+    @Test
+    public void testGeneraliseMap() throws Exception {
+        Int i = (Int)alg.generaliseMap(alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
+    }
 }

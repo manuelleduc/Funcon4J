@@ -14,4 +14,24 @@ public interface PolyTypeFactory extends TypeFactory, PolyTypeAlg<IEval> {
     default IEval instantiateIfPoly(IEval x) {
         return x;
     }
+
+    @Override
+    default IEval generalise(IEval x) {
+        return x;
+    }
+
+    @Override
+    default IEval generaliseIfPoly(IEval x) {
+        return x;
+    }
+
+    @Override
+    default IEval generaliseDecl(IEval x) {
+        return x;
+    }
+
+    @Override
+    default IEval generaliseMap(IEval x) {
+        return x;
+    }
 }
