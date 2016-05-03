@@ -28,15 +28,6 @@ public interface ApplyFactory extends MapFactory, ApplyAlg<IEval> {
     }
 
     @Override
-    default IEval scopeInner(IEval patt, IEval a) {
-        return (env, store, forward, given) -> new Abs<IEval>((e, f, s, g) -> {
-            @SuppressWarnings("unchecked")
-            Environment environment = (Environment)((Abs<IEval>)patt.eval(e, f, s, g)).body().eval(e, f, s, g);
-            return unAbs(a, e, f, s, g).eval(e.extend(environment), f, s, g);
-        });
-    }
-
-    @Override
     default IEval compose(IEval f, IEval g) {
         return abs(apply(f, apply(g, given())));
     }

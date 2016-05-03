@@ -39,11 +39,11 @@ public class CamlLightDemo {
 
     public static void main(String[] args) throws FunconException {
         interpret("let rec mul a b = if b = 0 then 0 else a + (mul a b - 1);; mul 3 5;;");
-        interpret("let rec x = 4 and countup x y = if x = y then print y else (print x ; countup (x + 1) y) ;; countup 0 10;;");
-        interpret("let add (x : (foo -> I * can * write * anything * here)) y = x + y in add 5 3;;");
-        interpret("[1 ; 2 ; 3] ;; [] ;; () ;; 1 ;;");
+        //interpret("let rec x = 4 and countup x y = if x = y then print y else (print x ; countup (x + 1) y) ;; countup 0 10;;");
+        //interpret("let add (x : (foo -> I * can * write * anything * here)) y = x + y in add 5 3;;");
+        //interpret("[1 ; 2 ; 3] ;; [] ;; () ;; 1 ;;");
         //interpret("let countup = fun x -> (if x = 3 then 3 else (print x ; countup (x + 1))) ;; (countup 0);;");
-        //interpret("let count x = (if x == 3 then 3 else (print x ; count (x + 1))) in count 5;;");
+        //interpret("let count x = (if x = 3 then 3 else (print x ; count (x + 1))) in count 0;;");
         /*interpret("let smallerThan = function | [x :: y :: _] -> x < y in smallerThan [0 ; 1];;");
         interpret("(  );;");
         interpret("[ ];;");

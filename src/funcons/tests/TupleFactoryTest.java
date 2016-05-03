@@ -127,4 +127,18 @@ public class TupleFactoryTest {
         assertEquals(new Int(1), env.val(new Id("x")));
         assertEquals(new Int(2), env.val(new Id("y")));
     }
+
+    @Test
+    public void testTupleTail() throws Exception {
+        IEval tailEval = alg.tupleTail(alg.tuple(alg.lit(0), alg.lit(1), alg.lit(2)));
+        Tuple t = (Tuple)tailEval.eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Tuple(new Int(1), new Int(2)), t);
+    }
+
+    @Test
+    public void testTupleHead() throws Exception {
+        IEval headEval = alg.tupleHead(alg.tuple(alg.lit(0), alg.lit(1), alg.lit(2)));
+        Int i = (Int)headEval.eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
+    }
 }
