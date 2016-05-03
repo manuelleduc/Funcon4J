@@ -41,13 +41,15 @@ public class RecursiveFactoryTest {
 
     @Test
     public void testSetForwards() throws Exception { // TODO fix
-        /*Forwards forwards = new Forwards();
+        Forwards forwards = new Forwards();
         Environment env = new Environment();
-        env.add(new Id("foo"), new Int(0));
-        env.add(new Id("bar"), new Int(1));
+        env = env.add(new Id("foo"), new Int(3));
+        env = env.add(new Id("bar"), new Int(5));
         IEval fwdsEval = alg.freshFwds(alg.list(alg.id("foo"), alg.id("bar")));
         Map fwds = (Map)fwdsEval.eval(env, forwards, new Store(), new Null());
         alg.setForwards((e,f,s,g) -> fwds).eval(env, forwards, new Store(), new Null());
-        forwards.follow(new Fwd(0));*/
+
+        assertEquals(new Integer(3), ((Int)forwards.follow(new Fwd(0))).intValue());
+        assertEquals(new Integer(5), ((Int)forwards.follow(new Fwd(1))).intValue());
     }
 }

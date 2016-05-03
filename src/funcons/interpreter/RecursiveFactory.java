@@ -2,12 +2,10 @@ package funcons.interpreter;
 
 import funcons.algebras.RecursiveAlg;
 import funcons.sorts.IEval;
-import funcons.values.Environment;
 import funcons.values.List;
 import funcons.values.Map;
 import funcons.values.Undefined;
 import funcons.values.ids.Id;
-import funcons.values.recursion.Forwards;
 import funcons.values.recursion.Fwd;
 
 public interface RecursiveFactory extends ListFactory, RecursiveAlg<IEval> {
