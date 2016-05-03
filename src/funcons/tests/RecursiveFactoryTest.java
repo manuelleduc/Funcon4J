@@ -59,4 +59,24 @@ public class RecursiveFactoryTest {
         assertEquals(new Integer(0), ((Int)forwards.follow(new Fwd(0))).intValue());
         assertEquals(new Undefined(), forwards.follow(new Fwd(1)));
     }
+
+    @Test
+    public void testRecursive() throws Exception { // TODO
+    
+    }
+
+    @Test
+    public void testFollowFwd() throws Exception {
+        Forwards forwards = new Forwards();
+        Environment env = new Environment();
+        env = env.add(new Id("foo"), new Int(0));
+        alg.setForwards(alg.freshFwds(alg.list(alg.id("foo")))).eval(env, forwards, new Store(), new Null());
+        Int i = (Int)alg.followFwd((e,f,s,g) -> new Fwd(0)).eval(env, forwards, new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
+    }
+
+    @Test
+    public void testFollowIfFwd() throws Exception { // TODO
+
+    }
 }

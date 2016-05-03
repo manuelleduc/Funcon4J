@@ -64,4 +64,26 @@ public interface RecursiveFactory extends ModuleFactory, RecursiveAlg<IEval> {
             return accum(scope((e,s,f,g) -> m, decl), seq(setForwards((e,s,f,g) -> m), environment())).eval(env, forward, store, given);
         };
     }
+
+    @Override
+    default IEval recursive(IEval idList, IEval decl) {
+        return reclose(freshFwds(idList), decl);
+    }
+
+    @Override
+    default IEval followFwd(IEval fwd) {
+        return (env, forward, store, given) -> forward.follow((Fwd)fwd.eval(env, forward, store, given));
+    }
+
+    @Override
+    default IEval followIfFwd(IEval fwd) {
+        return (env, forward, store, given) -> {
+            Value v = fwd.eval(env, forward, store, given);
+            try {
+                return forward.follow((Fwd)v);
+            } catch (ClassCastException ignore) {
+                return v;
+            }
+        };
+    }
 }
