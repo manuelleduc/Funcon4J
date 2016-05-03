@@ -4,7 +4,7 @@ import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface ModuleAlg<E> {
-    funcons.algebras.ModuleAlg<E> alg();
+    funcons.algebras.RecursiveAlg<E> alg();
 
 
     //|[ prog[: IMPL :] ]| ->

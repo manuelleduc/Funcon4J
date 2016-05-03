@@ -16,6 +16,11 @@ public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
     }
 
     @Override
+    default IEval unknownType() {
+        return (env, forward, store, given) -> new UnknownType();
+    }
+
+    @Override
     default IEval tag(java.lang.String name) {
         return (env, forward, store, given) -> new Tag(name);
     }

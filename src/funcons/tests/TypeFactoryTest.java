@@ -201,4 +201,10 @@ public class TypeFactoryTest {
         }
         assertTrue(false);
     }
+
+    @Test
+    public void testUnknownType() throws Exception {
+        UnknownType unknown = (UnknownType)alg.unknownType().eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new UnknownType(), unknown);
+    }
 }

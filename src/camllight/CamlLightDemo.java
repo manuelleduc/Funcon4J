@@ -29,7 +29,7 @@ public class CamlLightDemo {
     private static void interpret(String src) throws FunconException {
         System.out.println("== Interpreting ==");
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.ModuleFactory() {});
+        IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.RecursiveFactory() {});
         System.out.println(src);
         System.out.print("Print output: ");
         eval.eval(new Environment(), new Forwards(), new Store(), new Null());
@@ -38,9 +38,10 @@ public class CamlLightDemo {
     }
 
     public static void main(String[] args) throws FunconException {
+        interpret("let rec x = 4 and countup x y = if x = y then print y else (print x ; countup (x + 1) y) ;; countup 0 10;;");
         interpret("let add (x : (foo -> I * can * write * anything * here)) y = x + y in add 5 3;;");
         interpret("[1 ; 2 ; 3] ;; [] ;; () ;; 1 ;;");
-        interpret("let countup = fun x -> (if x = 3 then 3 else (print x ; countup (x + 1))) ;; (countup 0);;");
+        //interpret("let countup = fun x -> (if x = 3 then 3 else (print x ; countup (x + 1))) ;; (countup 0);;");
         //interpret("let count x = (if x == 3 then 3 else (print x ; count (x + 1))) in count 5;;");
         /*interpret("let smallerThan = function | [x :: y :: _] -> x < y in smallerThan [0 ; 1];;");
         interpret("(  );;");
