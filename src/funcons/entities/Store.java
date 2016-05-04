@@ -1,4 +1,4 @@
-package funcons;
+package funcons.entities;
 
 import funcons.values.Value;
 import funcons.values.Variable;

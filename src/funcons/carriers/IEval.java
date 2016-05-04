@@ -1,7 +1,7 @@
-package funcons.sorts;
+package funcons.carriers;
 
-import funcons.Store;
-import funcons.values.recursion.Forwards;
+import funcons.entities.Store;
+import funcons.entities.Forwards;
 import funcons.values.signals.FunconException;
 import funcons.values.Environment;
 import funcons.values.Value;

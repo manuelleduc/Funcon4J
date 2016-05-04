@@ -1,12 +1,12 @@
-package funcons.tests;
+package funcons.interpreter.tests;
 
-import funcons.Store;
+import funcons.entities.Store;
 import funcons.algebras.RecursiveAlg;
 import funcons.interpreter.RecursiveFactory;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.*;
 import funcons.values.ids.Id;
-import funcons.values.recursion.Forwards;
+import funcons.entities.Forwards;
 import funcons.values.recursion.Fwd;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,8 +1,7 @@
 package funcons.interpreter;
 
 import funcons.algebras.SeqAlg;
-import funcons.sorts.IEval;
-import funcons.values.recursion.Forwards;
+import funcons.carriers.IEval;
 
 public interface SeqFactory extends EffectFactory, SeqAlg<IEval> {
     @Override

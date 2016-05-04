@@ -1,9 +1,8 @@
 package funcons.interpreter;
 
 import funcons.algebras.LogicIfTrueAlg;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.Bool;
-import funcons.values.recursion.Forwards;
 
 public interface LogicIfTrueFactory extends SeqFactory, LogicIfTrueAlg<IEval> {
 

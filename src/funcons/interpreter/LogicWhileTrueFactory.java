@@ -1,8 +1,7 @@
 package funcons.interpreter;
 
 import funcons.algebras.LogicWhileTrueAlg;
-import funcons.sorts.IEval;
-import funcons.values.recursion.Forwards;
+import funcons.carriers.IEval;
 
 public interface LogicWhileTrueFactory extends LogicIfTrueFactory, LogicWhileTrueAlg<IEval> {
     @Override

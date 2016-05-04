@@ -1,7 +1,7 @@
 package funcons.interpreter;
 
 import funcons.algebras.ModuleAlg;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.Environment;
 public interface ModuleFactory extends PolyTypeFactory, ModuleAlg<IEval> {
 

@@ -1,4 +1,4 @@
-package funcons.sorts;
+package funcons.carriers;
 
 import funcons.values.String;
 

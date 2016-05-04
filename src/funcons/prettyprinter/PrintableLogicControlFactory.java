@@ -1,7 +1,7 @@
 package funcons.prettyprinter;
 
 import funcons.algebras.LogicWhileTrueAlg;
-import funcons.sorts.IPrint;
+import funcons.carriers.IPrint;
 import funcons.values.String;
 
 public interface PrintableLogicControlFactory extends

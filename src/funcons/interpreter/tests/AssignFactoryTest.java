@@ -1,11 +1,11 @@
-package funcons.tests;
+package funcons.interpreter.tests;
 
-import funcons.Store;
+import funcons.entities.Store;
 import funcons.algebras.AssignAlg;
 import funcons.interpreter.AssignFactory;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.*;
-import funcons.values.recursion.Forwards;
+import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 

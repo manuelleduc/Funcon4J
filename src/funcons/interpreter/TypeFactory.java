@@ -1,12 +1,11 @@
 package funcons.interpreter;
 
 import funcons.algebras.TypeAlg;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.ids.Meta;
 import funcons.values.ids.TypeVar;
-import funcons.values.recursion.Forwards;
 import funcons.values.types.*;
 
 public interface TypeFactory extends ListFactory, TypeAlg<IEval> {

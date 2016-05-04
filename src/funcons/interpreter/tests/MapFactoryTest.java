@@ -1,14 +1,13 @@
-package funcons.tests;
+package funcons.interpreter.tests;
 
-import funcons.Store;
+import funcons.entities.Store;
 import funcons.algebras.MapAlg;
 import funcons.interpreter.MapFactory;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.*;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
-import funcons.values.recursion.Forwards;
-import funcons.values.recursion.Fwd;
+import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 

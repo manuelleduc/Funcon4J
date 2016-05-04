@@ -1,13 +1,13 @@
-package funcons.tests;
+package funcons.interpreter.tests;
 
-import funcons.Store;
+import funcons.entities.Store;
 import funcons.algebras.TypeAlg;
 import funcons.interpreter.TypeFactory;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.*;
 import funcons.values.ids.Meta;
 import funcons.values.ids.TypeVar;
-import funcons.values.recursion.Forwards;
+import funcons.entities.Forwards;
 import funcons.values.signals.FailureTrue;
 import funcons.values.types.*;
 import org.junit.Before;
@@ -91,7 +91,8 @@ public class TypeFactoryTest {
 
         val = alg.nomValSelect(alg.nomTag(alg.freshToken()), alg.nomVal(alg.nomTag(alg.freshToken()), alg.lit(0)));
         try {
-            i = (Int)val.eval(new Environment(), new Forwards(), new Store(), new Null());
+            @SuppressWarnings("unused")
+            Int i2 = (Int)val.eval(new Environment(), new Forwards(), new Store(), new Null());
         } catch(FailureTrue e) {
             return;
         }

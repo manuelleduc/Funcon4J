@@ -1,7 +1,7 @@
 package funcons.interpreter;
 
 import funcons.algebras.RecursiveAlg;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.List;
 import funcons.values.Map;
 import funcons.values.Undefined;

@@ -1,9 +1,10 @@
-package funcons.values.recursion;
+package funcons.entities;
 
 import funcons.values.Map;
 import funcons.values.Value;
+import funcons.values.recursion.Fwd;
 
-public class Forwards implements Value {
+public class Forwards {
 
     private Map<Fwd, Value> map;
     private Integer n;

@@ -1,13 +1,12 @@
-package funcons.tests;
+package funcons.interpreter.tests;
 
-import funcons.Store;
+import funcons.entities.Store;
 import funcons.algebras.ElseAlg;
 import funcons.interpreter.ElseFactory;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.*;
 import funcons.values.ids.Id;
-import funcons.values.recursion.Forwards;
-import noa.context.env.Env;
+import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 

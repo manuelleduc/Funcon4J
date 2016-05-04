@@ -1,13 +1,13 @@
-package funcons.tests;
+package funcons.interpreter.tests;
 
-import funcons.Store;
+import funcons.entities.Store;
 import funcons.algebras.NullAlg;
 import funcons.interpreter.NullFactory;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.Environment;
 import funcons.values.Null;
 import funcons.values.Undefined;
-import funcons.values.recursion.Forwards;
+import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 

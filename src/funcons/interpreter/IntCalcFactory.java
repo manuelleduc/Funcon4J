@@ -1,9 +1,8 @@
 package funcons.interpreter;
 
 import funcons.algebras.IntCalcAlg;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.*;
-import funcons.values.recursion.Forwards;
 
 public interface IntCalcFactory extends NullFactory, IntCalcAlg<IEval> {
     @Override

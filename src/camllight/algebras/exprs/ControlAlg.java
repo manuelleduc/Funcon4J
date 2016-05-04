@@ -3,7 +3,7 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface ExpControlAlg<E> extends BoolLogicAlg<E> {
+public interface ControlAlg<E> extends BoolLogicAlg<E> {
     @Syntax("exp = 'if' exp 'then' exp") @Level(800)
     default E if_(E e1, E e2) {
         return ifElse(e1, e2, alg().null_());

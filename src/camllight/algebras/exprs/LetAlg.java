@@ -3,7 +3,7 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface ExpLetAlg<E> extends FunctionAlg<E> {
+public interface LetAlg<E> extends FunctionAlg<E> {
 
     @Syntax("exp = letExp") @Level(1)
     default E letExp(E letExp) {

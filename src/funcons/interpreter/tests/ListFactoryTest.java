@@ -1,12 +1,12 @@
-package funcons.tests;
+package funcons.interpreter.tests;
 
-import funcons.Store;
+import funcons.entities.Store;
 import funcons.algebras.ListAlg;
 import funcons.interpreter.ListFactory;
-import funcons.sorts.IEval;
+import funcons.carriers.IEval;
 import funcons.values.*;
 import funcons.values.ids.Id;
-import funcons.values.recursion.Forwards;
+import funcons.entities.Forwards;
 import funcons.values.signals.FailureTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -85,7 +85,8 @@ public class ListFactoryTest {
         assertNotNull(env);
 
         try {
-            env = (Environment)alg.match(alg.list(alg.lit(1), alg.lit(0)), headIsZero).eval(new Environment(), new Forwards(), new Store(), new Null());
+            @SuppressWarnings("unused")
+            Environment e = (Environment)alg.match(alg.list(alg.lit(1), alg.lit(0)), headIsZero).eval(new Environment(), new Forwards(), new Store(), new Null());
         } catch(FailureTrue ignore) {
             return;
         }
