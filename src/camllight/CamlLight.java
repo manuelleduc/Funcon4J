@@ -7,12 +7,13 @@ import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.values.Environment;
 import funcons.values.Null;
+import funcons.values.Value;
 import funcons.values.signals.FunconException;
 import noa.proxy.Recorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-public class CamlLightDemo {
+public class CamlLight {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <X> X parse(String s, camllight.algebras.AllAlg alg) {
@@ -23,13 +24,17 @@ public class CamlLightDemo {
         return (X) parser.prog()._prog;
     }
 
-    private static void interpret(String src) throws FunconException {
-        System.out.println("== Interpreting ==");
+    public static funcons.values.Value eval(String src) throws FunconException {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.RecursiveFactory() {});
+        return eval.eval(new Environment(), new Forwards(), new Store(), new Null());
+    }
+
+    private static void interpret(String src) throws FunconException {
+        System.out.println("== Interpreting ==");
         System.out.println(src);
         System.out.print("Print output: ");
-        eval.eval(new Environment(), new Forwards(), new Store(), new Null());
+        eval(src);
         System.out.println();
         System.out.println();
     }
