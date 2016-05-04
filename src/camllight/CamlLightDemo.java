@@ -38,8 +38,8 @@ public class CamlLightDemo {
     }
 
     public static void main(String[] args) throws FunconException {
-        interpret("let isInt = function | 0 -> true | _ -> false ;; isInt 0;;");
-        //interpret("let rec mul a b = if b = 0 then 0 else a + mul a b - 1;; mul 3 5;;");
+        //interpret("let isInt = function | 0 -> true | _ -> false ;; isInt 0;;");
+        interpret("let power a b = if b = 0 then 1 else a * power a (b - 1) in power -3 3;;");
         //interpret("let rec x = 4 and countup x y = if x = y then print y else (print x ; countup (x + 1) y) ;; countup 0 10;;");
         //interpret("let add (x : (foo -> I * can * write * anything * here)) y = x + y in add 5 3;;");
         //interpret("[1 ; 2 ; 3] ;; [] ;; () ;; 1 ;;");

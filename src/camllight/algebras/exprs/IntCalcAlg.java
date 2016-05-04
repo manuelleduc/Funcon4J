@@ -4,14 +4,19 @@ import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface IntCalcAlg<E> extends BaseExpAlg<E> {
+    @Syntax("exp = '-' exp") @Level(1515)
+    default E intUnarySub(E exp) {
+        return alg().intNegate(exp);
+    }
+
     @Syntax("exp = exp '+' exp") @Level(1511)
-    default E intAdd(E l1, E l2) {
-        return alg().intAdd(l1, l2);
+    default E intAdd(E a, E b) {
+        return alg().intAdd(a, b);
     }
 
     @Syntax("exp = exp '-' exp") @Level(1511)
-    default E intSub(E l1, E l2) {
-        return alg().intSubtract(l1, l2);
+    default E intSub(E a, E b) {
+        return alg().intSubtract(a, b);
     }
 
     @Syntax("exp = exp '*' exp") @Level(1512)
