@@ -38,7 +38,7 @@ public interface Tokens {
         return src;
     }
 
-    @Token("[a-zA-Z_][a-zA-Z_0-9]*") @Level(1)
+    @Token("[a-z_][a-zA-Z_0-9]*") @Level(1)
     static String idtoken(String src) {
         return src;
     }
