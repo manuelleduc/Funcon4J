@@ -24,7 +24,7 @@ public class ConstantsAlgTest {
     }
 
     @After
-    public void breakDown() throws Exception {
+    public void tearDown() throws Exception {
         System.setOut(oldOut);
     }
 
