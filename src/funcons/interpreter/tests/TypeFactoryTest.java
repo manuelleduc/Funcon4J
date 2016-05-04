@@ -1,13 +1,15 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.TypeAlg;
-import funcons.interpreter.TypeFactory;
 import funcons.carriers.IEval;
-import funcons.values.*;
+import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.TypeFactory;
+import funcons.values.Environment;
+import funcons.values.Int;
+import funcons.values.Null;
 import funcons.values.ids.Meta;
 import funcons.values.ids.TypeVar;
-import funcons.entities.Forwards;
 import funcons.values.signals.FailureTrue;
 import funcons.values.types.*;
 import org.junit.Before;

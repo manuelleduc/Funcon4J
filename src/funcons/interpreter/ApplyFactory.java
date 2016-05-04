@@ -1,10 +1,12 @@
 package funcons.interpreter;
 
-import funcons.entities.Store;
 import funcons.algebras.ApplyAlg;
 import funcons.carriers.IEval;
-import funcons.values.*;
 import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.values.Abs;
+import funcons.values.Environment;
+import funcons.values.Value;
 
 public interface ApplyFactory extends MapFactory, ApplyAlg<IEval> {
 

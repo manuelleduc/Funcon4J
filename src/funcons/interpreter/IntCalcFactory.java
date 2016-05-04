@@ -2,7 +2,8 @@ package funcons.interpreter;
 
 import funcons.algebras.IntCalcAlg;
 import funcons.carriers.IEval;
-import funcons.values.*;
+import funcons.values.Bool;
+import funcons.values.Int;
 
 public interface IntCalcFactory extends NullFactory, IntCalcAlg<IEval> {
     @Override

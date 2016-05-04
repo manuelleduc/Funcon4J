@@ -1,12 +1,12 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.ElseAlg;
-import funcons.interpreter.ElseFactory;
 import funcons.carriers.IEval;
+import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.ElseFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
-import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,14 +1,14 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.LogicIfTrueAlg;
-import funcons.interpreter.LogicIfTrueFactory;
 import funcons.carriers.IEval;
+import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.LogicIfTrueFactory;
 import funcons.values.Bool;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
-import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 

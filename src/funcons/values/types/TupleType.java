@@ -3,8 +3,6 @@ package funcons.values.types;
 import funcons.values.Int;
 import funcons.values.Tuple;
 
-import java.util.Objects;
-
 public class TupleType extends Type {
     private Tuple tuple;
 

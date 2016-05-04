@@ -1,17 +1,21 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.TupleAlg;
-import funcons.interpreter.TupleFactory;
 import funcons.carriers.IEval;
-import funcons.values.*;
-import funcons.values.ids.Id;
 import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.TupleFactory;
+import funcons.values.Environment;
+import funcons.values.Int;
+import funcons.values.Null;
+import funcons.values.Tuple;
+import funcons.values.ids.Id;
 import funcons.values.signals.FailureTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TupleFactoryTest {
 

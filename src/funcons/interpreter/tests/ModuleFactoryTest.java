@@ -1,18 +1,18 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.ModuleAlg;
-import funcons.interpreter.ModuleFactory;
 import funcons.carriers.IEval;
+import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.ModuleFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
 import funcons.values.ids.Id;
-import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ModuleFactoryTest {
 

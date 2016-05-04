@@ -1,19 +1,19 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.IntCalcAlg;
-import funcons.interpreter.IntCalcFactory;
 import funcons.carriers.IEval;
+import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.IntCalcFactory;
 import funcons.values.Bool;
 import funcons.values.Environment;
 import funcons.values.Null;
-import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.function.BiFunction;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class IntCalcFactoryTest {
     private IntCalcAlg<IEval> alg;

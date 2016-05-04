@@ -1,11 +1,14 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.ExceptionAlg;
-import funcons.interpreter.ExceptionFactory;
 import funcons.carriers.IEval;
-import funcons.values.*;
 import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.ExceptionFactory;
+import funcons.values.Bool;
+import funcons.values.Environment;
+import funcons.values.Int;
+import funcons.values.Null;
 import funcons.values.signals.FailureTrue;
 import funcons.values.signals.MatchFailureException;
 import org.junit.Before;

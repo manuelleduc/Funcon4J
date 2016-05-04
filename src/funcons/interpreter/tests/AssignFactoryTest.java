@@ -1,15 +1,18 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.AssignAlg;
-import funcons.interpreter.AssignFactory;
 import funcons.carriers.IEval;
-import funcons.values.*;
 import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.AssignFactory;
+import funcons.values.Environment;
+import funcons.values.Int;
+import funcons.values.Null;
+import funcons.values.Variable;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AssignFactoryTest {
 

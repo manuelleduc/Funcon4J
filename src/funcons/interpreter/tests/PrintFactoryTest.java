@@ -1,19 +1,19 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.PrintAlg;
-import funcons.interpreter.PrintFactory;
 import funcons.carriers.IEval;
+import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.PrintFactory;
 import funcons.values.Environment;
 import funcons.values.Null;
-import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PrintFactoryTest {
 

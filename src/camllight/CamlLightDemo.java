@@ -2,18 +2,15 @@ package camllight;
 
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
-
-import funcons.entities.Store;
 import funcons.carriers.IEval;
-import funcons.values.Environment;
 import funcons.entities.Forwards;
-import funcons.values.signals.FunconException;
+import funcons.entities.Store;
+import funcons.values.Environment;
 import funcons.values.Null;
-
+import funcons.values.signals.FunconException;
+import noa.proxy.Recorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-
-import noa.proxy.Recorder;
 
 public class CamlLightDemo {
 

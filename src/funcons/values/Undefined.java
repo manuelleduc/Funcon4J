@@ -1,6 +1,5 @@
 package funcons.values;
 
-import java.lang.*;
 import java.lang.String;
 
 public class Undefined implements Value {

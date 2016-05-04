@@ -1,17 +1,17 @@
 package funcons.interpreter.tests;
 
-import funcons.entities.Store;
 import funcons.algebras.NullAlg;
-import funcons.interpreter.NullFactory;
 import funcons.carriers.IEval;
+import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.interpreter.NullFactory;
 import funcons.values.Environment;
 import funcons.values.Null;
 import funcons.values.Undefined;
-import funcons.entities.Forwards;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class NullFactoryTest {
 

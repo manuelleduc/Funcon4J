@@ -2,7 +2,6 @@ package camllight.algebras.decls;
 
 import camllight.algebras.base.ModuleAlg;
 import camllight.algebras.patts.PattMatchAlg;
-import noa.proxy.Pair;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
