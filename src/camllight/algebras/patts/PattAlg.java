@@ -54,18 +54,8 @@ public interface PattAlg<E> extends ModuleAlg<E> {
         ));
     }
 
-    @Syntax("patt = '(' optionalpattremainder ')'")
-    default E optionalPatt(E p) {
-        return p;
-    }
-
-    @Syntax("optionalpattremainder = patt")
-    default E optionalPattRemainderSingle(E p) {
-        return p;
-    }
-
-    @Syntax("optionalpattremainder = patt '|' optionalpattremainder")
-    default E optionalPattRemainderMulti(E p1, E p2) {
+    @Syntax("patt = <assoc=right> patt '|' patt")
+    default E optionalPatt(E p1, E p2) {
         return alg().pattNonBinding(alg().preferOver(p1, p2));
     }
 }

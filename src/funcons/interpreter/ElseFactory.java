@@ -50,7 +50,7 @@ public interface ElseFactory extends ExceptionFactory, ElseAlg<IEval> {
     @Override
     default IEval pattNonBinding(IEval patt) {
         return abs((env, forward, store, given) -> {
-            patt.eval(env, forward, store, given);
+            unAbs(patt, env, forward, store, given).eval(env, forward, store, given);
             return new Environment();
         });
     }

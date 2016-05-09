@@ -7,6 +7,7 @@ import funcons.entities.Store;
 import funcons.interpreter.ElseFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
+import funcons.values.signals.FailureTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -89,5 +90,13 @@ public class ElseFactoryTest {
         Environment env = (Environment)alg.match(alg.lit(0), pat).eval(new Environment(), new Forwards(), store, new Null());
         Value null_ = alg.boundValue(alg.id("foo")).eval(env, new Forwards(), store, new Null());
         assertNull(null_);
+
+        try {
+            alg.match(alg.lit(0), alg.pattNonBinding(alg.only(alg.lit(1))))
+                    .eval(new Environment(), new Forwards(), store, new Null());
+        } catch (FailureTrue ignore) {
+            return;
+        }
+        assertTrue(false);
     }
 }
