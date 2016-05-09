@@ -54,7 +54,7 @@ public interface PattAlg<E> extends ModuleAlg<E> {
         ));
     }
 
-    @Syntax("patt = <assoc=right> patt '|' patt")
+    @Syntax("patt = <assoc=left> patt '|' patt")
     default E optionalPatt(E p1, E p2) {
         return alg().pattNonBinding(alg().preferOver(p1, p2));
     }

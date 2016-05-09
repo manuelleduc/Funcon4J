@@ -10,7 +10,8 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.*;
 
-public class PattAlgTest {private ByteArrayOutputStream out;
+public class PattAlgTest {
+    private ByteArrayOutputStream out;
     private java.io.PrintStream oldOut;
 
     @Before

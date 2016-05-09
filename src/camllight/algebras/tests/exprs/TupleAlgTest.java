@@ -32,7 +32,7 @@ public class TupleAlgTest {
         assertEquals("(0, (1, ()))", out.toString());
         out.reset();
 
-        CamlLight.eval("(0,1,2);;");
-        assertEquals("(0, (1, (2, ())))", out.toString());
+        CamlLight.eval("(0,1,2,3,4);;");
+        assertEquals("(0, (1, (2, (3, (4, ())))))", out.toString());
     }
 }
