@@ -23,4 +23,9 @@ public class Abs<E> implements Value {
     public int hashCode() {
         throw new NotImplementedException();
     }
+
+    @Override
+    public java.lang.String toString() {
+        return "ABS: " + body.toString();
+    }
 }
