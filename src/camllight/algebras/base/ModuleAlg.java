@@ -24,12 +24,12 @@ public interface ModuleAlg<E> {
         return decl;
     }
 
-    @Syntax("declorexp = exp")
+    @Syntax("declorexp = exp") @Level(1)
     default E declOrExpExp(E exp) {
         return alg().seq(alg().print(exp), alg().environment());
     }
 
-    @Syntax("declorexp = decl")
+    @Syntax("declorexp = decl") @Level(0)
     default E declOrExpDecl(E decl) {
         return decl;
     }

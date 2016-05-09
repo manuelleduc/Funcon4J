@@ -1,4 +1,4 @@
-package camllight.algebras.tests;
+package camllight.algebras.tests.exprs;
 
 import camllight.CamlLight;
 import org.junit.After;

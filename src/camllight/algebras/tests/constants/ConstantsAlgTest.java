@@ -1,4 +1,4 @@
-package camllight.algebras.tests;
+package camllight.algebras.tests.constants;
 
 import camllight.CamlLight;
 import funcons.values.Int;

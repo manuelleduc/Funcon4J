@@ -42,17 +42,17 @@ public class CamlLight {
     public static void main(String[] args) throws FunconException {
         //interpret("let isInt = function | 0 -> true | _ -> false ;; isInt 0;;");
         //interpret("let power a b = if b = 0 then 1 else a * power a (b - 1) in power -3 3;;");
-        interpret("let mul a b = if b = 0 then 0 else a + mul a (b - 1) in mul 3 200;;");
+        //interpret("let mul a b = if b = 0 then 0 else a + mul a (b - 1) in mul 3 200;;");
         //interpret("let rec x = 4 and countup x y = if x = y then print y else (print x ; countup (x + 1) y) ;; countup 0 10;;");
         //interpret("let add (x : (foo -> I * can * write * anything * here)) y = x + y in add 5 3;;");
         //interpret("[1 ; 2 ; 3] ;; [] ;; () ;; 1 ;;");
         //interpret("let countup = fun x -> (if x = 3 then 3 else (print x ; countup (x + 1))) ;; (countup 0);;");
         //interpret("let count x = (if x = 3 then 3 else (print x ; count (x + 1))) in count 0;;");
-        /*interpret("let smallerThan = function | [x :: y :: _] -> x < y in smallerThan [0 ; 1];;");
-        interpret("(  );;");
-        interpret("[ ];;");
-        interpret("let test = function (0 | 1) -> true | _ -> false in test 1;;");
-        interpret("(fun (x : int) -> print x ; x + 1) 0;;");
+        //interpret("let smallerThan = function | [x :: y :: _] -> x < y in smallerThan [0 ; 1];;");
+        //interpret("(  );;");
+        //interpret("[ ];;");
+        interpret("let test = function (0 | 1) -> true | _ -> false in test 10;;");
+        /*interpret("(fun (x : int) -> print x ; x + 1) 0;;");
         interpret("(1 : int);;");
         interpret("let test = function | 0 as y -> y + 1 | _ -> 0 in test 0;;");
         interpret("let isZero = fun x -> match x with | 0 -> true | _ -> false and x = 0 in isZero x;;");
