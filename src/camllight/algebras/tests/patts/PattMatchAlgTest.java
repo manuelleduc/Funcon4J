@@ -54,7 +54,7 @@ public class PattMatchAlgTest {
 
     @Test
     public void testPattMatchCurriedMulti() throws Exception {
-        CamlLight.eval("let f = fun a b c -> 1 * a + 2 * b + 3 * c in f 2 3 4;;");
-        assertEquals("20", out.toString());
+        CamlLight.eval("let f = fun a b c -> 1 * a + 2 * b + 3 * c in f 2 3 5;;");
+        assertEquals("23", out.toString());
     }
 }
