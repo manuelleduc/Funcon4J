@@ -6,17 +6,7 @@ import noa.syntax.Syntax;
 public interface PattMatchAlg<E> extends ListPattAlg<E> {
 
     @Syntax("pattmatch = pattmatchsingle") @Level(0)
-    default E pattMatch1(E pm) {
-        return pm;
-    }
-
-    @Syntax("pattmatch = pattmatchmultiple") @Level(1)
-    default E pattMatch2(E pm) {
-        return pm;
-    }
-
-    @Syntax("pattmatch = '|' pattmatch")
-    default E pattMatchStripe(E pm) {
+    default E pattMatch(E pm) {
         return pm;
     }
 
@@ -25,9 +15,14 @@ public interface PattMatchAlg<E> extends ListPattAlg<E> {
         return alg().abs(p, e);
     }
 
-    @Syntax("pattmatchmultiple = pattmatchsingle '|' pattmatch")
+    @Syntax("pattmatch = pattmatchsingle '|' pattmatch") @Level(1)
     default E pattMatchMulti(E head, E tail) {
         return alg().preferOver(head, tail);
+    }
+
+    @Syntax("pattmatch = '|' pattmatch")
+    default E pattMatchStripe(E pm) {
+        return pm;
     }
 
     @Syntax("pattmatchcurried = patt+ '->' exp")

@@ -40,6 +40,7 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException {
+        interpret("match 3 with | | | | | 3 -> true;;");
         //interpret("let isInt = function | 0 -> true | _ -> false ;; isInt 0;;");
         //interpret("let power a b = if b = 0 then 1 else a * power a (b - 1) in power -3 3;;");
         //interpret("let mul a b = if b = 0 then 0 else a + mul a (b - 1) in mul 3 200;;");
