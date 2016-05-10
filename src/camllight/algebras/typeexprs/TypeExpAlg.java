@@ -38,7 +38,7 @@ public interface TypeExpAlg<E> extends ModuleAlg<E> {
     }
 
     @Syntax("type = type tupletypelist+")
-    default E doubleTupleType(E t, List<E> ts) {
+    default E tupleType(E t, List<E> ts) {
         E tuple = alg().tupleType();
 
         ListIterator<E> it = ts.listIterator(ts.size());
