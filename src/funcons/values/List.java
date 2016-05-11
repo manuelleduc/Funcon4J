@@ -66,6 +66,13 @@ public class List implements Value {
         return tail;
     }
 
+    public Int length() {
+        if (head == null) {
+            return new Int(0);
+        }
+        return new Int(1 + tail.length().intValue());
+    }
+
     @Override
     public java.lang.String toString() {
         return "[" +

@@ -1,6 +1,6 @@
 package funcons.algebras;
 
-public interface TypeAlg<E> extends ListAlg<E> {
+public interface TypeAlg<E> extends VectorAlg<E> {
     E type(java.lang.String name);
     E unknownType();
     E tag(java.lang.String name);

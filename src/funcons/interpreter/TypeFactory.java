@@ -8,7 +8,7 @@ import funcons.values.ids.Meta;
 import funcons.values.ids.TypeVar;
 import funcons.values.types.*;
 
-public interface TypeFactory extends ListFactory, TypeAlg<IEval> {
+public interface TypeFactory extends VectorFactory, TypeAlg<IEval> {
     @Override
     default IEval type(java.lang.String name) {
         return (env, forward, store, given) -> new Type(name);
