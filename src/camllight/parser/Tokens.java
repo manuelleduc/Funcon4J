@@ -29,7 +29,7 @@ public interface Tokens {
     }
 
     @Token("'[|' [ ]* '|]'")
-    static String emptyvectortoken(String src) {
+    static String emptyarraytoken(String src) {
         return src;
     }
 

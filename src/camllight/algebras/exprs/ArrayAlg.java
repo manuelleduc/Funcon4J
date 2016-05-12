@@ -1,0 +1,32 @@
+package camllight.algebras.exprs;
+
+import noa.syntax.Level;
+import noa.syntax.Syntax;
+
+public interface ArrayAlg<E> extends ListAlg<E> {
+
+    @Syntax("exp = EMPTYARRAYTOKEN")
+    default E emptyArray(java.lang.String src) {
+        return alg().vector();
+    }
+
+    @Syntax("exp = '[|' exp ';'? '|]'") @Level(1800)
+    default E arraySingle(E exp) {
+        return alg().vector(exp);
+    }
+
+    @Syntax("exp = '[|' exparray ';'? '|]'") @Level(1801)
+    default E arrayMulti(E expVector) {
+        return expVector;
+    }
+
+    @Syntax("exparray = exp ';' exp") @Level(0)
+    default E innerExpArrayDouble(E e1, E e2) {
+        return alg().vectorAppend(alg().vector(e1), alg().vector(e2));
+    }
+
+    @Syntax("exparray = exp ';' exparray") @Level(1)
+    default E innerExpArrayMulti(E e1, E e2) {
+        return alg().vectorAppend(alg().vector(e1), e2);
+    }
+}
