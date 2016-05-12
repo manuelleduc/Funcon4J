@@ -36,4 +36,9 @@ public class Vector implements Value {
     public boolean equals(Object other) {
         return other instanceof Vector && ((Vector)other).list.equals(this.list);
     }
+
+    @Override
+    public java.lang.String toString() {
+        return "Vector<" + list.toString() + ">";
+    }
 }

@@ -74,4 +74,13 @@ public interface ListFactory extends TupleFactory, ListAlg<IEval> {
     default IEval listReverse(IEval l) {
         return (env, forward, store, given) -> ((List)l.eval(env, forward, store, given)).reverse();
     }
+
+    @Override
+    default IEval listAppend(IEval list1, IEval list2) {
+        return (env, forward, store, given) -> {
+            List l1 = (List)list1.eval(env, forward, store, given);
+            List l2 = (List)list2.eval(env, forward, store, given);
+            return l1.append(l2);
+        };
+    }
 }

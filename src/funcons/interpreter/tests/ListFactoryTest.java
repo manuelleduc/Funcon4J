@@ -108,4 +108,11 @@ public class ListFactoryTest {
         List l2 = (List)alg.list(alg.lit(1), alg.lit(2)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(l2, l1);
     }
+
+    @Test
+    public void testListAppend() throws Exception {
+        List l = (List)alg.listAppend(alg.list(alg.lit(2)), alg.list(alg.lit(3)))
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new List(new Int(2), new Int(3)), l);
+    }
 }

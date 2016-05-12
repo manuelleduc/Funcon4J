@@ -41,4 +41,12 @@ public class VectorFactoryTest {
                 .eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Integer(1), i.intValue());
     }
+
+    @Test
+    public void testVectorAppend() throws Exception {
+        Vector v = (Vector)alg.vectorAppend(alg.vector(alg.lit(2)), alg.vector(alg.lit(3)))
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Integer(2), ((Int)v.get(new Int(0))).intValue());
+        assertEquals(new Integer(3), ((Int)v.get(new Int(1))).intValue());
+    }
 }

@@ -29,7 +29,7 @@ public interface VectorFactory extends ListFactory, VectorAlg<IEval> {
     default IEval vectorAppend(IEval vector1, IEval vector2) {
         return (env, forwards, store, given) -> {
             Vector v1 = (Vector)vector1.eval(env, forwards, store, given);
-            Vector v2 = (Vector)vector1.eval(env, forwards, store, given);
+            Vector v2 = (Vector)vector2.eval(env, forwards, store, given);
             return v1.append(v2);
         };
     }

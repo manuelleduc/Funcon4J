@@ -10,4 +10,5 @@ public interface ListAlg<E> extends TupleAlg<E> {
     E listPrefixPatt(E p1, E p2);
     E intClosedInterval(E m, E n);
     E listReverse(E l);
+    E listAppend(E list1, E list2);
 }
