@@ -23,6 +23,10 @@ public class Vector implements Value {
         return list.get(i);
     }
 
+    public Vector set(Int i, Value v) {
+        return new Vector(list.set(i, v));
+    }
+
     public Int length() {
         return list.length();
     }

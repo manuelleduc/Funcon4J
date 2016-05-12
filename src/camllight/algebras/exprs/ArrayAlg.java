@@ -29,4 +29,14 @@ public interface ArrayAlg<E> extends ListAlg<E> {
     default E innerExpArrayMulti(E e1, E e2) {
         return alg().vectorAppend(alg().vector(e1), e2);
     }
+
+    @Syntax("exp = exp '.(' exp ')'") @Level(1200)
+    default E arraySelect(E array, E index) {
+        return alg().vectorSelect(array, index);
+    }
+
+    @Syntax("exp = exp '.(' exp ')' '<-' exp") @Level(1100)
+    default E arrayAssign(E array, E index, E val) {
+        return alg().vectorAssign(array, index, val);
+    }
 }

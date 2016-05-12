@@ -3,6 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.VectorAlg;
 import funcons.carriers.IEval;
 import funcons.values.Int;
+import funcons.values.Value;
 import funcons.values.Vector;
 
 public interface VectorFactory extends ListFactory, VectorAlg<IEval> {
@@ -31,6 +32,16 @@ public interface VectorFactory extends ListFactory, VectorAlg<IEval> {
             Vector v1 = (Vector)vector1.eval(env, forwards, store, given);
             Vector v2 = (Vector)vector2.eval(env, forwards, store, given);
             return v1.append(v2);
+        };
+    }
+
+    @Override
+    default IEval vectorAssign(IEval vector, IEval index, IEval val) {
+        return (env, forwards, store, given) -> {
+            Vector vec = (Vector)vector.eval(env, forwards, store, given);
+            Int i = (Int)index.eval(env, forwards, store, given);
+            Value v = val.eval(env, forwards, store, given);
+            return vec.set(i, v);
         };
     }
 }

@@ -49,4 +49,24 @@ public class VectorFactoryTest {
         assertEquals(new Integer(2), ((Int)v.get(new Int(0))).intValue());
         assertEquals(new Integer(3), ((Int)v.get(new Int(1))).intValue());
     }
+
+    @Test
+    public void testVectorAssign() throws Exception {
+        Vector v = (Vector)alg.vectorAssign(alg.vector(alg.lit(2)), alg.lit(0), alg.lit(3))
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Vector(new Int(3)), v);
+
+        IEval vEval = alg.vectorAppend(
+                alg.vector(alg.lit(5)),
+                alg.vectorAppend(
+                    alg.vector(alg.lit(6)),
+                    alg.vector(alg.lit(7))
+                )
+        );
+        v = (Vector)alg.vectorAssign(vEval, alg.lit(2), alg.lit(10))
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Integer(5), ((Int)v.get(new Int(0))).intValue());
+        assertEquals(new Integer(6), ((Int)v.get(new Int(1))).intValue());
+        assertEquals(new Integer(10), ((Int)v.get(new Int(2))).intValue());
+    }
 }

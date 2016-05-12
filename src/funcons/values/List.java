@@ -49,6 +49,13 @@ public class List implements Value {
         return tail.get(new Int(i.intValue() - 1));
     }
 
+    public List set(Int i, Value v) {
+        if (i.intValue() == 0) {
+            return new List(v, tail());
+        }
+        return new List(head(), tail().set(new Int(i.intValue() - 1), v));
+    }
+
     public List reverse() {
         java.util.ArrayList<Value> items = this.toArrayList();
         List list = new List();

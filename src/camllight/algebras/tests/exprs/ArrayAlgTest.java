@@ -19,7 +19,7 @@ public class ArrayAlgTest extends TestStub {
     }
 
     @Test
-    public void testArray() throws Exception {
+    public void testArraySingle() throws Exception {
         CamlLight.eval("[|2|];;");
         assertEquals("Vector<[2, []]>", out.toString());
         out.reset();
@@ -44,5 +44,33 @@ public class ArrayAlgTest extends TestStub {
 
         CamlLight.eval("[| 7 ; 8 ; 9 ;|];;");
         assertEquals("Vector<[7, [8, [9, []]]]>", out.toString());
+    }
+
+    @Test
+    public void testArraySelect() throws Exception {
+        CamlLight.eval("[| 1 ; 2 ; 3|].(0);;");
+        assertEquals("1", out.toString());
+        out.reset();
+
+        CamlLight.eval("[| 1 ; 2 ; 3|].(1);;");
+        assertEquals("2", out.toString());
+        out.reset();
+
+        CamlLight.eval("[| 1 ; 2 ; 3|].(2);;");
+        assertEquals("3", out.toString());
+    }
+
+    @Test
+    public void testArrayAssign() throws Exception {
+        CamlLight.eval("[| 1 ; 2 ; 3 |].(0) <- 10;;");
+        assertEquals("Vector<[10, [2, [3, []]]]>", out.toString());
+        out.reset();
+
+        CamlLight.eval("[| 1 ; 2 ; 3 |].(1) <- 10;;");
+        assertEquals("Vector<[1, [10, [3, []]]]>", out.toString());
+        out.reset();
+
+        CamlLight.eval("[| 1 ; 2 ; 3 |].(2) <- 10;;");
+        assertEquals("Vector<[1, [2, [10, []]]]>", out.toString());
     }
 }
