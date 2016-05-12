@@ -1,32 +1,14 @@
 package camllight.algebras.tests.exprs;
 
 import camllight.CamlLight;
+import camllight.algebras.tests.TestStub;
 import funcons.values.signals.MatchFailureException;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
-
-public class ControlAlgTest {
-    private ByteArrayOutputStream out;
-    private java.io.PrintStream oldOut;
-
-    @Before
-    public void setUp() throws Exception {
-        oldOut = System.out;
-        out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        System.setOut(oldOut);
-    }
-
+public class ControlAlgTest extends TestStub {
     @Test
     public void testIf_() throws Exception {
         CamlLight.eval("if true then 0;;");

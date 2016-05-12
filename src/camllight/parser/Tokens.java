@@ -28,6 +28,11 @@ public interface Tokens {
         return src;
     }
 
+    @Token("'[|' [ ]* '|]'")
+    static String emptyvectortoken(String src) {
+        return src;
+    }
+
     @Token("'(' [ ]* ')'")
     static String nulltoken(String src) {
         return src;

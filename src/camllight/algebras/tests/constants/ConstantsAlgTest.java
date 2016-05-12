@@ -1,32 +1,12 @@
 package camllight.algebras.tests.constants;
 
 import camllight.CamlLight;
-import funcons.values.Int;
-import org.junit.After;
-import org.junit.Before;
+import camllight.algebras.tests.TestStub;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.stream.Stream;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
-
-public class ConstantsAlgTest {
-    private ByteArrayOutputStream out;
-    private java.io.PrintStream oldOut;
-
-    @Before
-    public void setUp() throws Exception {
-        oldOut = System.out;
-        out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        System.setOut(oldOut);
-    }
+public class ConstantsAlgTest extends TestStub {
 
     @Test
     public void testInt_() throws Exception {

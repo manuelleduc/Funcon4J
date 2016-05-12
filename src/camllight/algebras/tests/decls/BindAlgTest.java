@@ -1,31 +1,12 @@
 package camllight.algebras.tests.decls;
 
 import camllight.CamlLight;
-import org.junit.After;
-import org.junit.Before;
+import camllight.algebras.tests.TestStub;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
-
-public class BindAlgTest {
-    private ByteArrayOutputStream out;
-    private java.io.PrintStream oldOut;
-
-    @Before
-    public void setUp() throws Exception {
-        oldOut = System.out;
-        out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        System.setOut(oldOut);
-    }
-
+public class BindAlgTest extends TestStub {
     @Test
     public void testDeclRec() throws Exception {
         CamlLight.eval("let rec power a b = if b = 0 then 1 else a * power a (b - 1) in power 3 4;;");
