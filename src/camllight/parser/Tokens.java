@@ -6,8 +6,13 @@ import noa.syntax.Token;
 
 public interface Tokens {
     @Token("[0-9]+")
-    static int numtoken(String src) {
+    static int inttoken(String src) {
         return Integer.parseInt(src);
+    }
+
+    @Token("[0-9]+ '.' [0-9]*")
+    static float floattoken(String src) {
+        return Float.parseFloat(src);
     }
 
     @Token("'false' | 'true'")

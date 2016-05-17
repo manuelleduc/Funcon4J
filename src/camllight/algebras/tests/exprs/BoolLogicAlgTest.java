@@ -60,4 +60,75 @@ public class BoolLogicAlgTest extends TestStub {
         CamlLight.eval("not true;;");
         assertEquals("false", out.toString());
     }
+
+
+    @Test
+    public void testGreater() throws Exception {
+        CamlLight.eval("3 > 2;;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 > 3;;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 > 4;;");
+        assertEquals("false", out.toString());
+    }
+
+    @Test
+    public void testSmaller() throws Exception {
+        CamlLight.eval("3 < 2;;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 < 3;;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 < 4;;");
+        assertEquals("true", out.toString());
+    }
+
+    @Test
+    public void testGreaterEqual() throws Exception {
+        CamlLight.eval("3 >= 2;;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 >= 3;;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 >= 4;;");
+        assertEquals("false", out.toString());
+    }
+
+    @Test
+    public void testSmallerEqual() throws Exception {
+        CamlLight.eval("3 <= 2;;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 <= 3;;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 <= 4;;");
+        assertEquals("true", out.toString());
+    }
+
+    @Test
+    public void testEqual() throws Exception {
+        CamlLight.eval("3 = 2;;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 = 3;;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 = 4;;");
+        assertEquals("false", out.toString());
+    }
 }

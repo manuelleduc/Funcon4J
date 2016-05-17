@@ -4,9 +4,14 @@ import camllight.algebras.base.ModuleAlg;
 import noa.syntax.Syntax;
 
 public interface ConstantsAlg<E> extends ModuleAlg<E> {
-    @Syntax("constant = NUMTOKEN")
+    @Syntax("constant = INTTOKEN")
     default E int_(java.lang.Integer l) {
         return alg().lit(l);
+    }
+
+    @Syntax("constant = FLOATTOKEN")
+    default E float_(java.lang.Float f) {
+        return alg().lit(f.doubleValue());
     }
 
     @Syntax("constant = BOOLTOKEN")

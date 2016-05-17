@@ -62,42 +62,4 @@ public interface IntCalcFactory extends NullFactory, IntCalcAlg<IEval> {
                                 %
                         ((Number)b.eval(env, forward, store, given)).intValue());
     }
-
-    @Override
-    default IEval intGreater(IEval a, IEval b) {
-        return (env, forward, store, given) ->
-                new Bool(
-                        ((Number)a.eval(env, forward, store, given)).intValue()
-                                >
-                        ((Number)b.eval(env, forward, store, given)).intValue());
-    }
-
-    @Override
-    default IEval intSmaller(IEval a, IEval b) {
-        return (env, forward, store, given) ->
-                new Bool(
-                        ((Number)a.eval(env, forward, store, given)).intValue()
-                                <
-                        ((Number)b.eval(env, forward, store, given)).intValue());
-    }
-
-    @Override
-    default IEval intGreaterEqual(IEval a, IEval b) {
-        return (env, forward, store, given) ->
-                new Bool(
-                        ((Number)a.eval(env, forward, store, given)).intValue()
-                                >=
-                        ((Number)b.eval(env, forward, store, given)).intValue());
-    }
-
-    @Override
-    default IEval intSmallerEqual(IEval a, IEval b) {
-        return (env, forward, store, given) ->
-                new Bool(
-                        ((Number)a.eval(env, forward, store, given)).intValue()
-                                <=
-                        ((Number)b.eval(env, forward, store, given)).intValue());
-    }
-
-
 }

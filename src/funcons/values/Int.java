@@ -23,6 +23,26 @@ public class Int implements Number {
     }
 
     @Override
+    public Boolean greaterThan(Number other) {
+        return intValue() > other.intValue();
+    }
+
+    @Override
+    public Boolean smallerThan(Number other) {
+        return intValue() < other.intValue();
+    }
+
+    @Override
+    public Boolean greaterEqualThan(Number other) {
+        return intValue() >= other.intValue();
+    }
+
+    @Override
+    public Boolean smallerEqualThan(Number other) {
+        return intValue() <= other.intValue();
+    }
+
+    @Override
     public int hashCode() {
         return value.hashCode();
     }

@@ -24,6 +24,26 @@ public class Float implements Number {
     }
 
     @Override
+    public Boolean greaterThan(Number other) {
+        return floatValue() > other.floatValue();
+    }
+
+    @Override
+    public Boolean smallerThan(Number other) {
+        return floatValue() < other.floatValue();
+    }
+
+    @Override
+    public Boolean greaterEqualThan(Number other) {
+        return floatValue() >= other.floatValue();
+    }
+
+    @Override
+    public Boolean smallerEqualThan(Number other) {
+        return floatValue() <= other.floatValue();
+    }
+
+    @Override
     public int hashCode() {
         return value.hashCode();
     }

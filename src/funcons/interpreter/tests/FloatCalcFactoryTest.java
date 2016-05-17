@@ -92,40 +92,4 @@ public class FloatCalcFactoryTest {
                 .eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Float(.5), f);
     }
-
-    @Test
-    public void testFloatGreater() throws Exception {
-        boolOpTester(alg::floatGreater, true, false, false);
-    }
-
-    @Test
-    public void testFloatSmaller() throws Exception {
-        boolOpTester(alg::floatSmaller, false, true, false);
-    }
-
-    @Test
-    public void testFloatGreaterEqual() throws Exception {
-        boolOpTester(alg::floatGreaterEqual, true, false, true);
-    }
-
-    @Test
-    public void testFloatSmallerEqual() throws Exception {
-        boolOpTester(alg::floatSmallerEqual, false, true, true);
-    }
-
-
-    private void boolOpTester(BiFunction<IEval, IEval, IEval> f, boolean greaterThan, boolean smallerThan, boolean equal) throws Exception {
-        assertEquals(
-                greaterThan,
-                ((Bool)f.apply(alg.lit(6.0), alg.lit(3.0))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-        assertEquals(
-                smallerThan,
-                ((Bool)f.apply(alg.lit(3.0), alg.lit(6.0))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-        assertEquals(
-                equal,
-                ((Bool)f.apply(alg.lit(3.0), alg.lit(3.0))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-    }
 }

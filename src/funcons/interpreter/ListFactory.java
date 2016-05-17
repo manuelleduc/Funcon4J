@@ -62,7 +62,7 @@ public interface ListFactory extends TupleFactory, ListAlg<IEval> {
             Int mValue = (Int)m.eval(env, forward, store, given);
             Int nValue = (Int)n.eval(env, forward, store, given);
 
-            if (((Bool)intGreater((e,f,s,g) -> mValue, (e,f,s,g) -> nValue).eval(env, forward, store, given)).boolValue()) {
+            if (((Bool)greater((e,f,s,g) -> mValue, (e,f,s,g) -> nValue).eval(env, forward, store, given)).boolValue()) {
                 return new List();
             }
 

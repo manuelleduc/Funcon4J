@@ -1,12 +1,12 @@
 package funcons.prettyprinter;
 
-import funcons.algebras.LogicWhileTrueAlg;
+import funcons.algebras.LogicControlAlg;
 import funcons.carriers.IPrint;
 import funcons.values.String;
 
 public interface PrintableLogicControlFactory extends
         PrintableIntCalcFactory,
-        LogicWhileTrueAlg<IPrint> {
+        LogicControlAlg<IPrint> {
 
     @Override
     default IPrint bool(Boolean b) {

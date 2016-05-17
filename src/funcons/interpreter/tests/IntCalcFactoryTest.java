@@ -65,30 +65,4 @@ public class IntCalcFactoryTest {
         funcons.values.Int i = (funcons.values.Int)alg.intModulo(alg.lit(6), alg.lit(3)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
     }
-
-    @Test
-    public void testIntGreater() throws Exception {
-        boolOpTester(alg::intGreater, true, false, false);
-    }
-
-    @Test
-    public void testIntSmaller() throws Exception {
-        boolOpTester(alg::intSmaller, false, true, false);
-    }
-
-    @Test
-    public void testIntGreaterEqual() throws Exception {
-        boolOpTester(alg::intGreaterEqual, true, false, true);
-    }
-
-    @Test
-    public void testIntSmallerEqual() throws Exception {
-        boolOpTester(alg::intSmallerEqual, false, true, true);
-    }
-
-    private void boolOpTester(BiFunction<IEval, IEval, IEval> f, boolean greaterThan, boolean smallerThan, boolean equal) throws Exception {
-        assertEquals(greaterThan, ((Bool)f.apply(alg.lit(6), alg.lit(3)).eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-        assertEquals(smallerThan, ((Bool)f.apply(alg.lit(3), alg.lit(6)).eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-        assertEquals(equal, ((Bool)f.apply(alg.lit(3), alg.lit(3)).eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-    }
 }

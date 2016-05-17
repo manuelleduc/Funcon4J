@@ -2,7 +2,7 @@ package funcons.values;
 
 import java.lang.*;
 
-public class Bool implements Number {
+public class Bool implements Value {
 
     private java.lang.Boolean value;
 
@@ -10,19 +10,8 @@ public class Bool implements Number {
         value = b;
     }
 
-    @Override
-    public java.lang.Integer intValue() {
-        return value ? 1 : 0;
-    }
-
-    @Override
     public java.lang.Boolean boolValue() {
         return value;
-    }
-
-    @Override
-    public java.lang.Double floatValue() {
-        return value ? 1.0 : 0.0;
     }
 
     @Override

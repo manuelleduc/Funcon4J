@@ -33,29 +33,4 @@ public interface IntCalcAlg<E> extends ExpAlg<E> {
     default E intMod(E a, E b) {
         return alg().intModulo(a, b);
     }
-
-    @Syntax("exp = exp '>' exp") @Level(1508)
-    default E intGreater(E e1, E e2) {
-        return alg().intGreater(e1, e2);
-    }
-
-    @Syntax("exp = exp '<' exp") @Level(1508)
-    default E intSmaller(E e1, E e2) {
-        return alg().intSmaller(e1, e2);
-    }
-
-    @Syntax("exp = exp '>=' exp") @Level(1508)
-    default E intGreaterEqual(E e1, E e2) {
-        return alg().intGreaterEqual(e1, e2);
-    }
-
-    @Syntax("exp = exp '<=' exp") @Level(1508)
-    default E intSmallerEqual(E e1, E e2) {
-        return alg().intSmallerEqual(e1, e2);
-    }
-
-    @Syntax("exp = exp '=' exp") @Level(1508)
-    default E intEqual(E e1, E e2) {
-        return alg().equal(e1, e2);
-    }
 }

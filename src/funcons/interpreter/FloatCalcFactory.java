@@ -62,40 +62,4 @@ public interface FloatCalcFactory extends IntCalcFactory, FloatCalcAlg<IEval> {
                                 %
                         ((Number)b.eval(env, forwards, store, given)).floatValue());
     }
-
-    @Override
-    default IEval floatGreater(IEval a, IEval b) {
-        return (env, forwards, store, given) ->
-                new Bool(
-                        ((Number)a.eval(env, forwards, store, given)).floatValue()
-                                >
-                        ((Number)b.eval(env, forwards, store, given)).floatValue());
-    }
-
-    @Override
-    default IEval floatSmaller(IEval a, IEval b) {
-        return (env, forwards, store, given) ->
-                new Bool(
-                        ((Number)a.eval(env, forwards, store, given)).floatValue()
-                                <
-                        ((Number)b.eval(env, forwards, store, given)).floatValue());
-    }
-
-    @Override
-    default IEval floatGreaterEqual(IEval a, IEval b) {
-        return (env, forwards, store, given) ->
-                new Bool(
-                        ((Number)a.eval(env, forwards, store, given)).floatValue()
-                                >=
-                        ((Number)b.eval(env, forwards, store, given)).floatValue());
-    }
-
-    @Override
-    default IEval floatSmallerEqual(IEval a, IEval b) {
-        return (env, forwards, store, given) ->
-                new Bool(
-                        ((Number)a.eval(env, forwards, store, given)).floatValue()
-                                <=
-                        ((Number)b.eval(env, forwards, store, given)).floatValue());
-    }
 }

@@ -4,7 +4,7 @@ import funcons.algebras.PrintAlg;
 import funcons.carriers.IEval;
 import funcons.values.Null;
 
-public interface PrintFactory extends FloatCalcFactory, PrintAlg<IEval> {
+public interface PrintFactory extends BoolFactory, PrintAlg<IEval> {
     @Override
     default IEval print(IEval x) {
         return (env, forward, store, given) -> {

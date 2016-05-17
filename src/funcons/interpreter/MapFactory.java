@@ -11,7 +11,7 @@ import funcons.values.ids.NameId;
 
 import java.util.Set;
 
-public interface MapFactory extends LogicWhileTrueFactory, MapAlg<IEval> {
+public interface MapFactory extends LogicControlFactory, MapAlg<IEval> {
     @Override
     default IEval id(java.lang.String s) {
         return (env, forward, store, given) -> new Id(s);

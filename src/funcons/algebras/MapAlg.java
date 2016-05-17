@@ -1,6 +1,6 @@
 package funcons.algebras;
 
-public interface MapAlg<E> extends LogicWhileTrueAlg<E> {
+public interface MapAlg<E> extends LogicControlAlg<E> {
     E id(java.lang.String s);
     E nameId(java.lang.String namespace, java.lang.String id);
     E bindValue(E id, E exp);
