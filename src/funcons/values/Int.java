@@ -18,13 +18,18 @@ public class Int implements Number {
     }
 
     @Override
+    public Double floatValue() {
+        return value.doubleValue();
+    }
+
+    @Override
     public int hashCode() {
         return value.hashCode();
     }
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof Int && ((Int) other).value.equals(value);
+        return other instanceof Int && ((Int)other).value.equals(value);
     }
 
     @Override

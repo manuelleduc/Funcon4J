@@ -1,5 +1,7 @@
 package funcons.values;
 
+import java.lang.*;
+
 public class Bool implements Number {
 
     private java.lang.Boolean value;
@@ -19,13 +21,18 @@ public class Bool implements Number {
     }
 
     @Override
+    public java.lang.Double floatValue() {
+        return value ? 1.0 : 0.0;
+    }
+
+    @Override
     public int hashCode() {
         return value.hashCode();
     }
 
     @Override
     public boolean equals(Object other) {
-        return other instanceof Bool && ((Bool) other).value.equals(value);
+        return other instanceof Bool && ((Bool)other).value.equals(value);
     }
 
     @Override
