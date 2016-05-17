@@ -1,12 +1,13 @@
 package camllight.algebras.patts;
 
+import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 import java.util.List;
 import java.util.ListIterator;
 
 public interface TuplePattAlg<E> extends PattAlg<E> {
-    @Syntax("patt = '(' patt patttuple+ ')'")
+    @Syntax("patt = '(' patt patttuple+ ')'") @Level(50)
     default E pattTuple(E patt, List<E> patts) {
 
         ListIterator<E> it = patts.listIterator(patts.size());

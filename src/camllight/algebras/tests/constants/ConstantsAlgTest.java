@@ -15,9 +15,25 @@ public class ConstantsAlgTest extends TestStub {
     }
 
     @Test
+    public void testFloat_() throws Exception {
+        CamlLight.eval("1.;;");
+        assertEquals("1.0", out.toString());
+        out.reset();
+
+        CamlLight.eval("2.;;");
+        assertEquals("2.0", out.toString());
+    }
+
+    @Test
     public void testBool() throws Exception {
         CamlLight.eval("true;;");
         assertEquals("true", out.toString());
+    }
+
+    @Test
+    public void testString() throws Exception {
+        CamlLight.eval("\"foo\";;");
+        assertEquals("foo", out.toString());
     }
 
     @Test

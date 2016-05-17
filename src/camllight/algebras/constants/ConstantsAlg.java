@@ -19,6 +19,11 @@ public interface ConstantsAlg<E> extends ModuleAlg<E> {
         return alg().bool(b);
     }
 
+    @Syntax("constant = STRINGTOKEN")
+    default E string(java.lang.String s) {
+        return alg().string(s);
+    }
+
     @Syntax("constant = NULLTOKEN")
     default E null_(Object o) {
         return alg().null_();

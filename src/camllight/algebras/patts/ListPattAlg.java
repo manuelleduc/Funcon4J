@@ -5,12 +5,12 @@ import noa.syntax.Syntax;
 
 public interface ListPattAlg<E> extends TuplePattAlg<E> {
 
-    @Syntax("patt = emptylist")
+    @Syntax("patt = emptylist") @Level(20)
     default E emptyListPatt(E l) {
         return alg().only(l);
     }
 
-    @Syntax("patt = '[' headtaillistpatt ']'")
+    @Syntax("patt = '[' headtaillistpatt ']'") @Level(0)
     default E headTailListPatt(E p) {
         return p;
     }
@@ -25,12 +25,7 @@ public interface ListPattAlg<E> extends TuplePattAlg<E> {
         return alg().listPrefixPatt(p1, p2);
     }
 
-    //@Syntax("patt = '[' patt ']'")
-    default E singleElementListPatt(E p) {
-        return headTailListPattMulti(p, alg().only(alg().list()));
-    }
-
-    @Syntax("patt = '[' pattlist ']'")
+    @Syntax("patt = '[' pattlist ']'")@Level(10)
     default E pattList(E p) {
         return p;
     }

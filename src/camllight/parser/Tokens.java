@@ -20,6 +20,11 @@ public interface Tokens {
         return src.equals("true");
     }
 
+    @Token("'\"' ~('\\r' | '\\n' | '\"')* '\"'")
+    static String stringtoken(String src) {
+        return src.substring(1, src.length() - 1);
+    }
+
     @Token("'_'")
     static String wildcardtoken(String src) {
         return src;

@@ -27,5 +27,6 @@ public class StringFactoryTest {
         String s = (String)alg.string("foo")
                 .eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new String("foo"), s);
+        assertEquals("foo", s.toString());
     }
 }
