@@ -1,5 +1,5 @@
 package funcons.algebras;
 
-public interface PrintAlg<E> extends BoolAlg<E> {
+public interface PrintAlg<E> extends StringAlg<E> {
     E print(E x);
 }

@@ -11,6 +11,10 @@ public class String implements Value {
         value = b.toString();
     }
 
+    public String(java.lang.Double d) {
+        value = d.toString();
+    }
+
     public String(java.lang.String s) {
         value = s;
     }
