@@ -21,7 +21,7 @@ public interface ConstantsAlg<E> extends ModuleAlg<E> {
 
     @Syntax("constant = STRINGTOKEN")
     default E string(java.lang.String s) {
-        return alg().string(s);
+        return alg().camlLightString(s);
     }
 
     @Syntax("constant = NULLTOKEN")

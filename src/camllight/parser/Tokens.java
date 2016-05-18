@@ -20,7 +20,7 @@ public interface Tokens {
         return src.equals("true");
     }
 
-    @Token("'\"' ~('\\r' | '\\n' | '\"')* '\"'")
+    @Token("'\"' (~('\"' | '\\\\') | '\\\\' ('\"' | '\\\\' | 'n' | 'r' | 't' | 'b' | [0-9][0-9][0-9]))* '\"'")
     static String stringtoken(String src) {
         return src.substring(1, src.length() - 1);
     }

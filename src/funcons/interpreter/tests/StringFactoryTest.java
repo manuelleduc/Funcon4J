@@ -29,4 +29,16 @@ public class StringFactoryTest {
         assertEquals(new String("foo"), s);
         assertEquals("foo", s.toString());
     }
+
+    @Test
+    public void testCamlLightString() throws Exception {
+        String s = (String)alg.camlLightString("foo")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new String("foo"), s);
+        assertEquals("foo", s.toString());
+
+        s = (String)alg.camlLightString("\\\\ \\\" \\n \\r \\t \\b \\065")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new String("\\ \" \n \r \t \b A"), s);
+    }
 }

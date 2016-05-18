@@ -40,6 +40,8 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException {
+        //interpret("match \"hello\" with \"hello\" -> true;;");
+        //interpret("match 1.0 with 1. -> true;;");
         interpret("match 3 with | | | | | 3 -> true;;");
         //interpret("let isInt = function | 0 -> true | _ -> false ;; isInt 0;;");
         //interpret("let power a b = if b = 0 then 1 else a * power a (b - 1) in power -3 3;;");
@@ -52,23 +54,22 @@ public class CamlLight {
         //interpret("let smallerThan = function | [x :: y :: _] -> x < y in smallerThan [0 ; 1];;");
         //interpret("(  );;");
         //interpret("[ ];;");
-        interpret("let test = function (0 | 1) -> true | _ -> false in test 10;;");
-        /*interpret("(fun (x : int) -> print x ; x + 1) 0;;");
-        interpret("(1 : int);;");
-        interpret("let test = function | 0 as y -> y + 1 | _ -> 0 in test 0;;");
-        interpret("let isZero = fun x -> match x with | 0 -> true | _ -> false and x = 0 in isZero x;;");
-        interpret("let t = (1,2) and add = fun (x,y) -> x + y in add t;;");
-        interpret("let x = 3 in x + 1;;");
-        interpret("let x = 3 in fun y -> y + x 4;;");
-        interpret("let x = 3 in let y = 5 in x + y;;");
-        interpret("(fun a ((b,c), d) -> a + b + c + d) 1 ((2,3),4);;");
-        interpret("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2;;");
-        interpret("fun a b c d e f -> a + b + c + d + e + f 1 2 3 4 5 6;;");
-        interpret("1;;");
-        interpret("for i = 10 downto 1 do print i done;;");
-        interpret("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5;;");
-        interpret("not false or true;;");*/
-
+        //interpret("let test = function (0 | 1) -> true | _ -> false in test 10;;");
+        //interpret("(fun (x : int) -> print x ; x + 1) 0;;");
+        //interpret("(1 : int);;");
+        //interpret("let test = function | 0 as y -> y + 1 | _ -> 0 in test 0;;");
+        //interpret("let isZero = fun x -> match x with | 0 -> true | _ -> false and x = 0 in isZero x;;");
+        //interpret("let t = (1,2) and add = fun (x,y) -> x + y in add t;;");
+        //interpret("let x = 3 in x + 1;;");
+        //interpret("let x = 3 in fun y -> y + x 4;;");
+        //interpret("let x = 3 in let y = 5 in x + y;;");
+        //interpret("(fun a ((b,c), d) -> a + b + c + d) 1 ((2,3),4);;");
+        //interpret("function | 1 -> 4 | 2 -> 5 | 3 -> 6 | _ -> 0 2;;");
+        //interpret("fun a b c d e f -> a + b + c + d + e + f 1 2 3 4 5 6;;");
+        //interpret("1;;");
+        //interpret("for i = 10 downto 1 do print i done;;");
+        //interpret("(print 10) ; begin if 7 < 3 then 1 else 2 + 3 end = 5;;");
+        //interpret("not false or true;;");
         //interpret("let countup = function | 10 -> print 10 | _ as x -> (print x ; countup x + 1) in countup 0;;");
     }
 }

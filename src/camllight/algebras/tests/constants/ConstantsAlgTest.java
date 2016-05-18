@@ -34,6 +34,10 @@ public class ConstantsAlgTest extends TestStub {
     public void testString() throws Exception {
         CamlLight.eval("\"foo\";;");
         assertEquals("foo", out.toString());
+        out.reset();
+
+        CamlLight.eval("\"\\\\ \\\" \\n \\r \\t \\b \\065\";;");
+        assertEquals("\\ \" \n \r \t \b A", out.toString());
     }
 
     @Test
