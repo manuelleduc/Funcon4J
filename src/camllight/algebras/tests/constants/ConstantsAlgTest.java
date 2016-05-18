@@ -20,7 +20,7 @@ public class ConstantsAlgTest extends TestStub {
         assertEquals("1.0", out.toString());
         out.reset();
 
-        CamlLight.eval("2.;;");
+        CamlLight.eval("2.0;;");
         assertEquals("2.0", out.toString());
     }
 
@@ -38,6 +38,41 @@ public class ConstantsAlgTest extends TestStub {
 
         CamlLight.eval("\"\\\\ \\\" \\n \\r \\t \\b \\065\";;");
         assertEquals("\\ \" \n \r \t \b A", out.toString());
+    }
+
+    @Test
+    public void testChar_() throws Exception {
+        CamlLight.eval("`a`;;");
+        assertEquals("a", out.toString());
+        out.reset();
+
+        CamlLight.eval("`\\\\`;;");
+        assertEquals("\\", out.toString());
+        out.reset();
+
+        CamlLight.eval("`\\``;;");
+        assertEquals("`", out.toString());
+        out.reset();
+
+        CamlLight.eval("`\\n`;;");
+        assertEquals("\n", out.toString());
+        out.reset();
+
+
+        CamlLight.eval("`\\r`;;");
+        assertEquals("\r", out.toString());
+        out.reset();
+
+        CamlLight.eval("`\\t`;;");
+        assertEquals("\t", out.toString());
+        out.reset();
+
+        CamlLight.eval("`\\b`;;");
+        assertEquals("\b", out.toString());
+        out.reset();
+
+        CamlLight.eval("`\\065`;;");
+        assertEquals("A", out.toString());
     }
 
     @Test

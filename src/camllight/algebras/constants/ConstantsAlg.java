@@ -24,6 +24,11 @@ public interface ConstantsAlg<E> extends ModuleAlg<E> {
         return alg().camlLightString(s);
     }
 
+    @Syntax("constant = CHARTOKEN")
+    default E char_(java.lang.String s) {
+        return alg().camlLightChar(s);
+    }
+
     @Syntax("constant = NULLTOKEN")
     default E null_(Object o) {
         return alg().null_();

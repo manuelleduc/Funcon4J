@@ -25,6 +25,11 @@ public interface Tokens {
         return src.substring(1, src.length() - 1);
     }
 
+    @Token("'`' (~('`' | '\\\\') | '\\\\' ('`' | '\\\\' | 'n' | 'r' | 't' | 'b' | [0-9][0-9][0-9]))* '`'")
+    static String chartoken(String src) {
+        return src.substring(1, src.length() - 1);
+    }
+
     @Token("'_'")
     static String wildcardtoken(String src) {
         return src;
