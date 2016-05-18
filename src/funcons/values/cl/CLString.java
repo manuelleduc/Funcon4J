@@ -12,12 +12,7 @@ public class CLString extends String {
 
     private static java.lang.String filterCamlLightEscapes(java.lang.String s) {
         StringBuilder sb = new StringBuilder();
-
-        java.util.List<java.lang.Character> cs = new ArrayList<>();
-        for (java.lang.Character c : s.toCharArray()) {
-            cs.add(c);
-        }
-        Iterator<java.lang.Character> charIt = cs.iterator();
+        Iterator<java.lang.Character> charIt = charIterator(s);
 
         while(charIt.hasNext()) {
             java.lang.Character c = charIt.next();
@@ -30,6 +25,14 @@ public class CLString extends String {
         }
 
         return sb.toString();
+    }
+
+    private static Iterator<java.lang.Character> charIterator(java.lang.String s) {
+        java.util.List<java.lang.Character> cs = new ArrayList<>();
+        for (java.lang.Character c : s.toCharArray()) {
+            cs.add(c);
+        }
+        return cs.iterator();
     }
 
     private static java.lang.Character handleEscape(Iterator<java.lang.Character> charIt) {
