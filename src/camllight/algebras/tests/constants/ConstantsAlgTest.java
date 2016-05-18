@@ -28,6 +28,10 @@ public class ConstantsAlgTest extends TestStub {
     public void testBool() throws Exception {
         CamlLight.eval("true;;");
         assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("false;;");
+        assertEquals("false", out.toString());
     }
 
     @Test
@@ -57,7 +61,6 @@ public class ConstantsAlgTest extends TestStub {
         CamlLight.eval("`\\n`;;");
         assertEquals("\n", out.toString());
         out.reset();
-
 
         CamlLight.eval("`\\r`;;");
         assertEquals("\r", out.toString());

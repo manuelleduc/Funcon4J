@@ -70,11 +70,30 @@ public class Map<K, V> implements Value {
 
     @Override
     public int hashCode() {
-        throw new NotImplementedException();
+        return keys().hashCode();
     }
 
     @Override
     public boolean equals(Object other) {
-        throw new NotImplementedException();
+        if (!(other instanceof Map)) {
+            return false;
+        }
+
+        @SuppressWarnings("unchecked")
+        Map<K,V> otherMap = ((Map<K,V>)other);
+
+        Set<K> ks = keys();
+
+        if (!ks.equals(otherMap.keys())) {
+            return false;
+        }
+
+        for (K key : ks) {
+            if (!val(key).equals(otherMap.val(key))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
