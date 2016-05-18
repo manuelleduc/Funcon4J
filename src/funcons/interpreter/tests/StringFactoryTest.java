@@ -9,6 +9,7 @@ import funcons.values.Char;
 import funcons.values.Environment;
 import funcons.values.Null;
 import funcons.values.String;
+import funcons.values.cl.CLChar;
 import funcons.values.cl.CLString;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,5 +50,40 @@ public class StringFactoryTest {
         Char c = (Char)alg.char_('a')
                 .eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Char('a'), c);
+    }
+
+    @Test
+    public void testCamlLightChar() throws Exception {
+        CLChar c = (CLChar)alg.camlLightChar("a")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new CLChar("a"), c);
+
+        c = (CLChar)alg.camlLightChar("\\\\")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals("\\", c.toString());
+
+        c = (CLChar)alg.camlLightChar("\\`")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals("`", c.toString());
+
+        c = (CLChar)alg.camlLightChar("\\n")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals("\n", c.toString());
+
+        c = (CLChar)alg.camlLightChar("\\r")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals("\r", c.toString());
+
+        c = (CLChar)alg.camlLightChar("\\t")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals("\t", c.toString());
+
+        c = (CLChar)alg.camlLightChar("\\b")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals("\b", c.toString());
+
+        c = (CLChar)alg.camlLightChar("\\065")
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals("A", c.toString());
     }
 }
