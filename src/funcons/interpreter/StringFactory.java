@@ -2,7 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.StringAlg;
 import funcons.carriers.IEval;
-import funcons.values.CLString;
+import funcons.values.cl.CLString;
 import funcons.values.String;
 
 public interface StringFactory extends BoolFactory, StringAlg<IEval> {

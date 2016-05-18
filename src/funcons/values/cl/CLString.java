@@ -1,4 +1,6 @@
-package funcons.values;
+package funcons.values.cl;
+
+import funcons.values.String;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,8 +23,7 @@ public class CLString extends String {
             java.lang.Character c = charIt.next();
 
             if (c.equals('\\')) {
-                sb.append(handleEscape(charIt));
-                continue;
+                c = handleEscape(charIt);
             }
 
             sb.append(c);
@@ -32,29 +33,13 @@ public class CLString extends String {
     }
 
     private static java.lang.Character handleEscape(Iterator<java.lang.Character> charIt) {
-        if (!charIt.hasNext()) {
-            throw new UnsupportedOperationException();
-        }
-
         Character c = charIt.next();
 
         if (!Character.isDigit(c)) {
             return getCamlLightEscape(c);
         }
 
-        java.lang.String asciiCode = "" + c;
-        for (int i = 0; i < 2; i++) {
-            if (!charIt.hasNext()) {
-                throw new UnsupportedOperationException();
-            }
-            c = charIt.next();
-            if (!Character.isDigit(c)) {
-                throw new UnsupportedOperationException();
-            }
-
-            asciiCode += c;
-        }
-        return (char)Integer.parseInt(asciiCode);
+        return (char)Integer.parseInt("" + c + charIt.next() + charIt.next());
     }
 
     private static java.lang.Character getCamlLightEscape(java.lang.Character c) {
