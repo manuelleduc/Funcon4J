@@ -20,12 +20,12 @@ public class ListAlgTest extends TestStub {
 
     @Test
     public void testExpList() throws Exception {
-        CamlLight.eval("[1 ; 2];;");
+        CamlLight.eval("[1 , 2];;");
         assertEquals("[1, [2, []]]", out.toString());
         out.reset();
 
-        CamlLight.eval("[1 ; 2 ; 3];;");
-        assertEquals("[1, [2, [3, []]]]", out.toString());
+        CamlLight.eval("[1 , 2 , 3 , 4];;");
+        assertEquals("[1, [2, [3, [4, []]]]]", out.toString());
     }
 
     @Test

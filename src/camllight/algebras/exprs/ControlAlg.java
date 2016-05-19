@@ -34,7 +34,7 @@ public interface ControlAlg<E> extends BoolLogicAlg<E> {
         return alg().apply(alg().preferOver(patt, alg().abs(alg().throw_(alg().matchFailure()))), exp);
     }
 
-    @Syntax("exp = exp ';' exp") @Level(500)
+    @Syntax("exp = <assoc=right> exp ';' exp") @Level(500)
     default E seq(E e1, E e2) {
         return alg().seq(alg().effect(e1), e2);
     }

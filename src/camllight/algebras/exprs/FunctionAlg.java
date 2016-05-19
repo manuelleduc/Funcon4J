@@ -3,7 +3,7 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface FunctionAlg<E> extends ArrayAlg<E> {
+public interface FunctionAlg<E> extends RecordAlg<E> {
     @Syntax("exp = function") @Level(200)
     default E functionExpr(E f) {
         return f;

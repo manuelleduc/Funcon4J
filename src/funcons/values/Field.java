@@ -22,6 +22,6 @@ public class Field implements Value {
 
     @Override
     public String toString() {
-        return "Field: " + name;
+        return name;
     }
 }

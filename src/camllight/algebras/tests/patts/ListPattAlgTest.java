@@ -24,19 +24,19 @@ public class ListPattAlgTest extends TestStub {
 
     @Test
     public void testHeadTailListPatt() throws Exception {
-        CamlLight.eval("match [1 ; 2]  with [h :: t] -> h;;");
+        CamlLight.eval("match [1 , 2]  with [h :: t] -> h;;");
         assertEquals("1", out.toString());
         out.reset();
 
-        CamlLight.eval("match [1 ; 2]  with [h :: t] -> t;;");
+        CamlLight.eval("match [1 , 2]  with [h :: t] -> t;;");
         assertEquals("[2, []]", out.toString());
         out.reset();
 
-        CamlLight.eval("match [1 ; 2]  with [h :: h2 :: _] -> h + h2;;");
+        CamlLight.eval("match [1 , 2]  with [h :: h2 :: _] -> h + h2;;");
         assertEquals("3", out.toString());
         out.reset();
 
-        CamlLight.eval("match [1 ; 2] with [h :: 3] -> true | _ -> false;;");
+        CamlLight.eval("match [1 , 2] with [h :: 3] -> true | _ -> false;;");
         assertEquals("false", out.toString());
     }
 
@@ -50,11 +50,15 @@ public class ListPattAlgTest extends TestStub {
         assertEquals("false", out.toString());
         out.reset();
 
-        CamlLight.eval("match [1 ; 2] with [1 ; 2] -> true | _ -> false;;");
+        CamlLight.eval("match [1 , 2] with [1 , 2] -> true | _ -> false;;");
         assertEquals("true", out.toString());
         out.reset();
 
-        CamlLight.eval("match [1 ; 2] with [2 ; 1] -> true | [1 ; 3] -> true | _ -> false;;");
+        CamlLight.eval("match [1 , 2] with [2 , 1] -> true | [1 , 3] -> true | _ -> false;;");
         assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("match [1,2,3,4] with [1, 2, 3, 4] -> true | _ -> false;;");
+        assertEquals("true", out.toString());
     }
 }

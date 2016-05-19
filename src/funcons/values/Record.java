@@ -1,5 +1,9 @@
 package funcons.values;
 
+import java.lang.*;
+import java.lang.String;
+import java.util.Iterator;
+
 public class Record implements Value {
     private Map<Field, Value> map;
 
@@ -17,6 +21,27 @@ public class Record implements Value {
 
     public Record union(Record other) {
         return new Record(map.extend(other.map));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("{");
+        Iterator<Field> it = map.keys().iterator();
+        while (it.hasNext()) {
+            Field f = it.next();
+            sb.append(f);
+            sb.append("=");
+            sb.append(map.val(f));
+
+            if (it.hasNext()) {
+                sb.append("; ");
+            }
+        }
+        sb.append("}");
+
+        return sb.toString();
     }
 
     @Override

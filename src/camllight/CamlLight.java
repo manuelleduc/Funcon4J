@@ -26,7 +26,7 @@ public class CamlLight {
 
     public static funcons.values.Value eval(String src) throws FunconException {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.RecursiveFactory() {});
+        IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.RecordFactory() {});
         return eval.eval(new Environment(), new Forwards(), new Store(), new Null());
     }
 

@@ -35,7 +35,7 @@ public interface ListPattAlg<E> extends TuplePattAlg<E> {
         return headTailListPattMulti(p, alg().only(alg().list()));
     }
 
-    @Syntax("pattlist = patt ';' pattlist")
+    @Syntax("pattlist = patt ',' pattlist")
     default E pattListMulti(E p1, E p2) {
         return headTailListPattMulti(p1, p2);
     }
