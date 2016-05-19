@@ -23,18 +23,34 @@ public interface RecordAlg<E> extends ArrayAlg<E> {
         return alg().recordUnion(record, result);
     }
 
-    /*@Syntax("recordinnerlist = IDTOKEN '=' exp")
-    default E recordEntrySingle(java.lang.String fieldName, E exp) {
-        return alg().record(alg().field(fieldName), exp);
-    }*/
-
     @Syntax("recordsingle = IDTOKEN '=' exp")
     default E recordEntrySingle(java.lang.String fieldName, E exp) {
         return alg().record(alg().field(fieldName), exp);
     }
 
-    @Syntax("recordappendix = ',' IDTOKEN '=' exp")
-    default E recordEntryAppendix(java.lang.String fieldname, E exp) {
-        return recordEntrySingle(fieldname, exp);
+    @Syntax("recordsingle = 'mutable' IDTOKEN '=' exp")
+    default E recordEntryMutableSingle(java.lang.String fieldName, E exp) {
+        return alg().record(alg().field(fieldName), alg().alloc(exp));
+    }
+
+    @Syntax("recordappendix = ',' recordsingle")
+    default E recordEntryAppendix(E record) {
+        return record;
+    }
+
+    @Syntax("exp = exp '.' IDTOKEN") @Level(1400)
+    default E recordSelectExp(E record, java.lang.String fieldName) {
+        return alg().assignedValueIfVar(alg().recordSelect(record, alg().field(fieldName)));
+        /*return alg().assignedValueIfVar(alg().recordSelect(
+                alg().apply(
+                        alg().instantiateIfPoly(alg().boundValue(alg().nameId("label_selector", fieldName))),
+                        record),
+                alg().field(fieldName)
+        ));*/
+    }
+
+    @Syntax("exp = exp '.' IDTOKEN '<-' exp") @Level(1300)
+    default E recordAssignExp(E record, java.lang.String fieldName, E exp) {
+        return alg().assign(alg().recordSelect(record, alg().field(fieldName)), exp);
     }
 }
