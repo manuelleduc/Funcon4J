@@ -55,6 +55,24 @@ public interface MapFactory extends LogicControlFactory, MapAlg<IEval> {
     }
 
     @Override
+    default IEval environment(IEval id, IEval val) {
+        return (env, forward, store, given) ->
+                new Environment(
+                        (Id)id.eval(env, forward, store, given),
+                        val.eval(env, forward, store, given)
+                );
+    }
+
+    @Override
+    default IEval map(IEval key, IEval val) {
+        return (env, forward, store, given) -> {
+            Value keyVal = key.eval(env, forward, store, given);
+            Value valVal = val.eval(env, forward, store, given);
+            return new Map<>(keyVal, valVal);
+        };
+    }
+
+    @Override
     default IEval mapUpdate(IEval map, IEval key, IEval e) {
         return (env, forward, store, given) -> {
             Map m = (Map)map.eval(env, forward, store, given);

@@ -3,7 +3,7 @@ package camllight.algebras.patts;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface PattMatchAlg<E> extends ListPattAlg<E> {
+public interface PattMatchAlg<E> extends RecordPattAlg<E> {
 
     @Syntax("pattmatch = pattmatchsingle") @Level(0)
     default E pattMatch(E pm) {

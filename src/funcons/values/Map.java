@@ -2,7 +2,10 @@ package funcons.values;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.lang.*;
+import java.lang.String;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class Map<K, V> implements Value {
@@ -66,6 +69,24 @@ public class Map<K, V> implements Value {
 
     public Set<K> keys() {
         return keys.get();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Map[");
+        Iterator<K> keyIterator = keys().iterator();
+        while(keyIterator.hasNext()) {
+            K key = keyIterator.next();
+            sb.append(key);
+            sb.append(":");
+            sb.append(val(key));
+            if (keyIterator.hasNext()) {
+                sb.append("; ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     @Override

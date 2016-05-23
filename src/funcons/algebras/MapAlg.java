@@ -9,6 +9,8 @@ public interface MapAlg<E> extends LogicControlAlg<E> {
     E given();
     E supply(E exp, E x);
     E environment();
+    E environment(E id, E val);
+    E map(E key, E val);
     E mapUpdate(E map, E key, E e);
     E mapDomain(E map);
     E mapUnion(E map1, E map2);

@@ -2,10 +2,9 @@ package funcons.interpreter;
 
 import funcons.algebras.RecordAlg;
 import funcons.carriers.IEval;
-import funcons.values.Field;
-import funcons.values.Map;
-import funcons.values.Record;
-import funcons.values.Value;
+import funcons.values.*;
+
+import java.util.Set;
 
 public interface RecordFactory extends RecursiveFactory, RecordAlg<IEval> {
     @Override
@@ -18,7 +17,7 @@ public interface RecordFactory extends RecursiveFactory, RecordAlg<IEval> {
     }
 
     @Override
-    default IEval field(String name) {
+    default IEval field(java.lang.String name) {
         return (env, forward, store, given) -> new Field(name);
     }
 
@@ -46,6 +45,24 @@ public interface RecordFactory extends RecursiveFactory, RecordAlg<IEval> {
             Record r1 = (Record)rec1.eval(env, forward, store, given);
             Record r2 = (Record)rec2.eval(env, forward, store, given);
             return r1.union(r2);
+        };
+    }
+
+    @Override
+    default IEval recordMatch(IEval record, IEval map) {
+        return (env, forward, store, given) -> {
+            @SuppressWarnings("unchecked")
+            Map<Field, Abs> m = (Map<Field, Abs>)map.eval(env, forward, store, given);
+            Record r = (Record)record.eval(env, forward, store, given);
+            Environment environment = new Environment();
+            for (Field field : m.keys()) {
+                environment = environment.extend(
+                        (Environment)match(
+                                recordSelect((e,f,s,g) -> r, (e,f,s,g) -> field),
+                                (e,f,s,g) -> m.val(field)
+                        ).eval(env, forward, store, given));
+            }
+            return environment;
         };
     }
 }

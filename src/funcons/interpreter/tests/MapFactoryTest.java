@@ -5,10 +5,7 @@ import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.MapFactory;
-import funcons.values.Environment;
-import funcons.values.Int;
-import funcons.values.List;
-import funcons.values.Null;
+import funcons.values.*;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
 import org.junit.Before;
@@ -81,6 +78,10 @@ public class MapFactoryTest {
     public void testEnvironment() throws Exception {
         Environment env = (Environment)alg.environment().eval(new Environment(), new Forwards(), new Store(), new Null());
         assertNotNull(env);
+
+        env = (Environment)alg.environment(alg.id("foo"), alg.lit(0))
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Int(0), env.val(new Id("foo")));
     }
 
     @Test
@@ -132,5 +133,11 @@ public class MapFactoryTest {
         IEval mapEval = alg.mapUpdate(alg.environment(), alg.id("foo"), alg.lit(0));
         List l = (List)alg.mapDomain(mapEval).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new List(new Id("foo")), l);
+    }
+
+    @Test
+    public void testMap() throws Exception {
+        Map m = (Map)alg.map(alg.id("foo"), alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Map<>(new Id("foo"), new Int(0)), m);
     }
 }
