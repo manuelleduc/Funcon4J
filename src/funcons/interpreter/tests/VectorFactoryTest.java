@@ -5,10 +5,8 @@ import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.VectorFactory;
-import funcons.values.Environment;
-import funcons.values.Int;
-import funcons.values.Null;
-import funcons.values.Vector;
+import funcons.values.*;
+import funcons.values.ids.Id;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,8 +29,10 @@ public class VectorFactoryTest {
 
     @Test
     public void testVector1() throws Exception {
-        Vector v = (Vector)alg.vector(alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
-        assertEquals(new Vector(new Int(0)), v);
+        Store store = new Store();
+        Vector v = (Vector)alg.vector(alg.lit(3)).eval(new Environment(), new Forwards(), store, new Null());
+        assertEquals(new Vector(new Variable(0)), v);
+        assertEquals(new Int(3), store.val((Variable)v.get(new Int(0))));
     }
 
     @Test
@@ -44,29 +44,22 @@ public class VectorFactoryTest {
 
     @Test
     public void testVectorAppend() throws Exception {
+        Store store = new Store();
         Vector v = (Vector)alg.vectorAppend(alg.vector(alg.lit(2)), alg.vector(alg.lit(3)))
-                .eval(new Environment(), new Forwards(), new Store(), new Null());
-        assertEquals(new Integer(2), ((Int)v.get(new Int(0))).intValue());
-        assertEquals(new Integer(3), ((Int)v.get(new Int(1))).intValue());
+                .eval(new Environment(), new Forwards(), store, new Null());
+        assertEquals(new Int(2), store.val((Variable)v.get(new Int(0))));
+        assertEquals(new Int(3), store.val((Variable)v.get(new Int(1))));
     }
 
     @Test
     public void testVectorAssign() throws Exception {
-        Vector v = (Vector)alg.vectorAssign(alg.vector(alg.lit(2)), alg.lit(0), alg.lit(3))
-                .eval(new Environment(), new Forwards(), new Store(), new Null());
-        assertEquals(new Vector(new Int(3)), v);
+        Store store = new Store();
+        Environment env = (Environment)alg.bindValue(alg.id("foo"), alg.vector(alg.lit(2)))
+                .eval(new Environment(), new Forwards(), store, new Null());
+        alg.vectorAssign(alg.boundValue(alg.id("foo")), alg.lit(0), alg.lit(3))
+                .eval(env, new Forwards(), store, new Null());
+        assertEquals(new Vector(new Variable(0)), env.val(new Id("foo")));
+        assertEquals(new Int(3), store.val((Variable)((Vector)env.val(new Id("foo"))).get(new Int(0))));
 
-        IEval vEval = alg.vectorAppend(
-                alg.vector(alg.lit(5)),
-                alg.vectorAppend(
-                    alg.vector(alg.lit(6)),
-                    alg.vector(alg.lit(7))
-                )
-        );
-        v = (Vector)alg.vectorAssign(vEval, alg.lit(2), alg.lit(10))
-                .eval(new Environment(), new Forwards(), new Store(), new Null());
-        assertEquals(new Integer(5), ((Int)v.get(new Int(0))).intValue());
-        assertEquals(new Integer(6), ((Int)v.get(new Int(1))).intValue());
-        assertEquals(new Integer(10), ((Int)v.get(new Int(2))).intValue());
     }
 }

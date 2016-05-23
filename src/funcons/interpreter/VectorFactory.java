@@ -14,7 +14,7 @@ public interface VectorFactory extends ListFactory, VectorAlg<IEval> {
 
     @Override
     default IEval vector(IEval val) {
-        return (env, forwards, store, given) -> new Vector(val.eval(env, forwards, store, given));
+        return (env, forwards, store, given) -> new Vector(alloc(val).eval(env, forwards, store, given));
     }
 
     @Override
@@ -22,7 +22,7 @@ public interface VectorFactory extends ListFactory, VectorAlg<IEval> {
         return (env, forwards, store, given) -> {
             Vector v = (Vector)vector.eval(env, forwards, store, given);
             Int i = (Int)index.eval(env, forwards, store, given);
-            return v.get(i);
+            return assignedValue((e,f,s,g) -> v.get(i)).eval(env, forwards, store, given);
         };
     }
 
@@ -40,8 +40,7 @@ public interface VectorFactory extends ListFactory, VectorAlg<IEval> {
         return (env, forwards, store, given) -> {
             Vector vec = (Vector)vector.eval(env, forwards, store, given);
             Int i = (Int)index.eval(env, forwards, store, given);
-            Value v = val.eval(env, forwards, store, given);
-            return vec.set(i, v);
+            return assign((e,f,s,g) -> vec.get(i), val).eval(env, forwards, store, given);
         };
     }
 }
