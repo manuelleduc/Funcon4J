@@ -6,7 +6,9 @@ import noa.syntax.Syntax;
 import java.util.List;
 import java.util.ListIterator;
 
-public interface TypeExpAlg<E> extends ModuleAlg<E> {
+public interface TypeExpAlg<E> {
+
+    funcons.algebras.TypeAlg<E> alg();
 
     @Syntax("type = '(' type ')'")
     default E bracketedType(E type) {

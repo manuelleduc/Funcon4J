@@ -4,7 +4,8 @@ import noa.syntax.Syntax;
 
 import java.util.List;
 
-public interface RecordPattAlg<E> extends ListPattAlg<E> {
+public interface RecordPattAlg<E> {
+    funcons.algebras.RecordAlg<E> alg();
 
     @Syntax("patt = '{' IDTOKEN '=' patt recordpattappendix* '}'")
     default E recordPatt(java.lang.String name, E patt, List<E> recPatts) {

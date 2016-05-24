@@ -3,8 +3,7 @@ package camllight.algebras.patts;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface PattMatchAlg<E> extends RecordPattAlg<E> {
-
+public interface PattMatchAlg<E> extends TuplePattAlg<E> {
     @Syntax("pattmatch = pattmatchsingle") @Level(0)
     default E pattMatch(E pm) {
         return pm;
@@ -27,7 +26,7 @@ public interface PattMatchAlg<E> extends RecordPattAlg<E> {
 
     @Syntax("pattmatchcurried = patt+ '->' exp")
     default E pattMatchCurriedMulti(java.util.List<E> ps, E exp) {
-        E pattern = this.pattTuple(ps.get(0), ps.subList(1, ps.size()));
+        E pattern = pattTuple(ps.get(0), ps.subList(1, ps.size()));
         return alg().curryN(alg().lit(ps.size()), pattMatchSingle(pattern, exp));
     }
 }

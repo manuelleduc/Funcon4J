@@ -3,7 +3,9 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface BoolLogicAlg<E> extends FloatCalcAlg<E> {
+public interface BoolLogicAlg<E> {
+    funcons.algebras.LogicControlAlg<E> alg();
+
     @Syntax("exp = exp ('&' | '&&') exp") @Level(1000)
     default E lAnd(E e1, E e2) {
         return alg().ifTrue(e1, e2, alg().bool(false));

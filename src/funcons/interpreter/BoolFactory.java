@@ -48,4 +48,10 @@ public interface BoolFactory extends FloatCalcFactory, BoolAlg<IEval> {
                         ((Number)a.eval(env, forward, store, given)).smallerEqualThan(
                                 ((Number)b.eval(env, forward, store, given))));
     }
+
+    @Override
+    default IEval equal(IEval x1, IEval x2) {
+        return (env, forward, store, given) ->
+                new Bool(x1.eval(env, forward, store, given).equals(x2.eval(env, forward, store, given)));
+    }
 }

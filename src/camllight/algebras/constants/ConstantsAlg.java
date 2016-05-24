@@ -1,9 +1,10 @@
 package camllight.algebras.constants;
 
-import camllight.algebras.base.ModuleAlg;
 import noa.syntax.Syntax;
 
-public interface ConstantsAlg<E> extends ModuleAlg<E> {
+public interface ConstantsAlg<E> {
+    funcons.algebras.ListAlg<E> alg();
+
     @Syntax("constant = INTTOKEN")
     default E int_(java.lang.Integer l) {
         return alg().lit(l);

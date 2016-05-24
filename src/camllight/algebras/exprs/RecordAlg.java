@@ -6,7 +6,8 @@ import noa.syntax.Syntax;
 import java.util.List;
 import java.util.ListIterator;
 
-public interface RecordAlg<E> extends ArrayAlg<E> {
+public interface RecordAlg<E> {
+    funcons.algebras.RecordAlg<E> alg();
 
     @Syntax("exp = '{' recordsingle recordappendix* '}'") @Level(1700)
     default E recordExp(E record, List<E> records) {

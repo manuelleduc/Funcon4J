@@ -3,7 +3,9 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface FunctionAlg<E> extends RecordAlg<E> {
+public interface FunctionAlg<E> {
+    funcons.algebras.ElseAlg<E> alg();
+
     @Syntax("exp = function") @Level(200)
     default E functionExpr(E f) {
         return f;

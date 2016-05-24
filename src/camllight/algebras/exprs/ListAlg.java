@@ -5,7 +5,9 @@ import noa.syntax.Syntax;
 
 import java.util.List;
 
-public interface ListAlg<E> extends TupleAlg<E> {
+public interface ListAlg<E> {
+    funcons.algebras.ListAlg<E> alg();
+
     @Syntax("exp = <assoc=right> exp '::' exp") @Level(2000)
     default E headTailListExp(E e1, E e2) {
         return alg().listPrefix(e1, e2);

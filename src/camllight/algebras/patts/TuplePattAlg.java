@@ -6,7 +6,9 @@ import noa.syntax.Syntax;
 import java.util.List;
 import java.util.ListIterator;
 
-public interface TuplePattAlg<E> extends PattAlg<E> {
+public interface TuplePattAlg<E> {
+    funcons.algebras.TupleAlg<E> alg();
+
     @Syntax("patt = '(' patt patttuple+ ')'") @Level(50)
     default E pattTuple(E patt, List<E> patts) {
 

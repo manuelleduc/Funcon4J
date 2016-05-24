@@ -3,7 +3,8 @@ package camllight.algebras.patts;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface ListPattAlg<E> extends TuplePattAlg<E> {
+public interface ListPattAlg<E> {
+    funcons.algebras.ListAlg<E> alg();
 
     @Syntax("patt = emptylist") @Level(20)
     default E emptyListPatt(E l) {

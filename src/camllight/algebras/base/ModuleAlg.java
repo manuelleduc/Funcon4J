@@ -4,8 +4,8 @@ import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface ModuleAlg<E> {
-    funcons.algebras.RecordAlg<E> alg();
-
+    //funcons.algebras.RecordAlg<E> alg();
+    funcons.algebras.ModuleAlg<E> alg();
 
     //|[ prog[: IMPL :] ]| ->
     //|[ scope(accum(cl_base,cl_library), decl_impl[: IMPL :]) ]|

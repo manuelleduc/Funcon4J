@@ -1,10 +1,10 @@
 package camllight.algebras.patts;
 
-import camllight.algebras.base.ModuleAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface PattAlg<E> extends ModuleAlg<E> {
+public interface PattAlg<E> {
+    funcons.algebras.PolyTypeAlg<E> alg();
 
     @Syntax("patt = '(' patt ')'") @Level(100)
     default E bracketedPatt(E patt) {

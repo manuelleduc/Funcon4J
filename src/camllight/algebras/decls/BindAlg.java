@@ -1,13 +1,14 @@
 package camllight.algebras.decls;
 
-import camllight.algebras.base.ModuleAlg;
+import camllight.algebras.patts.PattAlg;
 import camllight.algebras.patts.PattMatchAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 import java.util.List;
 
-public interface BindAlg<E> extends ModuleAlg<E>, PattMatchAlg<E> {
+public interface BindAlg<E> extends PattAlg<E>, PattMatchAlg<E> {
+    funcons.algebras.RecursiveAlg<E> alg();
 
     @Syntax("decl = 'let' 'rec' recdecl")
     default E declRec(E declTuple) {
@@ -84,7 +85,7 @@ public interface BindAlg<E> extends ModuleAlg<E>, PattMatchAlg<E> {
     @Syntax("declmono = ident patt+ '=' exp")
     default E declBindMonoFunc(E id, java.util.List<E> patts, E exp) {
         if (patts.size() == 1) {
-            return alg().bindValue(id, this.pattMatchSingle(patts.get(0), exp));
+            return alg().bindValue(id, pattMatchSingle(patts.get(0), exp));
         }
         return alg().bindValue(id, pattMatchCurriedMulti(patts, exp));
     }

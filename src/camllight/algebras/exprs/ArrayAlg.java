@@ -3,7 +3,8 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface ArrayAlg<E> extends ListAlg<E> {
+public interface ArrayAlg<E> {
+    funcons.algebras.VectorAlg<E> alg();
 
     @Syntax("exp = EMPTYARRAYTOKEN")
     default E emptyArray(java.lang.String src) {

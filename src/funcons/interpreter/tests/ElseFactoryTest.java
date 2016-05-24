@@ -23,12 +23,6 @@ public class ElseFactoryTest {
     }
 
     @Test
-    public void testEqual() throws Exception {
-        assertTrue(((Bool)alg.equal(alg.lit(3), alg.lit(3)).eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-        assertFalse(((Bool)alg.equal(alg.bool(true), alg.bool(false)).eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-    }
-
-    @Test
     public void testOnly() throws Exception {
         Bool b = (Bool)alg.seq(alg.apply(alg.only(alg.lit(0)), alg.lit(0)), alg.bool(true)).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertTrue(b.boolValue());

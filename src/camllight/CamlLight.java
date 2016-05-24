@@ -40,7 +40,9 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException {
-        interpret("match `a` with `a` -> true;;");
+        //interpret("type intorstring = Int of int | String of string;;");
+        //interpret("not false = false;;");
+        //interpret("match `a` with `a` -> true;;");
         //interpret("match \"hello\" with \"hello\" -> true;;");
         //interpret("match 1.0 with 1. -> true;;");
         //interpret("match 3 with | | | | | 3 -> true;;");
