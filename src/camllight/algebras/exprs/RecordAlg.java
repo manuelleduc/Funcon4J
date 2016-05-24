@@ -9,19 +9,14 @@ import java.util.ListIterator;
 public interface RecordAlg<E> {
     funcons.algebras.RecordAlg<E> alg();
 
-    @Syntax("exp = '{' recordsingle recordappendix* '}'") @Level(1700)
-    default E recordExp(E record, List<E> records) {
-        if (records.isEmpty()) {
-            return record;
-        }
-
+    @Syntax("exp = '{' recordsingle@','+ '}'") @Level(1700)
+    default E recordExp(List<E> records) {
         ListIterator<E> it = records.listIterator(records.size());
-        E result = it.previous();
-
+        E record = it.previous();
         while (it.hasPrevious()) {
-            result = alg().recordUnion(it.previous(), result);
+            record = alg().recordUnion(it.previous(), record);
         }
-        return alg().recordUnion(record, result);
+        return record;
     }
 
     @Syntax("recordsingle = IDTOKEN '=' exp")
@@ -32,11 +27,6 @@ public interface RecordAlg<E> {
     @Syntax("recordsingle = 'mutable' IDTOKEN '=' exp")
     default E recordEntryMutableSingle(java.lang.String fieldName, E exp) {
         return alg().record(alg().field(fieldName), alg().alloc(exp));
-    }
-
-    @Syntax("recordappendix = ',' recordsingle")
-    default E recordEntryAppendix(E record) {
-        return record;
     }
 
     @Syntax("exp = exp '.' IDTOKEN") @Level(1400)
