@@ -33,6 +33,20 @@ public interface GlobalAlg<E> extends BindAlg<E> {
         return environment;
     }
 
+    @Syntax("decl = 'type' IDTOKEN '=' CONSTRTOKEN 'of' type declconstrtypeappendix*")
+    default E declNewConstrType(java.lang.String identToken, java.lang.String constrToken, E type, List<E> environments) {
+        E environment = declConstrTypeAppendix(constrToken, type);
+        for (E env : environments) {
+            environment = alg().mapUnion(environment, env);
+        }
+        return environment;
+    }
+
+    @Syntax("declconstrtypeappendix = '|' CONSTRTOKEN 'of' type")
+    default E declConstrTypeAppendix(java.lang.String constrToken, E type) {
+        return alg().environment(alg().id(constrToken), alg().abs(alg().variant(constrToken, alg().given())));
+    }
+
     @Syntax("declenumtypeappendix = '|' CONSTRTOKEN")
     default E declEnumTypeAppendix(java.lang.String constrToken) {
         return alg().environment(alg().id(constrToken), alg().variant(constrToken, alg().null_()));

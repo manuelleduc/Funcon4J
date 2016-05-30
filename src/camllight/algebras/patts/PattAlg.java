@@ -38,8 +38,7 @@ public interface PattAlg<E> {
 
     @Syntax("patt = CONSTRTOKEN") @Level(60)
     default E pattConstr(java.lang.String constrToken) {
-        return alg().only(alg().variant(constrToken, alg().null_()));
-
+        return alg().only(alg().boundValue(alg().id(constrToken)));
         /*return alg().abs(alg().variantMatch(
                 alg().tag(constrToken),
                 alg().apply(alg().instantiateIfPoly(alg().boundValue(alg().nameId("variant_selector", constrToken))), alg().given()),
@@ -51,9 +50,15 @@ public interface PattAlg<E> {
     default E pattConstrPatt(java.lang.String constrToken, E patt) {
         return alg().abs(alg().variantMatch(
                 alg().tag(constrToken),
+                alg().given(),
+                patt));
+                //alg().apply(alg().instantiateIfPoly(alg().boundValue(alg().id(constrToken))), alg().given()),
+                //patt));
+        /*return alg().abs(alg().variantMatch(
+                alg().tag(constrToken),
                 alg().apply(alg().instantiateIfPoly(alg().boundValue(alg().nameId("variant_selector", constrToken))), alg().given()),
                 patt
-        ));
+        ));*/
     }
 
     @Syntax("patt = <assoc=left> patt '|' patt") @Level(80)

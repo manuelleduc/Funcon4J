@@ -1,11 +1,10 @@
 package camllight.algebras.exprs;
 
-import camllight.algebras.base.ModuleAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface ExpAlg<E> {
-    funcons.algebras.TypeAlg<E> alg();
+    funcons.algebras.PolyTypeAlg<E> alg();
 
     @Syntax("exp = constant") @Level(2700)
     default E constExp(E e) {
@@ -13,8 +12,8 @@ public interface ExpAlg<E> {
     }
 
     @Syntax("exp = ident") @Level(2900)
-    default E idExp(E id) { // TODO should include instantiate-if-poly;
-        return alg().boundValue(id);
+    default E idExp(E id) {
+        return alg().instantiateIfPoly(alg().boundValue(id));
     }
 
     @Syntax("exp = '(' exp ')'") @Level(2600)
@@ -30,5 +29,10 @@ public interface ExpAlg<E> {
     @Syntax("exp = '(' exp ':' type ')'") @Level(2400)
     default E typedExp(E exp, E type) {
         return alg().typed(exp, type);
+    }
+
+    @Syntax("exp = CONSTRTOKEN exp") @Level(2200)
+    default E constrExp(java.lang.String constrToken, E exp) {
+        return alg().apply(alg().boundValue(alg().id(constrToken)), exp);
     }
 }

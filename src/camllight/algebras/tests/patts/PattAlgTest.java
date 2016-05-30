@@ -54,12 +54,38 @@ public class PattAlgTest extends TestStub {
 
     @Test
     public void testPattConstr() throws Exception {
-        // TODO
+        CamlLight.eval("type suit = Heart | Spade;; let f = function Heart -> true | Spade -> false;; f Spade;;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("type suit = Heart;; let f = function Heart -> true;; f Heart;;");
+        assertEquals("true", out.toString());
     }
 
     @Test
     public void testPattConstrPatt() throws Exception {
-        // TODO
+        CamlLight.eval("type id = Name of string | SS of int * int;; " +
+                "let get_name = function Name n -> n | _ -> \"\";; " +
+                "get_name (Name \"foo\");;");
+        assertEquals("foo", out.toString());
+        out.reset();
+
+        CamlLight.eval("type id = Name of string | SS of int * int;; " +
+                "let get_name = function Name n -> n | _ -> \"\";; " +
+                "get_name (SS (1,2));;");
+        assertEquals("", out.toString());
+        out.reset();
+
+        CamlLight.eval("type id = Name of string | SS of int * int;; " +
+                "let check_ss = function SS (1,2) -> true | _ -> false;; " +
+                "check_ss (SS (1,2));;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("type id = Name of string | SS of int * int;; " +
+                "let check_ss = function SS (1,2) -> true | _ -> false;; " +
+                "check_ss (SS (2,3));;");
+        assertEquals("false", out.toString());
     }
 
     @Test
