@@ -2,9 +2,13 @@ package camllight.algebras.decls;
 
 import noa.syntax.Syntax;
 
+import java.util.Iterator;
 import java.util.List;
 
 public interface GlobalAlg<E> extends BindAlg<E> {
+    @Override
+    funcons.algebras.RecordAlg<E> alg();
+
     @Syntax("decllabelsandvariants = ident '=' IDTOKEN 'of' type")
     default E declLabelsAndVariantsDecl(E id, java.lang.String idToken, E type) {
         return alg().scopeNominalCoercion(
@@ -50,5 +54,16 @@ public interface GlobalAlg<E> extends BindAlg<E> {
     @Syntax("declenumtypeappendix = '|' CONSTRTOKEN")
     default E declEnumTypeAppendix(java.lang.String constrToken) {
         return alg().environment(alg().id(constrToken), alg().variant(constrToken, alg().null_()));
+    }
+
+    @Syntax("decl = 'type' ident '=' '{' decllabeltype@','+ '}'")
+    default E declRecordType(E id, List<E> labelTypeTuples) {
+        //TODO
+        return alg().null_();
+    }
+
+    @Syntax("decllabeltype = IDTOKEN ':' type")
+    default E declLabelType(java.lang.String idToken, E type) {
+        return alg().tuple(alg().field(idToken), type);
     }
 }

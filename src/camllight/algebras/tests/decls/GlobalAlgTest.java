@@ -17,4 +17,9 @@ public class GlobalAlgTest extends TestStub {
         CamlLight.eval("type suit = Heart;; Heart;;");
         assertEquals("Variant(Tag(Heart),NULL)", out.toString());
     }
+
+    @Test
+    public void testDeclRecordType() throws Exception {
+        // TODO
+    }
 }
