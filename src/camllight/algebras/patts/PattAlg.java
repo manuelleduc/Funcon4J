@@ -38,11 +38,13 @@ public interface PattAlg<E> {
 
     @Syntax("patt = CONSTRTOKEN") @Level(60)
     default E pattConstr(java.lang.String constrToken) {
-        return alg().abs(alg().variantMatch(
+        return alg().only(alg().variant(constrToken, alg().null_()));
+
+        /*return alg().abs(alg().variantMatch(
                 alg().tag(constrToken),
                 alg().apply(alg().instantiateIfPoly(alg().boundValue(alg().nameId("variant_selector", constrToken))), alg().given()),
                 alg().only(alg().tuple())
-        ));
+        ));*/
     }
 
     @Syntax("patt = CONSTRTOKEN patt") @Level(61)

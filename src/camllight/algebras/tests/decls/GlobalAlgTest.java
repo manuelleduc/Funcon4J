@@ -12,5 +12,9 @@ public class GlobalAlgTest extends TestStub {
     public void testDeclNewEnumType() throws Exception {
         CamlLight.eval("type suit = Heart | Diamond | Club | Spade;; Club;;");
         assertEquals("Variant(Tag(Club),NULL)", out.toString());
+        out.reset();
+
+        CamlLight.eval("type suit = Heart;; Heart;;");
+        assertEquals("Variant(Tag(Heart),NULL)", out.toString());
     }
 }
