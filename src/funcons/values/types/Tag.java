@@ -13,4 +13,14 @@ public class Tag implements Value {
     public boolean equals(Object o) {
         return o instanceof Tag && ((Tag)o).name.equals(this.name);
     }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Tag(" + name + ")";
+    }
 }

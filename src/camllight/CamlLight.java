@@ -40,6 +40,8 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException {
+        interpret("type suit = Heart | Diamond | Club | Spade;; Spade;;");
+        //interpret("let name_of = function {name = n , age = _} -> n;; name_of {age = 3 , name = \"foo\"};;");
         //interpret("type intorstring = Int of int | String of string;;");
         //interpret("not false = false;;");
         //interpret("match `a` with `a` -> true;;");

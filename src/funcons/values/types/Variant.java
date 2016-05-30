@@ -23,4 +23,14 @@ public class Variant implements Value {
     public boolean equals(Object o) {
         return o instanceof Variant && ((Variant)o).tag.equals(this.tag) && ((Variant)o).value.equals(this.value);
     }
+
+    @Override
+    public int hashCode() {
+        return tag.hashCode() * 37 + value.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Variant(" + tag + "," + value + ")";
+    }
 }

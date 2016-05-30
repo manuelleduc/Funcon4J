@@ -3,7 +3,7 @@ package camllight.algebras.constants;
 import noa.syntax.Syntax;
 
 public interface ConstantsAlg<E> {
-    funcons.algebras.ListAlg<E> alg();
+    funcons.algebras.PolyTypeAlg<E> alg();
 
     @Syntax("constant = INTTOKEN")
     default E int_(java.lang.Integer l) {
@@ -23,6 +23,11 @@ public interface ConstantsAlg<E> {
     @Syntax("constant = STRINGTOKEN")
     default E string(java.lang.String s) {
         return alg().camlLightString(s);
+    }
+
+    @Syntax("constant = CONSTRTOKEN")
+    default E constr(java.lang.String s) {
+        return alg().instantiateIfPoly(alg().boundValue(alg().id(s)));
     }
 
     @Syntax("constant = CHARTOKEN")

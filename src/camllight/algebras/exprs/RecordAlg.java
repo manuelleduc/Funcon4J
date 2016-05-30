@@ -13,7 +13,7 @@ public interface RecordAlg<E> {
     default E recordExp(List<E> records) {
         ListIterator<E> it = records.listIterator(records.size());
         E record = it.previous();
-        while (it.hasPrevious()) {
+        while(it.hasPrevious()) {
             record = alg().recordUnion(it.previous(), record);
         }
         return record;
