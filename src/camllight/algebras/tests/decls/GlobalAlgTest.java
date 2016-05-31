@@ -20,6 +20,11 @@ public class GlobalAlgTest extends TestStub {
 
     @Test
     public void testDeclRecordType() throws Exception {
-        // TODO
+        CamlLight.eval("type some_record = {a:int , b:float, c:string};;");
+        assertEquals("", out.toString());
+        out.reset();
+
+        CamlLight.eval("type some_record = {a:int};;");
+        assertEquals("", out.toString());
     }
 }
