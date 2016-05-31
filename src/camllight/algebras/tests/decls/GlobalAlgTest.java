@@ -57,4 +57,36 @@ public class GlobalAlgTest extends TestStub {
         CamlLight.eval("type foo = {a:int} and ('a) x == float;;");
         assertEquals("", out.toString());
     }
+
+    @Test
+    public void testDeclEnumException() throws Exception {
+        CamlLight.eval("exception Foo;;");
+        assertEquals("", out.toString());
+        out.reset();
+
+        CamlLight.eval("exception Foo;; Foo;;");
+        assertEquals("Variant(Tag(Foo),NULL)", out.toString());
+        out.reset();
+
+        CamlLight.eval("exception Foo and Bar;; Foo;; Bar;;");
+        assertEquals("Variant(Tag(Foo),NULL)Variant(Tag(Bar),NULL)", out.toString());
+    }
+
+    @Test
+    public void testDeclConstrException() throws Exception {
+        CamlLight.eval("exception Foo of int;;");
+        assertEquals("", out.toString());
+        out.reset();
+
+        CamlLight.eval("exception Foo of int;; Foo 3;;");
+        assertEquals("Variant(Tag(Foo),3)", out.toString());
+        out.reset();
+
+        CamlLight.eval("exception Foo of int and Bar of string;; Foo 3;; Bar \"hello\";;");
+        assertEquals("Variant(Tag(Foo),3)Variant(Tag(Bar),hello)", out.toString());
+        out.reset();
+
+        CamlLight.eval("exception Foo of int and Bar;; Foo 3;; Bar;;");
+        assertEquals("Variant(Tag(Foo),3)Variant(Tag(Bar),NULL)", out.toString());
+    }
 }

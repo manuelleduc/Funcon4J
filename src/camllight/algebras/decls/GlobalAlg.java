@@ -28,38 +28,38 @@ public interface GlobalAlg<E> extends BindAlg<E> {
                                                 alg().given())))))));
     }*/
 
-    @Syntax("decl = 'type' decloptionalvartypes decllabelsandvariantsappendix*")
-    default E declLabelsAndVariants(E environment, List<E> environments) {
+    @Syntax("decl = 'type' decloptionalvartypes declnewtypeappendix*")
+    default E declNewType(E environment, List<E> environments) {
         for (E otherEnvironment : environments) {
             environment = alg().mapUnion(environment, otherEnvironment);
         }
         return environment;
     }
 
-    @Syntax("decllabelsandvariantsappendix = 'and' decloptionalvartypes")
-    default E declLabelsAndVariantsAppendix(E environment) {
+    @Syntax("declnewtypeappendix = 'and' decloptionalvartypes")
+    default E declNewTypeAppendix(E environment) {
         return environment;
     }
 
     // Syntax only
-    @Syntax("decloptionalvartypes = decllabelsandvariants") @Level(0)
-    default E declLabelsAndVariantsWithoutVarTypes(E environment) {
+    @Syntax("decloptionalvartypes = declnewtype") @Level(0)
+    default E declNewTypeWithoutVarTypes(E environment) {
         return environment;
     }
 
     // Syntax only
-    @Syntax("decloptionalvartypes = '(' vartype@','* ')' decllabelsandvariants") @Level(1)
-    default E declLabelsAndVariantsWithVarTypes(List<E> varTypes, E environment) {
+    @Syntax("decloptionalvartypes = '(' vartype@','* ')' declnewtype") @Level(1)
+    default E declNewTypeWithVarTypes(List<E> varTypes, E environment) {
         return environment;
     }
 
     //Syntax only
-    @Syntax("decllabelsandvariants = IDTOKEN '==' type")
+    @Syntax("declnewtype = IDTOKEN '==' type")
     default E declTypeDefEquals(java.lang.String idToken, E type) {
-        return alg().environment();
+        return alg().typeDef(alg().id(idToken), type);
     }
 
-    @Syntax("decllabelsandvariants = IDTOKEN '=' CONSTRTOKEN declenumtypeappendix*")
+    @Syntax("declnewtype = IDTOKEN '=' CONSTRTOKEN declenumtypeappendix*")
     default E declNewEnumType(java.lang.String identToken, java.lang.String constrToken, List<E> environments) {
         E environment = declEnumTypeAppendix(constrToken);
         for (E env : environments) {
@@ -68,7 +68,7 @@ public interface GlobalAlg<E> extends BindAlg<E> {
         return environment;
     }
 
-    @Syntax("decllabelsandvariants = IDTOKEN '=' CONSTRTOKEN 'of' type declconstrtypeappendix*")
+    @Syntax("declnewtype = IDTOKEN '=' CONSTRTOKEN 'of' type declconstrtypeappendix*")
     default E declNewConstrType(java.lang.String identToken, java.lang.String constrToken, E type, List<E> environments) {
         E environment = declConstrTypeAppendix(constrToken, type);
         for (E env : environments) {
@@ -88,7 +88,7 @@ public interface GlobalAlg<E> extends BindAlg<E> {
     }
 
     // Syntax only
-    @Syntax("decllabelsandvariants = ident '=' '{' decllabeltype@','+ '}'")
+    @Syntax("declnewtype = ident '=' '{' decllabeltype@','+ '}'")
     default E declRecordType(E id, List<E> labelTypeTuples) {
         return alg().environment();
     }
@@ -101,5 +101,33 @@ public interface GlobalAlg<E> extends BindAlg<E> {
     @Syntax("decllabeltype = 'mutable' IDTOKEN ':' type")
     default E declMutableLabelType(java.lang.String idToken, E type) {
         return alg().tuple(alg().field(idToken), type);
+    }
+
+    @Syntax("decl = 'exception' CONSTRTOKEN declexceptionappendix*")
+    default E declEnumException(java.lang.String constrToken, List<E> environments) {
+        E environment = declEnumTypeAppendix(constrToken);
+        for (E otherEnvironment : environments) {
+            environment = alg().mapUnion(environment, otherEnvironment);
+        }
+        return environment;
+    }
+
+    @Syntax("decl = 'exception' CONSTRTOKEN 'of' type declexceptionappendix*")
+    default E declConstrException(java.lang.String constrToken, E type, List<E> environments) {
+        E environment = declConstrTypeAppendix(constrToken, type);
+        for (E otherEnvironment : environments) {
+            environment = alg().mapUnion(environment, otherEnvironment);
+        }
+        return environment;
+    }
+
+    @Syntax("declexceptionappendix = 'and' CONSTRTOKEN")
+    default E declEnumExceptionAppendix(java.lang.String constrToken) {
+        return declEnumTypeAppendix(constrToken);
+    }
+
+    @Syntax("declexceptionappendix = 'and' CONSTRTOKEN 'of' type")
+    default E declConstrExceptionAppendix(java.lang.String constrToken, E type) {
+        return declConstrTypeAppendix(constrToken, type);
     }
 }
