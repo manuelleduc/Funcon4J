@@ -20,6 +20,11 @@ public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
         return (env, forward, store, given) -> new MatchFailureException();
     }
 
+    //@Override
+    //default IEval exception(java.lang.String name) {
+    //    return (env, forward, store, given) -> new RunTimeFunconException();
+    //}
+
     @Override
     default IEval throw_(IEval s) {
         return (env, forward, store, given) -> {

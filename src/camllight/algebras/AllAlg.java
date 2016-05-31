@@ -11,6 +11,7 @@ public interface AllAlg<E> extends
         camllight.algebras.exprs.ArrayAlg<E>,
         camllight.algebras.exprs.BoolLogicAlg<E>,
         camllight.algebras.exprs.ControlAlg<E>,
+        camllight.algebras.exprs.ExceptionAlg<E>,
         camllight.algebras.exprs.ExpAlg<E>,
         camllight.algebras.exprs.FloatCalcAlg<E>,
         camllight.algebras.exprs.FunctionAlg<E>,
