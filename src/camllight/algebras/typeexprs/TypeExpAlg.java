@@ -34,7 +34,12 @@ public interface TypeExpAlg<E> {
     |[ instantiate_type(type[: ~LI :], type_list[: ~T1 , ~T2 ... :]) ]|
      */
 
-    @Syntax("type = '\\'' IDTOKEN")
+    @Syntax("type = vartype")
+    default E varTypeType(E varType) {
+        return varType;
+    }
+
+    @Syntax("vartype = '\\'' IDTOKEN")
     default E varType(java.lang.String id) {
         return alg().typeVar(id);
     }

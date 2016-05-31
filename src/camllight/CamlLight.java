@@ -40,7 +40,9 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException {
-        interpret("type person = {name:string , age:int};;");
+        interpret("type ('a , 'b) pair = {fst:'a , snd:'b};;");
+        //interpret("let f = function (a:'a) -> a;; f 2;;");
+        //interpret("type person = {name:string , age:int};;");
         //interpret("type id = Name of string | SS of int * int;; let f = function SS (1, 11) -> 1 | _ -> -1;; f (SS (1, 11));;");
         //interpret("type suit = Heart | Diamond | Club | Spade;;" +
         //        " let f = function Heart -> true | _ -> false;; f Club;;");
