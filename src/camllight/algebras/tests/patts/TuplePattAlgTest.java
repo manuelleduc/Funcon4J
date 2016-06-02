@@ -2,7 +2,7 @@ package camllight.algebras.tests.patts;
 
 import camllight.CamlLight;
 import camllight.algebras.tests.TestStub;
-import funcons.values.signals.MatchFailureException;
+import funcons.values.cl.CLMatchFailureException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +21,7 @@ public class TuplePattAlgTest extends TestStub {
 
         try {
             CamlLight.eval("match (1,2,3,4) with (1,2,5,4) -> true;;");
-        } catch (MatchFailureException ignore) {
+        } catch (CLMatchFailureException ignore) {
             return;
         }
         assertTrue(false);

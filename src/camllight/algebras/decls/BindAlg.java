@@ -92,11 +92,11 @@ public interface BindAlg<E> extends PattAlg<E>, PattMatchAlg<E> {
 
     @Syntax("varianttype = CONSTRTOKEN") @Level(0)
     default E variantDecl(java.lang.String token) {
-        return alg().variant(token, alg().tupleType());
+        return alg().clVariant(token, alg().tupleType());
     }
 
     @Syntax("varianttype = CONSTRTOKEN 'of' type") @Level(1)
     default E variantTypeDecl(java.lang.String token, E type) {
-        return alg().variant(token, type);
+        return alg().clVariant(token, type);
     }
 }

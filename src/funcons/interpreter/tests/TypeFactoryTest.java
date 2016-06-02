@@ -8,6 +8,7 @@ import funcons.interpreter.TypeFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
+import funcons.values.cl.CLVariant;
 import funcons.values.ids.Meta;
 import funcons.values.ids.TypeVar;
 import funcons.values.signals.FailureTrue;
@@ -45,9 +46,9 @@ public class TypeFactoryTest {
     }
 
     @Test
-    public void testVariant() throws Exception {
-        Variant v = (Variant)alg.variant("foo", alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
-        assertEquals(new Variant("foo", new Int(0)), v);
+    public void testClVariant() throws Exception {
+        Variant v = (Variant)alg.clVariant("foo", alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new CLVariant("foo", new Int(0)), v);
     }
 
     @Test
@@ -191,12 +192,12 @@ public class TypeFactoryTest {
 
     @Test
     public void testVariantMatch() throws Exception {
-        IEval env = alg.variantMatch(alg.tag("foo"), alg.variant("foo", alg.lit(0)), alg.bind(alg.id("bar")));
+        IEval env = alg.variantMatch(alg.tag("foo"), alg.clVariant("foo", alg.lit(0)), alg.bind(alg.id("bar")));
         Int i = (Int)alg.scope(env, alg.boundValue(alg.id("bar"))).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Integer(0), i.intValue());
 
         try {
-            env = alg.variantMatch(alg.tag("foobar"), alg.variant("foo", alg.lit(0)), alg.bind(alg.id("bar")));
+            env = alg.variantMatch(alg.tag("foobar"), alg.clVariant("foo", alg.lit(0)), alg.bind(alg.id("bar")));
             i = (Int)alg.scope(env, alg.boundValue(alg.id("bar"))).eval(new Environment(), new Forwards(), new Store(), new Null());
             assertEquals(new Integer(0), i.intValue());
         } catch(FailureTrue ignore) {

@@ -8,7 +8,6 @@ import funcons.interpreter.RecordFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
 import funcons.values.signals.FailureTrue;
-import funcons.values.signals.MatchFailureException;
 import org.junit.Before;
 import org.junit.Test;
 

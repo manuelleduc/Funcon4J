@@ -3,6 +3,8 @@ package funcons.algebras;
 public interface ExceptionAlg<E> extends ApplyAlg<E> {
     E fail();
     E matchFailure();
+    E exception(java.lang.String message);
+    E exception(java.lang.String message, E val);
     E throw_(E exception);
     E catch_(E x, E abs);
     E catchElseRethrow(E x, E abs);

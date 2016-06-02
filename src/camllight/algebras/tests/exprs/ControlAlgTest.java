@@ -2,7 +2,7 @@ package camllight.algebras.tests.exprs;
 
 import camllight.CamlLight;
 import camllight.algebras.tests.TestStub;
-import funcons.values.signals.MatchFailureException;
+import funcons.values.cl.CLMatchFailureException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -54,7 +54,7 @@ public class ControlAlgTest extends TestStub {
 
         try {
             CamlLight.eval("match 0 with 1 -> true;;");
-        } catch (MatchFailureException ignore) {
+        } catch (CLMatchFailureException ignore) {
             return;
         }
         assertTrue(false);

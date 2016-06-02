@@ -4,6 +4,7 @@ import funcons.algebras.TypeAlg;
 import funcons.carriers.IEval;
 import funcons.values.Environment;
 import funcons.values.Int;
+import funcons.values.cl.CLVariant;
 import funcons.values.ids.Meta;
 import funcons.values.ids.TypeVar;
 import funcons.values.types.*;
@@ -30,8 +31,8 @@ public interface TypeFactory extends VectorFactory, TypeAlg<IEval> {
     }
 
     @Override
-    default IEval variant(java.lang.String tagName, IEval exp) {
-        return (env, forward, store, given) -> new Variant(tagName, exp.eval(env, forward, store, given));
+    default IEval clVariant(java.lang.String tagName, IEval exp) {
+        return (env, forward, store, given) -> new CLVariant(tagName, exp.eval(env, forward, store, given));
     }
 
     @Override
@@ -153,7 +154,7 @@ public interface TypeFactory extends VectorFactory, TypeAlg<IEval> {
     default IEval variantMatch(IEval tag, IEval variant, IEval patt) {
         return (env, forward, store, given) -> {
             Variant v = (Variant)variant.eval(env, forward, store, given);
-            return whenTrue(equal(tag, (e,f,s,g) -> v.tag), match((e,f,s,g) -> v.value, patt)).eval(env, forward, store, given);
+            return whenTrue(equal(tag, (e,f,s,g) -> v.tag()), match((e,f,s,g) -> v.value(), patt)).eval(env, forward, store, given);
         };
     }
 }

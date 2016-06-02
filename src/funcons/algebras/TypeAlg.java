@@ -5,7 +5,7 @@ public interface TypeAlg<E> extends VectorAlg<E> {
     E unknownType();
     E tag(java.lang.String name);
     E typeVar(java.lang.String name);
-    E variant(java.lang.String tagName, E exp);
+    E clVariant(java.lang.String tagName, E exp);
     E meta(java.lang.String name);
     E nomTag(E token);
     E nomVal(E nomTag, E val);

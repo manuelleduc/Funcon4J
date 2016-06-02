@@ -3,7 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.ExceptionAlg;
 import funcons.carriers.IEval;
 import funcons.values.signals.FailureTrue;
-import funcons.values.signals.MatchFailureException;
+import funcons.values.cl.CLMatchFailureException;
 import funcons.values.signals.RunTimeFunconException;
 
 public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
@@ -17,13 +17,18 @@ public interface ExceptionFactory extends ApplyFactory, ExceptionAlg<IEval> {
 
     @Override
     default IEval matchFailure() {
-        return (env, forward, store, given) -> new MatchFailureException();
+        return (env, forward, store, given) -> new CLMatchFailureException();
     }
 
-    //@Override
-    //default IEval exception(java.lang.String name) {
-    //    return (env, forward, store, given) -> new RunTimeFunconException();
-    //}
+    @Override
+    default IEval exception(java.lang.String message) {
+        return (env, forward, store, given) -> new RunTimeFunconException(message);
+    }
+
+    @Override
+    default IEval exception(java.lang.String message, IEval val) {
+        return (env, forward, store, given) -> new RunTimeFunconException(message, val.eval(env, forward, store, given));
+    }
 
     @Override
     default IEval throw_(IEval s) {

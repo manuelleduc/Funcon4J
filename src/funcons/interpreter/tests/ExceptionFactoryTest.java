@@ -10,7 +10,8 @@ import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
 import funcons.values.signals.FailureTrue;
-import funcons.values.signals.MatchFailureException;
+import funcons.values.cl.CLMatchFailureException;
+import funcons.values.signals.RunTimeFunconException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,7 +50,7 @@ public class ExceptionFactoryTest {
     public void testThrow_() throws Exception {
         try {
             alg.throw_(alg.matchFailure()).eval(new Environment(), new Forwards(), new Store(), new Null());
-        } catch(MatchFailureException s) {
+        } catch(CLMatchFailureException s) {
             return;
         }
         assertTrue(false);
@@ -58,7 +59,7 @@ public class ExceptionFactoryTest {
     @Test
     public void testCatch_() throws Exception {
         IEval c = alg.catch_(alg.throw_(alg.matchFailure()), alg.abs(alg.given()));
-        MatchFailureException e = (MatchFailureException)c.eval(new Environment(), new Forwards(), new Store(), new Null());
+        CLMatchFailureException e = (CLMatchFailureException)c.eval(new Environment(), new Forwards(), new Store(), new Null());
         assertNotNull(e);
     }
 
@@ -67,12 +68,12 @@ public class ExceptionFactoryTest {
         IEval fail = alg.throw_(alg.matchFailure());
 
         IEval c = alg.catchElseRethrow(fail, alg.abs(alg.given()));
-        MatchFailureException e = (MatchFailureException)c.eval(new Environment(), new Forwards(), new Store(), new Null());
+        CLMatchFailureException e = (CLMatchFailureException)c.eval(new Environment(), new Forwards(), new Store(), new Null());
         assertNotNull(e);
 
         try {
             alg.catchElseRethrow(fail, fail).eval(new Environment(), new Forwards(), new Store(), new Null());
-        } catch(MatchFailureException exception) {
+        } catch(CLMatchFailureException exception) {
             return;
         }
         assertTrue(false);
@@ -92,7 +93,30 @@ public class ExceptionFactoryTest {
 
     @Test
     public void testMatchFailure() throws Exception {
-        MatchFailureException e = (MatchFailureException)alg.matchFailure().eval(new Environment(), new Forwards(), new Store(), new Null());
+        CLMatchFailureException e = (CLMatchFailureException)alg.matchFailure().eval(new Environment(), new Forwards(), new Store(), new Null());
         assertNotNull(e);
+    }
+
+    @Test
+    public void testException() throws Exception {
+        try {
+            alg.throw_(alg.exception("Match_failure")).eval(new Environment(), new Forwards(), new Store(), new Null());
+            assertTrue(false);
+        } catch(RunTimeFunconException e) {
+            assertEquals(new RunTimeFunconException("Match_failure"), e);
+            assertNotEquals(new CLMatchFailureException(), e);
+            assertNotEquals(new FailureTrue(), e);
+        }
+
+        try {
+            alg.throw_(alg.exception("Match_failure", alg.lit(3))).eval(new Environment(), new Forwards(), new Store(), new Null());
+            assertTrue(false);
+        } catch(RunTimeFunconException e) {
+            assertEquals(new RunTimeFunconException("Match_failure", new Int(3)), e);
+            assertNotEquals(new RunTimeFunconException("Match_failure", new Int(4)), e);
+            assertNotEquals(new RunTimeFunconException("Match_failure"), e);
+            assertNotEquals(new CLMatchFailureException(), e);
+            assertNotEquals(new FailureTrue(), e);
+        }
     }
 }
