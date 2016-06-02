@@ -31,10 +31,8 @@ public class ExceptionFactoryTest {
     public void testFail() throws Exception {
         try {
             alg.fail().eval(new Environment(), new Forwards(), new Store(), new Null());
-        } catch (FailureTrue ignored) {
-            return;
-        }
-        assertTrue(false);
+            assertTrue(false);
+        } catch (FailureTrue ignored) {}
     }
 
     @Test
@@ -50,10 +48,8 @@ public class ExceptionFactoryTest {
     public void testThrow_() throws Exception {
         try {
             alg.throw_(alg.matchFailure()).eval(new Environment(), new Forwards(), new Store(), new Null());
-        } catch(CLMatchFailureException s) {
-            return;
-        }
-        assertTrue(false);
+            assertTrue(false);
+        } catch (CLMatchFailureException ignore) {}
     }
 
     @Test
@@ -73,10 +69,8 @@ public class ExceptionFactoryTest {
 
         try {
             alg.catchElseRethrow(fail, fail).eval(new Environment(), new Forwards(), new Store(), new Null());
-        } catch(CLMatchFailureException exception) {
-            return;
-        }
-        assertTrue(false);
+            assertTrue(false);
+        } catch (CLMatchFailureException ignore) {}
     }
 
     @Test

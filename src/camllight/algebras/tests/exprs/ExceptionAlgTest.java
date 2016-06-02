@@ -22,7 +22,7 @@ public class ExceptionAlgTest extends TestStub {
         out.reset();
 
         try {
-            CamlLight.eval("exception Foo;; exception Bar;; try raise Foo with Bar -> true;;");
+            CamlLight.eval("exception Foo and Bar;; try raise Foo with Bar -> true;;");
             assertTrue(false);
         } catch (RunTimeFunconException e) {
             assertEquals(new CLVariant("Foo", new Null()), e);

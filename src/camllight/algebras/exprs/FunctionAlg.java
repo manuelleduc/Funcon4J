@@ -4,7 +4,7 @@ import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface FunctionAlg<E> {
-    funcons.algebras.ElseAlg<E> alg();
+    funcons.algebras.RecursiveAlg<E> alg();
 
     @Syntax("exp = function") @Level(200)
     default E functionExpr(E f) {
@@ -13,7 +13,7 @@ public interface FunctionAlg<E> {
 
     @Syntax("function = ident")
     default E functionId(E id) {
-        return alg().boundValue(id);
+        return alg().instantiateIfPoly(alg().followIfFwd(alg().boundValue(id)));
     }
 
     @Syntax("function = function exp")

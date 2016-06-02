@@ -4,7 +4,7 @@ import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface ExpAlg<E> {
-    funcons.algebras.PolyTypeAlg<E> alg();
+    funcons.algebras.RecursiveAlg<E> alg();
 
     @Syntax("exp = constant") @Level(2700)
     default E constExp(E e) {
@@ -13,7 +13,7 @@ public interface ExpAlg<E> {
 
     @Syntax("exp = ident") @Level(2900)
     default E idExp(E id) {
-        return alg().instantiateIfPoly(alg().boundValue(id));
+        return alg().instantiateIfPoly(alg().followIfFwd(alg().boundValue(id)));
     }
 
     @Syntax("exp = '(' exp ')'") @Level(2600)

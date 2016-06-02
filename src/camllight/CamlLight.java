@@ -40,7 +40,12 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException {
-        interpret("exception Bar;; exception Foo of int;; try raise Foo 3 with Bar -> 0 | Foo 2 -> 1 | Foo 3 -> 2;;");
+        interpret("let rec f = function [] -> [] | [h::t] -> if h = 3 then h else (f t);; f [1,2,3];;");
+        /*interpret("fun x -> if x mod 2 = 0 then true else false 6;;");
+        interpret(
+                "let rec filter = function [] -> [] | [h :: t] -> if h = 3 then [h :: filter r] else filter r;;" +
+                "filter [1,2,3];;");*/
+        //interpret("exception Bar;; exception Foo of int;; try raise Foo 3 with Bar -> 0 | Foo 2 -> 1 | Foo 3 -> 2;;");
         //interpret("type f = Foo of int;; Foo 3;;");
         //interpret("type ('a , 'b) pair = {fst:'a , snd:'b};;");
         //interpret("let f = function (a:'a) -> a;; f 2;;");
