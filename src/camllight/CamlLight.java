@@ -51,8 +51,8 @@ public class CamlLight {
 
     public static void main(String[] args) throws FunconException, IOException {
         //run("examples/fib.cl");
-        //run("examples/sieve.cl");
-        interpret("type foo = A of int | B;;\nlet f = function A x -> true | B -> false;;\nf B;;");
+        run("examples/sieve.cl");
+        //interpret("type foo = A of int | B;;\nlet f = function A _ -> true | B -> false;;\nf B;;");
         /*interpret("fun x -> if x mod 2 = 0 then true else false 6;;");
         interpret(
                 "let rec filter = function [] -> [] | [h :: t] -> if h = 3 then [h :: filter r] else filter r;;" +

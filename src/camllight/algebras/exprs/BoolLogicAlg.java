@@ -46,4 +46,10 @@ public interface BoolLogicAlg<E> {
     default E equal(E e1, E e2) {
         return alg().equal(e1, e2);
     }
+
+    @Syntax("exp = exp '!=' exp") @Level(1508)
+    default E notEqual(E e1, E e2) {
+        return alg().not(alg().equal(e1, e2));
+    }
+
 }

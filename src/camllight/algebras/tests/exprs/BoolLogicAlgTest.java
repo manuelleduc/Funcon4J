@@ -131,4 +131,18 @@ public class BoolLogicAlgTest extends TestStub {
         CamlLight.eval("3 = 4;;");
         assertEquals("false", out.toString());
     }
+
+    @Test
+    public void testNotEqual() throws Exception {
+        CamlLight.eval("3 != 2;;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 != 3;;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("3 != 4;;");
+        assertEquals("true", out.toString());
+    }
 }
