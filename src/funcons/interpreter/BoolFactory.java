@@ -51,7 +51,10 @@ public interface BoolFactory extends FloatCalcFactory, BoolAlg<IEval> {
 
     @Override
     default IEval equal(IEval x1, IEval x2) {
-        return (env, forward, store, given) ->
-                new Bool(x1.eval(env, forward, store, given).equals(x2.eval(env, forward, store, given)));
+        return (env, forward, store, given) -> {
+            //System.out.println(x1.eval(env, forward, store, given));
+            //System.out.println(x2.eval(env, forward, store, given));
+            return new Bool(x1.eval(env, forward, store, given).equals(x2.eval(env, forward, store, given)));
+        };
     }
 }

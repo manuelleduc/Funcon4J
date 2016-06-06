@@ -38,6 +38,9 @@ public interface Tokens {
     @Token("[ ]+") @Skip
     void ws();
 
+    @Token("['\\n']+") @Skip
+    void newline();
+
     @Token("'[' [ ]* ']'")
     static String emptylisttoken(String src) {
         return src;
