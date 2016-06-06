@@ -9,4 +9,5 @@ public interface FloatCalcAlg<E> extends IntCalcAlg<E> {
     E floatMultiply(E a, E b);
     E floatDivide(E a, E b);
     E floatModulo(E a, E b);
+    E floatPowerOf(E a, E b);
 }

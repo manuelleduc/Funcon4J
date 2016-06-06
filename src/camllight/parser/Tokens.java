@@ -41,6 +41,9 @@ public interface Tokens {
     @Token("['\\n']+") @Skip
     void newline();
 
+    @Token("'(*' ~('\\r' | '\\n')* '*)'") @Skip
+    void comment();
+
     @Token("'[' [ ]* ']'")
     static String emptylisttoken(String src) {
         return src;

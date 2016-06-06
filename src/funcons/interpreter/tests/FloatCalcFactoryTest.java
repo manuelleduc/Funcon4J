@@ -92,4 +92,15 @@ public class FloatCalcFactoryTest {
                 .eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Float(.5), f);
     }
+
+    @Test
+    public void testFloatPowerOf() throws Exception {
+        Float f = (Float)alg.floatPowerOf(alg.lit(4.0), alg.lit(2.0))
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Float(16.0), f);
+
+        f = (Float)alg.floatPowerOf(alg.lit(2), alg.lit(1.5))
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Float(2.8284271247461903), f);
+    }
 }

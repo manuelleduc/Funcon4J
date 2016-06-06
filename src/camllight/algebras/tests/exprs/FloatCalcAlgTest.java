@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class FloatCalcAlgTest extends TestStub {
 
     @Test
-    public void testFloatNegate() throws Exception {
+    public void testFloatNegateExp() throws Exception {
         CamlLight.eval("-.1.;;");
         assertEquals("-1.0", out.toString());
     }
@@ -36,5 +36,11 @@ public class FloatCalcAlgTest extends TestStub {
     public void testFloatDivideExp() throws Exception {
         CamlLight.eval("3.0 /. 1.5;;");
         assertEquals("2.0", out.toString());
+    }
+
+    @Test
+    public void testFloatPowerExp() throws Exception {
+        CamlLight.eval("4.0 ** 2.0;;");
+        assertEquals("16.0", out.toString());
     }
 }

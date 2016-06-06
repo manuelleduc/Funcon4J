@@ -86,4 +86,11 @@ public class StringFactoryTest {
                 .eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals("A", c.toString());
     }
+
+    @Test
+    public void testStringAppend() throws Exception {
+        String s = (String)alg.stringAppend(alg.string("foo"), alg.string("bar"))
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals("foobar", s.stringValue());
+    }
 }

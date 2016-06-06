@@ -30,4 +30,9 @@ public interface FloatCalcAlg<E> {
     default E floatDivideExp(E exp1, E exp2) {
         return alg().floatDivide(exp1, exp2);
     }
+
+    @Syntax("exp = exp '**' exp") @Level(1514)
+    default E floatPowerExp(E exp1, E exp2) {
+        return alg().floatPowerOf(exp1, exp2);
+    }
 }

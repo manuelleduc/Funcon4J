@@ -48,7 +48,7 @@ public class GlobalAlgTest extends TestStub {
         assertEquals("", out.toString());
         out.reset();
 
-        CamlLight.eval("type ('a) solo = {fst:'a};;");
+        CamlLight.eval("type 'a solo = {fst:'a};;");
         assertEquals("", out.toString());
     }
 

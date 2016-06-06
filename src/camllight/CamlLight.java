@@ -13,6 +13,7 @@ import noa.proxy.Recorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -49,9 +50,25 @@ public class CamlLight {
         interpret(fileContent);
     }
 
+    private static void runAll(String folderLoc) throws IOException, FunconException {
+        File folder = new File(folderLoc);
+        File[] files = folder.listFiles();
+
+        for (File f : files) {
+            if (f.isFile() && f.getName().endsWith(".ml")) {
+                run(f.getAbsolutePath());
+            } else if (f.isDirectory()) {
+                runAll(f.getAbsolutePath());
+            }
+        }
+    }
+
     public static void main(String[] args) throws FunconException, IOException {
+        runAll("examples");
+        //runAll("givenExamples/Basic");
+        //runAll("givenExamples/Basic");
         //run("examples/fib.cl");
-        run("examples/sieve.cl");
+        //run("examples/sieve.cl");
         //interpret("type foo = A of int | B;;\nlet f = function A _ -> true | B -> false;;\nf B;;");
         /*interpret("fun x -> if x mod 2 = 0 then true else false 6;;");
         interpret(

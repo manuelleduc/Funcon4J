@@ -27,4 +27,13 @@ public interface StringFactory extends BoolFactory, StringAlg<IEval> {
     default IEval camlLightChar(java.lang.String s) {
         return (env, forwards, store, given) -> new CLChar(s);
     }
+
+    @Override
+    default IEval stringAppend(IEval str1, IEval str2) {
+        return (env, forwards, store, given) -> {
+            funcons.values.String s1 = (funcons.values.String)str1.eval(env, forwards, store, given);
+            funcons.values.String s2 = (funcons.values.String)str2.eval(env, forwards, store, given);
+            return s1.append(s2);
+        };
+    }
 }

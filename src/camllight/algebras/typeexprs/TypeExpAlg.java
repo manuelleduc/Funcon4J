@@ -17,7 +17,8 @@ public interface TypeExpAlg<E> {
 
     @Syntax("type = IDTOKEN")
     default E typeId(java.lang.String name) {
-        return alg().boundType(alg().id(name));
+        return alg().type(name);
+        //return alg().boundType(alg().id(name));
     }
 
     @Syntax("type = type '->' type")

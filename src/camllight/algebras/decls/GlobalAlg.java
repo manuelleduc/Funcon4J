@@ -48,6 +48,12 @@ public interface GlobalAlg<E> extends BindAlg<E> {
     }
 
     // Syntax only
+    @Syntax("decloptionalvartypes = vartype declnewtype")
+    default E declNewTypeWithVarType(E varType, E environment) {
+        return environment;
+    }
+
+    // Syntax only
     @Syntax("decloptionalvartypes = '(' vartype@','* ')' declnewtype") @Level(1)
     default E declNewTypeWithVarTypes(List<E> varTypes, E environment) {
         return environment;

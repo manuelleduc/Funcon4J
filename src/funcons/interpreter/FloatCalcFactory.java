@@ -62,4 +62,14 @@ public interface FloatCalcFactory extends IntCalcFactory, FloatCalcAlg<IEval> {
                                 %
                         ((Number)b.eval(env, forwards, store, given)).floatValue());
     }
+
+    @Override
+    default IEval floatPowerOf(IEval a, IEval b) {
+        return (env, forwards, store, given) ->
+                new Float(
+                        Math.pow(
+                            ((Number)a.eval(env, forwards, store, given)).floatValue()
+                                    ,
+                            ((Number)b.eval(env, forwards, store, given)).floatValue()));
+    }
 }

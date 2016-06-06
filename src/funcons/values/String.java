@@ -23,6 +23,10 @@ public class String implements Value {
         return value;
     }
 
+    public String append(String other) {
+        return new String(stringValue() + other.stringValue());
+    }
+
     @Override
     public int hashCode() {
         return value.hashCode();
