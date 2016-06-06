@@ -65,7 +65,7 @@ public class CamlLight {
 
     public static void main(String[] args) throws FunconException, IOException {
         runAll("examples");
-        //runAll("givenExamples/Basic");
+        runAll("givenExamples/Basic");
         //runAll("givenExamples/Basic");
         //run("examples/fib.cl");
         //run("examples/sieve.cl");

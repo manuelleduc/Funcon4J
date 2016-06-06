@@ -39,9 +39,18 @@ public interface Tokens {
     void ws();
 
     @Token("['\\n']+") @Skip
-    void newline();
+    void linefeed();
 
-    @Token("'(*' ~('\\r' | '\\n')* '*)'") @Skip
+    @Token("['\\r']+") @Skip
+    void carriagereturn();
+
+    @Token("['\\t']+") @Skip
+    void horizontaltab();
+
+    @Token("['\\f']+") @Skip
+    void formfeed();
+
+    @Token("'(*' .*? '*)'") @Skip
     void comment();
 
     @Token("'[' [ ]* ']'")
