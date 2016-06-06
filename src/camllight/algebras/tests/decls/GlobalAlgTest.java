@@ -19,6 +19,16 @@ public class GlobalAlgTest extends TestStub {
     }
 
     @Test
+    public void testDeclNewConstrType() throws Exception {
+        CamlLight.eval("type foo = Foo of float | Bar of int;; Bar 3;;");
+        assertEquals("Variant(Tag(Bar),3)", out.toString());
+        out.reset();
+
+        CamlLight.eval("type foo = Foo of float | Bar;; Bar;;");
+        assertEquals("Variant(Tag(Bar),NULL)", out.toString());
+    }
+
+    @Test
     public void testDeclRecordType() throws Exception {
         CamlLight.eval("type some_record = {a:int , b:float, c:string};;");
         assertEquals("", out.toString());

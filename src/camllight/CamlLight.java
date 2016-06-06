@@ -43,44 +43,16 @@ public class CamlLight {
         System.out.println();
     }
 
-    private static void run(String fileSrc) throws IOException, FunconException {
-        String fileContent = new String(Files.readAllBytes(Paths.get(fileSrc)));
-        System.out.println("== Running: " + fileSrc + " ==");
+    private static void run(String fileLoc) throws IOException, FunconException {
+        String fileContent = new String(Files.readAllBytes(Paths.get(fileLoc)));
+        System.out.println("== Running: " + fileLoc + " ==");
         interpret(fileContent);
     }
 
     public static void main(String[] args) throws FunconException, IOException {
-        run("examples/fib.cl");
-        run("examples/sieve.cl");
-        /*interpret("let rec filter f = " +
-                "  function [] -> [] | [h::t] -> if (f h) then h :: (filter f t) else (filter f t);;" +
-                "  let succ n = n + 1;; " +
-                "  let rec interval min max =" +
-                "  if min > max then [] else min :: interval (succ min) max;;" +
-                "  let remove_multiples_of n =" +
-                "  filter (fun m -> not (m mod n = 0));;" +
-                "  let sieve max =" +
-                "  let rec filter_again = function" +
-                "    | [] -> []" +
-                "    | [n :: r] as l ->" +
-                "      if n * n > max then l else" +
-                "      n :: filter_again (remove_multiples_of n r) in" +
-                "  filter_again (interval 2 max);;" +
-                " sieve 20;;");
-
-        interpret(
-                "let rec filter f = " +
-                "  function [] -> [] | [h::t] -> if (f h) then h :: (filter f t) else (filter f t);; " +
-                "filter (fun x -> if x mod 2 = 0 then true else false) [1,2,3,4,5,6,7,8,9,10];;");
-
-        interpret(
-                "let rec filter = " +
-                "  let " +
-                "    only_even x = if x mod 2 = 0 then true else false" +
-                "  in " +
-                "    function [] -> [] | [h::t] -> if (only_even h) then h :: (filter t) else (filter t);; " +
-                "filter [1,2,3,4,5,6,7,8,9,10];;");
-                */
+        //run("examples/fib.cl");
+        //run("examples/sieve.cl");
+        interpret("type foo = A of int | B;;\nlet f = function A x -> true | B -> false;;\nf B;;");
         /*interpret("fun x -> if x mod 2 = 0 then true else false 6;;");
         interpret(
                 "let rec filter = function [] -> [] | [h :: t] -> if h = 3 then [h :: filter r] else filter r;;" +
