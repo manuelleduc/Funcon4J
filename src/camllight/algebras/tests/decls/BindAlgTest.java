@@ -45,7 +45,7 @@ public class BindAlgTest extends TestStub {
 
     @Test
     public void testDeclBindMonoFunc() throws Exception {
-        CamlLight.eval("let f 2 3 4 = true in f 2 3 4;;");
+        CamlLight.eval("let f 2 3 4 = true in (f 2) 3 4;;");
         assertEquals("true", out.toString());
         out.reset();
 

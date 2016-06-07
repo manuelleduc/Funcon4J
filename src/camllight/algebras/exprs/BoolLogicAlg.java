@@ -6,18 +6,18 @@ import noa.syntax.Syntax;
 public interface BoolLogicAlg<E> {
     funcons.algebras.LogicControlAlg<E> alg();
 
-    @Syntax("exp = exp ('&' | '&&') exp") @Level(1000)
+    @Syntax("exp = exp ('&' | '&&') exp") @Level(1506)
     default E lAnd(E e1, E e2) {
         return alg().ifTrue(e1, e2, alg().bool(false));
     }
 
-    @Syntax("exp = exp ('||' | 'or') exp") @Level(900)
+    @Syntax("exp = exp ('||' | 'or') exp") @Level(1505)
     default E lOr(E e1, E e2) {
         alg().bool(false);
         return alg().ifTrue(e1, alg().bool(true), e2);
     }
 
-    @Syntax("exp = 'not' exp") @Level(1600)
+    @Syntax("exp = 'not' exp") @Level(1507)
     default E lNot(E e1) {
         return alg().not(e1);
     }

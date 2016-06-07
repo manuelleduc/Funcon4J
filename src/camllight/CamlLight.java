@@ -1,13 +1,16 @@
 package camllight;
 
+import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
+import funcons.algebras.RecordAlg;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.values.Environment;
 import funcons.values.Null;
 import funcons.values.Value;
+import funcons.values.ids.Id;
 import funcons.values.signals.FunconException;
 import noa.proxy.Recorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -15,8 +18,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class CamlLight {
 
@@ -32,7 +38,8 @@ public class CamlLight {
     public static funcons.values.Value eval(String src) throws FunconException {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.RecordFactory() {});
-        return eval.eval(new Environment(), new Forwards(), new Store(), new Null());
+        Environment env = importStandardLibrary(new Environment());
+        return eval.eval(env, new Forwards(), new Store(), new Null());
     }
 
     private static void interpret(String src) throws FunconException {
@@ -63,9 +70,36 @@ public class CamlLight {
         }
     }
 
+    private static Environment importStandardLibrary(Environment env) throws FunconException {
+        funcons.algebras.RecordAlg<IEval> alg = new funcons.interpreter.RecordFactory() {};
+        StandardLibrary<IEval> lib = () -> alg;
+
+        for (Method m : lib.getClass().getMethods()) {
+            java.lang.String methodName = m.getName();
+            if (!methodName.endsWith("Fun")) {
+                continue;
+            }
+            methodName = methodName.substring(0, methodName.length() - 3);
+
+            try {
+                final Environment env2 = env;
+                env = (Environment)alg.mapUnion(
+                        (e,f,s,g) -> env2,
+                        alg.bindValue(alg.id(methodName), (funcons.carriers.IEval)m.invoke(lib))
+                ).eval(env, new Forwards(), new Store(), new Null());
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return env;
+    }
+
     public static void main(String[] args) throws FunconException, IOException {
-        runAll("examples");
-        runAll("givenExamples/Basic");
+        interpret("let x = ref 3;; x := !x + 1 ; print_string !x;;");
+        //interpret("print_string \"hello\";;");
+        //runAll("examples");
+        //runAll("givenExamples/Basic");
         //runAll("givenExamples/Basic");
         //run("examples/fib.cl");
         //run("examples/sieve.cl");

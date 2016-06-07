@@ -11,14 +11,29 @@ public interface FunctionAlg<E> {
         return f;
     }
 
+    @Syntax("exp = functionapp") @Level(1517)
+    default E functionApplicationExp(E fa) {
+        return fa;
+    }
+
+    @Syntax("functionapp = '(' functionapp ')'") @Level(2)
+    default E functionApplicationBracketed(E fa) {
+        return fa;
+    }
+
+    @Syntax("functionapp = functionapp exp") @Level(1)
+    default E functionApplicationApplication(E fa, E exp) {
+        return alg().apply(fa, exp);
+    }
+
+    @Syntax("functionapp = function exp") @Level(0)
+    default E functionApplication(E e1, E e2) {
+        return alg().apply(e1, e2);
+    }
+
     @Syntax("function = ident")
     default E functionId(E id) {
         return alg().instantiateIfPoly(alg().followIfFwd(alg().boundValue(id)));
-    }
-
-    @Syntax("function = function exp")
-    default E funcAplication(E e1, E e2) {
-        return alg().apply(e1, e2);
     }
 
     @Syntax("function = '(' function ')'")

@@ -19,6 +19,7 @@ public interface AllAlg<E> extends
         camllight.algebras.exprs.LetAlg<E>,
         camllight.algebras.exprs.ListAlg<E>,
         camllight.algebras.exprs.RecordAlg<E>,
+        camllight.algebras.exprs.RefAlg<E>,
         camllight.algebras.exprs.StringAlg<E>,
         camllight.algebras.exprs.TupleAlg<E>,
 
