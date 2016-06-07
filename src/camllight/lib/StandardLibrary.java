@@ -20,8 +20,12 @@ public interface StandardLibrary<E> {
                 alg().vectorAppend(
                         alg().project(alg().lit(0), alg().given()),
                         alg().project(alg().lit(1), alg().given())
-                        )
+                )
         ));
+    }
+
+    default E vect_lengthFun() {
+        return alg().abs(alg().vectorLength(alg().given()));
     }
 
     default E make_vectFun() {

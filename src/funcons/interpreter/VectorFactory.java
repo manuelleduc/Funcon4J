@@ -36,6 +36,12 @@ public interface VectorFactory extends ListFactory, VectorAlg<IEval> {
     }
 
     @Override
+    default IEval vectorLength(IEval vect) {
+        return (env, forwards, store, given) ->
+                ((Vector)vect.eval(env, forwards, store, given)).length();
+    }
+
+    @Override
     default IEval vectorAssign(IEval vector, IEval index, IEval val) {
         return (env, forwards, store, given) -> {
             Vector vec = (Vector)vector.eval(env, forwards, store, given);

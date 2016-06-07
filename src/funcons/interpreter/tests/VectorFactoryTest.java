@@ -62,4 +62,20 @@ public class VectorFactoryTest {
         assertEquals(new Int(3), store.val((Variable)((Vector)env.val(new Id("foo"))).get(new Int(0))));
 
     }
+
+    @Test
+    public void testVectorLength() throws Exception {
+        Int i = (Int)alg.vectorLength(alg.vector())
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Int(0), i);
+
+        i = (Int)alg.vectorLength(alg.vector(alg.lit(5)))
+                .eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Int(1), i);
+
+        i = (Int)alg.vectorLength(
+                alg.vectorAppend(alg.vector(alg.lit(6)), alg.vector(alg.lit(7)))
+        ).eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Int(2), i);
+    }
 }
