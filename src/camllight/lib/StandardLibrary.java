@@ -15,6 +15,15 @@ public interface StandardLibrary<E> {
         return alg().abs(alg().print(alg().given()));
     }
 
+    default E concat_vectFun() {
+        return alg().curry(alg().abs(
+                alg().vectorAppend(
+                        alg().project(alg().lit(0), alg().given()),
+                        alg().project(alg().lit(1), alg().given())
+                        )
+        ));
+    }
+
     default E make_vectFun() {
         /* in pseudocode:
             counter = 0
@@ -45,7 +54,7 @@ public interface StandardLibrary<E> {
                         alg().vector(vectValue)
                 )
         );
-        E contCondition = alg().smaller(alg().assignedValue(alg().boundValue(alg().id("_1"))), vectSize);
+        E contCondition = alg().smaller(alg().assignedValue(counter), vectSize);
         E createVector = alg().whileTrue(
                 contCondition,
                 alg().seq(

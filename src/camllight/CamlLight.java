@@ -96,9 +96,9 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException, IOException {
-        interpret("let _1 = 5;; _1;; (make_vect (3 + _1) _1).(2);;");
+        //interpret("let _1 = 5;; _1;; (make_vect (3 + _1) _1).(2);;");
         //runAll("examples");
-        //runAll("givenExamples/Basic");
+        runAll("givenExamples/Basic");
         //run("examples/fib.cl");
         //run("examples/sieve.cl");
         //interpret("type foo = A of int | B;;\nlet f = function A _ -> true | B -> false;;\nf B;;");
