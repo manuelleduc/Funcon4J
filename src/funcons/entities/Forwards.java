@@ -26,4 +26,9 @@ public class Forwards {
     public Value follow(Fwd f) {
         return map.val(f);
     }
+
+    @Override
+    public String toString() {
+        return "Forwards<" + map.toString() + ">";
+    }
 }

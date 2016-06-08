@@ -67,7 +67,7 @@ public interface TypeFactory extends VectorFactory, TypeAlg<IEval> {
     @Override
     default IEval depends(IEval type1, IEval type2) {
         return (env, forward, store, given) ->
-                new Depends((Type)type1.eval(env, forward, store, given), (Type)type2.eval(env, forward, store, given));
+                new Depends(type1.eval(env, forward, store, given), type2.eval(env, forward, store, given));
     }
 
     @Override

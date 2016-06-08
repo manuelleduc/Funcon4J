@@ -26,8 +26,8 @@ public interface ApplyFactory extends MapFactory, ApplyAlg<IEval> {
 
     @Override
     default IEval apply(IEval abs, IEval arg) {
-        return (env, forward, store, given) ->
-                supply(arg, unAbs(abs, env, forward, store, given)).eval(env, forward, store, given);
+        return (env, forward, store, given) -> supply(arg, unAbs(abs, env, forward, store, given)).eval(env, forward, store, given);
+
     }
 
     @Override

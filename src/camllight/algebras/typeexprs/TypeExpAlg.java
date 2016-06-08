@@ -35,6 +35,18 @@ public interface TypeExpAlg<E> {
     |[ instantiate_type(type[: ~LI :], type_list[: ~T1 , ~T2 ... :]) ]|
      */
 
+    // Syntax only
+    @Syntax("type = vartype type")
+    default E varTypeType(E varType, E type) {
+        return type;
+    }
+
+    // Syntax only
+    @Syntax("type = '(' vartype@','+ ')' type")
+    default E varTypeType(List<E> varType, E type) {
+        return type;
+    }
+
     @Syntax("type = vartype")
     default E varTypeType(E varType) {
         return varType;

@@ -8,6 +8,8 @@ import funcons.values.Undefined;
 import funcons.values.Value;
 import funcons.values.ids.Id;
 import funcons.values.recursion.Fwd;
+import funcons.values.signals.FunconException;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface RecursiveFactory extends ModuleFactory, RecursiveAlg<IEval> {
 
@@ -19,7 +21,6 @@ public interface RecursiveFactory extends ModuleFactory, RecursiveAlg<IEval> {
     @Override
     default IEval freshFwds(IEval idList) {
         return (env, forward, store, given) -> {
-            null_();
             IEval envEval = environment();
             List list = (List)idList.eval(env, forward, store, given);
             Undefined undefined = (Undefined)undefined().eval(env, forward, store, given);
@@ -31,7 +32,6 @@ public interface RecursiveFactory extends ModuleFactory, RecursiveAlg<IEval> {
                 forward.add(fwd, undefined);
 
                 envEval = mapUpdate(envEval, (e,f,s,g) -> id, (e,f,s,g) -> fwd);
-
                 list = list.tail();
             }
 
