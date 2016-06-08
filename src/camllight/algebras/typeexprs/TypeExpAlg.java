@@ -54,7 +54,7 @@ public interface TypeExpAlg<E> {
             tuple = alg().tupleTypePrefix(it.previous(), tuple);
         }
 
-        return alg().tuplePrefix(t, tuple);
+        return alg().tupleTypePrefix(t, tuple);
     }
 
     @Syntax("tupletypelist = '*' type")
