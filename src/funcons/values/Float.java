@@ -1,5 +1,7 @@
 package funcons.values;
 
+import funcons.values.properties.Comparable;
+
 public class Float implements Number {
 
     private Double value;
@@ -24,23 +26,8 @@ public class Float implements Number {
     }
 
     @Override
-    public Boolean greaterThan(Number other) {
-        return floatValue() > other.floatValue();
-    }
-
-    @Override
-    public Boolean smallerThan(Number other) {
-        return floatValue() < other.floatValue();
-    }
-
-    @Override
-    public Boolean greaterEqualThan(Number other) {
-        return floatValue() >= other.floatValue();
-    }
-
-    @Override
-    public Boolean smallerEqualThan(Number other) {
-        return floatValue() <= other.floatValue();
+    public Boolean greaterThan(Comparable other) {
+        return floatValue() > ((Number)other).floatValue();
     }
 
     @Override

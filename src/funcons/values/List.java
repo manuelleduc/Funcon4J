@@ -1,6 +1,8 @@
 package funcons.values;
 
-public class List implements Value {
+import funcons.values.properties.Comparable;
+
+public class List implements Value, Comparable {
     private List tail;
     private Value head;
 
@@ -114,5 +116,23 @@ public class List implements Value {
         }
         java.util.Collections.reverse(items);
         return items;
+    }
+
+    @Override
+    public Boolean greaterThan(Comparable other) {
+        List otherList = ((List)other);
+        if (head() == null || otherList.head() == null) {
+            return head() != null && otherList.head() == null;
+        }
+
+        if (((Comparable)head()).greaterThan(otherList.head())) {
+            return true;
+        }
+
+        if (head().equals(otherList.head())) {
+            return tail().greaterThan(otherList.tail());
+        }
+
+        return false;
     }
 }

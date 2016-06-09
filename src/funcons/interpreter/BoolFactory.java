@@ -4,6 +4,7 @@ import funcons.algebras.BoolAlg;
 import funcons.carriers.IEval;
 import funcons.values.Bool;
 import funcons.values.Number;
+import funcons.values.properties.Comparable;
 
 public interface BoolFactory extends FloatCalcFactory, BoolAlg<IEval> {
     @Override
@@ -21,32 +22,32 @@ public interface BoolFactory extends FloatCalcFactory, BoolAlg<IEval> {
     default IEval greater(IEval a, IEval b) {
         return (env, forward, store, given) ->
                 new Bool(
-                        ((Number)a.eval(env, forward, store, given)).greaterThan(
-                            ((Number)b.eval(env, forward, store, given))));
+                        ((Comparable)a.eval(env, forward, store, given)).greaterThan(
+                            (b.eval(env, forward, store, given))));
     }
 
     @Override
     default IEval smaller(IEval a, IEval b) {
         return (env, forward, store, given) ->
                 new Bool(
-                        ((Number)a.eval(env, forward, store, given)).smallerThan(
-                                ((Number)b.eval(env, forward, store, given))));
+                        ((Comparable)a.eval(env, forward, store, given)).smallerThan(
+                                (b.eval(env, forward, store, given))));
     }
 
     @Override
     default IEval greaterEqual(IEval a, IEval b) {
         return (env, forward, store, given) ->
                 new Bool(
-                        ((Number)a.eval(env, forward, store, given)).greaterEqualThan(
-                                ((Number)b.eval(env, forward, store, given))));
+                        ((Comparable)a.eval(env, forward, store, given)).greaterEqualThan(
+                                (b.eval(env, forward, store, given))));
     }
 
     @Override
     default IEval smallerEqual(IEval a, IEval b) {
         return (env, forward, store, given) ->
                 new Bool(
-                        ((Number)a.eval(env, forward, store, given)).smallerEqualThan(
-                                ((Number)b.eval(env, forward, store, given))));
+                        ((Comparable)a.eval(env, forward, store, given)).smallerEqualThan(
+                                (b.eval(env, forward, store, given))));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package funcons.values;
 
+import funcons.values.properties.Comparable;
+
 public class Int implements Number {
     private java.lang.Integer value;
 
@@ -23,23 +25,8 @@ public class Int implements Number {
     }
 
     @Override
-    public Boolean greaterThan(Number other) {
-        return intValue() > other.intValue();
-    }
-
-    @Override
-    public Boolean smallerThan(Number other) {
-        return intValue() < other.intValue();
-    }
-
-    @Override
-    public Boolean greaterEqualThan(Number other) {
-        return intValue() >= other.intValue();
-    }
-
-    @Override
-    public Boolean smallerEqualThan(Number other) {
-        return intValue() <= other.intValue();
+    public Boolean greaterThan(Comparable other) {
+        return intValue() > ((Number)other).intValue();
     }
 
     @Override

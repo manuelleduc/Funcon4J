@@ -31,7 +31,7 @@ public class VectorFactoryTest {
     public void testVector1() throws Exception {
         Store store = new Store();
         Vector v = (Vector)alg.vector(alg.lit(3)).eval(new Environment(), new Forwards(), store, new Null());
-        assertEquals(new Vector(new Variable(0)), v);
+        assertEquals(new Vector(new Variable(0, store)), v);
         assertEquals(new Int(3), store.val((Variable)v.get(new Int(0))));
     }
 
@@ -58,7 +58,7 @@ public class VectorFactoryTest {
                 .eval(new Environment(), new Forwards(), store, new Null());
         alg.vectorAssign(alg.boundValue(alg.id("foo")), alg.lit(0), alg.lit(3))
                 .eval(env, new Forwards(), store, new Null());
-        assertEquals(new Vector(new Variable(0)), env.val(new Id("foo")));
+        assertEquals(new Vector(new Variable(0, store)), env.val(new Id("foo")));
         assertEquals(new Int(3), store.val((Variable)((Vector)env.val(new Id("foo"))).get(new Int(0))));
 
     }

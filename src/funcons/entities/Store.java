@@ -23,13 +23,13 @@ public class Store {
     }
 
     public Variable alloc() {
-        Variable v = new Variable(allocCount);
+        Variable v = new Variable(allocCount, this);
         allocCount++;
         return v;
     }
 
     public Variable alloc(Value initialValue) {
-        Variable v = new Variable(allocCount);
+        Variable v = new Variable(allocCount, this);
         allocCount++;
         map.put(v, initialValue);
         return v;

@@ -97,6 +97,16 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException, IOException {
+        interpret("1 > (ref 0);;");
+        interpret("1 > (ref (ref 0));;");
+        interpret("(ref 1) > 0;;");
+        interpret("(ref 1) > (ref 0);;");
+        interpret("0 > (ref 1);;");
+        interpret("(ref 0) > 1;;");
+        interpret("(ref 0) > (ref 1);;");
+        interpret("0 > (ref 0);;");
+        interpret("(ref 0) > 0;;");
+        interpret("(ref 0) > (ref (ref (ref 0)));;");
         //interpret("let _1 = 5;; _1;; (make_vect (3 + _1) _1).(2);;");
         //runAll("examples");
         //interpret("let rec (f : (string * int) -> int) = function _ -> 7 ;;");
@@ -105,7 +115,10 @@ public class CamlLight {
         //interpret("let rec foldr = fun f u -> function" +
         //        "    []      -> u" +
         //        "  | [x :: xs] -> (f x (foldr f u xs));; foldr ");
-        runAll("givenExamples/Advanced");
+        //runAll("givenExamples/basic");
+        //runAll("givenExamples/advanced");
+        //runAll("givenExamples/OL");
+        //runAll("givenExamples/Advanced");
         //runAll("givenExamples/Basic");
         //run("givenExamples/Advanced/Advanced7.ml");
         //interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");

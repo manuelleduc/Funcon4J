@@ -94,10 +94,6 @@ public class BoolFactoryTest {
                 smallerThan,
                 ((Bool)f.apply(alg.lit(3), alg.lit(6.0))
                         .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-        assertEquals(
-                equal,
-                ((Bool)f.apply(alg.lit(3.0), alg.lit(3))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
     }
 
     @Test

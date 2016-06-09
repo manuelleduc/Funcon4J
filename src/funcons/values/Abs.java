@@ -16,7 +16,7 @@ public class Abs<E> implements Value {
 
     @Override
     public boolean equals(Object o) {
-        throw new NotImplementedException();
+        return o == this;
     }
 
     @Override

@@ -74,6 +74,46 @@ public class BoolLogicAlgTest extends TestStub {
 
         CamlLight.eval("3 > 4;;");
         assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("(1,2) > (1,1);;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("(1,1) > (1,2);;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("(1,1) > (1,1);;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("(1,1,1) > (1,1);;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("(1,1) > (1,1,1);;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("[1,2] > [1,1];;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("[1,1] > [1,2];;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("[1,1] > [1,1];;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("[1,1,1] > [1,1];;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("[1,1] > [1,1,1];;");
+        assertEquals("false", out.toString());
     }
 
     @Test
