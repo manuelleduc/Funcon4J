@@ -2,6 +2,12 @@ package camllight.algebras.decls;
 
 import camllight.algebras.patts.PattAlg;
 import camllight.algebras.patts.PattMatchAlg;
+import funcons.carriers.IEval;
+import funcons.entities.Forwards;
+import funcons.entities.Store;
+import funcons.values.Environment;
+import funcons.values.Null;
+import funcons.values.signals.FunconException;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 

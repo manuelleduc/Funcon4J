@@ -36,15 +36,15 @@ public interface TypeExpAlg<E> {
      */
 
     // Syntax only
-    @Syntax("type = vartype type")
-    default E varTypeType(E varType, E type) {
-        return type;
+    @Syntax("type = type IDTOKEN")
+    default E typeIdType(E type, java.lang.String idToken) {
+        return typeId(idToken);
     }
 
     // Syntax only
-    @Syntax("type = '(' vartype@','+ ')' type")
-    default E varTypeType(List<E> varType, E type) {
-        return type;
+    @Syntax("type = '(' type@','+ ')' IDTOKEN")
+    default E typesIdType(List<E> types, java.lang.String idToken) {
+        return typeId(idToken);
     }
 
     @Syntax("type = vartype")

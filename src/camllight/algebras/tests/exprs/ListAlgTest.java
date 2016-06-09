@@ -33,4 +33,14 @@ public class ListAlgTest extends TestStub {
         CamlLight.eval("[1];;");
         assertEquals("[1, []]", out.toString());
     }
+
+    @Test
+    public void testListConcatExp() throws Exception {
+        CamlLight.eval("[1] @ [2];;");
+        assertEquals("[1, [2, []]]", out.toString());
+        out.reset();
+
+        CamlLight.eval("[1] @ [2, 3];;");
+        assertEquals("[1, [2, [3, []]]]", out.toString());
+    }
 }

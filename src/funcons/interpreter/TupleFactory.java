@@ -103,8 +103,9 @@ public interface TupleFactory extends AssignFactory, TupleAlg<IEval> {
 
             return new Abs<IEval>(
                     (localEnv, localForward, localStore, localGiven) -> curryN(
-                            (e,f,s,g) -> new Int(index.intValue() - 1),
-                            partialAppN(a, (e,f,s,g) -> localGiven)).eval(localEnv, localForward, localStore, localGiven)
+                            intSubtract(n, lit(1)),
+                            partialAppN(a, (e,f,s,g) -> localGiven))
+                            .eval(env, forward, store, given)
             );
         };
     }

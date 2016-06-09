@@ -39,6 +39,7 @@ public class CamlLight {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.RecordFactory() {});
         Environment env = importStandardLibrary(new Environment());
+        //Environment env = new Environment();
         return eval.eval(env, new Forwards(), new Store(), new Null());
     }
 
@@ -104,9 +105,11 @@ public class CamlLight {
         //interpret("let rec foldr = fun f u -> function" +
         //        "    []      -> u" +
         //        "  | [x :: xs] -> (f x (foldr f u xs));; foldr ");
-
-        runAll("givenExamples/Advanced");
+        //runAll("givenExamples/Advanced");
         //runAll("givenExamples/Basic");
+        //run("givenExamples/Advanced/Advanced7.ml");
+        interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");
+        //interpret("let outer f = fun x y -> (f x);; outer (fun a -> a + 1) 5 8;;)");
         //run("examples/fib.cl");
         //run("examples/sieve.cl");
         //interpret("type foo = A of int | B;;\nlet f = function A _ -> true | B -> false;;\nf B;;");

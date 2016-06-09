@@ -19,8 +19,8 @@ public interface ApplyFactory extends MapFactory, ApplyAlg<IEval> {
     default IEval abs(IEval patt, IEval exp) { // TODO Hacky, what is depends(X,Y)?
         return (env, forward, store, given) -> new Abs<IEval>((e, f, s, g) -> {
             @SuppressWarnings("unchecked")
-            Environment environment = (Environment)((Abs<IEval>)patt.eval(e, f, s, g)).body().eval(e, f, s, g);
-            return exp.eval(e.extend(environment), f, s, g);
+            IEval environment = ((Abs<IEval>)patt.eval(e, f, s, g)).body();
+            return scope(environment, exp).eval(e, f, s, g);
         });
     }
 
