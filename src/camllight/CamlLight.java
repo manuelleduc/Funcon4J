@@ -105,10 +105,10 @@ public class CamlLight {
         //interpret("let rec foldr = fun f u -> function" +
         //        "    []      -> u" +
         //        "  | [x :: xs] -> (f x (foldr f u xs));; foldr ");
-        //runAll("givenExamples/Advanced");
+        runAll("givenExamples/Advanced");
         //runAll("givenExamples/Basic");
         //run("givenExamples/Advanced/Advanced7.ml");
-        interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");
+        //interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");
         //interpret("let outer f = fun x y -> (f x);; outer (fun a -> a + 1) 5 8;;)");
         //run("examples/fib.cl");
         //run("examples/sieve.cl");

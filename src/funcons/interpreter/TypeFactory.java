@@ -153,8 +153,12 @@ public interface TypeFactory extends VectorFactory, TypeAlg<IEval> {
     @Override
     default IEval variantMatch(IEval tag, IEval variant, IEval patt) {
         return (env, forward, store, given) -> {
-            Variant v = (Variant)variant.eval(env, forward, store, given);
-            return whenTrue(equal(tag, (e,f,s,g) -> v.tag()), match((e,f,s,g) -> v.value(), patt)).eval(env, forward, store, given);
+            try {
+                Variant v = (Variant)variant.eval(env, forward, store, given);
+                return whenTrue(equal(tag, (e, f, s, g) -> v.tag()), match((e, f, s, g) -> v.value(), patt)).eval(env, forward, store, given);
+            } catch (ClassCastException e) {
+                return fail().eval(env, forward, store, given);
+            }
         };
     }
 }
