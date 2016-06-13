@@ -1,10 +1,12 @@
 package funcons.values;
 
+import funcons.values.properties.Comparable;
+
 import java.lang.*;
 import java.lang.String;
 import java.util.Iterator;
 
-public class Record implements Value {
+public class Record implements Value, Comparable {
     private Map<Field, Value> map;
 
     public Record(Map<Field, Value> m) {
@@ -52,5 +54,10 @@ public class Record implements Value {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Record && ((Record)obj).map.equals(map);
+    }
+
+    @Override
+    public Boolean greaterThan(Comparable other) {
+        return map.greaterThan(((Record)other).map);
     }
 }

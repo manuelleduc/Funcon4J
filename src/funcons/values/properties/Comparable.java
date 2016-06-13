@@ -24,10 +24,10 @@ public interface Comparable {
     }
 
     default java.lang.Boolean greaterEqualThan(Object other) {
-        return greaterThan(other) || equalsComparable((Comparable)other);
+        return !smallerThan(other);
     }
 
     default Boolean smallerEqualThan(Object other) {
-        return smallerThan(other) || equalsComparable((Comparable)other);
+        return !greaterThan(other);
     }
 }

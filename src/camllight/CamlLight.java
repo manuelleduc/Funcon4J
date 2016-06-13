@@ -97,6 +97,7 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException, IOException {
+        interpret("{mutable a=3, b=5, c = 4,d=2,e=10} > {a=2, b=3};;");
         interpret("1 > (ref 0);;");
         interpret("1 > (ref (ref 0));;");
         interpret("(ref 1) > 0;;");

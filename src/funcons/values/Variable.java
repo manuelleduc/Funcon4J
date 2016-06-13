@@ -25,6 +25,11 @@ public class Variable implements Value, Comparable {
     }
 
     @Override
+    public String toString() {
+        return "Variable<" + value() + ">";
+    }
+
+    @Override
     public boolean equals(Object o) {
         return o instanceof Variable && ((Variable)o).loc.equals(loc);
     }
@@ -38,11 +43,6 @@ public class Variable implements Value, Comparable {
     @Override
     public Boolean equalsComparable(Object other) {
         return ((Comparable)other).equalsComparable(value());
-    }
-
-    @Override
-    public String toString() {
-        return "Variable<" + value() + ">";
     }
 
     @Override

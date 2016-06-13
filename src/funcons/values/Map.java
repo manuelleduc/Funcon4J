@@ -1,5 +1,6 @@
 package funcons.values;
 
+import funcons.values.properties.Comparable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.lang.*;
@@ -8,7 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Map<K, V> implements Value {
+public class Map<K, V> implements Value, Comparable {
     private interface Keys<K> {
         Set<K> get();
     }
@@ -116,5 +117,20 @@ public class Map<K, V> implements Value {
         }
 
         return true;
+    }
+
+    @Override
+    public Boolean greaterThan(Comparable other) {
+        int nSmaller = 0;
+        Map otherMap = (Map)other;
+        for (K k : keys()) {
+            V v = val(k);
+            @SuppressWarnings("unchecked")
+            Object otherV = otherMap.val(k);
+            if (otherV != null) {
+                nSmaller += ((Comparable) v).greaterThan(otherV) ? 1 : -1;
+            }
+        }
+        return nSmaller > 0;
     }
 }
