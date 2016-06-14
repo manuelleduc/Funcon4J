@@ -1,6 +1,6 @@
 package funcons.values.types;
 
-import funcons.values.Value;
+import funcons.values.properties.Value;
 
 public class Depends extends Type {
 

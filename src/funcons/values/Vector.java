@@ -1,6 +1,9 @@
 package funcons.values;
 
-public class Vector implements Value {
+import funcons.values.properties.Comparable;
+import funcons.values.properties.Value;
+
+public class Vector implements Value, Comparable {
     private final List list;
 
     public Vector() {
@@ -44,5 +47,10 @@ public class Vector implements Value {
     @Override
     public java.lang.String toString() {
         return "Vector<" + list.toString() + ">";
+    }
+
+    @Override
+    public Boolean greaterThan(Comparable other) {
+        return list.greaterThan(((Vector)other).list);
     }
 }

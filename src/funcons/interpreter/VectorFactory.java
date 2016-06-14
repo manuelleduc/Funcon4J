@@ -3,7 +3,6 @@ package funcons.interpreter;
 import funcons.algebras.VectorAlg;
 import funcons.carriers.IEval;
 import funcons.values.Int;
-import funcons.values.Value;
 import funcons.values.Vector;
 
 public interface VectorFactory extends ListFactory, VectorAlg<IEval> {

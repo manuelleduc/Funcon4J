@@ -3,7 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.AssignAlg;
 import funcons.carriers.IEval;
 import funcons.values.Null;
-import funcons.values.Value;
+import funcons.values.properties.Value;
 import funcons.values.Variable;
 
 public interface AssignFactory extends ElseFactory, AssignAlg<IEval> {

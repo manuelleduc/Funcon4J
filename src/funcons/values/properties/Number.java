@@ -1,6 +1,4 @@
-package funcons.values;
-
-import funcons.values.properties.Comparable;
+package funcons.values.properties;
 
 public interface Number extends Value, Comparable {
     java.lang.Integer intValue();

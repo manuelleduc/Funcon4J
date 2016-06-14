@@ -5,11 +5,9 @@ import funcons.carriers.IEval;
 import funcons.values.List;
 import funcons.values.Map;
 import funcons.values.Undefined;
-import funcons.values.Value;
+import funcons.values.properties.Value;
 import funcons.values.ids.Id;
 import funcons.values.recursion.Fwd;
-import funcons.values.signals.FunconException;
-import funcons.values.signals.RunTimeFunconException;
 
 public interface RecursiveFactory extends ModuleFactory, RecursiveAlg<IEval> {
 

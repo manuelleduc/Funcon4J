@@ -1,7 +1,7 @@
 package funcons.entities;
 
 import funcons.values.Map;
-import funcons.values.Value;
+import funcons.values.properties.Value;
 import funcons.values.recursion.Fwd;
 
 public class Forwards {

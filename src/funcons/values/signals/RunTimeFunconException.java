@@ -1,7 +1,7 @@
 package funcons.values.signals;
 
 import funcons.values.Null;
-import funcons.values.Value;
+import funcons.values.properties.Value;
 
 public class RunTimeFunconException extends FunconException {
     final Value value;

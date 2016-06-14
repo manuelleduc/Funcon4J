@@ -114,6 +114,27 @@ public class BoolLogicAlgTest extends TestStub {
 
         CamlLight.eval("[1,1] > [1,1,1];;");
         assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("{a = 1, b = 2} > {b = 1, a = 1};;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("\"abc\" > \"abd\";;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("\"abcd\" > \"abc\";;");
+        assertEquals("true", out.toString());
+        out.reset();
+
+        CamlLight.eval("`a` > `b`;;");
+        assertEquals("false", out.toString());
+        out.reset();
+
+        CamlLight.eval("[|1,2,3|] > [|1,2,2|];;");
+        assertEquals("true", out.toString());
+        out.reset();
     }
 
     @Test

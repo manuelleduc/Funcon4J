@@ -1,5 +1,7 @@
 package funcons.values;
 
+import funcons.values.properties.Unit;
+
 public class Null implements Unit {
     @Override
     public int hashCode() {

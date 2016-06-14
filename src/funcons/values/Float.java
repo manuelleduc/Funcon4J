@@ -1,6 +1,7 @@
 package funcons.values;
 
 import funcons.values.properties.Comparable;
+import funcons.values.properties.Number;
 
 public class Float implements Number {
 

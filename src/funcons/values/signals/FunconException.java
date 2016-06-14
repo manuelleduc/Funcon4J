@@ -1,6 +1,6 @@
 package funcons.values.signals;
 
-import funcons.values.Value;
+import funcons.values.properties.Value;
 
 public abstract class FunconException extends Exception implements Value {
     private java.lang.String message;

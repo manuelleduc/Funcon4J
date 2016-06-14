@@ -1,6 +1,7 @@
 package funcons.values;
 
 import funcons.values.properties.Comparable;
+import funcons.values.properties.Value;
 
 public class Tuple implements Value, Comparable {
     private final Tuple tail;
@@ -93,7 +94,7 @@ public class Tuple implements Value, Comparable {
             return true;
         }
 
-        if (head().equals(otherTup.head())) {
+        if (((Comparable)head()).equalsComparable(otherTup.head())) {
             return tail().greaterThan(otherTup.tail());
         }
 

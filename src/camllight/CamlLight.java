@@ -3,14 +3,12 @@ package camllight;
 import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
-import funcons.algebras.RecordAlg;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.values.Environment;
 import funcons.values.Null;
-import funcons.values.Value;
-import funcons.values.ids.Id;
+import funcons.values.properties.Value;
 import funcons.values.signals.FunconException;
 import noa.proxy.Recorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -22,7 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 public class CamlLight {
 
@@ -35,7 +32,7 @@ public class CamlLight {
         return (X) parser.prog()._prog;
     }
 
-    public static funcons.values.Value eval(String src) throws FunconException {
+    public static Value eval(String src) throws FunconException {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.RecordFactory() {});
         Environment env = importStandardLibrary(new Environment());
@@ -97,17 +94,20 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException, IOException {
-        interpret("{mutable a=3, b=5, c = 4,d=2,e=10} > {a=2, b=3};;");
-        interpret("1 > (ref 0);;");
-        interpret("1 > (ref (ref 0));;");
-        interpret("(ref 1) > 0;;");
-        interpret("(ref 1) > (ref 0);;");
-        interpret("0 > (ref 1);;");
-        interpret("(ref 0) > 1;;");
-        interpret("(ref 0) > (ref 1);;");
-        interpret("0 > (ref 0);;");
-        interpret("(ref 0) > 0;;");
-        interpret("(ref 0) > (ref (ref (ref 0)));;");
+        interpret("[ref 1,ref 2,ref 3] > [ref 1,ref 2,ref 2];;");
+        interpret("[|1 , 2 , 3|] > [|1, 2 , 2|];;");
+        //interpret("\"abc\" > \"abc\";;");
+        //interpret("{mutable a=1, b=2, c = 4,d=2,e=10} > {a=2, b=3};;");
+        //interpret("1 > (ref 0);;");
+        //interpret("1 > (ref (ref 0));;");
+        //interpret("(ref 1) > 0;;");
+        //interpret("(ref 1) > (ref 0);;");
+        //interpret("0 > (ref 1);;");
+        //interpret("(ref 0) > 1;;");
+        //interpret("(ref 0) > (ref 1);;");
+        //interpret("0 > (ref 0);;");
+        //interpret("(ref 0) > 0;;");
+        //interpret("(ref 0) > (ref (ref (ref 0)));;");
         //interpret("let _1 = 5;; _1;; (make_vect (3 + _1) _1).(2);;");
         //runAll("examples");
         //interpret("let rec (f : (string * int) -> int) = function _ -> 7 ;;");

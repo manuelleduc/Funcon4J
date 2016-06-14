@@ -1,7 +1,7 @@
 package funcons.values;
 
 import funcons.values.properties.Comparable;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import funcons.values.properties.Value;
 
 import java.lang.*;
 import java.lang.String;
@@ -121,16 +121,15 @@ public class Map<K, V> implements Value, Comparable {
 
     @Override
     public Boolean greaterThan(Comparable other) {
-        int nSmaller = 0;
-        Map otherMap = (Map)other;
+        int nGreater = 0;
         for (K k : keys()) {
             V v = val(k);
             @SuppressWarnings("unchecked")
-            Object otherV = otherMap.val(k);
-            if (otherV != null) {
-                nSmaller += ((Comparable) v).greaterThan(otherV) ? 1 : -1;
+            Object otherV = ((Map)other).val(k);
+            if (otherV != null && !((Comparable)v).equalsComparable(otherV)) {
+                nGreater += ((Comparable)v).greaterThan(otherV) ? 1 : -1;
             }
         }
-        return nSmaller > 0;
+        return nGreater > 0;
     }
 }

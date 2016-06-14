@@ -2,6 +2,7 @@ package funcons.values;
 
 import funcons.entities.Store;
 import funcons.values.properties.Comparable;
+import funcons.values.properties.Value;
 
 import java.lang.*;
 import java.lang.String;

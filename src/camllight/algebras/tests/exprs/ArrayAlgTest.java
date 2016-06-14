@@ -26,27 +26,27 @@ public class ArrayAlgTest extends TestStub {
 
     @Test
     public void testArrayMulti() throws Exception {
-        CamlLight.eval("[|1;2;3|].(1);;");
+        CamlLight.eval("[|1,2,3|].(1);;");
         assertEquals("2", out.toString());
     }
 
     @Test
     public void testArraySelect() throws Exception {
-        CamlLight.eval("[| 1 ; 2 ; 3|].(0);;");
+        CamlLight.eval("[| 1 , 2 , 3|].(0);;");
         assertEquals("1", out.toString());
         out.reset();
 
-        CamlLight.eval("[| 1 ; 2 ; 3|].(1);;");
+        CamlLight.eval("[| 1 , 2 , 3|].(1);;");
         assertEquals("2", out.toString());
         out.reset();
 
-        CamlLight.eval("[| 1 ; 2 ; 3|].(2);;");
+        CamlLight.eval("[| 1 , 2 , 3|].(2);;");
         assertEquals("3", out.toString());
     }
 
     @Test
     public void testArrayAssign() throws Exception {
-        CamlLight.eval("let v = [| 1 ; 2 ; 3 |];; v.(0) <- 4; v.(0);; v.(1);; v.(2);;");
+        CamlLight.eval("let v = [| 1 , 2 , 3 |];; v.(0) <- 4; v.(0);; v.(1);; v.(2);;");
         assertEquals("423", out.toString());
     }
 }

@@ -1,5 +1,7 @@
 package funcons.values;
 
+import funcons.values.properties.Value;
+
 import java.lang.*;
 import java.lang.String;
 

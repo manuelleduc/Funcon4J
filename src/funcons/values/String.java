@@ -1,6 +1,9 @@
 package funcons.values;
 
-public class String implements Value {
+import funcons.values.properties.Comparable;
+import funcons.values.properties.Value;
+
+public class String implements Value, Comparable {
     private java.lang.String value;
 
     public String(java.lang.Integer i) {
@@ -40,5 +43,16 @@ public class String implements Value {
     @Override
     public java.lang.String toString() {
         return value;
+    }
+
+    @Override
+    public Boolean greaterThan(Comparable other) {
+        java.lang.String otherString = ((String)other).stringValue();
+        for (int i = 0, l = Math.min(stringValue().length(), otherString.length()); i < l; i++) {
+            if (stringValue().charAt(i) != otherString.charAt(i)) {
+                return stringValue().charAt(i) > otherString.charAt(i);
+            }
+        }
+        return stringValue().length() - otherString.length() > 0;
     }
 }

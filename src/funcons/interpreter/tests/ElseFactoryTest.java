@@ -7,6 +7,7 @@ import funcons.entities.Store;
 import funcons.interpreter.ElseFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
+import funcons.values.properties.Value;
 import funcons.values.signals.FailureTrue;
 import org.junit.Before;
 import org.junit.Test;

@@ -3,7 +3,6 @@ package funcons.interpreter;
 import funcons.algebras.BoolAlg;
 import funcons.carriers.IEval;
 import funcons.values.Bool;
-import funcons.values.Number;
 import funcons.values.properties.Comparable;
 
 public interface BoolFactory extends FloatCalcFactory, BoolAlg<IEval> {

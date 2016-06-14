@@ -1,5 +1,6 @@
 package funcons.values;
 
+import funcons.values.properties.Value;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Abs<E> implements Value {

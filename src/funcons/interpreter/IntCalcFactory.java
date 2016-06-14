@@ -2,8 +2,7 @@ package funcons.interpreter;
 
 import funcons.algebras.IntCalcAlg;
 import funcons.carriers.IEval;
-import funcons.values.Number;
-import funcons.values.Bool;
+import funcons.values.properties.Number;
 import funcons.values.Int;
 
 public interface IntCalcFactory extends NullFactory, IntCalcAlg<IEval> {

@@ -3,8 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.RecordAlg;
 import funcons.carriers.IEval;
 import funcons.values.*;
-
-import java.util.Set;
+import funcons.values.properties.Value;
 
 public interface RecordFactory extends RecursiveFactory, RecordAlg<IEval> {
     @Override

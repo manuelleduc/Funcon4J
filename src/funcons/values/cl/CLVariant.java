@@ -1,6 +1,6 @@
 package funcons.values.cl;
 
-import funcons.values.Value;
+import funcons.values.properties.Value;
 import funcons.values.signals.RunTimeFunconException;
 import funcons.values.types.Tag;
 import funcons.values.types.Variant;

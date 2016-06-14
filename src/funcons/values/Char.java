@@ -1,9 +1,12 @@
 package funcons.values;
 
+import funcons.values.properties.Comparable;
+import funcons.values.properties.Value;
+
 import java.lang.*;
 import java.lang.String;
 
-public class Char implements Value {
+public class Char implements Value, Comparable {
     private java.lang.Character value;
 
     public Char(java.lang.Character c) {
@@ -23,5 +26,10 @@ public class Char implements Value {
     @Override
     public String toString() {
         return value.toString();
+    }
+
+    @Override
+    public Boolean greaterThan(Comparable other) {
+        return value > ((Char)other).value;
     }
 }

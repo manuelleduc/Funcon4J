@@ -1,6 +1,6 @@
 package funcons.values.recursion;
 
-import funcons.values.Value;
+import funcons.values.properties.Value;
 
 public class Fwd implements Value {
     private final java.lang.Integer n;

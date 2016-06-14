@@ -1,6 +1,7 @@
 package funcons.values;
 
 import funcons.values.ids.Id;
+import funcons.values.properties.Value;
 
 public class Environment extends Map<Id, Value> {
 

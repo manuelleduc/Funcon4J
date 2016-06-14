@@ -1,6 +1,6 @@
 package funcons.values.types;
 
-import funcons.values.Value;
+import funcons.values.properties.Value;
 
 public class Token implements Value {
     private static Integer tokenCount = 0;

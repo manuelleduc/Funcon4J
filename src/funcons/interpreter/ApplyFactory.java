@@ -6,7 +6,7 @@ import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.values.Abs;
 import funcons.values.Environment;
-import funcons.values.Value;
+import funcons.values.properties.Value;
 
 public interface ApplyFactory extends MapFactory, ApplyAlg<IEval> {
 

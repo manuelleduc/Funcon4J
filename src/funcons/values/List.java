@@ -1,6 +1,7 @@
 package funcons.values;
 
 import funcons.values.properties.Comparable;
+import funcons.values.properties.Value;
 
 public class List implements Value, Comparable {
     private List tail;
@@ -129,7 +130,7 @@ public class List implements Value, Comparable {
             return true;
         }
 
-        if (head().equals(otherList.head())) {
+        if (((Comparable)head()).equalsComparable(otherList.head())) {
             return tail().greaterThan(otherList.tail());
         }
 

@@ -5,7 +5,7 @@ import funcons.carriers.IEval;
 import funcons.values.Environment;
 import funcons.values.List;
 import funcons.values.Map;
-import funcons.values.Value;
+import funcons.values.properties.Value;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
 

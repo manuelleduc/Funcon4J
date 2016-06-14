@@ -2,9 +2,8 @@ package funcons.interpreter;
 
 import funcons.algebras.FloatCalcAlg;
 import funcons.carriers.IEval;
-import funcons.values.Bool;
 import funcons.values.Float;
-import funcons.values.Number;
+import funcons.values.properties.Number;
 
 public interface FloatCalcFactory extends IntCalcFactory, FloatCalcAlg<IEval> {
     @Override

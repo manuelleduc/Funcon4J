@@ -1,6 +1,6 @@
 package funcons.entities;
 
-import funcons.values.Value;
+import funcons.values.properties.Value;
 import funcons.values.Variable;
 
 import java.util.HashMap;

@@ -1,6 +1,7 @@
 package funcons.values;
 
 import funcons.values.properties.Comparable;
+import funcons.values.properties.Value;
 
 import java.lang.*;
 import java.lang.String;
@@ -18,7 +19,7 @@ public class Record implements Value, Comparable {
     }
 
     public Record over(Record other) {
-        return new Record(other.map.extend(map));
+        return other.union(this);
     }
 
     public Record union(Record other) {

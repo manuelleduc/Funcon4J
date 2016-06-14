@@ -3,6 +3,7 @@ package funcons.interpreter;
 import funcons.algebras.TupleAlg;
 import funcons.carriers.IEval;
 import funcons.values.*;
+import funcons.values.properties.Value;
 
 import java.util.NoSuchElementException;
 
