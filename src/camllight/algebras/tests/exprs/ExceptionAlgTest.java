@@ -13,16 +13,10 @@ public class ExceptionAlgTest extends TestStub {
 
     @Test
     public void testTryWithExp() throws Exception {
-        CamlLight.eval("exception Match_failure of int;; try (match 0 with 1 -> true) with Match_failure _ -> false;;");
-        assertEquals("false", out.toString());
-        out.reset();
-
-        CamlLight.eval("exception Foo;; try raise Foo with Foo -> true;;");
-        assertEquals("true", out.toString());
-        out.reset();
-
+        test("exception Match_failure of int;; try (match 0 with 1 -> true) with Match_failure _ -> false;;", "false");
+        test("exception Foo;; try raise Foo with Foo -> true;;", "true");
         try {
-            CamlLight.eval("exception Foo and Bar;; try raise Foo with Bar -> true;;");
+            test("exception Foo and Bar;; try raise Foo with Bar -> true;;");
             assertTrue(false);
         } catch (RunTimeFunconException e) {
             assertEquals(new CLVariant("Foo", new Null()), e);
@@ -33,7 +27,7 @@ public class ExceptionAlgTest extends TestStub {
     @Test
     public void testRaiseExp() throws Exception {
         try {
-            CamlLight.eval("exception Foo;; raise Foo;;");
+            test("exception Foo;; raise Foo;;");
             assertTrue(false);
         } catch (RunTimeFunconException e) {
             assertEquals(new CLVariant("Foo", new Null()), e);
@@ -43,7 +37,7 @@ public class ExceptionAlgTest extends TestStub {
     @Test
     public void testRaiseWithArgumentExp() throws Exception {
         try {
-            CamlLight.eval("exception Foo of int;; raise Foo 3;;");
+            test("exception Foo of int;; raise Foo 3;;");
             assertTrue(false);
         } catch (RunTimeFunconException e) {
             assertEquals(new CLVariant("Foo", new funcons.values.Int(3)), e);

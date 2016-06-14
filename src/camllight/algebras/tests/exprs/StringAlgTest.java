@@ -10,7 +10,6 @@ public class StringAlgTest extends TestStub {
 
     @Test
     public void testStringAppendExp() throws Exception {
-        CamlLight.eval("\"foo\" ^ \"bar\";;");
-        assertEquals("foobar", out.toString());
+        test("\"foo\" ^ \"bar\";;", "foobar");
     }
 }

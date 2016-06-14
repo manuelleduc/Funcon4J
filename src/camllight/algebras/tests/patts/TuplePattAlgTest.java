@@ -12,18 +12,11 @@ public class TuplePattAlgTest extends TestStub {
 
     @Test
     public void testPattTuple() throws Exception {
-        CamlLight.eval("match (1) with (1) -> true;;");
-        assertEquals("true", out.toString());
-        out.reset();
-
-        CamlLight.eval("match (1,2,3,4) with (1,2,3,4) -> true;;");
-        assertEquals("true", out.toString());
-
+        test("match (1) with (1) -> true;;", "true");
+        test("match (1,2,3,4) with (1,2,3,4) -> true;;", "true");
         try {
             CamlLight.eval("match (1,2,3,4) with (1,2,5,4) -> true;;");
-        } catch (CLMatchFailureException ignore) {
-            return;
-        }
-        assertTrue(false);
+            assertTrue(false);
+        } catch (CLMatchFailureException ignore) {}
     }
 }

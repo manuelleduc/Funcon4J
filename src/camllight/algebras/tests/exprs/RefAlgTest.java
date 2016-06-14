@@ -10,21 +10,13 @@ public class RefAlgTest extends TestStub {
 
     @Test
     public void testDereferenceExp() throws Exception {
-        CamlLight.eval("!(ref 3);;");
-        assertEquals("3", out.toString());
-        out.reset();
-
-        CamlLight.eval("let x = ref 5;; !x;;");
-        assertEquals("5", out.toString());
+        test("!(ref 3);;", "3");
+        test("let x = ref 5;; !x;;", "5");
     }
 
     @Test
     public void testRefAssignExp() throws Exception {
-        CamlLight.eval("let x = ref 3;; x := 4; !x;;");
-        assertEquals("4", out.toString());
-        out.reset();
-
-        CamlLight.eval("(ref 1) := 2;;");
-        assertEquals("NULL", out.toString());
+        test("let x = ref 3;; x := 4; !x;;", "4");
+        test("(ref 1) := 2;;", "NULL");
     }
 }

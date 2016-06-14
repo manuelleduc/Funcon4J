@@ -11,58 +11,43 @@ import static org.junit.Assert.assertTrue;
 public class ControlAlgTest extends TestStub {
     @Test
     public void testIf_() throws Exception {
-        CamlLight.eval("if true then 0;;");
-        assertEquals("0", out.toString());
-        out.reset();
-
-        CamlLight.eval("if false then 0;;");
-        assertEquals("NULL", out.toString());
+        test("if true then 0;;", "0");
+        test("if false then 0;;", "NULL");
     }
 
     @Test
     public void testIfElse() throws Exception {
-        CamlLight.eval("if true then 0 else 1;;");
-        assertEquals("0", out.toString());
-        out.reset();
-
-        CamlLight.eval("if false then 0 else 1;;");
-        assertEquals("1", out.toString());
+        test("if true then 0 else 1;;", "0");
+        test("if false then 0 else 1;;", "1");
     }
 
     @Test
     public void testWhileTrue() throws Exception {
-        CamlLight.eval("while false do 1 done;;");
-        assertEquals("NULL", out.toString());
+        test("while false do 1 done;;", "NULL");
     }
 
     @Test
     public void testFor_() throws Exception {
-        CamlLight.eval("for i = 1 to 10 do print i done;;");
-        assertEquals("12345678910NULL", out.toString());
+        test("for i = 1 to 10 do print i done;;", "12345678910NULL");
     }
 
     @Test
     public void testForDownto() throws Exception {
-        CamlLight.eval("for i = 10 downto 1 do print i done;;");
-        assertEquals("10987654321NULL", out.toString());
+        test("for i = 10 downto 1 do print i done;;", "10987654321NULL");
     }
 
     @Test
     public void testMatchWith() throws Exception {
-        CamlLight.eval("match 0 with 0 -> true;;");
-        assertEquals("true", out.toString());
+        test("match 0 with 0 -> true;;", "true");
 
         try {
             CamlLight.eval("match 0 with 1 -> true;;");
-        } catch (CLMatchFailureException ignore) {
-            return;
-        }
-        assertTrue(false);
+            assertTrue(false);
+        } catch (CLMatchFailureException ignore) {}
     }
 
     @Test
     public void testSeq() throws Exception {
-        CamlLight.eval("0 ; 1;;");
-        assertEquals("1", out.toString());
+        test("0 ; 1;;", "1");
     }
 }

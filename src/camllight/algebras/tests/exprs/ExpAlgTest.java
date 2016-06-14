@@ -10,47 +10,30 @@ public class ExpAlgTest extends TestStub {
 
     @Test
     public void testConstExp() throws Exception {
-        CamlLight.eval("3;;");
-        assertEquals("3", out.toString());
+        test("3;;", "3");
     }
 
     @Test
     public void testIdExp() throws Exception {
-        CamlLight.eval("foo;;");
-        assertEquals("null", out.toString());
+        test("foo;;", "null");
     }
 
     @Test
     public void testBracketedExp() throws Exception {
-        CamlLight.eval("(3);;");
-        String result = out.toString();
-        out.reset();
-        CamlLight.eval("3;;");
-        assertEquals(result, out.toString());
-
-        out.reset();
-
-        CamlLight.eval("(1 + 2) * 3;;");
-        assertEquals("9", out.toString());
+        test("(3);;", "3");
+        test("4;;", "4");
+        test("(1 + 2) * 3;;", "9");
     }
 
     @Test
     public void testBeginEndExp() throws Exception {
-        CamlLight.eval("begin 3 end;;");
-        String result = out.toString();
-        out.reset();
-        CamlLight.eval("3;;");
-        assertEquals(result, out.toString());
-
-        out.reset();
-
-        CamlLight.eval("begin 1 + 2 end * 3;;");
-        assertEquals("9", out.toString());
+        test("begin 3 end;;", "3");
+        test("4;;", "4");
+        test("begin 1 + 2 end * 3;;", "9");
     }
 
     @Test
     public void testTypedExp() throws Exception {
-        CamlLight.eval("(3 : int);;");
-        assertEquals("3", out.toString());
+        test("(3 : int);;", "3");
     }
 }

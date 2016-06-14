@@ -10,95 +10,53 @@ public class ConstantsAlgTest extends TestStub {
 
     @Test
     public void testInt_() throws Exception {
-        CamlLight.eval("3;;");
-        assertEquals("3", out.toString());
+        test("3;;", "3");
     }
 
     @Test
     public void testFloat_() throws Exception {
-        CamlLight.eval("1.;;");
-        assertEquals("1.0", out.toString());
-        out.reset();
-
-        CamlLight.eval("2.0;;");
-        assertEquals("2.0", out.toString());
+        test("1.;;", "1.0");
+        test("2.0;;", "2.0");
     }
 
     @Test
     public void testBool() throws Exception {
-        CamlLight.eval("true;;");
-        assertEquals("true", out.toString());
-        out.reset();
-
-        CamlLight.eval("false;;");
-        assertEquals("false", out.toString());
+        test("true;;", "true");
+        test("false;;", "false");
     }
 
     @Test
     public void testString() throws Exception {
-        CamlLight.eval("\"foo\";;");
-        assertEquals("foo", out.toString());
-        out.reset();
-
-        CamlLight.eval("\"\\\\ \\\" \\n \\r \\t \\b \\065\";;");
-        assertEquals("\\ \" \n \r \t \b A", out.toString());
+        test("\"foo\";;", "foo");
+        test("\"\\\\ \\\" \\n \\r \\t \\b \\065\";;", "\\ \" \n \r \t \b A");
     }
 
     @Test
     public void testChar_() throws Exception {
-        CamlLight.eval("`a`;;");
-        assertEquals("a", out.toString());
-        out.reset();
-
-        CamlLight.eval("`\\\\`;;");
-        assertEquals("\\", out.toString());
-        out.reset();
-
-        CamlLight.eval("`\\``;;");
-        assertEquals("`", out.toString());
-        out.reset();
-
-        CamlLight.eval("`\\n`;;");
-        assertEquals("\n", out.toString());
-        out.reset();
-
-        CamlLight.eval("`\\r`;;");
-        assertEquals("\r", out.toString());
-        out.reset();
-
-        CamlLight.eval("`\\t`;;");
-        assertEquals("\t", out.toString());
-        out.reset();
-
-        CamlLight.eval("`\\b`;;");
-        assertEquals("\b", out.toString());
-        out.reset();
-
-        CamlLight.eval("`\\065`;;");
-        assertEquals("A", out.toString());
+        test("`a`;;", "a");
+        test("`\\\\`;;", "\\");
+        test("`\\``;;", "`");
+        test("`\\n`;;", "\n");
+        test("`\\r`;;", "\r");
+        test("`\\t`;;", "\t");
+        test("`\\b`;;", "\b");
+        test("`\\065`;;", "A");
     }
 
     @Test
     public void testNull_() throws Exception {
-        CamlLight.eval("();;");
-        assertEquals("NULL", out.toString());
+        test("();;", "NULL");
     }
 
     @Test
     public void testEmptyListConstant() throws Exception {
-        CamlLight.eval("[];;");
-        assertEquals("[]", out.toString());
-        out.reset();
-        CamlLight.eval("[];;");
-        assertEquals("[]", out.toString());
+        test("[];;", "[]");
+        test("[];;", "[]");
     }
 
     @Test
     public void testEmptyList() throws Exception {
-        CamlLight.eval("[];;");
-        assertEquals("[]", out.toString());
-        out.reset();
-        CamlLight.eval("[];;");
-        assertEquals("[]", out.toString());
+        test("[];;", "[]");
+        test("[];;", "[]");
     }
 }

@@ -10,11 +10,7 @@ public class TupleAlgTest extends TestStub {
 
     @Test
     public void testExprTupleMulti() throws Exception {
-        CamlLight.eval("(0,1);;");
-        assertEquals("(0, (1, ()))", out.toString());
-        out.reset();
-
-        CamlLight.eval("(0,1,2,3,4);;");
-        assertEquals("(0, (1, (2, (3, (4, ())))))", out.toString());
+        test("(0,1);;", "(0, (1, ()))");
+        test("(0,1,2,3,4);;", "(0, (1, (2, (3, (4, ())))))");
     }
 }

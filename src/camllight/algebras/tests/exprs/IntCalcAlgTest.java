@@ -10,45 +10,33 @@ public class IntCalcAlgTest extends TestStub {
 
     @Test
     public void testIntUnarySub() throws Exception {
-        CamlLight.eval("-1;;");
-        assertEquals("-1", out.toString());
-        out.reset();
-
-        CamlLight.eval("--1;;");
-        assertEquals("1", out.toString());
+        test("-1;;", "-1");
+        test("--1;;", "1");
     }
 
     @Test
     public void testIntAdd() throws Exception {
-        CamlLight.eval("1 + 2;;");
-        assertEquals("3", out.toString());
+        test("1 + 2;;", "3");
     }
 
     @Test
     public void testIntSub() throws Exception {
-        CamlLight.eval("3 - 2;;");
-        assertEquals("1", out.toString());
+        test("3 - 2;;", "1");
     }
 
     @Test
     public void testIntMultiply() throws Exception {
-        CamlLight.eval("2 * 3;;");
-        assertEquals("6", out.toString());
+        test("2 * 3;;", "6");
     }
 
     @Test
     public void testIntDivide() throws Exception {
-        CamlLight.eval("6 / 2;;");
-        assertEquals("3", out.toString());
-        out.reset();
-
-        CamlLight.eval("1 / 2;;");
-        assertEquals("0", out.toString());
+        test("6 / 2;;", "3");
+        test("1 / 2;;", "0");
     }
 
     @Test
     public void testIntMod() throws Exception {
-        CamlLight.eval("3 mod 2;;");
-        assertEquals("1", out.toString());
+        test("3 mod 2;;", "1");
     }
 }
