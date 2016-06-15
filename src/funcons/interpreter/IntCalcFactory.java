@@ -28,8 +28,7 @@ public interface IntCalcFactory extends NullFactory, IntCalcAlg<IEval> {
 
     @Override
     default IEval intSubtract(IEval a, IEval b) {
-        return (env, forward, store, given) ->
-                new Int(
+        return (env, forward, store, given) -> new Int(
                         ((Number)a.eval(env, forward, store, given)).intValue()
                                 -
                         ((Number)b.eval(env, forward, store, given)).intValue());

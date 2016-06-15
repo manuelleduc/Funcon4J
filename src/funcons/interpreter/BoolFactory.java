@@ -66,9 +66,9 @@ public interface BoolFactory extends FloatCalcFactory, BoolAlg<IEval> {
     @Override
     default IEval physicalEqual(IEval e1, IEval e2) {
         return (env, forward, store, given) -> {
-            System.out.println(e1.eval(env, forward, store, given) == e2.eval(env, forward, store, given));
-            System.out.println(e1.eval(env, forward, store, given));
-            System.out.println(e2.eval(env, forward, store, given));
+            //System.out.println(e1.eval(env, forward, store, given) == e2.eval(env, forward, store, given));
+            //System.out.println(e1.eval(env, forward, store, given));
+            //System.out.println(e2.eval(env, forward, store, given));
             return new Bool(
                             e1.eval(env, forward, store, given)
                             ==

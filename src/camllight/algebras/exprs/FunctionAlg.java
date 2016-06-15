@@ -4,7 +4,7 @@ import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 public interface FunctionAlg<E> {
-    funcons.algebras.RecursiveAlg<E> alg();
+    funcons.algebras.RecordAlg<E> alg();
 
     @Syntax("exp = function") @Level(200)
     default E functionExpr(E f) {
@@ -34,6 +34,11 @@ public interface FunctionAlg<E> {
     @Syntax("function = ident")
     default E functionId(E id) {
         return alg().instantiateIfPoly(alg().followIfFwd(alg().boundValue(id)));
+    }
+
+    @Syntax("function = function '.' IDTOKEN")
+    default E functionRecordSelect(E record, java.lang.String fieldName) {
+        return alg().assignedValueIfVar(alg().recordSelect(record, alg().field(fieldName)));
     }
 
     @Syntax("function = '(' function ')'")

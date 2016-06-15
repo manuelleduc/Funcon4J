@@ -4,6 +4,7 @@ import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
 import funcons.carriers.IEval;
+import funcons.debug.Tracer;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.values.Environment;
@@ -37,10 +38,13 @@ public class CamlLight {
     }
 
     public static Value eval(String src) throws FunconException {
+        return eval(src, () -> new funcons.interpreter.RecordFactory() {});
+    }
+
+    public static Value eval(String src, camllight.algebras.AllAlg alg) throws FunconException {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        IEval eval = builder.build((camllight.algebras.AllAlg<IEval>) () -> new funcons.interpreter.RecordFactory() {});
+        IEval eval = builder.build(alg);
         Environment env = importStandardLibrary(new Environment());
-        //Environment env = new Environment();
         return eval.eval(env, new Forwards(), new Store(), new Null());
     }
 
@@ -105,6 +109,11 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException, IOException {
+        /*camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.RecordFactory() {};
+        Value v = CamlLight.eval(
+                "let add x y = x + y;; add 1 2;;",
+                new Tracer<>(myalg, new Class<?>[] {camllight.algebras.AllAlg.class}).make());
+        */
         //interpret("let x = ref 1;; let y = ref 1;; x == y;; x = y;;");
         //interpret("[ref 1,ref 2,ref 3] > [ref 1,ref 2,ref 2];;");
         //interpret("[|1 , 2 , 3|] > [|1, 2 , 2|];;");
@@ -132,7 +141,8 @@ public class CamlLight {
         //runAll("givenExamples/Basic");
         //runAll("givenExamples/Equality"); // structural equality on variables fails???
         //runAll("givenExamples/MuRecTypes");
-        runAllButExclude("givenExamples/OL", Collections.singletonList("OL12.ml"));
+        //runAllButExclude("givenExamples/OL", Arrays.asList("OL12.ml", "OL17.ml"));
+        run("givenExamples/OL/OL2.ml");
         //runAll("givenExamples/PM");
         //interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");
         //interpret("let outer f = fun x y -> (f x);; outer (fun a -> a + 1) 5 8;;)");
