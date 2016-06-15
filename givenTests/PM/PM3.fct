@@ -1,0 +1,13 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(apply(prefer_over(prefer_over(close(patt_abs(patt_non_binding(prefer_over(tuple_prefix_patt(only(2), tuple_prefix_patt(only(1), only(tuple_empty))),
+    tuple_prefix_patt(only(1), tuple_prefix_patt(only(2), only(tuple_empty))))),
+    char('A'))),
+    close(patt_abs(any,
+      char('B')))),
+    abs(throw(cl_match_failure))),
+    tuple_prefix(1,
+      tuple_prefix(2,
+        tuple_empty)))),
+  map_empty),
+  map_empty))

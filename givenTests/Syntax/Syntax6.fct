@@ -1,0 +1,5 @@
+scope(accum(cl_base,
+cl_library),
+  accum(instantiate_poly_decl_if_true(not(and(true, true)), generalise_decl(match(list_prefix(1, list_prefix(2, list_empty)), prefer_over(bind(id('x')),
+    abs(throw(cl_match_failure)))))),
+  map_empty))

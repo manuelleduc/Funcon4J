@@ -1,0 +1,12 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(apply(prefer_over(prefer_over(close(patt_abs(only(false),
+    0)),
+    close(patt_abs(only(true),
+      1))),
+    abs(throw(cl_match_failure))),
+    apply(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('prefix >')))),
+      3),
+      4))),
+  map_empty),
+  map_empty))

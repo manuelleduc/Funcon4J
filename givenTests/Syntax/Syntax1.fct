@@ -1,0 +1,9 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(list_prefix(1, list_empty)),
+  map_empty),
+  accum(seq(print(list_prefix(1, list_prefix(2, list_empty))),
+  map_empty),
+  accum(seq(print(list_prefix(1, list_prefix(2, list_prefix(3, list_empty)))),
+  map_empty),
+  map_empty))))

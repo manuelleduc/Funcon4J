@@ -1,0 +1,12 @@
+scope(accum(cl_base,
+cl_library),
+  accum(instantiate_poly_decl_if_true(not(true), generalise_decl(match(vector_empty, prefer_over(bind(id('v0')),
+    abs(throw(cl_match_failure)))))),
+  accum(instantiate_poly_decl_if_true(not(false), generalise_decl(match(vector1(alloc(1)), prefer_over(bind(id('v1')),
+    abs(throw(cl_match_failure)))))),
+  accum(seq(print(apply(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('vect_item')))),
+    instantiate_if_poly(follow_if_fwd(bound_value(id('v1'))))),
+    apply(instantiate_if_poly(follow_if_fwd(bound_value(id('vect_length')))),
+      instantiate_if_poly(follow_if_fwd(bound_value(id('v0'))))))),
+  map_empty),
+  map_empty))))

@@ -1,0 +1,9 @@
+exception E1 and E2 ;;
+(* Exception E1 defined.
+   Exception E2 defined. *)
+
+type 'a r = {f : int ; g : char ; h : 'a ; i : int} ;;
+(* Type r defined. *)
+
+{f=1; g=raise E1; h=raise E2; i=3} ;;
+(* Uncaught exception: E2 *)

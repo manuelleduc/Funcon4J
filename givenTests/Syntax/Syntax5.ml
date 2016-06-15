@@ -1,0 +1,11 @@
+type r = { x : int ; y : int ; z : int } ;;
+(* Type r defined. *)
+
+let f1 = function { x = a ; } -> a ;;
+(* f1 : r -> int = <fun> *)
+
+let f2 = function { y = b ; z = c ; } -> (b,c) ;;
+(* f2 : r -> int * int = <fun> *)
+
+let f3 = function { x = 1 ; y = 2 ; z = 3 ; } -> "okay" ;;
+(* f3 : r -> string = <fun> *)

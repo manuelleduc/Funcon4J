@@ -1,0 +1,12 @@
+scope(accum(cl_base,
+cl_library),
+  accum(generalise_decl(bind_value(id('square'),
+    curry_N(succ(zero),prefer_over(close(patt_abs(tuple_prefix_patt(bind(id('x')), only(tuple_empty)),
+      apply(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('prefix *.')))),
+        instantiate_if_poly(follow_if_fwd(bound_value(id('x'))))),
+        instantiate_if_poly(follow_if_fwd(bound_value(id('x'))))))),
+      abs(throw(cl_match_failure)))))),
+  accum(seq(print(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('square')))),
+    2.5)),
+  map_empty),
+  map_empty)))

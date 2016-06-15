@@ -1,0 +1,11 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(tuple_prefix(apply(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('prefix +')))),
+    1),
+    2),
+    tuple_prefix(apply(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('prefix +')))),
+      3),
+      4),
+      tuple_empty))),
+  map_empty),
+  map_empty))

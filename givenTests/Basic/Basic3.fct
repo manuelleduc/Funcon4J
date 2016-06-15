@@ -1,0 +1,6 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(typed(char('?'),
+    bound_type(nameid('type', id('char'))))),
+  map_empty),
+  map_empty))

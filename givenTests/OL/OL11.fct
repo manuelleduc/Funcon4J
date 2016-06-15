@@ -1,0 +1,11 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print("Hello world"),
+  map_empty),
+  accum(instantiate_poly_decl_if_true(not(and(true, and(true, and(true, and(true, true))))), generalise_decl(match(typed(list_prefix("is", list_prefix("a", list_prefix("tale", list_prefix("told", list_prefix("etc.", list_empty))))),
+    instantiate_type(bound_type(nameid('type', id('list'))), list1(bound_type(nameid('type', id('string')))))), prefer_over(bind(id('l')),
+    abs(throw(cl_match_failure)))))),
+  accum(seq(print(typed(list_prefix("Life", instantiate_if_poly(follow_if_fwd(bound_value(id('l'))))),
+    instantiate_type(bound_type(nameid('type', id('list'))), list1(bound_type(nameid('type', id('string'))))))),
+  map_empty),
+  map_empty))))

@@ -1,0 +1,13 @@
+type 'a box = Box of 'a ;;
+(* Type box defined. *)
+
+let b = Box [] ;;
+(* b : 'a list box = Box [] *)
+
+let x = match b with
+          Box l -> 3 :: l ;;
+(* x : int list = [3] *)
+
+let y = match b with
+          Box l -> true :: l ;;
+(* y : bool list = [true] *)

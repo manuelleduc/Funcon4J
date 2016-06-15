@@ -1,0 +1,11 @@
+scope(accum(cl_base,
+cl_library),
+  accum(scope_nominal_coercion(variants(map1('X', tuple_type_empty)), bound_type(nameid('builtin', id('exn'))),
+    patt_abs(bind(meta('nom_tag')),
+      map_union(bind_value(id('X'),
+        nomval(bound_value(meta('nom_tag')), variant('X', tuple_empty))), bind_value(nameid('variant_selector', id('X')),
+        close(abs(nomval_select(bound_value(meta('nom_tag')), given))))))),
+  accum(instantiate_poly_decl_if_true(not(false), generalise_decl(match(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('raise')))),
+    instantiate_if_poly(bound_value(id('X')))), prefer_over(bind(id('x')),
+    abs(throw(cl_match_failure)))))),
+  map_empty)))

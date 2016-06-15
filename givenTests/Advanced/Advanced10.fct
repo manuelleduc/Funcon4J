@@ -1,0 +1,9 @@
+scope(accum(cl_base,
+cl_library),
+  accum(generalise_decl(recursive_typed(map1(id('f'), depends(tuple_type2(bound_type(nameid('type', id('string'))), bound_type(nameid('type', id('int')))), bound_type(nameid('type', id('int'))))),
+    match(prefer_over(close(patt_abs(any,
+      7)),
+      abs(throw(cl_match_failure))), prefer_over(patt_at_type(bind(id('f')),
+      depends(tuple_type2(bound_type(nameid('type', id('string'))), bound_type(nameid('type', id('int')))), bound_type(nameid('type', id('int'))))),
+      abs(throw(cl_match_failure)))))),
+  map_empty))

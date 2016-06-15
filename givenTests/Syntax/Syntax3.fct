@@ -1,0 +1,12 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(vector1(alloc(1))),
+  map_empty),
+  accum(seq(print(vector_append(vector1(alloc(1)),
+    vector1(alloc(2)))),
+  map_empty),
+  accum(seq(print(vector_append(vector1(alloc(1)),
+    vector_append(vector1(alloc(2)),
+      vector1(alloc(3))))),
+  map_empty),
+  map_empty))))

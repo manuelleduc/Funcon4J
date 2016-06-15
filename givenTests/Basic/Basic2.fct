@@ -1,0 +1,7 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(not(true)),
+  map_empty),
+  accum(seq(print(not(false)),
+  map_empty),
+  map_empty)))

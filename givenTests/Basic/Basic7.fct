@@ -1,0 +1,10 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(if_true(apply(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('prefix <')))),
+    5),
+    3),
+    apply(instantiate_if_poly(follow_if_fwd(bound_value(id('print_string')))),
+      "bad"),
+    null)),
+  map_empty),
+  map_empty))

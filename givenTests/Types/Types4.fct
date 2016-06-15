@@ -1,0 +1,9 @@
+scope(accum(cl_base,
+cl_library),
+  accum(accum(map_empty,
+  accum(typedef(nameid('type', id('integer')), bound_type(nameid('type', id('int')))),
+  map_empty)),
+  accum(seq(print(typed(3,
+    bound_type(nameid('type', id('integer'))))),
+  map_empty),
+  map_empty)))

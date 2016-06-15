@@ -1,0 +1,8 @@
+type 'a box = Box of 'a ;; 
+(* Type box defined. *)
+
+Box (1+2) ;;
+(* - : int box = Box 3 *)
+
+Box (1+2, 3+4, 5+6) ;;
+(* - : (int * int * int) box = Box (3, 7, 11) *)

@@ -139,13 +139,13 @@ public class CamlLight {
         //interpret("let rec foldr = fun f u -> function" +
         //        "    []      -> u" +
         //        "  | [x :: xs] -> (f x (foldr f u xs));; foldr ");
-        //runAll("givenExamples/Advanced");
-        //runAll("givenExamples/Basic");
-        //runAll("givenExamples/Equality"); // structural equality on variables fails???
-        //runAll("givenExamples/MuRecTypes");
-        //runAllButExclude("givenExamples/OL", Arrays.asList("OL12.ml", "OL17.ml"));
-        run("givenExamples/OL/OL23.ml");
-        //runAll("givenExamples/PM");
+        //runAll("givenTests/Advanced");
+        //runAll("givenTests/Basic");
+        //runAll("givenTests/Equality"); // structural equality on variables fails???
+        //runAll("givenTests/MuRecTypes");
+        //runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml"));
+        run("givenTests/OL/OL23.ml");
+        //runAll("givenTests/PM");
         //interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");
         //interpret("let outer f = fun x y -> (f x);; outer (fun a -> a + 1) 5 8;;)");
         //run("examples/fib.cl");

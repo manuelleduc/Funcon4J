@@ -1,0 +1,11 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(apply(prefer_over(prefer_over(close(patt_abs(patt_non_binding(prefer_over(only(list_empty),
+    list_prefix_patt(only(0), only(list_empty)))),
+    "good")),
+    close(patt_abs(list_prefix_patt(only(1), only(list_empty)),
+      "bad"))),
+    abs(throw(cl_match_failure))),
+    list_prefix(0, list_empty))),
+  map_empty),
+  map_empty))

@@ -1,0 +1,9 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(scope(instantiate_poly_decl_if_true(not(true), generalise_decl(match(list_empty, prefer_over(bind(id('e')),
+    abs(throw(cl_match_failure)))))),
+    tuple_prefix(list_prefix(true, instantiate_if_poly(follow_if_fwd(bound_value(id('e'))))),
+      tuple_prefix(list_prefix(7, instantiate_if_poly(follow_if_fwd(bound_value(id('e'))))),
+        tuple_empty)))),
+  map_empty),
+  map_empty))

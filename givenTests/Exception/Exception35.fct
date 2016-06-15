@@ -1,0 +1,13 @@
+scope(accum(cl_base,
+cl_library),
+  accum(scope_nominal_coercion(variants(map1('EEE', tuple_type_empty)), bound_type(nameid('builtin', id('exn'))),
+    patt_abs(bind(meta('nom_tag')),
+      map_union(bind_value(id('EEE'),
+        nomval(bound_value(meta('nom_tag')), variant('EEE', tuple_empty))), bind_value(nameid('variant_selector', id('EEE')),
+        close(abs(nomval_select(bound_value(meta('nom_tag')), given))))))),
+  accum(instantiate_poly_decl_if_true(not(true), generalise_decl(match(prefer_over(close(patt_abs(any,
+    apply(instantiate_if_poly(follow_if_fwd(bound_value(id('raise')))),
+      instantiate_if_poly(bound_value(id('EEE')))))),
+    abs(throw(cl_match_failure))), prefer_over(bind(id('f')),
+    abs(throw(cl_match_failure)))))),
+  map_empty)))

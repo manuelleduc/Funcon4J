@@ -1,0 +1,10 @@
+scope(accum(cl_base,
+cl_library),
+  accum(generalise_decl(recursive_typed(map1(id('f'), depends(bound_type(nameid('type', id('bool'))), bound_type(nameid('type', id('bool'))))),
+    match(prefer_over(close(patt_abs(bind(id('b')),
+      not(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('f')))),
+        instantiate_if_poly(follow_if_fwd(bound_value(id('b')))))))),
+      abs(throw(cl_match_failure))), prefer_over(patt_at_type(bind(id('f')),
+      depends(bound_type(nameid('type', id('bool'))), bound_type(nameid('type', id('bool'))))),
+      abs(throw(cl_match_failure)))))),
+  map_empty))

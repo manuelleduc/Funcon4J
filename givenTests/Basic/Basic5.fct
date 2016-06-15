@@ -1,0 +1,12 @@
+scope(accum(cl_base,
+cl_library),
+  accum(instantiate_poly_decl_if_true(not(true), generalise_decl(match(prefer_over(close(patt_abs(bind(id('x')),
+    apply(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('prefix +')))),
+      instantiate_if_poly(follow_if_fwd(bound_value(id('x'))))),
+      instantiate_if_poly(follow_if_fwd(bound_value(id('x'))))))),
+    abs(throw(cl_match_failure))), prefer_over(bind(id('double')),
+    abs(throw(cl_match_failure)))))),
+  accum(seq(print(apply(instantiate_if_poly(follow_if_fwd(bound_value(id('double')))),
+    7)),
+  map_empty),
+  map_empty)))

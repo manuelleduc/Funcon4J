@@ -1,0 +1,10 @@
+scope(accum(cl_base,
+cl_library),
+  accum(seq(print(apply(prefer_over(prefer_over(close(patt_abs(only(2),
+    2)),
+    close(patt_abs(only(3),
+      3))),
+    abs(throw(cl_match_failure))),
+    1)),
+  map_empty),
+  map_empty))
