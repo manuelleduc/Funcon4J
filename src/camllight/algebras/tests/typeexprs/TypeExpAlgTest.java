@@ -1,10 +1,7 @@
 package camllight.algebras.tests.typeexprs;
 
-import camllight.CamlLight;
 import camllight.algebras.tests.TestStub;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class TypeExpAlgTest extends TestStub {
 

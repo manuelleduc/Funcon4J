@@ -2,7 +2,11 @@ package funcons.interpreter;
 
 import funcons.algebras.BoolAlg;
 import funcons.carriers.IEval;
+import funcons.entities.Forwards;
+import funcons.entities.Store;
 import funcons.values.Bool;
+import funcons.values.Environment;
+import funcons.values.Null;
 import funcons.values.properties.Comparable;
 
 public interface BoolFactory extends FloatCalcFactory, BoolAlg<IEval> {
@@ -15,7 +19,6 @@ public interface BoolFactory extends FloatCalcFactory, BoolAlg<IEval> {
     default IEval not(IEval bool) {
         return (env, forward, store, given) -> new Bool(!((Bool)bool.eval(env, forward, store, given)).boolValue());
     }
-
 
     @Override
     default IEval greater(IEval a, IEval b) {
@@ -54,7 +57,23 @@ public interface BoolFactory extends FloatCalcFactory, BoolAlg<IEval> {
         return (env, forward, store, given) -> {
             //System.out.println(x1.eval(env, forward, store, given));
             //System.out.println(x2.eval(env, forward, store, given));
-            return new Bool(x1.eval(env, forward, store, given).equals(x2.eval(env, forward, store, given)));
+            return new Bool(
+                            x1.eval(env, forward, store, given).equals(
+                                    x2.eval(env, forward, store, given)));
+        };
+    }
+
+    @Override
+    default IEval physicalEqual(IEval e1, IEval e2) {
+        return (env, forward, store, given) -> {
+            System.out.println(e1.eval(env, forward, store, given) == e2.eval(env, forward, store, given));
+            System.out.println(e1.eval(env, forward, store, given));
+            System.out.println(e2.eval(env, forward, store, given));
+            return new Bool(
+                            e1.eval(env, forward, store, given)
+                            ==
+                            e2.eval(env, forward, store, given)
+            );
         };
     }
 }

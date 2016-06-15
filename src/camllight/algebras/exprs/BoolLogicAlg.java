@@ -42,12 +42,22 @@ public interface BoolLogicAlg<E> {
         return alg().smallerEqual(e1, e2);
     }
 
+    @Syntax("exp = exp '==' exp") @Level(1508)
+    default E physicalEqual(E e1, E e2) {
+        return alg().physicalEqual(e1, e2);
+    }
+
     @Syntax("exp = exp '=' exp") @Level(1508)
     default E equal(E e1, E e2) {
         return alg().equal(e1, e2);
     }
 
     @Syntax("exp = exp '!=' exp") @Level(1508)
+    default E notPhysicalEqual(E e1, E e2) {
+        return alg().not(alg().physicalEqual(e1, e2));
+    }
+
+    @Syntax("exp = exp '<>' exp") @Level(1508)
     default E notEqual(E e1, E e2) {
         return alg().not(alg().equal(e1, e2));
     }

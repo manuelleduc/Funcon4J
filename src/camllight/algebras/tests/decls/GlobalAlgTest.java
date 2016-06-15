@@ -1,10 +1,7 @@
 package camllight.algebras.tests.decls;
 
-import camllight.CamlLight;
 import camllight.algebras.tests.TestStub;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class GlobalAlgTest extends TestStub {
 

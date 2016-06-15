@@ -1,10 +1,7 @@
 package camllight.algebras.tests.exprs;
 
-import camllight.CamlLight;
 import camllight.algebras.tests.TestStub;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class BoolLogicAlgTest extends TestStub {
     @Test
@@ -84,8 +81,8 @@ public class BoolLogicAlgTest extends TestStub {
 
     @Test
     public void testNotEqual() throws Exception {
-        test("3 != 2;;", "true");
-        test("3 != 3;;", "false");
-        test("3 != 4;;", "true");
+        test("3 <> 2;;", "true");
+        test("3 <> 3;;", "false");
+        test("3 <> 4;;", "true");
     }
 }

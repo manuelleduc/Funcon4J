@@ -1,10 +1,7 @@
 package camllight.algebras.tests.exprs;
 
-import camllight.CamlLight;
 import camllight.algebras.tests.TestStub;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 public class TupleAlgTest extends TestStub {
 

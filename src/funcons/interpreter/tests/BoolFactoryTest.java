@@ -7,6 +7,7 @@ import funcons.entities.Store;
 import funcons.interpreter.BoolFactory;
 import funcons.values.Bool;
 import funcons.values.Environment;
+import funcons.values.Int;
 import funcons.values.Null;
 import org.junit.Before;
 import org.junit.Test;
@@ -100,5 +101,15 @@ public class BoolFactoryTest {
     public void testEqual() throws Exception {
         assertTrue(((Bool)alg.equal(alg.lit(3), alg.lit(3)).eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
         assertFalse(((Bool)alg.equal(alg.bool(true), alg.bool(false)).eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+    }
+
+    @Test
+    public void testPhysicalEqual() throws Exception {
+        Int i = new Int(0);
+        assertTrue(((Bool)alg.physicalEqual((e,f,s,g) -> i, (e,f,s,g) -> i)
+                .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+
+        assertFalse(((Bool)alg.physicalEqual(alg.lit(1), alg.lit(1))
+                .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
     }
 }

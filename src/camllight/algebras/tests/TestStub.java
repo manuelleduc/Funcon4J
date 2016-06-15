@@ -5,10 +5,10 @@ import funcons.values.signals.FunconException;
 import org.junit.After;
 import org.junit.Before;
 
-
-import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import static org.junit.Assert.assertEquals;
 
 public abstract class TestStub {
     protected ByteArrayOutputStream out;

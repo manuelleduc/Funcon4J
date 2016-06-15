@@ -20,6 +20,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class CamlLight {
 
@@ -56,11 +60,18 @@ public class CamlLight {
     }
 
     private static void runAll(String folderLoc) throws IOException, FunconException {
+        runAllButExclude(folderLoc, new ArrayList<>());
+    }
+
+    private static void runAllButExclude(String folderLoc, List<String> fileEndings) throws IOException, FunconException {
         File folder = new File(folderLoc);
         File[] files = folder.listFiles();
 
         for (File f : files) {
             if (f.isFile() && f.getName().endsWith(".ml")) {
+                if (fileEndings.stream().anyMatch(s -> f.getName().endsWith(s))) {
+                    continue;
+                }
                 run(f.getAbsolutePath());
             } else if (f.isDirectory()) {
                 runAll(f.getAbsolutePath());
@@ -94,8 +105,9 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException, IOException {
-        interpret("[ref 1,ref 2,ref 3] > [ref 1,ref 2,ref 2];;");
-        interpret("[|1 , 2 , 3|] > [|1, 2 , 2|];;");
+        //interpret("let x = ref 1;; let y = ref 1;; x == y;; x = y;;");
+        //interpret("[ref 1,ref 2,ref 3] > [ref 1,ref 2,ref 2];;");
+        //interpret("[|1 , 2 , 3|] > [|1, 2 , 2|];;");
         //interpret("\"abc\" > \"abc\";;");
         //interpret("{mutable a=1, b=2, c = 4,d=2,e=10} > {a=2, b=3};;");
         //interpret("1 > (ref 0);;");
@@ -116,12 +128,12 @@ public class CamlLight {
         //interpret("let rec foldr = fun f u -> function" +
         //        "    []      -> u" +
         //        "  | [x :: xs] -> (f x (foldr f u xs));; foldr ");
-        //runAll("givenExamples/basic");
-        //runAll("givenExamples/advanced");
-        //runAll("givenExamples/OL");
         //runAll("givenExamples/Advanced");
         //runAll("givenExamples/Basic");
-        //run("givenExamples/Advanced/Advanced7.ml");
+        //runAll("givenExamples/Equality"); // structural equality on variables fails???
+        //runAll("givenExamples/MuRecTypes");
+        runAllButExclude("givenExamples/OL", Collections.singletonList("OL12.ml"));
+        //runAll("givenExamples/PM");
         //interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");
         //interpret("let outer f = fun x y -> (f x);; outer (fun a -> a + 1) 5 8;;)");
         //run("examples/fib.cl");

@@ -5,7 +5,6 @@ import camllight.algebras.tests.TestStub;
 import funcons.values.cl.CLMatchFailureException;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ControlAlgTest extends TestStub {

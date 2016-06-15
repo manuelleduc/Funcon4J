@@ -1,6 +1,5 @@
 package camllight.algebras.tests.exprs;
 
-import camllight.CamlLight;
 import camllight.algebras.tests.TestStub;
 import funcons.values.Null;
 import funcons.values.cl.CLVariant;

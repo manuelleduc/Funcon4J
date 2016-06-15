@@ -1,10 +1,7 @@
 package camllight.algebras.tests.patts;
 
-import camllight.CamlLight;
 import camllight.algebras.tests.TestStub;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class RecordPattAlgTest extends TestStub {
 

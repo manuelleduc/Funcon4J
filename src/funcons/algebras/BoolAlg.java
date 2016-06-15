@@ -9,4 +9,5 @@ public interface BoolAlg<E> extends FloatCalcAlg<E> {
     E greaterEqual(E a, E b);
     E smallerEqual(E a, E b);
     E equal(E x1, E x2);
+    E physicalEqual(E e1, E e2);
 }

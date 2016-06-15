@@ -27,7 +27,7 @@ public class Variable implements Value, Comparable {
 
     @Override
     public String toString() {
-        return "Variable<" + value() + ">";
+        return "Variable@" + loc + "<" + value() + ">";
     }
 
     @Override
