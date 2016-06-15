@@ -60,6 +60,8 @@ public class CamlLight {
     private static void run(String fileLoc) throws IOException, FunconException {
         String fileContent = new String(Files.readAllBytes(Paths.get(fileLoc)));
         System.out.println("== Running: " + fileLoc + " ==");
+//        camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.RecordFactory() {};
+//        eval(fileContent, new Tracer<>(myalg, new Class<?>[] {camllight.algebras.AllAlg.class}).make());
         interpret(fileContent);
     }
 
@@ -142,7 +144,7 @@ public class CamlLight {
         //runAll("givenExamples/Equality"); // structural equality on variables fails???
         //runAll("givenExamples/MuRecTypes");
         //runAllButExclude("givenExamples/OL", Arrays.asList("OL12.ml", "OL17.ml"));
-        run("givenExamples/OL/OL2.ml");
+        run("givenExamples/OL/OL23.ml");
         //runAll("givenExamples/PM");
         //interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");
         //interpret("let outer f = fun x y -> (f x);; outer (fun a -> a + 1) 5 8;;)");
