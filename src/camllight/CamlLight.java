@@ -124,7 +124,8 @@ public class CamlLight {
         //runAll("givenTests/PM"); // curried fun with multiple patterns, should they be supported?
         //runAllButExclude("givenTests/Shadowing", Arrays.asList("Shadowing3.ml", "Shadowing6.ml")); // shadowing 3 & 6 -> patternmatching on type?
         //runAll("givenTests/Syntax"); // missing the syntactic sugar, fix?
-        runAll("givenTests/Types");
+        //runAll("givenTests/Types");
+        runAll("givenTests/Valres");
     }
 
     public static void main(String[] args) throws FunconException, IOException {
