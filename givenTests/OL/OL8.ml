@@ -7,6 +7,9 @@ let sign_int n = (if n >= 0 then Positive else Negative : sign);;
 sign_int 14;;
 (* - : sign = Positive *)
 
+let float_of_int x = x;;
+let int_of_float x = x;;
+
 type number = Int of int | Float of float | Error;;
 (* Type number defined *)
 

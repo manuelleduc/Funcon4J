@@ -11,4 +11,3 @@ let add_vect v1 v2 =
 
 add_vect [| 1.0, 2.0 |] [| 3.0, 4.0 |];;
 (* - : float vect = [|4.0; 6.0|] *)
-

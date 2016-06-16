@@ -41,7 +41,7 @@ public class Tracer<A> implements InvocationHandler{
                     Forwards forwards = (Forwards) as[1];
                     Store store = (Store)as[2];
                     Value given = (Value)as[3];
-                    print("Given to " + method.getName() + ": " + given);
+                    print("Given to " + method.getName() + ": " + given + " env: " + env);
                     depth++;
                     Value v = myEval.eval(env, forwards, store, given);
                     depth--;
