@@ -143,8 +143,8 @@ public class CamlLight {
         //runAll("givenTests/Basic");
         //runAll("givenTests/Equality"); // structural equality on variables fails???
         //runAll("givenTests/MuRecTypes");
-        runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml", "OL25.ml")); // precedence issues in OL5.ml
-        //interpret("");
+        //runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml", "OL25.ml")); // precedence issues in OL5.ml
+        runAll("givenTests/PM"); // curried fun with multiple patterns, should they be supported?
         //run("givenTests/OL/OL5.ml");
         //runAll("givenTests/PM");
         //interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");

@@ -1,5 +1,7 @@
+exception Match_failure;;
+
 type ty = A | B ;;
 (* Type ty defined. *)
 
-let A = B ;;
+try (A = B) with Match_failure -> 0;;
 (* Match_failure *)

@@ -28,7 +28,7 @@ public class CLLexer extends Lexer {
 		T__20=52, T__19=53, T__18=54, T__17=55, T__16=56, T__15=57, T__14=58, 
 		T__13=59, T__12=60, T__11=61, T__10=62, T__9=63, T__8=64, T__7=65, T__6=66, 
 		T__5=67, T__4=68, T__3=69, T__2=70, T__1=71, T__0=72, CHARTOKEN=73, NULLTOKEN=74, 
-		EMPTYARRAYTOKEN=75, EMPTYLISTTOKEN=76, WILDCARDTOKEN=77, BOOLTOKEN=78, 
+		EMPTYLISTTOKEN=75, EMPTYARRAYTOKEN=76, WILDCARDTOKEN=77, BOOLTOKEN=78, 
 		CARRIAGERETURN=79, FORMFEED=80, WS=81, COMMENT=82, INTTOKEN=83, STRINGTOKEN=84, 
 		FLOATTOKEN=85, LINEFEED=86, HORIZONTALTAB=87, IDTOKEN=88, CONSTRTOKEN=89;
 	public static String[] modeNames = {
@@ -45,7 +45,7 @@ public class CLLexer extends Lexer {
 		"'[|'", "'&'", "'print'", "'''", "'*'", "'.'", "'exception'", "'->'", 
 		"'to'", "'mutable'", "':'", "'['", "'=='", "'|'", "'with'", "'>'", "'+.'", 
 		"'or'", "'-.'", "'!'", "'else'", "'begin'", "'in'", "'end'", "')'", "'and'", 
-		"'not'", "'-'", "CHARTOKEN", "NULLTOKEN", "EMPTYARRAYTOKEN", "EMPTYLISTTOKEN", 
+		"'not'", "'-'", "CHARTOKEN", "NULLTOKEN", "EMPTYLISTTOKEN", "EMPTYARRAYTOKEN", 
 		"'_'", "BOOLTOKEN", "CARRIAGERETURN", "FORMFEED", "WS", "COMMENT", "INTTOKEN", 
 		"STRINGTOKEN", "FLOATTOKEN", "LINEFEED", "HORIZONTALTAB", "IDTOKEN", "CONSTRTOKEN"
 	};
@@ -59,7 +59,7 @@ public class CLLexer extends Lexer {
 		"T__23", "T__22", "T__21", "T__20", "T__19", "T__18", "T__17", "T__16", 
 		"T__15", "T__14", "T__13", "T__12", "T__11", "T__10", "T__9", "T__8", 
 		"T__7", "T__6", "T__5", "T__4", "T__3", "T__2", "T__1", "T__0", "CHARTOKEN", 
-		"NULLTOKEN", "EMPTYARRAYTOKEN", "EMPTYLISTTOKEN", "WILDCARDTOKEN", "BOOLTOKEN", 
+		"NULLTOKEN", "EMPTYLISTTOKEN", "EMPTYARRAYTOKEN", "WILDCARDTOKEN", "BOOLTOKEN", 
 		"CARRIAGERETURN", "FORMFEED", "WS", "COMMENT", "INTTOKEN", "STRINGTOKEN", 
 		"FLOATTOKEN", "LINEFEED", "HORIZONTALTAB", "IDTOKEN", "CONSTRTOKEN"
 	};
@@ -115,8 +115,8 @@ public class CLLexer extends Lexer {
 		">\3>\3>\3?\3?\3?\3@\3@\3@\3A\3A\3B\3B\3B\3B\3B\3C\3C\3C\3C\3C\3C\3D\3"+
 		"D\3D\3E\3E\3E\3E\3F\3F\3G\3G\3G\3G\3H\3H\3H\3H\3I\3I\3J\3J\3J\3J\3J\3"+
 		"J\3J\5J\u01b3\nJ\7J\u01b5\nJ\fJ\16J\u01b8\13J\3J\3J\3K\3K\7K\u01be\nK"+
-		"\fK\16K\u01c1\13K\3K\3K\3L\3L\3L\3L\7L\u01c9\nL\fL\16L\u01cc\13L\3L\3"+
-		"L\3L\3M\3M\7M\u01d3\nM\fM\16M\u01d6\13M\3M\3M\3N\3N\3O\3O\3O\3O\3O\3O"+
+		"\fK\16K\u01c1\13K\3K\3K\3L\3L\7L\u01c7\nL\fL\16L\u01ca\13L\3L\3L\3M\3"+
+		"M\3M\3M\7M\u01d2\nM\fM\16M\u01d5\13M\3M\3M\3M\3N\3N\3O\3O\3O\3O\3O\3O"+
 		"\3O\3O\3O\5O\u01e5\nO\3P\6P\u01e8\nP\rP\16P\u01e9\3P\3P\3Q\6Q\u01ef\n"+
 		"Q\rQ\16Q\u01f0\3Q\3Q\3R\6R\u01f6\nR\rR\16R\u01f7\3R\3R\3S\3S\3S\3S\7S"+
 		"\u0200\nS\fS\16S\u0203\13S\3S\3S\3S\3S\3S\3T\6T\u020b\nT\rT\16T\u020c"+
@@ -165,7 +165,7 @@ public class CLLexer extends Lexer {
 		"\u0188\3\2\2\2\u0081\u018b\3\2\2\2\u0083\u018d\3\2\2\2\u0085\u0192\3\2"+
 		"\2\2\u0087\u0198\3\2\2\2\u0089\u019b\3\2\2\2\u008b\u019f\3\2\2\2\u008d"+
 		"\u01a1\3\2\2\2\u008f\u01a5\3\2\2\2\u0091\u01a9\3\2\2\2\u0093\u01ab\3\2"+
-		"\2\2\u0095\u01bb\3\2\2\2\u0097\u01c4\3\2\2\2\u0099\u01d0\3\2\2\2\u009b"+
+		"\2\2\u0095\u01bb\3\2\2\2\u0097\u01c4\3\2\2\2\u0099\u01cd\3\2\2\2\u009b"+
 		"\u01d9\3\2\2\2\u009d\u01e4\3\2\2\2\u009f\u01e7\3\2\2\2\u00a1\u01ee\3\2"+
 		"\2\2\u00a3\u01f5\3\2\2\2\u00a5\u01fb\3\2\2\2\u00a7\u020a\3\2\2\2\u00a9"+
 		"\u020e\3\2\2\2\u00ab\u021f\3\2\2\2\u00ad\u022b\3\2\2\2\u00af\u0232\3\2"+
@@ -240,13 +240,13 @@ public class CLLexer extends Lexer {
 		"\u01b6\3\2\2\2\u01b9\u01ba\7b\2\2\u01ba\u0094\3\2\2\2\u01bb\u01bf\7*\2"+
 		"\2\u01bc\u01be\t\5\2\2\u01bd\u01bc\3\2\2\2\u01be\u01c1\3\2\2\2\u01bf\u01bd"+
 		"\3\2\2\2\u01bf\u01c0\3\2\2\2\u01c0\u01c2\3\2\2\2\u01c1\u01bf\3\2\2\2\u01c2"+
-		"\u01c3\7+\2\2\u01c3\u0096\3\2\2\2\u01c4\u01c5\7]\2\2\u01c5\u01c6\7~\2"+
-		"\2\u01c6\u01ca\3\2\2\2\u01c7\u01c9\t\5\2\2\u01c8\u01c7\3\2\2\2\u01c9\u01cc"+
-		"\3\2\2\2\u01ca\u01c8\3\2\2\2\u01ca\u01cb\3\2\2\2\u01cb\u01cd\3\2\2\2\u01cc"+
-		"\u01ca\3\2\2\2\u01cd\u01ce\7~\2\2\u01ce\u01cf\7_\2\2\u01cf\u0098\3\2\2"+
-		"\2\u01d0\u01d4\7]\2\2\u01d1\u01d3\t\5\2\2\u01d2\u01d1\3\2\2\2\u01d3\u01d6"+
-		"\3\2\2\2\u01d4\u01d2\3\2\2\2\u01d4\u01d5\3\2\2\2\u01d5\u01d7\3\2\2\2\u01d6"+
-		"\u01d4\3\2\2\2\u01d7\u01d8\7_\2\2\u01d8\u009a\3\2\2\2\u01d9\u01da\7a\2"+
+		"\u01c3\7+\2\2\u01c3\u0096\3\2\2\2\u01c4\u01c8\7]\2\2\u01c5\u01c7\t\5\2"+
+		"\2\u01c6\u01c5\3\2\2\2\u01c7\u01ca\3\2\2\2\u01c8\u01c6\3\2\2\2\u01c8\u01c9"+
+		"\3\2\2\2\u01c9\u01cb\3\2\2\2\u01ca\u01c8\3\2\2\2\u01cb\u01cc\7_\2\2\u01cc"+
+		"\u0098\3\2\2\2\u01cd\u01ce\7]\2\2\u01ce\u01cf\7~\2\2\u01cf\u01d3\3\2\2"+
+		"\2\u01d0\u01d2\t\5\2\2\u01d1\u01d0\3\2\2\2\u01d2\u01d5\3\2\2\2\u01d3\u01d1"+
+		"\3\2\2\2\u01d3\u01d4\3\2\2\2\u01d4\u01d6\3\2\2\2\u01d5\u01d3\3\2\2\2\u01d6"+
+		"\u01d7\7~\2\2\u01d7\u01d8\7_\2\2\u01d8\u009a\3\2\2\2\u01d9\u01da\7a\2"+
 		"\2\u01da\u009c\3\2\2\2\u01db\u01dc\7h\2\2\u01dc\u01dd\7c\2\2\u01dd\u01de"+
 		"\7n\2\2\u01de\u01df\7u\2\2\u01df\u01e5\7g\2\2\u01e0\u01e1\7v\2\2\u01e1"+
 		"\u01e2\7t\2\2\u01e2\u01e3\7w\2\2\u01e3\u01e5\7g\2\2\u01e4\u01db\3\2\2"+
@@ -282,7 +282,7 @@ public class CLLexer extends Lexer {
 		"\2\2\u023e\u023c\3\2\2\2\u023f\u0243\t\16\2\2\u0240\u0242\t\r\2\2\u0241"+
 		"\u0240\3\2\2\2\u0242\u0245\3\2\2\2\u0243\u0241\3\2\2\2\u0243\u0244\3\2"+
 		"\2\2\u0244\u00b4\3\2\2\2\u0245\u0243\3\2\2\2\30\2\u01b2\u01b4\u01b6\u01bf"+
-		"\u01ca\u01d4\u01e4\u01e9\u01f0\u01f7\u0201\u020c\u0215\u0217\u0219\u0221"+
+		"\u01c8\u01d3\u01e4\u01e9\u01f0\u01f7\u0201\u020c\u0215\u0217\u0219\u0221"+
 		"\u0227\u022d\u0234\u023c\u0243\3\b\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

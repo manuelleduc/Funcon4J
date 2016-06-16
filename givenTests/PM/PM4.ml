@@ -1,13 +1,13 @@
 type 'a option = None | Some of 'a ;;
 
-match [1;2;3] with
-    x::y -> x
+match [1,2,3] with
+    [x::y] -> x
   | _ -> 2
 ;;
 (* - : int = 1 *)
 
-match [1;2;3] with
-    x::y -> y
+match [1,2,3] with
+    [x::y] -> y
   | _ -> [2]
 ;;
 (* - : int list = [2;3] *)
@@ -30,13 +30,13 @@ match () with
 (* - : int = 1 *)
 
 match [] with
-    x::y -> 1
+    [x::y] -> 1
   | [] -> 2
 ;;
 (* - : int = 2 *)
 
 match [1] with
-    x::y -> 1
+    [x::y] -> 1
   | [] -> 2
 ;;
 (* - : int = 1 *)
