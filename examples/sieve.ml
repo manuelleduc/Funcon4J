@@ -11,7 +11,7 @@ let rec interval min max =
     else min :: (interval (succ min) max);;
 
 let remove_multiples_of n =
-    filter (fun m -> m mod n != 0);;
+    filter (fun m -> m mod n <> 0);;
 
 let sieve max =
     let rec filter_again = function

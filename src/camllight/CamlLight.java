@@ -110,7 +110,27 @@ public class CamlLight {
         return env;
     }
 
+    private static void runExamples() throws IOException, FunconException {
+        run("examples/fib.ml");
+        run("examples/sieve.ml");
+    }
+
+    private static void runGivenTests() throws IOException, FunconException {
+        //runAll("givenTests/Advanced");
+        //runAll("givenTests/Basic");
+        //runAll("givenTests/Equality"); // structural equality on variables fails???
+        //runAll("givenTests/MuRecTypes");
+        //runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml", "OL25.ml")); // precedence issues in OL5.ml
+        //runAll("givenTests/PM"); // curried fun with multiple patterns, should they be supported?
+        //runAllButExclude("givenTests/Shadowing", Arrays.asList("Shadowing3.ml", "Shadowing6.ml")); // shadowing 3 & 6 -> patternmatching on type?
+        //runAll("givenTests/Syntax"); // missing the syntactic sugar, fix?
+        runAll("givenTests/Types");
+    }
+
     public static void main(String[] args) throws FunconException, IOException {
+        //runExamples();
+        runGivenTests();
+
         /*camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.RecordFactory() {};
         Value v = CamlLight.eval(
                 "let add x y = x + y;; add 1 2;;",
@@ -139,18 +159,8 @@ public class CamlLight {
         //interpret("let rec foldr = fun f u -> function" +
         //        "    []      -> u" +
         //        "  | [x :: xs] -> (f x (foldr f u xs));; foldr ");
-        //runAll("givenTests/Advanced");
-        //runAll("givenTests/Basic");
-        //runAll("givenTests/Equality"); // structural equality on variables fails???
-        //runAll("givenTests/MuRecTypes");
-        //runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml", "OL25.ml")); // precedence issues in OL5.ml
-        runAll("givenTests/PM"); // curried fun with multiple patterns, should they be supported?
-        //run("givenTests/OL/OL5.ml");
-        //runAll("givenTests/PM");
         //interpret("let curry f = fun x y -> (f (x,y));; curry (fun (a,b) -> a + b) 1 2;;");
         //interpret("let outer f = fun x y -> (f x);; outer (fun a -> a + 1) 5 8;;)");
-        //run("examples/fib.cl");
-        //run("examples/sieve.cl");
         //interpret("type foo = A of int | B;;\nlet f = function A _ -> true | B -> false;;\nf B;;");
         /*interpret("fun x -> if x mod 2 = 0 then true else false 6;;");
         interpret(
