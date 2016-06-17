@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 public class CamlLight {
 
@@ -63,6 +64,17 @@ public class CamlLight {
 //        camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.RecordFactory() {};
 //        eval(fileContent, new Tracer<>(myalg, new Class<?>[] {camllight.algebras.AllAlg.class}).make());
         interpret(fileContent);
+    }
+
+    private static void runPerformance(String fileLoc) throws IOException, FunconException {
+        long start = System.currentTimeMillis();
+        String src = new String(Files.readAllBytes(Paths.get(fileLoc)));
+        Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
+        IEval eval = builder.build((camllight.algebras.AllAlg) () -> new funcons.interpreter.RecordFactory() {});
+        Environment env = importStandardLibrary(new Environment());
+        eval.eval(env, new Forwards(), new Store(), new Null());
+        long end = System.currentTimeMillis();
+        System.out.println("time taken: " + (end - start));
     }
 
     private static void runAll(String folderLoc) throws IOException, FunconException {
@@ -116,21 +128,30 @@ public class CamlLight {
     }
 
     private static void runGivenTests() throws IOException, FunconException {
-        //runAll("givenTests/Advanced");
-        //runAll("givenTests/Basic");
-        //runAll("givenTests/Equality"); // structural equality on variables fails???
-        //runAll("givenTests/MuRecTypes");
-        //runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml", "OL25.ml")); // precedence issues in OL5.ml
-        //runAll("givenTests/PM"); // curried fun with multiple patterns, should they be supported?
-        //runAllButExclude("givenTests/Shadowing", Arrays.asList("Shadowing3.ml", "Shadowing6.ml")); // shadowing 3 & 6 -> patternmatching on type?
+        runAll("givenTests/Advanced");
+        runAll("givenTests/Basic");
+        runAll("givenTests/Equality"); // structural equality on variables fails???
+        runAll("givenTests/MuRecTypes");
+        runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml", "OL25.ml")); // precedence issues in OL5.ml
+        runAll("givenTests/PM"); // curried fun with multiple patterns, should they be supported?
+        runAllButExclude("givenTests/Shadowing", Arrays.asList("Shadowing3.ml", "Shadowing6.ml")); // shadowing 3 & 6 -> patternmatching on type?
         //runAll("givenTests/Syntax"); // missing the syntactic sugar, fix?
-        //runAll("givenTests/Types");
+        runAll("givenTests/Types");
         runAll("givenTests/Valres");
+    }
+
+    private static void runPerformanceTests() throws IOException, FunconException {
+        runPerformance("performanceTests/mandelbrot.ml"); // FunCaml: 387.1s, Ocaml: 75.5s, Py: 170.2s
+        runPerformance("performanceTests/fib.ml"); // FunCaml: 237.8s, Ocaml: 8.1s
+        runPerformance("performanceTests/ack.ml"); // FunCaml: 126.s, Ocaml: 1.4s
+        runPerformance("performanceTests/harmonic.ml"); // FunCaml: 38.7s, Ocaml: 0.2s
+        runPerformance("performanceTests/tak.ml"); // FunCaml: 406.7s, Ocaml: 5.9s
     }
 
     public static void main(String[] args) throws FunconException, IOException {
         //runExamples();
-        runGivenTests();
+        //runGivenTests();
+        runPerformanceTests();
 
         /*camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.RecordFactory() {};
         Value v = CamlLight.eval(

@@ -7,12 +7,30 @@ public interface StandardLibrary<E> {
         return alg().abs(alg().alloc(alg().given()));
     }
 
+    default E print_intFun() {
+        return alg().abs(alg().print(alg().given()));
+    }
+
     default E print_floatFun() {
         return alg().abs(alg().print(alg().given()));
     }
 
     default E print_stringFun() {
         return alg().abs(alg().print(alg().given()));
+    }
+
+    default E print_newlineFun() {
+        return alg().abs(alg().print(alg().string("\n")));
+    }
+
+    // Placeholder
+    default E int_of_floatFun() {
+        return alg().abs(alg().given());
+    }
+
+    // Placeholder
+    default E float_of_intFun() {
+        return alg().abs(alg().given());
     }
 
     default E raiseFun() {
