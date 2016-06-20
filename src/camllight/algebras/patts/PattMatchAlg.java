@@ -1,9 +1,23 @@
 package camllight.algebras.patts;
 
+import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.functions.CurryAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.functions.PatternAlg;
+import funcons.algebras.values.IntCalcAlg;
+import funcons.algebras.values.TupleAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface PattMatchAlg<E> extends TuplePattAlg<E> {
+public interface PattMatchAlg
+        <E, A extends
+                TupleAlg<E> &
+                PatternAlg<E> &
+                FunctionAlg<E> &
+                ExceptionAlg<E> &
+                CurryAlg<E> &
+                IntCalcAlg<E>>
+        extends TuplePattAlg<E, A> {
     @Syntax("pattmatch = pattmatchsingle") @Level(0)
     default E pattMatch(E pm) {
         return pm;

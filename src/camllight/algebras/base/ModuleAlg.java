@@ -1,11 +1,13 @@
 package camllight.algebras.base;
 
+import funcons.algebras.commands.PrintAlg;
+import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.storage.BindAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface ModuleAlg<E> {
-    //funcons.algebras.RecordAlg<E> alg();
-    funcons.algebras.ModuleAlg<E> alg();
+public interface ModuleAlg<E, A extends BindAlg<E> & LogicControlAlg<E> & PrintAlg<E>> {
+    A alg();
 
     //|[ prog[: IMPL :] ]| ->
     //|[ scope(accum(cl_base,cl_library), decl_impl[: IMPL :]) ]|
@@ -33,20 +35,6 @@ public interface ModuleAlg<E> {
     default E declOrExpDecl(E decl) {
         return decl;
     }
-
-    /*
-    to-funcons:
-            |[ decl[: ~TDS :] ]| ->
-            |[ accum(decl_newtypes[: ~TDS :],
-                     accum(decl_type_abbrvs[: ~TDS :],
-                     decl_labels_and_variants[: ~TDS :])) ]|
-    to-funcons:
-            |[ decl[: ~ED :] ]| ->
-            |[ decl_exception[: ~ED :] ]|
-    to-funcons:
-            |[ decl[: ~D :] ]| ->
-            |[ map_empty ]| // directives not yet specified
-    */
 
     @Syntax("ident = IDTOKEN") @Level(0)
     default E id(java.lang.String name) {

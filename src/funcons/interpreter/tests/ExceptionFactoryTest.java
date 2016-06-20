@@ -1,10 +1,10 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.ExceptionAlg;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.ExceptionFactory;
+import funcons.interpreter.controlflow.ExceptionFactory;
+import funcons.interpreter.values.BoolFactory;
 import funcons.values.Bool;
 import funcons.values.Environment;
 import funcons.values.Int;
@@ -18,14 +18,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ExceptionFactoryTest {
-
-    private ExceptionAlg<IEval> alg;
+    private interface Alg extends ExceptionFactory, BoolFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new ExceptionFactory() {};
+        alg = new Alg() {};
     }
-
 
     @Test
     public void testFail() throws Exception {
@@ -33,6 +32,12 @@ public class ExceptionFactoryTest {
             alg.fail().eval(new Environment(), new Forwards(), new Store(), new Null());
             assertTrue(false);
         } catch (FailureTrue ignored) {}
+    }
+
+    @Test
+    public void testWhenTrue() throws Exception {
+        Int i =(Int)alg.whenTrue(alg.bool(true), alg.lit(0)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        assertEquals(new Integer(0), i.intValue());
     }
 
     @Test

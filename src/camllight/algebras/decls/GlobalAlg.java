@@ -1,13 +1,37 @@
 package camllight.algebras.decls;
 
+import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.functions.CurryAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.functions.PatternAlg;
+import funcons.algebras.recursion.RecursiveAlg;
+import funcons.algebras.types.PolyTypeAlg;
+import funcons.algebras.types.TypeAlg;
+import funcons.algebras.values.*;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 import java.util.List;
 
-public interface GlobalAlg<E> extends BindAlg<E> {
+public interface GlobalAlg
+        <E, A extends
+                MapAlg<E> &
+                RecordAlg<E> &
+                TypeAlg<E> &
+                funcons.algebras.storage.BindAlg<E> &
+                NullAlg<E> &
+                FunctionAlg<E> &
+                TupleAlg<E> &
+                PolyTypeAlg<E> &
+                IntCalcAlg<E> &
+                RecursiveAlg<E> &
+                ExceptionAlg<E> &
+                PatternAlg<E> &
+                CurryAlg<E>>
+        extends BindAlg<E, A> {
+
     @Override
-    funcons.algebras.RecordAlg<E> alg();
+    A alg();
 
     /*@Syntax("decllabelsandvariants = ident '=' IDTOKEN 'of' type")
     default E declLabelsAndVariantsDecl(E id, java.lang.String idToken, E type) {

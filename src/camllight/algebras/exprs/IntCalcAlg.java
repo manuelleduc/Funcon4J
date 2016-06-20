@@ -3,8 +3,8 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface IntCalcAlg<E> {
-    funcons.algebras.IntCalcAlg<E> alg();
+public interface IntCalcAlg<E, A extends funcons.algebras.values.IntCalcAlg<E>> {
+    A alg();
 
     @Syntax("exp = '-' exp") @Level(1515)
     default E intUnarySub(E exp) {

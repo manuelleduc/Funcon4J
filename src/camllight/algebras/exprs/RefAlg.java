@@ -1,10 +1,11 @@
 package camllight.algebras.exprs;
 
+import funcons.algebras.storage.AssignAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface RefAlg<E> {
-    funcons.algebras.AssignAlg<E> alg();
+public interface RefAlg<E, A extends AssignAlg<E>> {
+    A alg();
 
     @Syntax("exp = '!' exp") @Level(1519)
     default E dereferenceExp(E exp) {

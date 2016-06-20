@@ -2,19 +2,36 @@ package camllight.algebras.decls;
 
 import camllight.algebras.patts.PattAlg;
 import camllight.algebras.patts.PattMatchAlg;
-import funcons.carriers.IEval;
-import funcons.entities.Forwards;
-import funcons.entities.Store;
-import funcons.values.Environment;
-import funcons.values.Null;
-import funcons.values.signals.FunconException;
+import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.functions.CurryAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.functions.PatternAlg;
+import funcons.algebras.recursion.RecursiveAlg;
+import funcons.algebras.types.PolyTypeAlg;
+import funcons.algebras.types.TypeAlg;
+import funcons.algebras.values.IntCalcAlg;
+import funcons.algebras.values.MapAlg;
+import funcons.algebras.values.TupleAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 import java.util.List;
 
-public interface BindAlg<E> extends PattAlg<E>, PattMatchAlg<E> {
-    funcons.algebras.RecursiveAlg<E> alg();
+public interface BindAlg
+        <E, A extends
+                funcons.algebras.storage.BindAlg<E> &
+                PolyTypeAlg<E> &
+                TupleAlg<E> &
+                IntCalcAlg<E> &
+                MapAlg<E> &
+                RecursiveAlg<E> &
+                ExceptionAlg<E> &
+                FunctionAlg<E> &
+                PatternAlg<E> &
+                TypeAlg<E> &
+                CurryAlg<E>>
+        extends PattAlg<E, A>, PattMatchAlg<E, A> {
+    A alg();
 
     @Syntax("decl = 'let' 'rec' recdecl")
     default E declRec(E declTuple) {

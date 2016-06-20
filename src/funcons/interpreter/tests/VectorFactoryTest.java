@@ -1,10 +1,10 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.VectorAlg;
-import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.VectorFactory;
+import funcons.interpreter.storage.BindFactory;
+import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.VectorFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
 import org.junit.Before;
@@ -13,12 +13,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class VectorFactoryTest {
-
-    private VectorAlg<IEval> alg;
+    private interface Alg extends VectorFactory, IntCalcFactory, BindFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new VectorFactory() {};
+        alg = new Alg() {};
     }
 
     @Test
@@ -31,7 +31,6 @@ public class VectorFactoryTest {
     public void testVector1() throws Exception {
         Store store = new Store();
         Vector v = (Vector)alg.vector(alg.lit(3)).eval(new Environment(), new Forwards(), store, new Null());
-        //assertEquals(new Vector(new Variable(0, store)), v);
         assertEquals(new Int(3), store.val((Variable)v.get(new Int(0))));
     }
 

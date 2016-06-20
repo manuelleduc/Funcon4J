@@ -3,11 +3,10 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-import java.util.List;
 import java.util.ListIterator;
 
-public interface ListAlg<E> {
-    funcons.algebras.ListAlg<E> alg();
+public interface ListAlg<E, A extends funcons.algebras.values.ListAlg<E>> {
+    A alg();
 
     @Syntax("exp = exp '@' exp") @Level(1509)
     default E listConcatExp(E l1, E l2) {

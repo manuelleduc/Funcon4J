@@ -1,10 +1,8 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.RecordAlg;
-import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.RecordFactory;
+import funcons.interpreter.values.RecordFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
 import funcons.values.signals.FailureTrue;
@@ -14,12 +12,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class RecordFactoryTest {
-
-    private RecordAlg<IEval> alg;
+    private interface Alg extends RecordFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new RecordFactory() {};
+        alg = new Alg() {};
     }
 
     @Test

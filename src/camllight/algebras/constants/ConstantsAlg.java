@@ -1,9 +1,21 @@
 package camllight.algebras.constants;
 
+import funcons.algebras.storage.BindAlg;
+import funcons.algebras.types.PolyTypeAlg;
+import funcons.algebras.values.*;
 import noa.syntax.Syntax;
 
-public interface ConstantsAlg<E> {
-    funcons.algebras.PolyTypeAlg<E> alg();
+public interface ConstantsAlg
+        <E, A extends
+                PolyTypeAlg<E> &
+                IntCalcAlg<E> &
+                BindAlg<E> &
+                StringAlg<E> &
+                BoolAlg<E> &
+                FloatCalcAlg<E> &
+                NullAlg<E> &
+                ListAlg<E>> {
+    A alg();
 
     @Syntax("constant = INTTOKEN")
     default E int_(java.lang.Integer l) {

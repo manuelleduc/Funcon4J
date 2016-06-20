@@ -1,10 +1,9 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.PolyTypeAlg;
-import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.PolyTypeFactory;
+import funcons.interpreter.types.PolyTypeFactory;
+import funcons.interpreter.values.IntCalcFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
@@ -14,12 +13,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class PolyTypeFactoryTest {
-
-    private PolyTypeAlg<IEval> alg;
+    private interface Alg extends PolyTypeFactory, IntCalcFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new PolyTypeFactory() {};
+        alg = new Alg() {};
     }
 
     @Test

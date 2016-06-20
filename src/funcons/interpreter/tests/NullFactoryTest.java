@@ -1,10 +1,8 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.NullAlg;
-import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.NullFactory;
+import funcons.interpreter.values.NullFactory;
 import funcons.values.Environment;
 import funcons.values.Null;
 import funcons.values.Undefined;
@@ -14,12 +12,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class NullFactoryTest {
-
-    private NullAlg<IEval> alg;
+    private interface Alg extends NullFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new NullFactory() {};
+        alg = new Alg() {};
     }
 
     @Test

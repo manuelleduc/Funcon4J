@@ -3,8 +3,8 @@ package camllight.algebras.exprs;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface FloatCalcAlg<E> {
-    funcons.algebras.FloatCalcAlg<E> alg();
+public interface FloatCalcAlg<E, A extends funcons.algebras.values.FloatCalcAlg<E>> {
+    A alg();
 
     @Syntax("exp = '-.' exp") @Level(1516)
     default E floatNegateExp(E exp) {

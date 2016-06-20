@@ -1,10 +1,12 @@
 package camllight.algebras.exprs;
 
+import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.values.BoolAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface BoolLogicAlg<E> {
-    funcons.algebras.LogicControlAlg<E> alg();
+public interface BoolLogicAlg<E, A extends BoolAlg<E> & LogicControlAlg<E>> {
+    A alg();
 
     @Syntax("exp = exp ('&' | '&&') exp") @Level(1506)
     default E lAnd(E e1, E e2) {

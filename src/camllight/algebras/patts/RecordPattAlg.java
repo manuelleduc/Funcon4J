@@ -1,11 +1,20 @@
 package camllight.algebras.patts;
 
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.storage.BindAlg;
+import funcons.algebras.values.MapAlg;
+import funcons.algebras.values.RecordAlg;
 import noa.syntax.Syntax;
 
 import java.util.List;
 
-public interface RecordPattAlg<E> {
-    funcons.algebras.RecordAlg<E> alg();
+public interface RecordPattAlg
+        <E, A extends
+                RecordAlg<E> &
+                MapAlg<E> &
+                BindAlg<E> &
+                FunctionAlg<E>> {
+    A alg();
 
     @Syntax("patt = '{' IDTOKEN '=' patt recordpattappendix* '}'")
     default E recordPatt(java.lang.String name, E patt, List<E> recPatts) {

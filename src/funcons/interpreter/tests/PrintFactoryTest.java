@@ -1,10 +1,9 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.PrintAlg;
-import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.PrintFactory;
+import funcons.interpreter.commands.PrintFactory;
+import funcons.interpreter.values.IntCalcFactory;
 import funcons.values.Environment;
 import funcons.values.Null;
 import org.junit.Before;
@@ -16,12 +15,12 @@ import java.io.PrintStream;
 import static org.junit.Assert.assertEquals;
 
 public class PrintFactoryTest {
-
-    PrintAlg<IEval> alg;
+    private interface Alg extends PrintFactory, IntCalcFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new PrintFactory() {};
+        alg = new Alg() {};
     }
 
     @Test

@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class CamlLight {
 
@@ -39,7 +40,8 @@ public class CamlLight {
     }
 
     public static Value eval(String src) throws FunconException {
-        return eval(src, () -> new funcons.interpreter.RecordFactory() {});
+        final funcons.algebras.AllAlg<IEval> evalAlg = new funcons.interpreter.AllFactory() {};
+        return eval(src, () -> evalAlg);
     }
 
     public static Value eval(String src, camllight.algebras.AllAlg alg) throws FunconException {
@@ -61,7 +63,7 @@ public class CamlLight {
     private static void run(String fileLoc) throws IOException, FunconException {
         String fileContent = new String(Files.readAllBytes(Paths.get(fileLoc)));
         System.out.println("== Running: " + fileLoc + " ==");
-//        camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.RecordFactory() {};
+//        camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.value.RecordFactory() {};
 //        eval(fileContent, new Tracer<>(myalg, new Class<?>[] {camllight.algebras.AllAlg.class}).make());
         interpret(fileContent);
     }
@@ -70,7 +72,7 @@ public class CamlLight {
         long start = System.currentTimeMillis();
         String src = new String(Files.readAllBytes(Paths.get(fileLoc)));
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        IEval eval = builder.build((camllight.algebras.AllAlg) () -> new funcons.interpreter.RecordFactory() {});
+        IEval eval = builder.build((camllight.algebras.AllAlg) () -> new funcons.interpreter.AllFactory() {});
         Environment env = importStandardLibrary(new Environment());
         eval.eval(env, new Forwards(), new Store(), new Null());
         long end = System.currentTimeMillis();
@@ -85,6 +87,7 @@ public class CamlLight {
         File folder = new File(folderLoc);
         File[] files = folder.listFiles();
 
+        assert files != null;
         for (File f : files) {
             if (f.isFile() && f.getName().endsWith(".ml")) {
                 if (fileEndings.stream().anyMatch(s -> f.getName().endsWith(s))) {
@@ -98,7 +101,7 @@ public class CamlLight {
     }
 
     private static Environment importStandardLibrary(Environment env) throws FunconException {
-        funcons.algebras.RecordAlg<IEval> alg = new funcons.interpreter.RecordFactory() {};
+        funcons.algebras.AllAlg<IEval> alg = new funcons.interpreter.AllFactory() {};
         StandardLibrary<IEval> lib = () -> alg;
 
         for (Method m : lib.getClass().getMethods()) {
@@ -150,10 +153,10 @@ public class CamlLight {
 
     public static void main(String[] args) throws FunconException, IOException {
         //runExamples();
-        //runGivenTests();
-        runPerformanceTests();
+        runGivenTests();
+        //runPerformanceTests();
 
-        /*camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.RecordFactory() {};
+        /*camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.value.RecordFactory() {};
         Value v = CamlLight.eval(
                 "let add x y = x + y;; add 1 2;;",
                 new Tracer<>(myalg, new Class<?>[] {camllight.algebras.AllAlg.class}).make());

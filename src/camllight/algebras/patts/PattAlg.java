@@ -1,10 +1,23 @@
 package camllight.algebras.patts;
 
+import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.functions.PatternAlg;
+import funcons.algebras.storage.BindAlg;
+import funcons.algebras.types.PolyTypeAlg;
+import funcons.algebras.types.TypeAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface PattAlg<E> {
-    funcons.algebras.PolyTypeAlg<E> alg();
+public interface PattAlg
+        <E, A extends
+                PolyTypeAlg<E> &
+                TypeAlg<E> &
+                PatternAlg<E> &
+                BindAlg<E> &
+                FunctionAlg<E> &
+                ExceptionAlg<E>> {
+    A alg();
 
     @Syntax("patt = '(' patt ')'") @Level(100)
     default E bracketedPatt(E patt) {

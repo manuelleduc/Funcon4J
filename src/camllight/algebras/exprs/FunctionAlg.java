@@ -1,10 +1,22 @@
 package camllight.algebras.exprs;
 
+import funcons.algebras.recursion.RecursiveAlg;
+import funcons.algebras.storage.AssignAlg;
+import funcons.algebras.storage.BindAlg;
+import funcons.algebras.types.PolyTypeAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface FunctionAlg<E> {
-    funcons.algebras.RecordAlg<E> alg();
+public interface FunctionAlg
+        <E, A extends
+                funcons.algebras.values.RecordAlg<E> &
+                funcons.algebras.functions.FunctionAlg<E> &
+                PolyTypeAlg<E> &
+                BindAlg<E> &
+                RecursiveAlg<E> &
+                AssignAlg<E> &
+                funcons.algebras.controlflow.ExceptionAlg<E>> {
+    A alg();
 
     @Syntax("exp = function") @Level(200)
     default E functionExpr(E f) {

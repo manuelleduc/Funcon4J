@@ -9,6 +9,8 @@ import camllight.algebras.AllAlg;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
+import funcons.interpreter.AllFactory;
+import funcons.interpreter.values.RecordFactory;
 import funcons.values.Environment;
 import funcons.values.properties.Value;
 import funcons.values.signals.FunconException;
@@ -57,7 +59,7 @@ public class Tracer<A> implements InvocationHandler{
     }
 
     public static void main(String[] args) throws FunconException {
-        AllAlg<IEval> myalg = () -> new funcons.interpreter.RecordFactory() {};
+        AllAlg<IEval> myalg = () -> new AllFactory() {};
         Value v = CamlLight.eval("let add x y = x + y;; add 1 2;;", new Tracer<>(myalg, new Class<?>[] {AllAlg.class}).make());
         System.out.println(v);
     }

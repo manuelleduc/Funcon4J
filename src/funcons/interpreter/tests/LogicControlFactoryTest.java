@@ -1,10 +1,10 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.LogicControlAlg;
-import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.LogicControlFactory;
+import funcons.interpreter.controlflow.LogicControlFactory;
+import funcons.interpreter.values.BoolFactory;
+import funcons.interpreter.values.IntCalcFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
@@ -14,12 +14,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class LogicControlFactoryTest {
-
-    private LogicControlAlg<IEval> alg;
+    private interface Alg extends LogicControlFactory, BoolFactory, IntCalcFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new LogicControlFactory() {};
+        alg = new Alg() {};
     }
 
     @Test

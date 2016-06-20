@@ -1,10 +1,11 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.ListAlg;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.ListFactory;
+import funcons.interpreter.commands.PrintFactory;
+import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.ListFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.List;
@@ -20,12 +21,12 @@ import java.io.PrintStream;
 import static org.junit.Assert.*;
 
 public class ListFactoryTest {
-
-    private ListAlg<IEval> alg;
+    private interface Alg extends ListFactory, IntCalcFactory, PrintFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new ListFactory() {};
+        alg = new Alg() {};
     }
 
     @Test

@@ -1,28 +1,24 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.FloatCalcAlg;
-import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.FloatCalcFactory;
-import funcons.values.Bool;
+import funcons.interpreter.values.FloatCalcFactory;
+import funcons.interpreter.values.IntCalcFactory;
 import funcons.values.Environment;
 import funcons.values.Float;
 import funcons.values.Null;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.function.BiFunction;
-
 import static org.junit.Assert.*;
 
 public class FloatCalcFactoryTest {
-
-    private FloatCalcAlg<IEval> alg;
+    private interface Alg extends FloatCalcFactory, IntCalcFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new FloatCalcFactory() {};
+        alg = new Alg() {};
     }
 
     @Test

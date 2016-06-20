@@ -1,7 +1,8 @@
 package camllight.lib;
 
+import funcons.algebras.AllAlg;
 public interface StandardLibrary<E> {
-    funcons.algebras.RecordAlg<E> alg();
+    AllAlg<E> alg();
 
     default E refFun() {
         return alg().abs(alg().alloc(alg().given()));

@@ -1,10 +1,9 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.TypeAlg;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.TypeFactory;
+import funcons.interpreter.types.TypeFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
@@ -19,12 +18,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TypeFactoryTest {
-
-    private TypeAlg<IEval> alg;
+    private interface Alg extends TypeFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new TypeFactory() {};
+        alg = new Alg() {};
     }
 
     @Test

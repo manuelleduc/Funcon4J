@@ -1,10 +1,8 @@
 package funcons.interpreter.tests;
 
-import funcons.algebras.StringAlg;
-import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.StringFactory;
+import funcons.interpreter.values.StringFactory;
 import funcons.values.Char;
 import funcons.values.Environment;
 import funcons.values.Null;
@@ -17,12 +15,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class StringFactoryTest {
-
-    private StringAlg<IEval> alg;
+    private interface Alg extends StringFactory {}
+    private Alg alg;
 
     @Before
     public void setUp() throws Exception {
-        alg = new StringFactory() {};
+        alg = new Alg() {};
     }
 
     @Test

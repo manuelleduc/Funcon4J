@@ -1,10 +1,20 @@
 package camllight.algebras.exprs;
 
+import funcons.algebras.recursion.RecursiveAlg;
+import funcons.algebras.storage.BindAlg;
+import funcons.algebras.types.PolyTypeAlg;
+import funcons.algebras.types.TypeAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface ExpAlg<E> {
-    funcons.algebras.RecursiveAlg<E> alg();
+public interface ExpAlg
+        <E, A extends
+                RecursiveAlg<E> &
+                PolyTypeAlg<E> &
+                BindAlg<E> &
+                TypeAlg<E> &
+                funcons.algebras.functions.FunctionAlg<E>> {
+    A alg();
 
     @Syntax("exp = constant") @Level(2700)
     default E constExp(E e) {

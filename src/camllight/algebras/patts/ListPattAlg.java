@@ -1,10 +1,12 @@
 package camllight.algebras.patts;
 
+import funcons.algebras.functions.PatternAlg;
+import funcons.algebras.values.ListAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface ListPattAlg<E> {
-    funcons.algebras.ListAlg<E> alg();
+public interface ListPattAlg<E, A extends ListAlg<E> & PatternAlg<E>> {
+    A alg();
 
     @Syntax("patt = emptylist") @Level(20)
     default E emptyListPatt(E l) {
