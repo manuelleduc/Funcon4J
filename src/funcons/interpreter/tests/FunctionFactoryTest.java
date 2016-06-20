@@ -4,7 +4,7 @@ import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.functions.FunctionFactory;
-import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.IntFactory;
 import funcons.values.Abs;
 import funcons.values.Environment;
 import funcons.values.Int;
@@ -15,7 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class FunctionFactoryTest {
-    private interface Alg extends FunctionFactory, IntCalcFactory {}
+    private interface Alg extends FunctionFactory, IntFactory {}
     private Alg alg;
 
     @Before

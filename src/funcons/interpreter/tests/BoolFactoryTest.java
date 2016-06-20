@@ -4,8 +4,8 @@ import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.values.BoolFactory;
-import funcons.interpreter.values.FloatCalcFactory;
-import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.FloatFactory;
+import funcons.interpreter.values.IntFactory;
 import funcons.values.Bool;
 import funcons.values.Environment;
 import funcons.values.Int;
@@ -18,7 +18,7 @@ import java.util.function.BiFunction;
 import static org.junit.Assert.*;
 
 public class BoolFactoryTest {
-    private interface Alg extends BoolFactory, IntCalcFactory, FloatCalcFactory {}
+    private interface Alg extends BoolFactory, IntFactory, FloatFactory {}
     private Alg alg;
 
     @Before

@@ -4,17 +4,17 @@ import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.controlflow.LogicControlFactory;
 import funcons.interpreter.values.BoolFactory;
-import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.IntFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class LogicControlFactoryTest {
-    private interface Alg extends LogicControlFactory, BoolFactory, IntCalcFactory {}
+    private interface Alg extends LogicControlFactory, BoolFactory, IntFactory {}
     private Alg alg;
 
     @Before

@@ -2,18 +2,18 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.values.FloatCalcFactory;
-import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.FloatFactory;
+import funcons.interpreter.values.IntFactory;
 import funcons.values.Environment;
 import funcons.values.Float;
 import funcons.values.Null;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class FloatCalcFactoryTest {
-    private interface Alg extends FloatCalcFactory, IntCalcFactory {}
+public class FloatFactoryTest {
+    private interface Alg extends FloatFactory, IntFactory {}
     private Alg alg;
 
     @Before

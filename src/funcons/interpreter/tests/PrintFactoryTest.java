@@ -3,7 +3,7 @@ package funcons.interpreter.tests;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.commands.PrintFactory;
-import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.IntFactory;
 import funcons.values.Environment;
 import funcons.values.Null;
 import org.junit.Before;
@@ -15,7 +15,7 @@ import java.io.PrintStream;
 import static org.junit.Assert.assertEquals;
 
 public class PrintFactoryTest {
-    private interface Alg extends PrintFactory, IntCalcFactory {}
+    private interface Alg extends PrintFactory, IntFactory {}
     private Alg alg;
 
     @Before

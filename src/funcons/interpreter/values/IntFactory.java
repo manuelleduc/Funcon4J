@@ -1,11 +1,11 @@
 package funcons.interpreter.values;
 
-import funcons.algebras.values.IntCalcAlg;
+import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import funcons.values.properties.Number;
 import funcons.values.Int;
+import funcons.values.properties.Number;
 
-public interface IntCalcFactory extends IntCalcAlg<IEval> {
+public interface IntFactory extends IntAlg<IEval> {
     @Override
     default IEval lit(java.lang.Integer i) {
         return (env, forward, store, given) -> new Int(i);

@@ -1,11 +1,11 @@
 package funcons.interpreter.values;
 
-import funcons.algebras.values.FloatCalcAlg;
+import funcons.algebras.values.FloatAlg;
 import funcons.carriers.IEval;
 import funcons.values.Float;
 import funcons.values.properties.Number;
 
-public interface FloatCalcFactory extends FloatCalcAlg<IEval> {
+public interface FloatFactory extends FloatAlg<IEval> {
     @Override
     default IEval lit(Double d) {
         return (env, forwards, store, given) -> new Float(d);

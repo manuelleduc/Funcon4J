@@ -6,13 +6,13 @@ import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.storage.EnvironmentFactory;
 import funcons.interpreter.storage.SupplyGivenFactory;
-import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.IntFactory;
 import funcons.values.Abs;
 import funcons.values.Environment;
 import funcons.values.properties.Value;
 
 public interface FunctionFactory extends
-        IntCalcFactory,
+        IntFactory,
         SupplyGivenFactory,
         EnvironmentFactory,
         FunctionAlg<IEval> {

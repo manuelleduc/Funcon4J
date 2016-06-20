@@ -5,7 +5,7 @@ import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.functions.FunctionFactory;
 import funcons.interpreter.storage.EnvironmentFactory;
-import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.IntFactory;
 import funcons.values.Abs;
 import funcons.values.Environment;
 import funcons.values.Int;
@@ -18,7 +18,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class EnvironmentFactoryTest {
-    private interface Alg extends EnvironmentFactory, FunctionFactory, IntCalcFactory {}
+    private interface Alg extends EnvironmentFactory, FunctionFactory, IntFactory {}
     private Alg alg;
 
     @Before

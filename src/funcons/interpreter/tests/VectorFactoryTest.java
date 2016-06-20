@@ -3,7 +3,7 @@ package funcons.interpreter.tests;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.storage.EnvironmentFactory;
-import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.IntFactory;
 import funcons.interpreter.values.VectorFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
@@ -13,7 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class VectorFactoryTest {
-    private interface Alg extends VectorFactory, IntCalcFactory, EnvironmentFactory {}
+    private interface Alg extends VectorFactory, IntFactory, EnvironmentFactory {}
     private Alg alg;
 
     @Before

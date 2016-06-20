@@ -4,7 +4,7 @@ import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.storage.EnvironmentFactory;
-import funcons.interpreter.values.IntCalcFactory;
+import funcons.interpreter.values.IntFactory;
 import funcons.interpreter.values.MapFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
@@ -14,7 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class MapFactoryTest {
-    private interface Alg extends EnvironmentFactory, IntCalcFactory, MapFactory {}
+    private interface Alg extends EnvironmentFactory, IntFactory, MapFactory {}
     private Alg alg;
 
     @Before
