@@ -1,8 +1,8 @@
 package camllight.algebras.exprs;
 
 import funcons.algebras.recursion.RecursiveAlg;
-import funcons.algebras.storage.AssignAlg;
-import funcons.algebras.storage.BindAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.storage.StoreAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
@@ -12,9 +12,9 @@ public interface FunctionAlg
                 funcons.algebras.values.RecordAlg<E> &
                 funcons.algebras.functions.FunctionAlg<E> &
                 PolyTypeAlg<E> &
-                BindAlg<E> &
+                EnvironmentAlg<E> &
                 RecursiveAlg<E> &
-                AssignAlg<E> &
+                StoreAlg<E> &
                 funcons.algebras.controlflow.ExceptionAlg<E>> {
     A alg();
 

@@ -4,16 +4,18 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.storage.BindFactory;
+import funcons.interpreter.storage.EnvironmentFactory;
+import funcons.interpreter.storage.SupplyGivenFactory;
 import funcons.interpreter.values.IntCalcFactory;
-import funcons.interpreter.values.TupleFactory;
 import funcons.values.Abs;
 import funcons.values.Environment;
-import funcons.values.Int;
-import funcons.values.Tuple;
 import funcons.values.properties.Value;
 
-public interface FunctionFactory extends IntCalcFactory, BindFactory, FunctionAlg<IEval> {
+public interface FunctionFactory extends
+        IntCalcFactory,
+        SupplyGivenFactory,
+        EnvironmentFactory,
+        FunctionAlg<IEval> {
 
     @Override
     default IEval abs(IEval exp) {
@@ -21,7 +23,7 @@ public interface FunctionFactory extends IntCalcFactory, BindFactory, FunctionAl
     }
 
     @Override
-    default IEval abs(IEval patt, IEval exp) { // TODO Hacky, what is depends(X,Y)?
+    default IEval abs(IEval patt, IEval exp) {
         return (env, forward, store, given) -> new Abs<IEval>((e, f, s, g) -> {
             @SuppressWarnings("unchecked")
             IEval environment = ((Abs<IEval>)patt.eval(e, f, s, g)).body();

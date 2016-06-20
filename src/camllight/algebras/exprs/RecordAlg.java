@@ -1,13 +1,13 @@
 package camllight.algebras.exprs;
 
-import funcons.algebras.storage.AssignAlg;
+import funcons.algebras.storage.StoreAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 import java.util.List;
 import java.util.ListIterator;
 
-public interface RecordAlg<E, A extends funcons.algebras.values.RecordAlg<E> & AssignAlg<E>> {
+public interface RecordAlg<E, A extends funcons.algebras.values.RecordAlg<E> & StoreAlg<E>> {
     A alg();
 
     @Syntax("exp = '{' recordsingle@','+ '}'") @Level(1700)

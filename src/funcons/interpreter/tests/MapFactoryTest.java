@@ -3,7 +3,7 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.storage.BindFactory;
+import funcons.interpreter.storage.EnvironmentFactory;
 import funcons.interpreter.values.IntCalcFactory;
 import funcons.interpreter.values.MapFactory;
 import funcons.values.*;
@@ -11,10 +11,10 @@ import funcons.values.ids.Id;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MapFactoryTest {
-    private interface Alg extends BindFactory, IntCalcFactory, MapFactory {}
+    private interface Alg extends EnvironmentFactory, IntCalcFactory, MapFactory {}
     private Alg alg;
 
     @Before

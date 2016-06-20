@@ -1,13 +1,13 @@
 package funcons.interpreter.storage;
 
-import funcons.algebras.storage.BindAlg;
+import funcons.algebras.storage.EnvironmentAlg;
 import funcons.carriers.IEval;
 import funcons.interpreter.values.MapFactory;
 import funcons.values.Environment;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
 
-public interface BindFactory extends MapFactory, BindAlg<IEval> {
+public interface EnvironmentFactory extends MapFactory, EnvironmentAlg<IEval> {
     @Override
     default IEval id(java.lang.String s) {
         return (env, forward, store, given) -> new Id(s);
@@ -33,16 +33,6 @@ public interface BindFactory extends MapFactory, BindAlg<IEval> {
     default IEval scope(IEval localBindings, IEval exp) {
         return (env, forward, store, given) ->
                 exp.eval(env.extend((Environment)localBindings.eval(env, forward, store, given)), forward, store, given);
-    }
-
-    @Override
-    default IEval given() {
-        return (env, forward, store, given) -> given;
-    }
-
-    @Override
-    default IEval supply(IEval exp, IEval x) {
-        return (env, forward, store, given) -> x.eval(env, forward, store, exp.eval(env, forward, store, given));
     }
 
     @Override

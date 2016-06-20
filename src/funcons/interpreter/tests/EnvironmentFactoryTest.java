@@ -4,7 +4,7 @@ import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.functions.FunctionFactory;
-import funcons.interpreter.storage.BindFactory;
+import funcons.interpreter.storage.EnvironmentFactory;
 import funcons.interpreter.values.IntCalcFactory;
 import funcons.values.Abs;
 import funcons.values.Environment;
@@ -17,8 +17,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class BindFactoryTest {
-    private interface Alg extends BindFactory, FunctionFactory, IntCalcFactory {}
+public class EnvironmentFactoryTest {
+    private interface Alg extends EnvironmentFactory, FunctionFactory, IntCalcFactory {}
     private Alg alg;
 
     @Before
@@ -64,18 +64,6 @@ public class BindFactoryTest {
         Int i = (Int)alg.scope(env1, alg.scope(env2, alg.boundValue(alg.id("foo")))).eval(new Environment(), new Forwards(), new Store(), new Null());
 
         assertEquals(i.intValue(), new Integer(2));
-    }
-
-    @Test
-    public void testGiven() throws Exception {
-        Int i = (Int)alg.given().eval(new Environment(), new Forwards(), new Store(), new Int(0));
-        assertEquals(i.intValue(), new Integer(0));
-    }
-
-    @Test
-    public void testSupply() throws Exception {
-        Int i = (Int)alg.supply(alg.lit(0), alg.given()).eval(new Environment(), new Forwards(), new Store(), new Null());
-        assertEquals(i.intValue(), new Integer(0));
     }
 
     @Test

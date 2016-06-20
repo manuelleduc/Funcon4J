@@ -1,7 +1,7 @@
 package camllight.algebras.patts;
 
 import funcons.algebras.functions.FunctionAlg;
-import funcons.algebras.storage.BindAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.values.MapAlg;
 import funcons.algebras.values.RecordAlg;
 import noa.syntax.Syntax;
@@ -12,7 +12,7 @@ public interface RecordPattAlg
         <E, A extends
                 RecordAlg<E> &
                 MapAlg<E> &
-                BindAlg<E> &
+                SupplyGivenAlg<E> &
                 FunctionAlg<E>> {
     A alg();
 

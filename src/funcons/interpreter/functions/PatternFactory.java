@@ -4,14 +4,14 @@ import funcons.algebras.functions.PatternAlg;
 import funcons.carriers.IEval;
 import funcons.interpreter.controlflow.ExceptionFactory;
 import funcons.interpreter.controlflow.LogicControlFactory;
-import funcons.interpreter.storage.BindFactory;
+import funcons.interpreter.storage.SupplyGivenFactory;
 import funcons.interpreter.values.BoolFactory;
 import funcons.values.Environment;
 
 public interface PatternFactory extends
         BoolFactory,
         LogicControlFactory,
-        BindFactory,
+        SupplyGivenFactory,
         FunctionFactory,
         ExceptionFactory,
         PatternAlg<IEval> {

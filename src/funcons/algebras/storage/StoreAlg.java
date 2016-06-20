@@ -1,6 +1,6 @@
 package funcons.algebras.storage;
 
-public interface AssignAlg<E> {
+public interface StoreAlg<E> {
     E assign(E var, E x);
     E assignedValue(E var);
     E assignedValueIfVar(E v);

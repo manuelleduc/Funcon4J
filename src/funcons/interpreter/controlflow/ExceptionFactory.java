@@ -3,12 +3,11 @@ package funcons.interpreter.controlflow;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.carriers.IEval;
 import funcons.interpreter.functions.FunctionFactory;
-import funcons.interpreter.storage.BindFactory;
-import funcons.values.signals.FailureTrue;
 import funcons.values.cl.CLMatchFailureException;
+import funcons.values.signals.FailureTrue;
 import funcons.values.signals.RunTimeFunconException;
 
-public interface ExceptionFactory extends LogicControlFactory, FunctionFactory, BindFactory, ExceptionAlg<IEval> {
+public interface ExceptionFactory extends LogicControlFactory, FunctionFactory, ExceptionAlg<IEval> {
 
     @Override
     default IEval fail() {

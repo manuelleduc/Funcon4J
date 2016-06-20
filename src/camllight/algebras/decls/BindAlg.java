@@ -7,6 +7,8 @@ import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.recursion.RecursiveAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.IntCalcAlg;
@@ -19,7 +21,7 @@ import java.util.List;
 
 public interface BindAlg
         <E, A extends
-                funcons.algebras.storage.BindAlg<E> &
+                EnvironmentAlg<E> &
                 PolyTypeAlg<E> &
                 TupleAlg<E> &
                 IntCalcAlg<E> &
@@ -29,7 +31,8 @@ public interface BindAlg
                 FunctionAlg<E> &
                 PatternAlg<E> &
                 TypeAlg<E> &
-                CurryAlg<E>>
+                CurryAlg<E> &
+                SupplyGivenAlg<E>>
         extends PattAlg<E, A>, PattMatchAlg<E, A> {
     A alg();
 

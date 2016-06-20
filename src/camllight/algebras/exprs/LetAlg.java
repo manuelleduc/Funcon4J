@@ -1,10 +1,10 @@
 package camllight.algebras.exprs;
 
-import funcons.algebras.storage.BindAlg;
+import funcons.algebras.storage.EnvironmentAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface LetAlg<E, A extends BindAlg<E>> {
+public interface LetAlg<E, A extends EnvironmentAlg<E>> {
     A alg();
 
     @Syntax("exp = letExp") @Level(1)

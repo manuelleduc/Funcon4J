@@ -2,11 +2,11 @@ package funcons.interpreter.values;
 
 import funcons.algebras.values.VectorAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.storage.AssignFactory;
+import funcons.interpreter.storage.StoreFactory;
 import funcons.values.Int;
 import funcons.values.Vector;
 
-public interface VectorFactory extends AssignFactory, VectorAlg<IEval> {
+public interface VectorFactory extends StoreFactory, VectorAlg<IEval> {
     @Override
     default IEval vector() {
         return (env, forwards, store, given) -> new Vector();

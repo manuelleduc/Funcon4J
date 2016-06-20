@@ -7,15 +7,17 @@ import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.recursion.RecursiveAlg;
-import funcons.algebras.storage.AssignAlg;
-import funcons.algebras.storage.BindAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.storage.StoreAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.*;
 
 public interface AllAlg<E> extends
-        AssignAlg<E>,
-        BindAlg<E>,
+        StoreAlg<E>,
+        EnvironmentAlg<E>,
+        SupplyGivenAlg<E>,
         BoolAlg<E>,
         CurryAlg<E>,
         PatternAlg<E>,

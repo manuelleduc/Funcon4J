@@ -4,14 +4,16 @@ import funcons.algebras.values.TupleAlg;
 import funcons.carriers.IEval;
 import funcons.interpreter.functions.FunctionFactory;
 import funcons.interpreter.functions.PatternFactory;
-import funcons.interpreter.storage.BindFactory;
-import funcons.values.*;
+import funcons.interpreter.storage.EnvironmentFactory;
+import funcons.values.Environment;
+import funcons.values.Int;
+import funcons.values.Tuple;
 import funcons.values.properties.Value;
 
 import java.util.NoSuchElementException;
 
 public interface TupleFactory extends
-        BindFactory,
+        EnvironmentFactory,
         FunctionFactory,
         PatternFactory,
         TupleAlg<IEval> {

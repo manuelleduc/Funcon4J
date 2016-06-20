@@ -5,6 +5,8 @@ import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.recursion.RecursiveAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.*;
@@ -18,7 +20,8 @@ public interface GlobalAlg
                 MapAlg<E> &
                 RecordAlg<E> &
                 TypeAlg<E> &
-                funcons.algebras.storage.BindAlg<E> &
+                SupplyGivenAlg<E> &
+                EnvironmentAlg<E> &
                 NullAlg<E> &
                 FunctionAlg<E> &
                 TupleAlg<E> &

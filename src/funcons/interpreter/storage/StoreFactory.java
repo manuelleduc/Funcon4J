@@ -1,12 +1,12 @@
 package funcons.interpreter.storage;
 
-import funcons.algebras.storage.AssignAlg;
+import funcons.algebras.storage.StoreAlg;
 import funcons.carriers.IEval;
 import funcons.values.Null;
-import funcons.values.properties.Value;
 import funcons.values.Variable;
+import funcons.values.properties.Value;
 
-public interface AssignFactory extends AssignAlg<IEval> {
+public interface StoreFactory extends StoreAlg<IEval> {
 
     @Override
     default IEval assign(IEval var, IEval x) {

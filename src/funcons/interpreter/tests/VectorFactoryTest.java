@@ -2,7 +2,7 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.storage.BindFactory;
+import funcons.interpreter.storage.EnvironmentFactory;
 import funcons.interpreter.values.IntCalcFactory;
 import funcons.interpreter.values.VectorFactory;
 import funcons.values.*;
@@ -10,10 +10,10 @@ import funcons.values.ids.Id;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class VectorFactoryTest {
-    private interface Alg extends VectorFactory, IntCalcFactory, BindFactory {}
+    private interface Alg extends VectorFactory, IntCalcFactory, EnvironmentFactory {}
     private Alg alg;
 
     @Before

@@ -3,16 +3,16 @@ package funcons.interpreter.recursion;
 import funcons.algebras.recursion.RecursiveAlg;
 import funcons.carriers.IEval;
 import funcons.interpreter.controlflow.LogicControlFactory;
-import funcons.interpreter.storage.BindFactory;
+import funcons.interpreter.storage.EnvironmentFactory;
 import funcons.interpreter.values.NullFactory;
 import funcons.values.List;
 import funcons.values.Map;
 import funcons.values.Undefined;
-import funcons.values.properties.Value;
 import funcons.values.ids.Id;
+import funcons.values.properties.Value;
 import funcons.values.recursion.Fwd;
 
-public interface RecursiveFactory extends NullFactory, LogicControlFactory, BindFactory, RecursiveAlg<IEval> {
+public interface RecursiveFactory extends NullFactory, LogicControlFactory, EnvironmentFactory, RecursiveAlg<IEval> {
 
     @Override
     default IEval freshFwd() {

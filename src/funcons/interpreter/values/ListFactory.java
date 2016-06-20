@@ -5,12 +5,12 @@ import funcons.carriers.IEval;
 import funcons.interpreter.controlflow.LogicControlFactory;
 import funcons.interpreter.functions.FunctionFactory;
 import funcons.interpreter.functions.PatternFactory;
-import funcons.interpreter.storage.BindFactory;
+import funcons.interpreter.storage.EnvironmentFactory;
 import funcons.values.*;
 import funcons.values.properties.Value;
 
 public interface ListFactory extends
-        BindFactory,
+        EnvironmentFactory,
         LogicControlFactory,
         FunctionFactory,
         PatternFactory,
