@@ -4,7 +4,7 @@ import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.algebras.values.IntCalcAlg;
+import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.TupleAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
@@ -16,7 +16,7 @@ public interface PattMatchAlg
                 FunctionAlg<E> &
                 ExceptionAlg<E> &
                 CurryAlg<E> &
-                IntCalcAlg<E>>
+                IntAlg<E>>
         extends TuplePattAlg<E, A> {
     @Syntax("pattmatch = pattmatchsingle") @Level(0)
     default E pattMatch(E pm) {

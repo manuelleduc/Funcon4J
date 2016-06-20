@@ -26,7 +26,7 @@ public interface GlobalAlg
                 FunctionAlg<E> &
                 TupleAlg<E> &
                 PolyTypeAlg<E> &
-                IntCalcAlg<E> &
+                IntAlg<E> &
                 RecursiveAlg<E> &
                 ExceptionAlg<E> &
                 PatternAlg<E> &

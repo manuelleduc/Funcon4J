@@ -8,11 +8,11 @@ import noa.syntax.Syntax;
 public interface ConstantsAlg
         <E, A extends
                 PolyTypeAlg<E> &
-                IntCalcAlg<E> &
+                IntAlg<E> &
                 EnvironmentAlg<E> &
                 StringAlg<E> &
                 BoolAlg<E> &
-                FloatCalcAlg<E> &
+                FloatAlg<E> &
                 NullAlg<E> &
                 ListAlg<E>> {
     A alg();

@@ -1,6 +1,6 @@
 package funcons.algebras.values;
 
-public interface IntCalcAlg<E> {
+public interface IntAlg<E> {
     E lit(java.lang.Integer i);
 
     E intAdd(E a, E b);

@@ -1,6 +1,6 @@
 package camllight.algebras.base;
 
-import funcons.algebras.commands.PrintAlg;
+import funcons.algebras.auxiliary.PrintAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.storage.EnvironmentAlg;
 import noa.syntax.Level;

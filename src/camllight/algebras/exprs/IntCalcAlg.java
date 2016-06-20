@@ -1,9 +1,10 @@
 package camllight.algebras.exprs;
 
+import funcons.algebras.values.IntAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface IntCalcAlg<E, A extends funcons.algebras.values.IntCalcAlg<E>> {
+public interface IntCalcAlg<E, A extends IntAlg<E>> {
     A alg();
 
     @Syntax("exp = '-' exp") @Level(1515)

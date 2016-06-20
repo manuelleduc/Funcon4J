@@ -24,14 +24,12 @@ public interface StandardLibrary<E> {
         return alg().abs(alg().print(alg().string("\n")));
     }
 
-    // Placeholder
     default E int_of_floatFun() {
-        return alg().abs(alg().given());
+        return alg().abs(alg().floatToInt(alg().given()));
     }
 
-    // Placeholder
     default E float_of_intFun() {
-        return alg().abs(alg().given());
+        return alg().abs(alg().intToFloat(alg().given()));
     }
 
     default E raiseFun() {

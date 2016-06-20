@@ -1,6 +1,7 @@
 package funcons.algebras;
 
-import funcons.algebras.commands.PrintAlg;
+import funcons.algebras.auxiliary.IntFloatConversionAlg;
+import funcons.algebras.auxiliary.PrintAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.functions.CurryAlg;
@@ -22,9 +23,10 @@ public interface AllAlg<E> extends
         CurryAlg<E>,
         PatternAlg<E>,
         ExceptionAlg<E>,
-        FloatCalcAlg<E>,
+        FloatAlg<E>,
         FunctionAlg<E>,
-        IntCalcAlg<E>,
+        IntAlg<E>,
+        IntFloatConversionAlg<E>,
         ListAlg<E>,
         LogicControlAlg<E>,
         MapAlg<E>,

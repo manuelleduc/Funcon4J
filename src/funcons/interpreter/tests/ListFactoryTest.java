@@ -3,7 +3,7 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.commands.PrintFactory;
+import funcons.interpreter.auxiliary.PrintFactory;
 import funcons.interpreter.values.IntFactory;
 import funcons.interpreter.values.ListFactory;
 import funcons.values.Environment;

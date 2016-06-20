@@ -1,7 +1,8 @@
 package funcons.interpreter;
 
 import funcons.carriers.IEval;
-import funcons.interpreter.commands.PrintFactory;
+import funcons.interpreter.auxiliary.IntFloatConversionFactory;
+import funcons.interpreter.auxiliary.PrintFactory;
 import funcons.interpreter.controlflow.ExceptionFactory;
 import funcons.interpreter.controlflow.LogicControlFactory;
 import funcons.interpreter.functions.CurryFactory;
@@ -26,6 +27,7 @@ public interface AllFactory extends funcons.algebras.AllAlg<IEval>,
         FloatFactory,
         FunctionFactory,
         IntFactory,
+        IntFloatConversionFactory,
         ListFactory,
         LogicControlFactory,
         MapFactory,

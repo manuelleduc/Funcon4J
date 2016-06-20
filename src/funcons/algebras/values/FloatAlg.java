@@ -1,6 +1,6 @@
 package funcons.algebras.values;
 
-public interface FloatCalcAlg<E> {
+public interface FloatAlg<E> {
     E lit(java.lang.Double i);
     E floatAdd(E a, E b);
     E floatNegate(E x);

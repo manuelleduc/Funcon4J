@@ -11,7 +11,7 @@ import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
-import funcons.algebras.values.IntCalcAlg;
+import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.MapAlg;
 import funcons.algebras.values.TupleAlg;
 import noa.syntax.Level;
@@ -24,7 +24,7 @@ public interface BindAlg
                 EnvironmentAlg<E> &
                 PolyTypeAlg<E> &
                 TupleAlg<E> &
-                IntCalcAlg<E> &
+                IntAlg<E> &
                 MapAlg<E> &
                 RecursiveAlg<E> &
                 ExceptionAlg<E> &

@@ -1,6 +1,6 @@
-package funcons.interpreter.commands;
+package funcons.interpreter.auxiliary;
 
-import funcons.algebras.commands.PrintAlg;
+import funcons.algebras.auxiliary.PrintAlg;
 import funcons.carriers.IEval;
 import funcons.interpreter.values.NullFactory;
 
