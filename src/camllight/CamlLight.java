@@ -151,7 +151,7 @@ public class CamlLight {
         //runExamples();
         //runGivenTests();
         //runPerformanceTests();
-        interpret("1 + 2;;");
+        interpret("3 / 2;;");
         /*camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.value.RecordFactory() {};
         Value v = CamlLight.eval(
                 "let add x y = x + y;; add 1 2;;",

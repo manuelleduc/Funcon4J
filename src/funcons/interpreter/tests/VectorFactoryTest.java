@@ -2,30 +2,31 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
+import funcons.interpreter.AllFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class VectorFactoryTest extends TestStub {
+public class VectorFactoryTest implements AllFactory {
 
     @Test
     public void testVector() throws Exception {
-        Vector v = (Vector)alg.vector().eval(new Environment(), new Forwards(), new Store(), new Null());
+        Vector v = (Vector)vector().eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Vector(), v);
     }
 
     @Test
     public void testVector1() throws Exception {
         Store store = new Store();
-        Vector v = (Vector)alg.vector(alg.lit(3)).eval(new Environment(), new Forwards(), store, new Null());
+        Vector v = (Vector)vector(lit(3)).eval(new Environment(), new Forwards(), store, new Null());
         assertEquals(new Int(3), store.val((Variable)v.get(new Int(0))));
     }
 
     @Test
     public void testVectorSelect() throws Exception {
-        Int i = (Int)alg.vectorSelect(alg.vector(alg.lit(1)), alg.lit(0))
+        Int i = (Int)vectorSelect(vector(lit(1)), lit(0))
                 .eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Integer(1), i.intValue());
     }
@@ -33,7 +34,7 @@ public class VectorFactoryTest extends TestStub {
     @Test
     public void testVectorAppend() throws Exception {
         Store store = new Store();
-        Vector v = (Vector)alg.vectorAppend(alg.vector(alg.lit(2)), alg.vector(alg.lit(3)))
+        Vector v = (Vector)vectorAppend(vector(lit(2)), vector(lit(3)))
                 .eval(new Environment(), new Forwards(), store, new Null());
         assertEquals(new Int(2), store.val((Variable)v.get(new Int(0))));
         assertEquals(new Int(3), store.val((Variable)v.get(new Int(1))));
@@ -42,9 +43,9 @@ public class VectorFactoryTest extends TestStub {
     @Test
     public void testVectorAssign() throws Exception {
         Store store = new Store();
-        Environment env = (Environment)alg.bindValue(alg.id("foo"), alg.vector(alg.lit(2)))
+        Environment env = (Environment)bindValue(id("foo"), vector(lit(2)))
                 .eval(new Environment(), new Forwards(), store, new Null());
-        alg.vectorAssign(alg.boundValue(alg.id("foo")), alg.lit(0), alg.lit(3))
+        vectorAssign(boundValue(id("foo")), lit(0), lit(3))
                 .eval(env, new Forwards(), store, new Null());
         assertEquals(new Vector(new Variable(0, store)), env.val(new Id("foo")));
         assertEquals(new Int(3), store.val((Variable)((Vector)env.val(new Id("foo"))).get(new Int(0))));
@@ -53,16 +54,16 @@ public class VectorFactoryTest extends TestStub {
 
     @Test
     public void testVectorLength() throws Exception {
-        Int i = (Int)alg.vectorLength(alg.vector())
+        Int i = (Int)vectorLength(vector())
                 .eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Int(0), i);
 
-        i = (Int)alg.vectorLength(alg.vector(alg.lit(5)))
+        i = (Int)vectorLength(vector(lit(5)))
                 .eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Int(1), i);
 
-        i = (Int)alg.vectorLength(
-                alg.vectorAppend(alg.vector(alg.lit(6)), alg.vector(alg.lit(7)))
+        i = (Int)vectorLength(
+                vectorAppend(vector(lit(6)), vector(lit(7)))
         ).eval(new Environment(), new Forwards(), new Store(), new Null());
         assertEquals(new Int(2), i);
     }
