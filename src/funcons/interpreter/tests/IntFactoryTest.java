@@ -9,44 +9,37 @@ public class IntFactoryTest implements AllFactory {
 
     @Test
     public void testLit() throws Exception {
-        funcons.values.Int i = (funcons.values.Int)lit(0).eval();
-        assertEquals(new Integer(0), i.intValue());
+        assertEquals(lit(0).eval(), lit(0).eval());
     }
 
     @Test
     public void testIntAdd() throws Exception {
-        funcons.values.Int i = (funcons.values.Int)intAdd(lit(6), lit(3)).eval();
-        assertEquals(new Integer(9), i.intValue());
+        assertEquals(lit(9).eval(), intAdd(lit(3), lit(6)).eval());
     }
 
     @Test
     public void testIntNegate() throws Exception {
-        funcons.values.Int i = (funcons.values.Int)intNegate(lit(1)).eval();
-        assertEquals(new Integer(-1), i.intValue());
+        assertEquals(lit(-1).eval(), intNegate(lit(1)).eval());
     }
 
     @Test
     public void testIntSubtract() throws Exception {
-        funcons.values.Int i = (funcons.values.Int)intSubtract(lit(6), lit(3)).eval();
-        assertEquals(new Integer(3), i.intValue());
+        assertEquals(lit(3).eval(), intSubtract(lit(6), lit(3)).eval());
     }
 
     @Test
     public void testIntMultiply() throws Exception {
-        funcons.values.Int i = (funcons.values.Int)intMultiply(lit(6), lit(3)).eval();
-        assertEquals(new Integer(18), i.intValue());
+        assertEquals(lit(18).eval(), intMultiply(lit(6), lit(3)).eval());
     }
 
     @Test
     public void testIntDivide() throws Exception {
-        funcons.values.Int i = (funcons.values.Int)intDivide(lit(6), lit(3)).eval();
-        assertEquals(new Integer(2), i.intValue());
+        assertEquals(lit(2).eval(), intDivide(lit(6), lit(3)).eval());
     }
 
 
     @Test
     public void testIntModulo() throws Exception {
-        funcons.values.Int i = (funcons.values.Int)intModulo(lit(6), lit(3)).eval();
-        assertEquals(new Integer(0), i.intValue());
+        assertEquals(lit(0).eval(), intModulo(lit(6), lit(3)).eval());
     }
 }
