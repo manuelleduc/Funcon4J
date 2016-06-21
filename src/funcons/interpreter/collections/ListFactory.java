@@ -100,4 +100,13 @@ public interface ListFactory extends
             return l1.append(l2);
         };
     }
+
+    @Override
+    default IEval projectList(IEval index, IEval list)  {
+        return (env, forwards, store, given) -> {
+            Int i = (Int)index.eval(env, forwards, store, given);
+            List l = (List)list.eval(env, forwards, store, given);
+            return l.get(i);
+        };
+    }
 }

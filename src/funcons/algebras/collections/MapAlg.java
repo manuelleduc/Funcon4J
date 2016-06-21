@@ -6,4 +6,5 @@ public interface MapAlg<E> {
     E mapDomain(E map);
     E mapUnion(E map1, E map2);
     E mapOver(E map1, E map2);
+    E mapGet(E map, E key);
 }

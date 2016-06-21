@@ -66,4 +66,13 @@ public interface MapFactory extends MapAlg<IEval> {
             return m3;
         };
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    default IEval mapGet(IEval map, IEval key) {
+        return (env, forward, store, given) -> {
+            Map m = (Map)map.eval(env, forward, store, given);
+            return (Value)m.val(key.eval(env, forward, store, given));
+        };
+    }
 }

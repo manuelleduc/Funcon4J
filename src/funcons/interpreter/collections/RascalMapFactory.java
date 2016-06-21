@@ -59,4 +59,12 @@ public interface RascalMapFactory extends MapAlg<IEval> {
             return m2.join(m1);
         };
     }
+
+    @Override
+    default IEval mapGet(IEval map, IEval key) {
+        return (env, forwards, store, given) -> {
+            IMap m = (IMap)map.eval(env, forwards, store, given);
+            return m.get((IValue)key.eval(env, forwards, store, given));
+        };
+    }
 }

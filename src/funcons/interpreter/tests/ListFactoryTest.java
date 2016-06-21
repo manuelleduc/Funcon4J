@@ -103,4 +103,10 @@ public class ListFactoryTest implements AllFactory {
                 .eval();
         assertEquals(new List(new Int(2), new Int(3)), l);
     }
+
+    @Test
+    public void testProjectList() throws Exception {
+        assertEquals(lit(5).eval(), projectList(lit(0), list(lit(5), lit(6))).eval());
+        assertEquals(lit(6).eval(), projectList(lit(1), list(lit(5), lit(6))).eval());
+    }
 }

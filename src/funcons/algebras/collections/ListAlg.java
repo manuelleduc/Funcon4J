@@ -11,4 +11,5 @@ public interface ListAlg<E> {
     E intClosedInterval(E m, E n);
     E listReverse(E l);
     E listAppend(E list1, E list2);
+    E projectList(E index, E list);
 }
