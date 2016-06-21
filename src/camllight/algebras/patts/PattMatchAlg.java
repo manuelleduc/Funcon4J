@@ -1,11 +1,11 @@
 package camllight.algebras.patts;
 
+import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.values.IntAlg;
-import funcons.algebras.values.TupleAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 

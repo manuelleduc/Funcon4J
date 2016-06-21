@@ -2,7 +2,7 @@ package funcons.interpreter.functions;
 
 import funcons.algebras.functions.CurryAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.values.TupleFactory;
+import funcons.interpreter.collections.TupleFactory;
 import funcons.values.Abs;
 import funcons.values.Int;
 

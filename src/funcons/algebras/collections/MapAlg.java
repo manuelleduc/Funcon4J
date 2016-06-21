@@ -1,4 +1,4 @@
-package funcons.algebras.values;
+package funcons.algebras.collections;
 
 public interface MapAlg<E> {
     E map(E key, E val);

@@ -5,7 +5,7 @@ import noa.syntax.Syntax;
 
 import java.util.ListIterator;
 
-public interface ListAlg<E, A extends funcons.algebras.values.ListAlg<E>> {
+public interface ListAlg<E, A extends funcons.algebras.collections.ListAlg<E>> {
     A alg();
 
     @Syntax("exp = exp '@' exp") @Level(1509)

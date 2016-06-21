@@ -2,7 +2,7 @@ package funcons.interpreter.storage;
 
 import funcons.algebras.storage.EnvironmentAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.values.MapFactory;
+import funcons.interpreter.collections.MapFactory;
 import funcons.values.Environment;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;

@@ -1,4 +1,4 @@
-package funcons.algebras.values;
+package funcons.algebras.collections;
 
 public interface VectorAlg<E> {
     E vector();

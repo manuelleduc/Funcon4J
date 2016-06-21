@@ -1,9 +1,9 @@
 package camllight.algebras.patts;
 
+import funcons.algebras.collections.MapAlg;
+import funcons.algebras.collections.RecordAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.storage.SupplyGivenAlg;
-import funcons.algebras.values.MapAlg;
-import funcons.algebras.values.RecordAlg;
 import noa.syntax.Syntax;
 
 import java.util.List;

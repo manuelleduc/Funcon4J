@@ -2,6 +2,7 @@ package funcons.algebras;
 
 import funcons.algebras.auxiliary.IntFloatConversionAlg;
 import funcons.algebras.auxiliary.PrintAlg;
+import funcons.algebras.collections.*;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.functions.CurryAlg;

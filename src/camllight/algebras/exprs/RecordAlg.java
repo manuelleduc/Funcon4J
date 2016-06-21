@@ -7,7 +7,7 @@ import noa.syntax.Syntax;
 import java.util.List;
 import java.util.ListIterator;
 
-public interface RecordAlg<E, A extends funcons.algebras.values.RecordAlg<E> & StoreAlg<E>> {
+public interface RecordAlg<E, A extends funcons.algebras.collections.RecordAlg<E> & StoreAlg<E>> {
     A alg();
 
     @Syntax("exp = '{' recordsingle@','+ '}'") @Level(1700)

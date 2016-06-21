@@ -1,7 +1,7 @@
 package camllight.algebras.exprs;
 
-import funcons.algebras.controlflow.*;
-import funcons.algebras.values.*;
+import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.values.NullAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
@@ -10,7 +10,7 @@ public interface ControlAlg
                 NullAlg<E> &
                 LogicControlAlg<E> &
                 funcons.algebras.functions.FunctionAlg<E> &
-                funcons.algebras.values.ListAlg<E> &
+                funcons.algebras.collections.ListAlg<E> &
                 funcons.algebras.controlflow.ExceptionAlg<E>> {
     A alg();
 

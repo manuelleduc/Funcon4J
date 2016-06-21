@@ -5,7 +5,7 @@ import noa.syntax.Syntax;
 
 import java.util.ListIterator;
 
-public interface TupleAlg<E, A extends funcons.algebras.values.TupleAlg<E>> {
+public interface TupleAlg<E, A extends funcons.algebras.collections.TupleAlg<E>> {
     A alg();
 
     @Syntax("exp = '(' exp@','+ ')'") @Level(2300) // Love your brackets.

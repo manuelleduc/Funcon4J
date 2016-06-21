@@ -2,6 +2,8 @@ package camllight.algebras.decls;
 
 import camllight.algebras.patts.PattAlg;
 import camllight.algebras.patts.PattMatchAlg;
+import funcons.algebras.collections.MapAlg;
+import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
@@ -12,8 +14,6 @@ import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.IntAlg;
-import funcons.algebras.values.MapAlg;
-import funcons.algebras.values.TupleAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 

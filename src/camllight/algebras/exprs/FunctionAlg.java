@@ -9,7 +9,7 @@ import noa.syntax.Syntax;
 
 public interface FunctionAlg
         <E, A extends
-                funcons.algebras.values.RecordAlg<E> &
+                funcons.algebras.collections.RecordAlg<E> &
                 funcons.algebras.functions.FunctionAlg<E> &
                 PolyTypeAlg<E> &
                 EnvironmentAlg<E> &

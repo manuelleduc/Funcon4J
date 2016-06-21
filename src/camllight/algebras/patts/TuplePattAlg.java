@@ -1,7 +1,7 @@
 package camllight.algebras.patts;
 
+import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.algebras.values.TupleAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 

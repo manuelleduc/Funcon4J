@@ -2,9 +2,9 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
+import funcons.interpreter.collections.VectorFactory;
 import funcons.interpreter.storage.EnvironmentFactory;
 import funcons.interpreter.values.IntFactory;
-import funcons.interpreter.values.VectorFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
 import org.junit.Before;

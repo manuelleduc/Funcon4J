@@ -1,6 +1,6 @@
 package camllight.algebras.exprs;
 
-import funcons.algebras.values.VectorAlg;
+import funcons.algebras.collections.VectorAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 

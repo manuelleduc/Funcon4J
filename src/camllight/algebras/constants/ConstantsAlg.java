@@ -1,5 +1,6 @@
 package camllight.algebras.constants;
 
+import funcons.algebras.collections.ListAlg;
 import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.values.*;

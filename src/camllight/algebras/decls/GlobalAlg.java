@@ -1,5 +1,8 @@
 package camllight.algebras.decls;
 
+import funcons.algebras.collections.MapAlg;
+import funcons.algebras.collections.RecordAlg;
+import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
@@ -9,7 +12,8 @@ import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
-import funcons.algebras.values.*;
+import funcons.algebras.values.IntAlg;
+import funcons.algebras.values.NullAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 

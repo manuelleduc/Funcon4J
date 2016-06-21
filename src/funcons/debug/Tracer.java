@@ -1,19 +1,18 @@
 package funcons.debug;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-
 import camllight.CamlLight;
 import camllight.algebras.AllAlg;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.AllFactory;
-import funcons.interpreter.values.RecordFactory;
 import funcons.values.Environment;
 import funcons.values.properties.Value;
 import funcons.values.signals.FunconException;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 public class Tracer<A> implements InvocationHandler{
 
