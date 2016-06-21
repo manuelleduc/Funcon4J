@@ -37,7 +37,6 @@ public class IntFactoryTest implements AllFactory {
         assertEquals(lit(2).eval(), intDivide(lit(6), lit(3)).eval());
     }
 
-
     @Test
     public void testIntModulo() throws Exception {
         assertEquals(lit(0).eval(), intModulo(lit(6), lit(3)).eval());

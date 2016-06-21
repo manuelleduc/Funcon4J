@@ -9,8 +9,10 @@ import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import funcons.values.*;
-import funcons.values.properties.Value;
+import funcons.values.Bool;
+import funcons.values.Environment;
+import funcons.values.Int;
+import funcons.values.List;
 
 public interface ListFactory extends
         EnvironmentAlg<IEval>,
@@ -41,21 +43,6 @@ public interface ListFactory extends
     default IEval listPrefix(IEval x, IEval l) {
         return (env, forward, store, given) ->
                 ((List)l.eval(env, forward, store, given)).prepend(x.eval(env, forward, store, given));
-    }
-
-    @Override
-    default IEval applyToEach(IEval a, IEval l) {
-        return (env, forward, store, given) -> {
-            List list = (List)l.eval(env, forward, store, given);
-            Value head = list.head();
-            List tail = list.tail();
-
-            if (list.equals(new List())) {
-                return new Null();
-            }
-
-            return seq(apply(a, (e,f,s,g) -> head), applyToEach(a, (e,f,s,g) -> tail)).eval(env, forward, store, given);
-        };
     }
 
     @Override

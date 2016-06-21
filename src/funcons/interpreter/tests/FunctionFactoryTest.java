@@ -10,6 +10,9 @@ import funcons.values.Int;
 import funcons.values.Null;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.Assert.assertEquals;
 
 public class FunctionFactoryTest implements AllFactory {
@@ -29,6 +32,25 @@ public class FunctionFactoryTest implements AllFactory {
             Abs<IEval> abs = (Abs<IEval>) abs(bind(id("foo")), boundValue(id("foo"))).eval(new Environment(), new Forwards(), store, new Null());
             Int result = (Int) abs.body().eval(new Environment(), new Forwards(), store, new Int(10));
             assertEquals(result.intValue(), new Integer(10));
+        }
+    }
+
+    @Test
+    public void testApplyToEach() throws Exception {
+        {
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            IEval printList = applyToEach(abs(print(given())), list(lit(0), lit(1)));
+            printList.eval();
+            assertEquals("01", outContent.toString());
+        }
+        {
+            ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+            System.setOut(new PrintStream(outContent));
+            IEval printList = applyToEach(abs(bind(id("foo")), effect(print(boundValue(id("foo"))))),
+                    intClosedInterval(lit(0), lit(3)));
+            printList.eval();
+            assertEquals("0123", outContent.toString());
         }
     }
 

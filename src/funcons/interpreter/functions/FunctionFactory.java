@@ -1,5 +1,6 @@
 package funcons.interpreter.functions;
 
+import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.storage.SupplyGivenAlg;
@@ -9,12 +10,15 @@ import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.values.Abs;
 import funcons.values.Environment;
+import funcons.values.List;
+import funcons.values.Null;
 import funcons.values.properties.Value;
 
 public interface FunctionFactory extends
         IntAlg<IEval>,
         SupplyGivenAlg<IEval>,
         EnvironmentAlg<IEval>,
+        LogicControlAlg<IEval>,
         FunctionAlg<IEval> {
 
     @Override
@@ -34,6 +38,21 @@ public interface FunctionFactory extends
     @Override
     default IEval apply(IEval abs, IEval arg) {
         return (env, forward, store, given) -> supply(arg, unAbs(abs, env, forward, store, given)).eval(env, forward, store, given);
+    }
+
+    @Override
+    default IEval applyToEach(IEval a, IEval l) {
+        return (env, forward, store, given) -> {
+            List list = (List)l.eval(env, forward, store, given);
+            Value head = list.head();
+            List tail = list.tail();
+
+            if (list.equals(new List())) {
+                return new Null();
+            }
+
+            return seq(apply(a, (e,f,s,g) -> head), applyToEach(a, (e,f,s,g) -> tail)).eval(env, forward, store, given);
+        };
     }
 
     @Override
