@@ -18,13 +18,13 @@ public class EnvironmentFactoryTest implements AllFactory {
 
     @Test
     public void testId() throws Exception {
-        Id v = (Id)id("foo").eval(new Environment(), new Forwards(), new Store(), new Null());
+        Id v = (Id)id("foo").eval();
         assertEquals(v.stringValue(), "foo");
     }
 
     @Test
     public void testNameId() throws Exception {
-        NameId v = (NameId)nameId("foo", "bar").eval(new Environment(), new Forwards(), new Store(), new Null());
+        NameId v = (NameId)nameId("foo", "bar").eval();
         assertEquals(new NameId("foo", "bar"), v);
         assertNotEquals(new NameId("bar", "bar"), v);
         assertNotEquals(new NameId("bar", "foo"), v);
@@ -51,18 +51,18 @@ public class EnvironmentFactoryTest implements AllFactory {
         IEval env1 = bindValue(id("foo"), lit(3));
         IEval env2 = bindValue(id("foo"), lit(2));
 
-        Int i = (Int)scope(env1, scope(env2, boundValue(id("foo")))).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Int i = (Int)scope(env1, scope(env2, boundValue(id("foo")))).eval();
 
         assertEquals(i.intValue(), new Integer(2));
     }
 
     @Test
     public void testEnvironment() throws Exception {
-        Environment env = (Environment)environment().eval(new Environment(), new Forwards(), new Store(), new Null());
+        Environment env = (Environment)environment().eval();
         assertNotNull(env);
 
         env = (Environment)environment(id("foo"), lit(0))
-                .eval(new Environment(), new Forwards(), new Store(), new Null());
+                .eval();
         assertEquals(new Int(0), env.val(new Id("foo")));
     }
 
@@ -70,7 +70,7 @@ public class EnvironmentFactoryTest implements AllFactory {
     public void testAccum() throws Exception {
         IEval accum = accum(bindValue(id("bar"), lit(1)),
                 bindValue(id("foo"), intAdd(boundValue(id("bar")), lit(2))));
-        Environment env = (Environment)accum.eval(new Environment(), new Forwards(), new Store(), new Null());
+        Environment env = (Environment)accum.eval();
         assertEquals(new Integer(1), ((Int)env.val(new Id("bar"))).intValue());
         assertEquals(new Integer(3), ((Int)env.val(new Id("foo"))).intValue());
     }

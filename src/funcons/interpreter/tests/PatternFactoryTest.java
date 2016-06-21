@@ -19,25 +19,25 @@ public class PatternFactoryTest implements AllFactory {
 
     @Test
     public void testOnly() throws Exception {
-        Bool b = (Bool)seq(apply(only(lit(0)), lit(0)), bool(true)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Bool b = (Bool)seq(apply(only(lit(0)), lit(0)), bool(true)).eval();
         assertTrue(b.boolValue());
 
-        b = (Bool)else_(apply(only(lit(0)), lit(1)), bool(false)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        b = (Bool)else_(apply(only(lit(0)), lit(1)), bool(false)).eval();
         assertFalse(b.boolValue());
     }
 
     @Test
     public void testAny() throws Exception {
-        Bool b = (Bool)seq(apply(any(), lit(0)), bool(true)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Bool b = (Bool)seq(apply(any(), lit(0)), bool(true)).eval();
         assertTrue(b.boolValue());
     }
 
     @Test
     public void testMatch() throws Exception {
-        Bool b = (Bool)seq(match(lit(0), any()), bool(true)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Bool b = (Bool)seq(match(lit(0), any()), bool(true)).eval();
         assertTrue(b.boolValue());
 
-        b = (Bool)else_(match(lit(0), only(lit(1))), bool(false)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        b = (Bool)else_(match(lit(0), only(lit(1))), bool(false)).eval();
         assertFalse(b.boolValue());
     }
 
@@ -46,7 +46,7 @@ public class PatternFactoryTest implements AllFactory {
         IEval part1 = bind(id("x"));
         IEval part2 = intAdd(boundValue(id("x")), lit(1));
         IEval incr = pattAbs(part1, part2);
-        Int i = (Int)apply(incr, lit(2)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Int i = (Int)apply(incr, lit(2)).eval();
         assertEquals(new Integer(3), i.intValue());
     }
 

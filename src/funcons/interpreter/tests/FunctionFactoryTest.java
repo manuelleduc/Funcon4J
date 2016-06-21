@@ -34,7 +34,7 @@ public class FunctionFactoryTest implements AllFactory {
 
     @Test
     public void testApply() throws Exception {
-        Int i = (Int)apply(abs(intAdd(lit(1), given())), lit(2)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Int i = (Int)apply(abs(intAdd(lit(1), given())), lit(2)).eval();
         assertEquals(i.intValue(), new Integer(3));
     }
 
@@ -42,7 +42,7 @@ public class FunctionFactoryTest implements AllFactory {
     public void testCompose() throws Exception {
         IEval incr = abs(intAdd(given(), lit(1)));
         IEval double_ = abs(intMultiply(given(), lit(2)));
-        Int i = (Int)apply(compose(double_, incr), lit(3)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Int i = (Int)apply(compose(double_, incr), lit(3)).eval();
         assertEquals(new Integer(8), i.intValue());
     }
 }

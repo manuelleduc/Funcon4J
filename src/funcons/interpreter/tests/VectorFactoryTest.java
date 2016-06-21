@@ -13,7 +13,7 @@ public class VectorFactoryTest implements AllFactory {
 
     @Test
     public void testVector() throws Exception {
-        Vector v = (Vector)vector().eval(new Environment(), new Forwards(), new Store(), new Null());
+        Vector v = (Vector)vector().eval();
         assertEquals(new Vector(), v);
     }
 
@@ -27,7 +27,7 @@ public class VectorFactoryTest implements AllFactory {
     @Test
     public void testVectorSelect() throws Exception {
         Int i = (Int)vectorSelect(vector(lit(1)), lit(0))
-                .eval(new Environment(), new Forwards(), new Store(), new Null());
+                .eval();
         assertEquals(new Integer(1), i.intValue());
     }
 
@@ -55,16 +55,16 @@ public class VectorFactoryTest implements AllFactory {
     @Test
     public void testVectorLength() throws Exception {
         Int i = (Int)vectorLength(vector())
-                .eval(new Environment(), new Forwards(), new Store(), new Null());
+                .eval();
         assertEquals(new Int(0), i);
 
         i = (Int)vectorLength(vector(lit(5)))
-                .eval(new Environment(), new Forwards(), new Store(), new Null());
+                .eval();
         assertEquals(new Int(1), i);
 
         i = (Int)vectorLength(
                 vectorAppend(vector(lit(6)), vector(lit(7)))
-        ).eval(new Environment(), new Forwards(), new Store(), new Null());
+        ).eval();
         assertEquals(new Int(2), i);
     }
 }

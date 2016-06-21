@@ -40,10 +40,10 @@ public class StoreFactoryTest implements AllFactory {
 
     @Test
     public void testAssignedValueIfVar() throws Exception {
-        Int i = (Int)assignedValueIfVar(alloc(lit(0))).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Int i = (Int)assignedValueIfVar(alloc(lit(0))).eval();
         assertEquals(new Integer(0), i.intValue());
 
-        i = (Int)assignedValueIfVar(lit(1)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        i = (Int)assignedValueIfVar(lit(1)).eval();
         assertEquals(new Integer(1), i.intValue());
     }
 }

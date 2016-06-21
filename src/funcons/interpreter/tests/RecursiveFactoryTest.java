@@ -15,14 +15,14 @@ public class RecursiveFactoryTest implements AllFactory {
 
     @Test
     public void testFreshFwd() throws Exception {
-        Fwd f = (Fwd)freshFwd().eval(new Environment(), new Forwards(), new Store(), new Null());
+        Fwd f = (Fwd)freshFwd().eval();
         assertEquals((new Forwards()).freshFwd(), f);
     }
 
     @Test
     public void testFreshFwds() throws Exception {
         IEval fwds = freshFwds(list(id("x"), id("y")));
-        Environment map = (Environment)fwds.eval(new Environment(), new Forwards(), new Store(), new Null());
+        Environment map = (Environment)fwds.eval();
         assertEquals(new Fwd(0), map.val(new Id("x")));
         assertEquals(new Fwd(1), map.val(new Id("y")));
     }

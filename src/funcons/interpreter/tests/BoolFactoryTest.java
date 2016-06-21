@@ -1,13 +1,9 @@
 package funcons.interpreter.tests;
 
 import funcons.carriers.IEval;
-import funcons.entities.Forwards;
-import funcons.entities.Store;
 import funcons.interpreter.AllFactory;
 import funcons.values.Bool;
-import funcons.values.Environment;
 import funcons.values.Int;
-import funcons.values.Null;
 import org.junit.Test;
 
 import java.util.function.BiFunction;
@@ -17,16 +13,16 @@ import static org.junit.Assert.*;
 public class BoolFactoryTest implements AllFactory {
     @Test
     public void testBool() throws Exception {
-        Bool b = (Bool)bool(false).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Bool b = (Bool)bool(false).eval();
         assertEquals(b.boolValue(), false);
     }
 
     @Test
     public void testNot() throws Exception {
-        Bool b = (Bool)not(bool(true)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        Bool b = (Bool)not(bool(true)).eval();
         assertFalse(b.boolValue());
 
-        b = (Bool)not(bool(false)).eval(new Environment(), new Forwards(), new Store(), new Null());
+        b = (Bool)not(bool(false)).eval();
         assertTrue(b.boolValue());
     }
 
@@ -54,52 +50,52 @@ public class BoolFactoryTest implements AllFactory {
         assertEquals(
                 greaterThan,
                 ((Bool)f.apply(lit(6), lit(3))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                        .eval()).boolValue());
         assertEquals(
                 smallerThan,
                 ((Bool)f.apply(lit(3), lit(6))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                        .eval()).boolValue());
         assertEquals(
                 equal,
                 ((Bool)f.apply(lit(3), lit(3))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                        .eval()).boolValue());
 
         assertEquals(
                 greaterThan,
                 ((Bool)f.apply(lit(6.0), lit(3.0))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                        .eval()).boolValue());
         assertEquals(
                 smallerThan,
                 ((Bool)f.apply(lit(3.0), lit(6.0))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                        .eval()).boolValue());
         assertEquals(
                 equal,
                 ((Bool)f.apply(lit(3.0), lit(3.0))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                        .eval()).boolValue());
 
         assertEquals(
                 greaterThan,
                 ((Bool)f.apply(lit(6.0), lit(3))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                        .eval()).boolValue());
         assertEquals(
                 smallerThan,
                 ((Bool)f.apply(lit(3), lit(6.0))
-                        .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                        .eval()).boolValue());
     }
 
     @Test
     public void testEqual() throws Exception {
-        assertTrue(((Bool)equal(lit(3), lit(3)).eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
-        assertFalse(((Bool)equal(bool(true), bool(false)).eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+        assertTrue(((Bool)equal(lit(3), lit(3)).eval()).boolValue());
+        assertFalse(((Bool)equal(bool(true), bool(false)).eval()).boolValue());
     }
 
     @Test
     public void testPhysicalEqual() throws Exception {
         Int i = new Int(0);
         assertTrue(((Bool)physicalEqual((e,f,s,g) -> i, (e,f,s,g) -> i)
-                .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                .eval()).boolValue());
 
         assertFalse(((Bool)physicalEqual(lit(1), lit(1))
-                .eval(new Environment(), new Forwards(), new Store(), new Null())).boolValue());
+                .eval()).boolValue());
     }
 }
