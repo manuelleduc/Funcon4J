@@ -34,4 +34,14 @@ public class TypeExpAlgTest extends TestStub {
         test("match (3 : int * float) with (3 : int * float) -> true | _ -> false;;", "true");
         test("match (3 : int * float) with 3 -> true | _ -> false;;", "true");
     }
+
+    @Test
+    public void testVariantDecl() throws Exception {
+        // TODO
+    }
+
+    @Test
+    public void testVariantTypeDecl() throws Exception {
+        // TODO
+    }
 }

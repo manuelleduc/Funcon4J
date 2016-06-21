@@ -2,23 +2,14 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.values.NullFactory;
 import funcons.values.Environment;
 import funcons.values.Null;
 import funcons.values.Undefined;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class NullFactoryTest {
-    private interface Alg extends NullFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class NullFactoryTest extends TestStub {
 
     @Test
     public void testNull_() throws Exception {

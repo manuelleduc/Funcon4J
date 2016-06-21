@@ -1,10 +1,11 @@
 package funcons.interpreter.collections;
 
 import funcons.algebras.collections.TupleAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.functions.PatternAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.functions.FunctionFactory;
-import funcons.interpreter.functions.PatternFactory;
-import funcons.interpreter.storage.EnvironmentFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Tuple;
@@ -13,9 +14,10 @@ import funcons.values.properties.Value;
 import java.util.NoSuchElementException;
 
 public interface TupleFactory extends
-        EnvironmentFactory,
-        FunctionFactory,
-        PatternFactory,
+        EnvironmentAlg<IEval>,
+        FunctionAlg<IEval>,
+        PatternAlg<IEval>,
+        SupplyGivenAlg<IEval>,
         TupleAlg<IEval> {
 
     @Override

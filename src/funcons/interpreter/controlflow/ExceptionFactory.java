@@ -1,13 +1,20 @@
 package funcons.interpreter.controlflow;
 
 import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.functions.FunctionFactory;
+import funcons.values.Abs;
 import funcons.values.cl.CLMatchFailureException;
 import funcons.values.signals.FailureTrue;
 import funcons.values.signals.RunTimeFunconException;
 
-public interface ExceptionFactory extends LogicControlFactory, FunctionFactory, ExceptionAlg<IEval> {
+public interface ExceptionFactory extends
+        LogicControlAlg<IEval>,
+        FunctionAlg<IEval>,
+        SupplyGivenAlg<IEval>,
+        ExceptionAlg<IEval> {
 
     @Override
     default IEval fail() {
@@ -71,11 +78,12 @@ public interface ExceptionFactory extends LogicControlFactory, FunctionFactory, 
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     default IEval preferOver(IEval a1, IEval a2) {
         return (env, forward, store, given) ->
                 abs(else_(
-                        unAbs(a1, env, forward, store, given),
-                        unAbs(a2, env, forward, store, given))
-                ).eval(env, forward, store, given);
+                        ((Abs<IEval>)a1.eval(env, forward, store, given)).body(),
+                        ((Abs<IEval>)a2.eval(env, forward, store, given)).body()
+                )).eval(env, forward, store, given);
     }
 }

@@ -3,28 +3,17 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.functions.FunctionFactory;
-import funcons.interpreter.storage.EnvironmentFactory;
-import funcons.interpreter.values.IntFactory;
 import funcons.values.Abs;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class EnvironmentFactoryTest {
-    private interface Alg extends EnvironmentFactory, FunctionFactory, IntFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class EnvironmentFactoryTest extends TestStub {
 
     @Test
     public void testId() throws Exception {

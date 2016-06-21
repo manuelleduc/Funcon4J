@@ -1,12 +1,20 @@
 package funcons.interpreter.controlflow;
 
 import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.values.NullFactory;
 import funcons.values.Bool;
+import funcons.values.Environment;
 import funcons.values.Null;
 
-public interface LogicControlFactory extends NullFactory, LogicControlAlg<IEval> {
+public interface LogicControlFactory extends
+        NullAlg<IEval>,
+        FunctionAlg<IEval>,
+        EnvironmentAlg<IEval>,
+        LogicControlAlg<IEval> {
+
     @Override
     default IEval effect(IEval e) {
         return (env, forward, store, given) -> {
@@ -31,10 +39,28 @@ public interface LogicControlFactory extends NullFactory, LogicControlAlg<IEval>
 
     @Override
     default IEval whileTrue(IEval e, IEval c) {
-        return ifTrue(
+        return (env, forward, store, given) -> {
+            while (((Bool)e.eval(env, forward, store, given)).boolValue()) {
+                c.eval(env, forward, store, given);
+            }
+            return null_().eval(env, forward, store, given);
+        };
+/*        return ifTrue(
                 e,
                 seq(c, (env, forward, store, given) -> whileTrue(e, c).eval(env, forward, store, given)),
                 null_()
-        );
+        );*/
+    }
+
+    @Override
+    default IEval for_(IEval id, IEval startValue, IEval cond, IEval incr, IEval exp) {
+        return (env, forward, store, given) -> {
+            for (env = env.extend((Environment)bindValue(id, startValue).eval(env, forward, store, given));
+                 ((Bool)cond.eval(env, forward, store, given)).boolValue();
+                 env = env.extend((Environment)bindValue(id, incr).eval(env, forward, store, given))) {
+                exp.eval(env, forward, store, given);
+            }
+            return null_().eval(env, forward, store, given);
+        };
     }
 }

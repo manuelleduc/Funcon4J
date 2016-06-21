@@ -1,11 +1,12 @@
 package funcons.interpreter.types;
 
+import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.types.TypeAlg;
+import funcons.algebras.values.BoolAlg;
+import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.controlflow.ExceptionFactory;
-import funcons.interpreter.functions.FunctionFactory;
-import funcons.interpreter.functions.PatternFactory;
-import funcons.interpreter.values.BoolFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.cl.CLVariant;
@@ -14,10 +15,11 @@ import funcons.values.ids.TypeVar;
 import funcons.values.types.*;
 
 public interface TypeFactory extends
-        BoolFactory,
-        FunctionFactory,
-        PatternFactory,
-        ExceptionFactory,
+        BoolAlg<IEval>,
+        FunctionAlg<IEval>,
+        PatternAlg<IEval>,
+        ExceptionAlg<IEval>,
+        NullAlg<IEval>,
         TypeAlg<IEval> {
 
     @Override

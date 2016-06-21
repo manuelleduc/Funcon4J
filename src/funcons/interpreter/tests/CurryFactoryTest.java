@@ -3,23 +3,14 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.functions.CurryFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
-import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class CurryFactoryTest {
-    private interface Alg extends CurryFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class CurryFactoryTest extends TestStub {
 
     @Test
     public void testPartialApp() throws Exception {

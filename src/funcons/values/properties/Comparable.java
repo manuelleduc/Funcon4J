@@ -16,7 +16,7 @@ public interface Comparable {
     }
 
     default java.lang.Boolean greaterThan(Object other) {
-        return !equalsComparable(other) && ((Comparable)other).smallerThan(this);
+        return ((Comparable)other).smallerThan(this) && !equalsComparable(other);
     }
 
     default java.lang.Boolean smallerThan(Object other) {

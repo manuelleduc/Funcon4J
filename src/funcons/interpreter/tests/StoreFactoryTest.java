@@ -2,25 +2,15 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.storage.StoreFactory;
-import funcons.interpreter.values.IntFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
 import funcons.values.Variable;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class StoreFactoryTest {
-    private interface Alg extends StoreFactory, IntFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class StoreFactoryTest extends TestStub {
 
     @Test
     public void testAlloc() throws Exception {

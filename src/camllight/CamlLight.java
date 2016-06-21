@@ -4,7 +4,6 @@ import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
 import funcons.carriers.IEval;
-import funcons.debug.Tracer;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.values.Environment;
@@ -23,10 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class CamlLight {
 
@@ -144,18 +140,18 @@ public class CamlLight {
     }
 
     private static void runPerformanceTests() throws IOException, FunconException {
-        runPerformance("performanceTests/mandelbrot.ml"); // FunCaml: 387.1s, Ocaml: 75.5s, Py: 170.2s
-        runPerformance("performanceTests/fib.ml"); // FunCaml: 237.8s, Ocaml: 8.1s
-        runPerformance("performanceTests/ack.ml"); // FunCaml: 126.s, Ocaml: 1.4s
+        //runPerformance("performanceTests/mandelbrot.ml"); // FunCaml: 387.1s, Ocaml: 75.5s, Py: 170.2s
+        //runPerformance("performanceTests/fib.ml"); // FunCaml: 237.8s, Ocaml: 8.1s
+        //runPerformance("performanceTests/ack.ml"); // FunCaml: 126.s, Ocaml: 1.4s
         runPerformance("performanceTests/harmonic.ml"); // FunCaml: 38.7s, Ocaml: 0.2s
-        runPerformance("performanceTests/tak.ml"); // FunCaml: 406.7s, Ocaml: 5.9s
+        //runPerformance("performanceTests/tak.ml"); // FunCaml: 406.7s, Ocaml: 5.9s
     }
 
     public static void main(String[] args) throws FunconException, IOException {
         //runExamples();
-        runGivenTests();
+        //runGivenTests();
         //runPerformanceTests();
-
+        interpret("1 + 2;;");
         /*camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.value.RecordFactory() {};
         Value v = CamlLight.eval(
                 "let add x y = x + y;; add 1 2;;",

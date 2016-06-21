@@ -2,24 +2,13 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.collections.VectorFactory;
-import funcons.interpreter.storage.EnvironmentFactory;
-import funcons.interpreter.values.IntFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class VectorFactoryTest {
-    private interface Alg extends VectorFactory, IntFactory, EnvironmentFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class VectorFactoryTest extends TestStub {
 
     @Test
     public void testVector() throws Exception {

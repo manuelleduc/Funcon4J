@@ -3,25 +3,14 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.collections.ListFactory;
-import funcons.interpreter.recursion.RecursiveFactory;
-import funcons.interpreter.types.TypeFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
 import funcons.values.recursion.Fwd;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class RecursiveFactoryTest {
-    private interface Alg extends RecursiveFactory, ListFactory, TypeFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class RecursiveFactoryTest extends TestStub {
 
     @Test
     public void testFreshFwd() throws Exception {

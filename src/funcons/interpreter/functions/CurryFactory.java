@@ -1,12 +1,20 @@
 package funcons.interpreter.functions;
 
+import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.functions.CurryAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
+import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.collections.TupleFactory;
 import funcons.values.Abs;
 import funcons.values.Int;
 
-public interface CurryFactory extends FunctionFactory, TupleFactory, CurryAlg<IEval> {
+public interface CurryFactory extends
+        FunctionAlg<IEval>,
+        TupleAlg<IEval>,
+        IntAlg<IEval>,
+        SupplyGivenAlg<IEval>,
+        CurryAlg<IEval> {
 
     @Override
     default IEval partialApp(IEval f, IEval x) {

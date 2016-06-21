@@ -1,6 +1,7 @@
 package camllight.algebras.typeexprs;
 
 import funcons.algebras.types.TypeAlg;
+import noa.syntax.Level;
 import noa.syntax.Syntax;
 
 import java.util.List;
@@ -71,5 +72,15 @@ public interface TypeExpAlg<E, A extends TypeAlg<E>> {
     @Syntax("tupletypelist = '*' type")
     default E tupleTypeSingle(E type) {
         return type;
+    }
+
+    @Syntax("varianttype = CONSTRTOKEN") @Level(0)
+    default E variantDecl(java.lang.String token) {
+        return alg().clVariant(token, alg().tupleType());
+    }
+
+    @Syntax("varianttype = CONSTRTOKEN 'of' type") @Level(1)
+    default E variantTypeDecl(java.lang.String token, E type) {
+        return alg().clVariant(token, type);
     }
 }

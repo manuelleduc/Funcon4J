@@ -3,7 +3,6 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.types.TypeFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
@@ -12,19 +11,11 @@ import funcons.values.ids.Meta;
 import funcons.values.ids.TypeVar;
 import funcons.values.signals.FailureTrue;
 import funcons.values.types.*;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class TypeFactoryTest {
-    private interface Alg extends TypeFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class TypeFactoryTest extends TestStub {
 
     @Test
     public void testType() throws Exception {

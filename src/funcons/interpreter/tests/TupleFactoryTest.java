@@ -3,27 +3,18 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.collections.TupleFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
 import funcons.values.Tuple;
 import funcons.values.ids.Id;
 import funcons.values.signals.FailureTrue;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class TupleFactoryTest {
-    private interface Alg extends TupleFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class TupleFactoryTest extends TestStub {
 
     @Test
     public void testTuple() throws Exception {

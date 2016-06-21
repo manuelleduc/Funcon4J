@@ -1,10 +1,10 @@
 package funcons.interpreter.auxiliary;
 
 import funcons.algebras.auxiliary.PrintAlg;
+import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.values.NullFactory;
 
-public interface PrintFactory extends NullFactory, PrintAlg<IEval> {
+public interface PrintFactory extends NullAlg<IEval>, PrintAlg<IEval> {
     @Override
     default IEval print(IEval x) {
         return (env, forward, store, given) -> {

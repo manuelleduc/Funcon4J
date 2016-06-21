@@ -2,11 +2,8 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.auxiliary.PrintFactory;
-import funcons.interpreter.values.IntFactory;
 import funcons.values.Environment;
 import funcons.values.Null;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -14,14 +11,7 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 
-public class PrintFactoryTest {
-    private interface Alg extends PrintFactory, IntFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class PrintFactoryTest extends TestStub {
 
     @Test
     public void testPrint() throws Exception {

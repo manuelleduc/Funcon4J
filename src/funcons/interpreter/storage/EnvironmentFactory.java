@@ -1,13 +1,16 @@
 package funcons.interpreter.storage;
 
+import funcons.algebras.collections.MapAlg;
 import funcons.algebras.storage.EnvironmentAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.collections.MapFactory;
 import funcons.values.Environment;
 import funcons.values.ids.Id;
 import funcons.values.ids.NameId;
 
-public interface EnvironmentFactory extends MapFactory, EnvironmentAlg<IEval> {
+public interface EnvironmentFactory extends
+        MapAlg<IEval>,
+        EnvironmentAlg<IEval> {
+
     @Override
     default IEval id(java.lang.String s) {
         return (env, forward, store, given) -> new Id(s);

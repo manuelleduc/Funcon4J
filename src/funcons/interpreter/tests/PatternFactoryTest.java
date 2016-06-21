@@ -3,24 +3,18 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.functions.PatternFactory;
-import funcons.values.*;
+import funcons.values.Bool;
+import funcons.values.Environment;
+import funcons.values.Int;
+import funcons.values.Null;
 import funcons.values.ids.Id;
 import funcons.values.properties.Value;
 import funcons.values.signals.FailureTrue;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PatternFactoryTest {
-    private interface Alg extends PatternFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class PatternFactoryTest extends TestStub {
 
     @Test
     public void testOnly() throws Exception {

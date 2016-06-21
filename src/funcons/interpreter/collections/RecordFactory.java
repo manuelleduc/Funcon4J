@@ -1,12 +1,12 @@
 package funcons.interpreter.collections;
 
 import funcons.algebras.collections.RecordAlg;
+import funcons.algebras.functions.PatternAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.functions.PatternFactory;
 import funcons.values.*;
 import funcons.values.properties.Value;
 
-public interface RecordFactory extends PatternFactory, RecordAlg<IEval> {
+public interface RecordFactory extends PatternAlg<IEval>, RecordAlg<IEval> {
     @Override
     default IEval record(IEval field, IEval val) {
         return (env, forward, store, given) -> {

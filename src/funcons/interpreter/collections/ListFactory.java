@@ -1,19 +1,25 @@
 package funcons.interpreter.collections;
 
 import funcons.algebras.collections.ListAlg;
+import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.functions.PatternAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
+import funcons.algebras.values.BoolAlg;
+import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.controlflow.LogicControlFactory;
-import funcons.interpreter.functions.FunctionFactory;
-import funcons.interpreter.functions.PatternFactory;
-import funcons.interpreter.storage.EnvironmentFactory;
 import funcons.values.*;
 import funcons.values.properties.Value;
 
 public interface ListFactory extends
-        EnvironmentFactory,
-        LogicControlFactory,
-        FunctionFactory,
-        PatternFactory,
+        EnvironmentAlg<IEval>,
+        LogicControlAlg<IEval>,
+        FunctionAlg<IEval>,
+        PatternAlg<IEval>,
+        IntAlg<IEval>,
+        BoolAlg<IEval>,
+        SupplyGivenAlg<IEval>,
         ListAlg<IEval> {
 
     @Override

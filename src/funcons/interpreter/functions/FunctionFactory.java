@@ -1,20 +1,20 @@
 package funcons.interpreter.functions;
 
 import funcons.algebras.functions.FunctionAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
+import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.storage.EnvironmentFactory;
-import funcons.interpreter.storage.SupplyGivenFactory;
-import funcons.interpreter.values.IntFactory;
 import funcons.values.Abs;
 import funcons.values.Environment;
 import funcons.values.properties.Value;
 
 public interface FunctionFactory extends
-        IntFactory,
-        SupplyGivenFactory,
-        EnvironmentFactory,
+        IntAlg<IEval>,
+        SupplyGivenAlg<IEval>,
+        EnvironmentAlg<IEval>,
         FunctionAlg<IEval> {
 
     @Override

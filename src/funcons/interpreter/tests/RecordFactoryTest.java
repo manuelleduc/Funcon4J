@@ -2,24 +2,15 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.collections.RecordFactory;
 import funcons.values.*;
 import funcons.values.ids.Id;
 import funcons.values.signals.FailureTrue;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class RecordFactoryTest {
-    private interface Alg extends RecordFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class RecordFactoryTest extends TestStub {
 
     @Test
     public void testRecord() throws Exception {

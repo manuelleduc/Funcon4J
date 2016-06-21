@@ -3,28 +3,18 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.controlflow.ExceptionFactory;
-import funcons.interpreter.values.BoolFactory;
 import funcons.values.Bool;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
-import funcons.values.signals.FailureTrue;
 import funcons.values.cl.CLMatchFailureException;
+import funcons.values.signals.FailureTrue;
 import funcons.values.signals.RunTimeFunconException;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ExceptionFactoryTest {
-    private interface Alg extends ExceptionFactory, BoolFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class ExceptionFactoryTest extends TestStub {
 
     @Test
     public void testFail() throws Exception {

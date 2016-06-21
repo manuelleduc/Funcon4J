@@ -1,19 +1,23 @@
 package funcons.interpreter.functions;
 
+import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
+import funcons.algebras.values.BoolAlg;
 import funcons.carriers.IEval;
-import funcons.interpreter.controlflow.ExceptionFactory;
-import funcons.interpreter.controlflow.LogicControlFactory;
-import funcons.interpreter.storage.SupplyGivenFactory;
-import funcons.interpreter.values.BoolFactory;
+import funcons.values.Abs;
 import funcons.values.Environment;
 
 public interface PatternFactory extends
-        BoolFactory,
-        LogicControlFactory,
-        SupplyGivenFactory,
-        FunctionFactory,
-        ExceptionFactory,
+        BoolAlg<IEval>,
+        LogicControlAlg<IEval>,
+        SupplyGivenAlg<IEval>,
+        FunctionAlg<IEval>,
+        ExceptionAlg<IEval>,
+        EnvironmentAlg<IEval>,
         PatternAlg<IEval> {
 
     @Override
@@ -37,18 +41,20 @@ public interface PatternFactory extends
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     default IEval pattUnion(IEval pat1, IEval pat2) {
         return abs((env, forward, store, given) -> {
-            Environment env1 = (Environment)unAbs(pat1, env, forward, store, given).eval(env, forward, store, given);
-            Environment env2 = (Environment)unAbs(pat2, env, forward, store, given).eval(env, forward, store, given);
+            Environment env1 = (Environment)((Abs<IEval>)pat1.eval(env, forward, store, given)).body().eval(env, forward, store, given);
+            Environment env2 = (Environment)((Abs<IEval>)pat2.eval(env, forward, store, given)).body().eval(env, forward, store, given);
             return env1.extend(env2);
         });
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     default IEval pattNonBinding(IEval patt) {
         return abs((env, forward, store, given) -> {
-            unAbs(patt, env, forward, store, given).eval(env, forward, store, given);
+            ((Abs<IEval>)patt.eval(env, forward, store, given)).body().eval(env, forward, store, given);
             return new Environment();
         });
     }

@@ -1,6 +1,10 @@
 package camllight.algebras.exprs;
 
 import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.storage.SupplyGivenAlg;
+import funcons.algebras.values.BoolAlg;
+import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
@@ -11,7 +15,11 @@ public interface ControlAlg
                 LogicControlAlg<E> &
                 funcons.algebras.functions.FunctionAlg<E> &
                 funcons.algebras.collections.ListAlg<E> &
-                funcons.algebras.controlflow.ExceptionAlg<E>> {
+                funcons.algebras.controlflow.ExceptionAlg<E> &
+                SupplyGivenAlg<E> &
+                BoolAlg<E> &
+                IntAlg<E> &
+                EnvironmentAlg<E>> {
     A alg();
 
     @Syntax("exp = 'if' exp 'then' exp") @Level(800)
@@ -31,7 +39,13 @@ public interface ControlAlg
 
     @Syntax("exp = 'for' ident '=' exp 'to' exp 'do' exp 'done'") @Level(600)
     default E for_(E id, E start, E finish, E exp) {
-        return alg().applyToEach(alg().abs(alg().bind(id), alg().effect(exp)), alg().intClosedInterval(start, finish));
+        /*return alg().for_(
+                id,
+                start,
+                alg().smallerEqual(alg().boundValue(id), finish),
+                alg().intAdd(alg().boundValue(id), alg().lit(1)),
+                exp);
+        */return alg().applyToEach(alg().abs(alg().bind(id), alg().effect(exp)), alg().intClosedInterval(start, finish));
     }
 
     @Syntax("exp = 'for' ident '=' exp 'downto' exp 'do' exp 'done'") @Level(601)

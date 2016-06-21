@@ -3,16 +3,12 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.auxiliary.PrintFactory;
-import funcons.interpreter.collections.ListFactory;
-import funcons.interpreter.values.IntFactory;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.List;
 import funcons.values.Null;
 import funcons.values.ids.Id;
 import funcons.values.signals.FailureTrue;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -20,14 +16,7 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.*;
 
-public class ListFactoryTest {
-    private interface Alg extends ListFactory, IntFactory, PrintFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class ListFactoryTest extends TestStub {
 
     @Test
     public void testList() throws Exception {

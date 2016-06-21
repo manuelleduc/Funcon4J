@@ -2,26 +2,17 @@ package funcons.interpreter.tests;
 
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.values.StringFactory;
 import funcons.values.Char;
 import funcons.values.Environment;
 import funcons.values.Null;
 import funcons.values.String;
 import funcons.values.cl.CLChar;
 import funcons.values.cl.CLString;
-import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class StringFactoryTest {
-    private interface Alg extends StringFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
+public class StringFactoryTest extends TestStub {
 
     @Test
     public void testString() throws Exception {

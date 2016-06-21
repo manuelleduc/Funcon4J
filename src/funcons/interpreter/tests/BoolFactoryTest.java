@@ -3,29 +3,17 @@ package funcons.interpreter.tests;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.interpreter.values.BoolFactory;
-import funcons.interpreter.values.FloatFactory;
-import funcons.interpreter.values.IntFactory;
 import funcons.values.Bool;
 import funcons.values.Environment;
 import funcons.values.Int;
 import funcons.values.Null;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.function.BiFunction;
 
 import static org.junit.Assert.*;
 
-public class BoolFactoryTest {
-    private interface Alg extends BoolFactory, IntFactory, FloatFactory {}
-    private Alg alg;
-
-    @Before
-    public void setUp() throws Exception {
-        alg = new Alg() {};
-    }
-
+public class BoolFactoryTest extends TestStub {
     @Test
     public void testBool() throws Exception {
         Bool b = (Bool)alg.bool(false).eval(new Environment(), new Forwards(), new Store(), new Null());
