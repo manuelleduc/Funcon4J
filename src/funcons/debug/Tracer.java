@@ -6,9 +6,9 @@ import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.AllFactory;
-import funcons.values.Environment;
 import funcons.values.properties.Value;
 import funcons.values.signals.FunconException;
+import org.rascalmpl.value.IMap;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -38,7 +38,7 @@ public class Tracer<A> implements InvocationHandler{
                 Tracer.class.getClassLoader(),
                 new Class<?>[] {IEval.class},
                 (Object p, Method m, Object[] as) -> {
-                    Environment env = (Environment) as[0];
+                    IMap env = (IMap) as[0];
                     Forwards forwards = (Forwards) as[1];
                     Store store = (Store)as[2];
                     Value given = (Value)as[3];

@@ -29,27 +29,26 @@ public interface EnvironmentFactory extends
 
     @Override
     default IEval boundValue(IEval id) {
-        return (env, forward, store, given) -> env.val((Id) id.eval(env, forward, store, given));
+        return null;
+        //return (env, forward, store, given) -> env.val((Id) id.eval(env, forward, store, given));
+    }
+
+    @Override
+    default IEval closure(IEval x, IEval environment) {
+        return null;
+        //return (env, forward, store, given) -> x.eval((Environment)environment.eval(env, forward, store, given), forward, store, given);
     }
 
     @Override
     default IEval scope(IEval localBindings, IEval exp) {
-        return (env, forward, store, given) ->
-                exp.eval(env.extend((Environment)localBindings.eval(env, forward, store, given)), forward, store, given);
+        return null;
+        //return (env, forward, store, given) ->
+        //        exp.eval(env.join((Environment)localBindings.eval(env, forward, store, given)), forward, store, given);
     }
 
     @Override
     default IEval environment() {
         return (env, forward, store, given) -> new Environment();
-    }
-
-    @Override
-    default IEval environment(IEval id, IEval val) {
-        return (env, forward, store, given) ->
-                new Environment(
-                        (Id)id.eval(env, forward, store, given),
-                        val.eval(env, forward, store, given)
-                );
     }
 
     @Override

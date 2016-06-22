@@ -6,7 +6,6 @@ import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.Bool;
-import funcons.values.Environment;
 import funcons.values.Null;
 
 public interface LogicControlFactory extends
@@ -54,13 +53,14 @@ public interface LogicControlFactory extends
 
     @Override
     default IEval for_(IEval id, IEval startValue, IEval cond, IEval incr, IEval exp) {
-        return (env, forward, store, given) -> {
-            for (env = env.extend((Environment)bindValue(id, startValue).eval(env, forward, store, given));
+        return null;
+        /*return (env, forward, store, given) -> {
+            for (env = env.join((Environment)bindValue(id, startValue).eval(env, forward, store, given));
                  ((Bool)cond.eval(env, forward, store, given)).boolValue();
-                 env = env.extend((Environment)bindValue(id, incr).eval(env, forward, store, given))) {
+                 env = env.join((Environment)bindValue(id, incr).eval(env, forward, store, given))) {
                 exp.eval(env, forward, store, given);
             }
             return null_().eval(env, forward, store, given);
-        };
+        };*/
     }
 }

@@ -6,8 +6,8 @@ public interface EnvironmentAlg<E> {
     E bindValue(E id, E exp);
     E boundValue(E id);
     E scope(E localBindings, E exp);
+    E closure(E x, E environment);
 
     E environment();
-    E environment(E id, E val);
     E accum(E env, E decl);
 }

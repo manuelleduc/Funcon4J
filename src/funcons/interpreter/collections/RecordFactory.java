@@ -56,7 +56,7 @@ public interface RecordFactory extends PatternAlg<IEval>, RecordAlg<IEval> {
             Record r = (Record)record.eval(env, forward, store, given);
             Environment environment = new Environment();
             for (Field field : m.keys()) {
-                environment = environment.extend(
+                environment = environment.join(
                         (Environment)match(
                                 recordSelect((e,f,s,g) -> r, (e,f,s,g) -> field),
                                 (e,f,s,g) -> m.val(field)

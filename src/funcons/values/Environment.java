@@ -27,7 +27,7 @@ public class Environment extends Map<Id, Value> {
     }
 
     @Override
-    public Environment extend(Map<Id, Value> m) {
+    public Environment join(Map<Id, Value> m) {
         return new Environment(this, m);
     }
 }

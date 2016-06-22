@@ -52,7 +52,7 @@ public interface RecursiveFactory extends
             Map map = (Map)idFwdMap.eval(env, forward, store, given);
             for (Object idObject : map.keys()) {
                 Id id = (Id)idObject;
-                Value v = env.val(id);
+                Value v = boundValue((e,f,s,g)->(Value)idObject).eval(env, forward, store, given);
                 if (v == null) {
                     v = new Undefined();
                 }
@@ -67,7 +67,7 @@ public interface RecursiveFactory extends
     @Override
     default IEval reclose(IEval map, IEval decl) {
         return (env, forward, store, given) -> {
-            Map m = (Map)map.eval(env, forward, store, given);
+            Value m = map.eval(env, forward, store, given);
             return accum(scope((e,s,f,g) -> m, decl), seq(setForwards((e,s,f,g) -> m), environment())).eval(env, forward, store, given);
         };
     }

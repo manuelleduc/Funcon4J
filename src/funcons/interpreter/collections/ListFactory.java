@@ -51,7 +51,7 @@ public interface ListFactory extends
             List list = (List)l.eval(env, forward, store, given);
             Environment e1 = (Environment)match((e, f, s, g) -> list.head(), p1).eval(env, forward, store, given);
             Environment e2 = (Environment)match((e, f, s, g) -> list.tail(), p2).eval(env, forward, store, given);
-            return e1.extend(e2);
+            return e1.join(e2);
         };
     }
 

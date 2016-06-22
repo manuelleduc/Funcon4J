@@ -51,7 +51,7 @@ public interface MapFactory extends MapAlg<IEval> {
             Map m1 = (Map)map1.eval(env, forward, store, given);
             Map m2 = (Map)map2.eval(env, forward, store, given);
             @SuppressWarnings("unchecked")
-            Map m3 = m1.extend(m2);
+            Map m3 = m1.join(m2);
             return m3;
         };
     }
@@ -62,7 +62,7 @@ public interface MapFactory extends MapAlg<IEval> {
             Map m1 = (Map)map1.eval(env, forward, store, given);
             Map m2 = (Map)map2.eval(env, forward, store, given);
             @SuppressWarnings("unchecked")
-            Map m3 = m2.extend(m1);
+            Map m3 = m2.join(m1);
             return m3;
         };
     }

@@ -13,10 +13,10 @@ import funcons.values.signals.FunconException;
 import noa.proxy.Recorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.rascalmpl.value.impl.fast.ValueFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -43,8 +43,8 @@ public class CamlLight {
     public static Value eval(String src, camllight.algebras.AllAlg alg) throws FunconException {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         IEval eval = builder.build(alg);
-        Environment env = importStandardLibrary(new Environment());
-        return eval.eval(env, new Forwards(), new Store(), new Null());
+        //Environment env = importStandardLibrary(new Environment());
+        return eval.eval(ValueFactory.getInstance().mapWriter().done(), new Forwards(), new Store(), new Null());
     }
 
     private static void interpret(String src) throws FunconException {
@@ -70,7 +70,7 @@ public class CamlLight {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         IEval eval = builder.build((camllight.algebras.AllAlg) () -> new funcons.interpreter.AllFactory() {});
         Environment env = importStandardLibrary(new Environment());
-        eval.eval(env, new Forwards(), new Store(), new Null());
+        eval.eval(ValueFactory.getInstance().mapWriter().done(), new Forwards(), new Store(), new Null());
         long end = System.currentTimeMillis();
         System.out.println("time taken: " + (end - start));
     }
@@ -107,7 +107,7 @@ public class CamlLight {
             }
             methodName = methodName.substring(0, methodName.length() - 3);
 
-            try {
+            /*try {
                 final Environment env2 = env;
                 env = (Environment)alg.mapUnion(
                         (e,f,s,g) -> env2,
@@ -115,7 +115,7 @@ public class CamlLight {
                 ).eval(env, new Forwards(), new Store(), new Null());
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
 
         return env;
@@ -151,7 +151,6 @@ public class CamlLight {
         //runExamples();
         //runGivenTests();
         //runPerformanceTests();
-        interpret("3 / 2;;");
         /*camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.value.RecordFactory() {};
         Value v = CamlLight.eval(
                 "let add x y = x + y;; add 1 2;;",

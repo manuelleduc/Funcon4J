@@ -46,7 +46,7 @@ public interface PatternFactory extends
         return abs((env, forward, store, given) -> {
             Environment env1 = (Environment)((Abs<IEval>)pat1.eval(env, forward, store, given)).body().eval(env, forward, store, given);
             Environment env2 = (Environment)((Abs<IEval>)pat2.eval(env, forward, store, given)).body().eval(env, forward, store, given);
-            return env1.extend(env2);
+            return env1.join(env2);
         });
     }
 

@@ -91,7 +91,7 @@ public interface TupleFactory extends
             Tuple t = (Tuple)tup.eval(env, forward, store, given);
             Environment e1 = (Environment)match((e, f, s, g) -> t.head(), p1).eval(env, forward, store, given);
             Environment e2 = (Environment)match((e, f, s, g) -> t.tail(), p2).eval(env, forward, store, given);
-            return e1.extend(e2);
+            return e1.join(e2);
         };
     }
 

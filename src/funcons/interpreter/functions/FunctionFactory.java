@@ -6,10 +6,7 @@ import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import funcons.entities.Forwards;
-import funcons.entities.Store;
 import funcons.values.Abs;
-import funcons.values.Environment;
 import funcons.values.List;
 import funcons.values.Null;
 import funcons.values.properties.Value;
@@ -36,8 +33,10 @@ public interface FunctionFactory extends
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     default IEval apply(IEval abs, IEval arg) {
-        return (env, forward, store, given) -> supply(arg, unAbs(abs, env, forward, store, given)).eval(env, forward, store, given);
+        return (env, forward, store, given) -> supply(arg,
+                ((Abs<IEval>)abs.eval(env, forward, store, given)).body()).eval(env, forward, store, given);
     }
 
     @Override
@@ -61,26 +60,16 @@ public interface FunctionFactory extends
     }
 
     @Override
-    default IEval closure(IEval x, IEval environment) {
-        return (env, forward, store, given) -> x.eval((Environment)environment.eval(env, forward, store, given), forward, store, given);
-    }
-
-    @Override
+    @SuppressWarnings("unchecked")
     default IEval close(IEval abs) {
         return (env, forward, store, given) ->
-                abs(closure(unAbs(abs, env, forward, store, given), (e, f, s, g) -> env)).eval(env, forward, store, given);
+                abs(closure(
+                        ((Abs<IEval>)abs.eval(env, forward, store, given)).body(),
+                        (e, f, s, g) -> env)).eval(env, forward, store, given);
     }
 
     @Override
     default IEval bind(IEval id) {
         return abs(bindValue(id, given()));
-    }
-
-    default IEval unAbs(IEval abs, Environment e, Forwards f, Store s, Value g) {
-        return (env, forward, store, given) -> {
-            @SuppressWarnings("unchecked")
-            IEval result = ((Abs<IEval>)abs.eval(e, f, s, g)).body();
-            return result.eval(env, forward, store, given);
-        };
     }
 }

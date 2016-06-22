@@ -3,7 +3,6 @@ package funcons.values;
 import funcons.values.properties.Comparable;
 import funcons.values.properties.Value;
 
-import java.lang.*;
 import java.lang.String;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -60,7 +59,7 @@ public class Map<K, V> implements Value, Comparable {
         return new Map<>(this, key, x);
     }
 
-    public Map<K, V> extend(Map<K, V> m) {
+    public Map<K, V> join(Map<K, V> m) {
         return new Map<>(this, m);
     }
 

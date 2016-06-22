@@ -116,12 +116,12 @@ public interface GlobalAlg
 
     @Syntax("decltypeappendix = '|' CONSTRTOKEN 'of' type") @Level(1)
     default E declConstrTypeAppendix(java.lang.String constrToken, E type) {
-        return alg().environment(alg().id(constrToken), alg().abs(alg().clVariant(constrToken, alg().given())));
+        return alg().bindValue(alg().id(constrToken), alg().abs(alg().clVariant(constrToken, alg().given())));
     }
 
     @Syntax("decltypeappendix = '|' CONSTRTOKEN") @Level(0)
     default E declEnumTypeAppendix(java.lang.String constrToken) {
-        return alg().environment(alg().id(constrToken), alg().clVariant(constrToken, alg().null_()));
+        return alg().bindValue(alg().id(constrToken), alg().clVariant(constrToken, alg().null_()));
     }
 
     // Syntax only
@@ -160,11 +160,11 @@ public interface GlobalAlg
 
     @Syntax("declexceptionappendix = 'and' CONSTRTOKEN") @Level(0)
     default E declEnumExceptionAppendix(java.lang.String constrToken) {
-        return alg().environment(alg().id(constrToken), alg().clVariant(constrToken, alg().null_()));
+        return alg().bindValue(alg().id(constrToken), alg().clVariant(constrToken, alg().null_()));
     }
 
     @Syntax("declexceptionappendix = 'and' CONSTRTOKEN 'of' type") @Level(1)
     default E declConstrExceptionAppendix(java.lang.String constrToken, E type) {
-        return alg().environment(alg().id(constrToken), alg().abs(alg().clVariant(constrToken, alg().given())));
+        return alg().bindValue(alg().id(constrToken), alg().abs(alg().clVariant(constrToken, alg().given())));
     }
 }

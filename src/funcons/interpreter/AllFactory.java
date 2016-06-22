@@ -10,7 +10,7 @@ import funcons.interpreter.functions.CurryFactory;
 import funcons.interpreter.functions.FunctionFactory;
 import funcons.interpreter.functions.PatternFactory;
 import funcons.interpreter.recursion.RecursiveFactory;
-import funcons.interpreter.storage.EnvironmentFactory;
+import funcons.interpreter.storage.RascalEnvironmentFactory;
 import funcons.interpreter.storage.StoreFactory;
 import funcons.interpreter.storage.SupplyGivenFactory;
 import funcons.interpreter.types.PolyTypeFactory;
@@ -19,7 +19,8 @@ import funcons.interpreter.values.*;
 
 public interface AllFactory extends funcons.algebras.AllAlg<IEval>,
         StoreFactory,
-        EnvironmentFactory,
+        //EnvironmentFactory,
+        RascalEnvironmentFactory,
         SupplyGivenFactory,
         BoolFactory,
         CurryFactory,
@@ -27,14 +28,14 @@ public interface AllFactory extends funcons.algebras.AllAlg<IEval>,
         ExceptionFactory,
         FloatFactory,
         FunctionFactory,
-        IntFactory,
-        //RascalIntFactory,
+        //IntFactory,
+        RascalIntFactory,
         IntFloatConversionFactory,
-        ListFactory,
-        //RascalListFactory,
+        //ListFactory,
+        RascalListFactory,
         LogicControlFactory,
-        MapFactory,
-        //RascalMapFactory,
+        //MapFactory,
+        RascalMapFactory,
         NullFactory,
         PolyTypeFactory,
         PrintFactory,
