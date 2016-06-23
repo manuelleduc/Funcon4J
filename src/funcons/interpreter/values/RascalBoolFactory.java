@@ -38,9 +38,9 @@ public interface RascalBoolFactory extends BoolAlg<IEval> {
     default IEval greaterEqual(IEval a, IEval b) {
         return (env, forwards, store, given) -> {
             if (((IBool)greater(a,b).eval(env, forwards, store, given)).getValue()) {
-                return equal(a, b).eval(env, forwards, store, given);
+                return bool(true).eval(env, forwards, store, given);
             }
-            return bool(false).eval(env, forwards, store, given);
+            return equal(a, b).eval(env, forwards, store, given);
         };
     }
 
