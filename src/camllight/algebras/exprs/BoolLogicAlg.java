@@ -15,7 +15,6 @@ public interface BoolLogicAlg<E, A extends BoolAlg<E> & LogicControlAlg<E>> {
 
     @Syntax("exp = exp ('||' | 'or') exp") @Level(1505)
     default E lOr(E e1, E e2) {
-        alg().bool(false);
         return alg().ifTrue(e1, alg().bool(true), e2);
     }
 

@@ -12,6 +12,7 @@ public class EnvironmentFactoryTest implements AllFactory {
     @Test
     public void testId() throws Exception {
         assertEquals(id("foo").eval(), id("foo").eval());
+        assertNotEquals(id("bar").eval(), id("foo").eval());
     }
 
     @Test
