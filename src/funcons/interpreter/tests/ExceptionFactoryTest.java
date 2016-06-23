@@ -2,8 +2,6 @@ package funcons.interpreter.tests;
 
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
-import funcons.values.Bool;
-import funcons.values.Int;
 import funcons.values.cl.CLMatchFailureException;
 import funcons.values.signals.FailureTrue;
 import funcons.values.signals.RunTimeFunconException;
@@ -23,17 +21,13 @@ public class ExceptionFactoryTest implements AllFactory {
 
     @Test
     public void testWhenTrue() throws Exception {
-        Int i =(Int)whenTrue(bool(true), lit(0)).eval();
-        assertEquals(new Integer(0), i.intValue());
+        assertEquals(lit(0).eval(), whenTrue(bool(true), lit(0)).eval());
     }
 
     @Test
     public void testElse_() throws Exception {
-        Int i = (Int)else_(fail(), lit(3)).eval();
-        assertEquals(i.intValue(), new Integer(3));
-
-        i = (Int)else_(lit(2), lit(3)).eval();
-        assertEquals(i.intValue(), new Integer(2));
+        assertEquals(lit(3).eval(), else_(fail(), lit(3)).eval());
+        assertEquals(lit(2).eval(), else_(lit(2), lit(3)).eval());
     }
 
     @Test
@@ -69,12 +63,8 @@ public class ExceptionFactoryTest implements AllFactory {
     public void testPreferOver() throws Exception {
         IEval f1 = abs(seq(fail(), bool(false)));
         IEval f2 = abs(bool(true));
-
-        Bool b = (Bool)apply(preferOver(f1, f2), lit(0)).eval();
-        assertTrue(b.boolValue());
-
-        b = (Bool)apply(preferOver(f2, f1), lit(1)).eval();
-        assertTrue(b.boolValue());
+        assertEquals(bool(true).eval(), apply(preferOver(f1, f2), lit(0)).eval());
+        assertEquals(bool(true).eval(), apply(preferOver(f2, f1), lit(1)).eval());
     }
 
     @Test
@@ -98,11 +88,10 @@ public class ExceptionFactoryTest implements AllFactory {
             throw_(exception("Match_failure", lit(3))).eval();
             assertTrue(false);
         } catch(RunTimeFunconException e) {
-            assertEquals(new RunTimeFunconException("Match_failure", new Int(3)), e);
-            assertNotEquals(new RunTimeFunconException("Match_failure", new Int(4)), e);
-            assertNotEquals(new RunTimeFunconException("Match_failure"), e);
-            assertNotEquals(new CLMatchFailureException(), e);
-            assertNotEquals(new FailureTrue(), e);
+            assertEquals(exception("Match_failure", lit(3)).eval(), e);
+            assertNotEquals(exception("Match_failure", lit(4)).eval(), e);
+            assertNotEquals(exception("Match_failure").eval(), e);
+            assertNotEquals(exception("Match_fail").eval(), e);
         }
     }
 }

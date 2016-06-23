@@ -62,5 +62,4 @@ public interface BoolLogicAlg<E, A extends BoolAlg<E> & LogicControlAlg<E>> {
     default E notEqual(E e1, E e2) {
         return alg().not(alg().equal(e1, e2));
     }
-
 }

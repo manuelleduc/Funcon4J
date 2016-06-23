@@ -89,11 +89,27 @@ public interface ListFactory extends
     }
 
     @Override
+    default IEval listHead(IEval list) {
+        return (env, forwards, store, given) -> ((List)list.eval(env, forwards, store, given)).head();
+    }
+
+    @Override
+    default IEval listTail(IEval list) {
+        return (env, forwards, store, given) -> ((List)list.eval(env, forwards, store, given)).tail();
+    }
+
+    @Override
     default IEval projectList(IEval index, IEval list)  {
         return (env, forwards, store, given) -> {
             Int i = (Int)index.eval(env, forwards, store, given);
             List l = (List)list.eval(env, forwards, store, given);
             return l.get(i);
         };
+    }
+
+    @Override
+    default IEval listLength(IEval list) {
+        return (env, forwards, store, given) ->
+                ((List)list.eval(env, forwards, store, given)).length();
     }
 }

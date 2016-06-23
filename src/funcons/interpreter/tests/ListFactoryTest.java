@@ -64,4 +64,23 @@ public class ListFactoryTest implements AllFactory {
         assertEquals(lit(5).eval(), projectList(lit(0), list(lit(5), lit(6))).eval());
         assertEquals(lit(6).eval(), projectList(lit(1), list(lit(5), lit(6))).eval());
     }
+
+    @Test
+    public void testListLength() throws Exception {
+        assertEquals(lit(0).eval(), listLength(list()).eval());
+        assertEquals(lit(1).eval(), listLength(list(lit(0))).eval());
+        assertEquals(lit(2).eval(), listLength(list(lit(0), lit(1))).eval());
+    }
+
+    @Test
+    public void testListHead() throws Exception {
+        assertEquals(lit(0).eval(), listHead(list(lit(0))));
+        assertEquals(lit(0).eval(), listHead(list(lit(0), lit(1))));
+    }
+
+    @Test
+    public void testListTail() throws Exception {
+        assertEquals(list().eval(), listTail(list(lit(0))));
+        assertEquals(list(lit(1)).eval(), listTail(list(lit(0), lit(1))));
+    }
 }

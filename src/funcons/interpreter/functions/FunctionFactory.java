@@ -1,14 +1,15 @@
 package funcons.interpreter.functions;
 
+import funcons.algebras.collections.ListAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.storage.SupplyGivenAlg;
+import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
+import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.Abs;
-import funcons.values.List;
-import funcons.values.Null;
 import funcons.values.properties.Value;
 
 public interface FunctionFactory extends
@@ -16,6 +17,9 @@ public interface FunctionFactory extends
         SupplyGivenAlg<IEval>,
         EnvironmentAlg<IEval>,
         LogicControlAlg<IEval>,
+        ListAlg<IEval>,
+        BoolAlg<IEval>,
+        NullAlg<IEval>,
         FunctionAlg<IEval> {
 
     @Override
@@ -42,15 +46,13 @@ public interface FunctionFactory extends
     @Override
     default IEval applyToEach(IEval a, IEval l) {
         return (env, forward, store, given) -> {
-            List list = (List)l.eval(env, forward, store, given);
-            Value head = list.head();
-            List tail = list.tail();
-
-            if (list.equals(new List())) {
-                return new Null();
-            }
-
-            return seq(apply(a, (e,f,s,g) -> head), applyToEach(a, (e,f,s,g) -> tail)).eval(env, forward, store, given);
+            Value listVal = l.eval(env, forward, store, given);
+            IEval cachedListEval = (e,f,s,g) -> listVal;
+            return ifTrue(
+                    equal(listLength(cachedListEval), lit(0)),
+                    null_(),
+                    seq(apply(a, listHead(cachedListEval)), applyToEach(a, listTail(cachedListEval)))
+            ).eval(env, forward, store, given);
         };
     }
 

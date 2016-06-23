@@ -13,8 +13,8 @@ public class FunctionFactoryTest implements AllFactory {
 
     @Test
     public void testAbs() throws Exception {
-        assertEquals(lit(0), apply(abs(given()), lit(0)).eval());
-        assertEquals(lit(3), apply(abs(bind(id("foo")), intAdd(boundValue(id("foo")), lit(1))), lit(2)));
+        assertEquals(lit(0).eval(), apply(abs(given()), lit(0)).eval());
+        assertEquals(lit(3).eval(), apply(abs(bind(id("foo")), intAdd(boundValue(id("foo")), lit(1))), lit(2)).eval());
     }
 
     @Test
@@ -53,11 +53,11 @@ public class FunctionFactoryTest implements AllFactory {
         IEval close = close(abs(boundValue(id("foo"))));
         assertEquals(
                 lit(0).eval(),
-                accum(
+                scope(
                         bindValue(id("foo"), lit(0)),
-                        accum(
+                        scope(
                                 bindValue(id("bar"), close),
-                                accum(
+                                scope(
                                         bindValue(id("foo"), lit(1)),
                                         apply(boundValue(id("bar")), lit(2))
                                 )

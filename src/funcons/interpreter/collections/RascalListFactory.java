@@ -96,4 +96,26 @@ public interface RascalListFactory extends
             return l1.concat(l2);
         };
     }
+
+    @Override
+    default IEval listHead(IEval list) {
+        return (env, forwards, store, given) -> ((IList)list.eval(env, forwards, store, given)).get(0);
+    }
+
+    @Override
+    default IEval listTail(IEval list) {
+        return (env, forwards, store, given) -> {
+            IList listVal = ((IList)list.eval(env, forwards, store, given));
+            if (listVal.length() <= 1) {
+                return vf.list();
+            }
+            return listVal.sublist(1, listVal.length() - 1);
+        };
+    }
+
+    @Override
+    default IEval listLength(IEval list) {
+        return (env, forwards, store, given) ->
+                vf.integer(((IList)list.eval(env, forwards, store, given)).length());
+    }
 }
