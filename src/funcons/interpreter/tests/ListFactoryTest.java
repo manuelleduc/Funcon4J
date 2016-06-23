@@ -74,13 +74,13 @@ public class ListFactoryTest implements AllFactory {
 
     @Test
     public void testListHead() throws Exception {
-        assertEquals(lit(0).eval(), listHead(list(lit(0))));
-        assertEquals(lit(0).eval(), listHead(list(lit(0), lit(1))));
+        assertEquals(lit(0).eval(), listHead(list(lit(0))).eval());
+        assertEquals(lit(0).eval(), listHead(list(lit(0), lit(1))).eval());
     }
 
     @Test
     public void testListTail() throws Exception {
-        assertEquals(list().eval(), listTail(list(lit(0))));
-        assertEquals(list(lit(1)).eval(), listTail(list(lit(0), lit(1))));
+        assertEquals(list().eval(), listTail(list(lit(0))).eval());
+        assertEquals(list(lit(1)).eval(), listTail(list(lit(0), lit(1))).eval());
     }
 }

@@ -38,17 +38,17 @@ public class PatternFactoryTest implements AllFactory {
     public void testPattUnion() throws Exception {
         IEval patt1 = bind(id("foo"));
         IEval patt2 = bind(id("bar"));
-        assertEquals(lit(1).eval(), accum(match(lit(1), patt1), boundValue(id("foo"))).eval());
+        assertEquals(lit(1).eval(), scope(match(lit(1), patt1), boundValue(id("foo"))).eval());
 
         IEval matching = match(lit(1), pattUnion(patt1, patt2));
-        assertEquals(lit(1).eval(), accum(matching, boundValue(id("foo"))).eval());
-        assertEquals(lit(1).eval(), accum(matching, boundValue(id("bar"))).eval());
+        assertEquals(lit(1).eval(), scope(matching, boundValue(id("foo"))).eval());
+        assertEquals(lit(1).eval(), scope(matching, boundValue(id("bar"))).eval());
     }
 
     @Test
     public void testPattNonBinding() throws Exception {
         IEval pat = pattNonBinding(bind(id("foo")));
-        assertNull(accum(match(lit(0), pat), boundValue(id("foo"))).eval());
+        assertNull(scope(match(lit(0), pat), boundValue(id("foo"))).eval());
 
         try {
             match(lit(0), pattNonBinding(only(lit(1)))).eval();
@@ -58,6 +58,6 @@ public class PatternFactoryTest implements AllFactory {
 
     @Test
     public void testBind() throws Exception {
-        assertEquals(lit(3).eval(), accum(apply(bind(id("foo")), lit(3)), boundValue(id("foo"))).eval());
+        assertEquals(lit(3).eval(), scope(apply(bind(id("foo")), lit(3)), boundValue(id("foo"))).eval());
     }
 }

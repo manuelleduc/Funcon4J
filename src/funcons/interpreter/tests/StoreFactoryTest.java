@@ -25,7 +25,7 @@ public class StoreFactoryTest implements AllFactory {
 
     @Test
     public void testAssignedValue() throws Exception {
-        assertEquals(lit(0).eval(), assignedValue(alloc(lit(0))));
+        assertEquals(lit(0).eval(), assignedValue(alloc(lit(0))).eval());
     }
 
     @Test

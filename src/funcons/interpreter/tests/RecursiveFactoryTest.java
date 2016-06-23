@@ -16,7 +16,7 @@ public class RecursiveFactoryTest implements AllFactory {
     @Test
     public void testFreshFwds() throws Exception {
         IEval fwds = freshFwds(list(id("x"), id("y")));
-        assertEquals(freshFwd().eval(), accum(fwds, boundValue(id("x"))));
+        assertEquals(freshFwd().eval(), scope(fwds, boundValue(id("x"))).eval());
     }
 
     @Test
