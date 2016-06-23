@@ -44,7 +44,8 @@ public interface AllFactory extends funcons.algebras.AllAlg<IEval>,
         RecordFactory,
         RecursiveFactory,
         StringFactory,
-        TupleFactory,
+        //TupleFactory,
+        RascalTupleFactory,
         TypeFactory,
         VectorFactory
 {}
