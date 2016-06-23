@@ -5,7 +5,7 @@ import funcons.interpreter.auxiliary.IntFloatConversionFactory;
 import funcons.interpreter.auxiliary.PrintFactory;
 import funcons.interpreter.collections.*;
 import funcons.interpreter.controlflow.ExceptionFactory;
-import funcons.interpreter.controlflow.LogicControlFactory;
+import funcons.interpreter.controlflow.RascalLogicControlFactory;
 import funcons.interpreter.functions.CurryFactory;
 import funcons.interpreter.functions.FunctionFactory;
 import funcons.interpreter.functions.PatternFactory;
@@ -35,7 +35,8 @@ public interface AllFactory extends funcons.algebras.AllAlg<IEval>,
         IntFloatConversionFactory,
         //ListFactory,
         RascalListFactory,
-        LogicControlFactory,
+        //LogicControlFactory,
+        RascalLogicControlFactory,
         //MapFactory,
         RascalMapFactory,
         NullFactory,
