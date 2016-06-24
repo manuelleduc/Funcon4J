@@ -1,11 +1,12 @@
 package funcons.values;
 
+import funcons.values.properties.RascalValue;
 import funcons.values.properties.Value;
+import org.rascalmpl.value.IValue;
 
-import java.lang.*;
 import java.lang.String;
 
-public class Field implements Value {
+public class Field implements Value, RascalValue {
     private java.lang.String name;
 
     public Field(java.lang.String name) {
@@ -20,6 +21,11 @@ public class Field implements Value {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Field && ((Field)obj).name.equals(name);
+    }
+
+    @Override
+    public boolean isEqual(IValue other) {
+        return equals(other);
     }
 
     @Override

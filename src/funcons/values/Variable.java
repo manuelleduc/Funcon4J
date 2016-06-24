@@ -2,12 +2,13 @@ package funcons.values;
 
 import funcons.entities.Store;
 import funcons.values.properties.Comparable;
+import funcons.values.properties.RascalValue;
 import funcons.values.properties.Value;
+import org.rascalmpl.value.IValue;
 
-import java.lang.*;
 import java.lang.String;
 
-public class Variable implements Value, Comparable {
+public class Variable implements Value, Comparable, RascalValue {
     private java.lang.Integer loc;
     private Store store;
 
@@ -33,6 +34,11 @@ public class Variable implements Value, Comparable {
     @Override
     public boolean equals(Object o) {
         return o instanceof Variable && ((Variable)o).loc.equals(loc);
+    }
+
+    @Override
+    public boolean isEqual(IValue other) {
+        return equals(other);
     }
 
     @Override
