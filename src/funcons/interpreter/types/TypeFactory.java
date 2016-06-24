@@ -8,7 +8,6 @@ import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.Environment;
-import funcons.values.Int;
 import funcons.values.cl.CLVariant;
 import funcons.values.ids.Meta;
 import funcons.values.ids.TypeVar;
@@ -85,50 +84,6 @@ public interface TypeFactory extends
     @Override
     default IEval typed(IEval exp, IEval type) {
         return exp;
-    }
-
-    @Override
-    default IEval tupleType() {
-        return (env, forward, store, given) -> new TupleType();
-    }
-
-    @Override
-    default IEval tupleType(IEval x) {
-        return (env, forward, store, given) ->
-                new TupleType((Type)x.eval(env, forward, store, given));
-    }
-
-    @Override
-    default IEval tupleType(IEval x1, IEval x2) {
-        return (env, forward, store, given) -> new TupleType(
-                (Type)x1.eval(env, forward, store, given),
-                (Type)x2.eval(env, forward, store, given));
-    }
-
-    @Override
-    default IEval tupleType(IEval x1, IEval x2, IEval x3) {
-        return (env, forward, store, given) -> new TupleType(
-                (Type)x1.eval(env, forward, store, given),
-                (Type)x2.eval(env, forward, store, given),
-                (Type)x3.eval(env, forward, store, given));
-    }
-
-    @Override
-    default IEval tupleTypePrefix(IEval x, IEval tup) {
-        return (env, forward, store, given) -> {
-            TupleType tt = (TupleType)tup.eval(env, forward, store, given);
-            Type t = (Type)x.eval(env, forward, store, given);
-            return tt.prepend(t);
-        };
-    }
-
-    @Override
-    default IEval projectType(IEval index, IEval tup) {
-        return (env, forward, store, given) -> {
-            TupleType tt = (TupleType)tup.eval(env, forward, store, given);
-            Int i = (Int)index.eval(env, forward, store, given);
-            return tt.get(i);
-        };
     }
 
     @Override

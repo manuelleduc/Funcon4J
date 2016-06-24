@@ -1,10 +1,12 @@
 package funcons.values;
 
+import funcons.values.properties.RascalValue;
 import funcons.values.properties.Value;
+import org.rascalmpl.value.IValue;
 
 import java.lang.String;
 
-public class Undefined implements Value {
+public class Undefined implements Value, RascalValue {
     @Override
     public int hashCode() {
         return 0;
@@ -13,6 +15,11 @@ public class Undefined implements Value {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Undefined;
+    }
+
+    @Override
+    public boolean isEqual(IValue other) {
+        return equals(other);
     }
 
     @Override

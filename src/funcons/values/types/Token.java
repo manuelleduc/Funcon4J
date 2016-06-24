@@ -1,8 +1,10 @@
 package funcons.values.types;
 
+import funcons.values.properties.RascalValue;
 import funcons.values.properties.Value;
+import org.rascalmpl.value.IValue;
 
-public class Token implements Value {
+public class Token implements Value, RascalValue {
     private static Integer tokenCount = 0;
 
     private final Integer identifier;
@@ -20,5 +22,10 @@ public class Token implements Value {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof Token && ((Token)obj).identifier.equals(this.identifier);
+    }
+
+    @Override
+    public boolean isEqual(IValue other) {
+        return equals(other);
     }
 }

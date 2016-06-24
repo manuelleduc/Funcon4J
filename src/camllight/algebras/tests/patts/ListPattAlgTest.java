@@ -15,7 +15,7 @@ public class ListPattAlgTest extends TestStub {
     @Test
     public void testHeadTailListPatt() throws Exception {
         test("match [1 , 2]  with [h :: t] -> h;;", "1");
-        test("match [1 , 2]  with [h :: t] -> t;;", "[2, []]");
+        test("match [1 , 2]  with [h :: t] -> t;;", "[2]");
         test("match [1 , 2]  with [h :: h2 :: _] -> h + h2;;", "3");
         test("match [1 , 2] with [h :: 3] -> true | _ -> false;;", "false");
     }

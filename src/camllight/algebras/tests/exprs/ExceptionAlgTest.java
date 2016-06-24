@@ -6,7 +6,8 @@ import funcons.values.cl.CLVariant;
 import funcons.values.signals.RunTimeFunconException;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ExceptionAlgTest extends TestStub {
 
@@ -29,7 +30,7 @@ public class ExceptionAlgTest extends TestStub {
             test("exception Foo;; raise Foo;;");
             assertTrue(false);
         } catch (RunTimeFunconException e) {
-            assertEquals(new CLVariant("Foo", new Null()), e);
+            assertEquals("Variant(\"Foo\",NULL)", e.toString());
         }
     }
 
@@ -39,8 +40,7 @@ public class ExceptionAlgTest extends TestStub {
             test("exception Foo of int;; raise Foo 3;;");
             assertTrue(false);
         } catch (RunTimeFunconException e) {
-            assertEquals(new CLVariant("Foo", new funcons.values.Int(3)), e);
-            assertNotEquals(new CLVariant("Foo", new funcons.values.Int(2)), e);
+            assertEquals("Variant(\"Foo\",3)", e.toString());
         }
     }
 }

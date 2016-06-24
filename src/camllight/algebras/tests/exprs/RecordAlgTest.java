@@ -7,9 +7,9 @@ public class RecordAlgTest extends TestStub {
 
     @Test
     public void testRecordExp() throws Exception {
-        test("{ a = 3 };;", "{a=3}");
+        test("{ a = 3 };;", "(\"a\":3)");
         test("{ mutable a = 3 }.a;;", "3");
-        test("{ a = 3 , b = \"foo\" , c = false };;", "{a=3; b=foo; c=false}");
+        test("{ a = 3 , b = \"foo\" , c = false };;", "(\"a\":3; \"b\":foo; \"c\":false)");
     }
 
     @Test

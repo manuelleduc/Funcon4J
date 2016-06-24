@@ -1,5 +1,6 @@
 package camllight.algebras.typeexprs;
 
+import funcons.algebras.types.TupleTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
@@ -7,7 +8,7 @@ import noa.syntax.Syntax;
 import java.util.List;
 import java.util.ListIterator;
 
-public interface TypeExpAlg<E, A extends TypeAlg<E>> {
+public interface TypeExpAlg<E, A extends TypeAlg<E> & TupleTypeAlg<E>> {
     A alg();
 
     @Syntax("type = '(' type ')'")

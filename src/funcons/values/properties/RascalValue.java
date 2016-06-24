@@ -21,7 +21,8 @@ public interface RascalValue extends IExternalValue {
 
     @Override
     default <T, E extends Throwable> T accept(IValueVisitor<T, E> v) throws E {
-        throw new NotImplementedException();
+        return null;
+        //throw new NotImplementedException();
     }
 
     @Override

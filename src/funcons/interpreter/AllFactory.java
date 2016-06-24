@@ -14,7 +14,8 @@ import funcons.interpreter.storage.RascalEnvironmentFactory;
 import funcons.interpreter.storage.StoreFactory;
 import funcons.interpreter.storage.SupplyGivenFactory;
 import funcons.interpreter.types.PolyTypeFactory;
-import funcons.interpreter.types.TypeFactory;
+import funcons.interpreter.types.RascalTupleTypeFactory;
+import funcons.interpreter.types.RascalTypeFactory;
 import funcons.interpreter.values.*;
 
 public interface AllFactory extends funcons.algebras.AllAlg<IEval>,
@@ -40,7 +41,8 @@ public interface AllFactory extends funcons.algebras.AllAlg<IEval>,
         RascalLogicControlFactory,
         //MapFactory,
         RascalMapFactory,
-        NullFactory,
+        //NullFactory,
+        RascalNullFactory,
         PolyTypeFactory,
         PrintFactory,
         //RecordFactory,
@@ -49,7 +51,10 @@ public interface AllFactory extends funcons.algebras.AllAlg<IEval>,
         StringFactory,
         //TupleFactory,
         RascalTupleFactory,
-        TypeFactory,
+        //TupleTypeFactory,
+        RascalTupleTypeFactory,
+        //TypeFactory,
+        RascalTypeFactory,
         //VectorFactory,
         RascalVectorFactory
 {}

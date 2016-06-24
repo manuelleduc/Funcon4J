@@ -6,17 +6,18 @@ import camllight.parser.CLParser;
 import funcons.carriers.IEval;
 import funcons.entities.Forwards;
 import funcons.entities.Store;
-import funcons.values.Environment;
 import funcons.values.Null;
 import funcons.values.properties.Value;
 import funcons.values.signals.FunconException;
 import noa.proxy.Recorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.rascalmpl.value.IMap;
 import org.rascalmpl.value.impl.fast.ValueFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -43,8 +44,8 @@ public class CamlLight {
     public static Value eval(String src, camllight.algebras.AllAlg alg) throws FunconException {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         IEval eval = builder.build(alg);
-        //Environment env = importStandardLibrary(new Environment());
-        return eval.eval(ValueFactory.getInstance().mapWriter().done(), new Forwards(), new Store(), new Null());
+        Value env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
+        return eval.eval((IMap)env, new Forwards(), new Store(), new Null());
     }
 
     private static void interpret(String src) throws FunconException {
@@ -68,9 +69,11 @@ public class CamlLight {
         long start = System.currentTimeMillis();
         String src = new String(Files.readAllBytes(Paths.get(fileLoc)));
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        IEval eval = builder.build((camllight.algebras.AllAlg) () -> new funcons.interpreter.AllFactory() {});
-        Environment env = importStandardLibrary(new Environment());
-        eval.eval(ValueFactory.getInstance().mapWriter().done(), new Forwards(), new Store(), new Null());
+        funcons.interpreter.AllFactory funconFactory = new funcons.interpreter.AllFactory() {};
+        camllight.algebras.AllAlg alg = () -> funconFactory;
+        IEval eval = builder.build(alg);
+        Value env = importStandardLibrary(funconFactory.environment().eval());
+        eval.eval((IMap)env, new Forwards(), new Store(), new Null());
         long end = System.currentTimeMillis();
         System.out.println("time taken: " + (end - start));
     }
@@ -96,7 +99,7 @@ public class CamlLight {
         }
     }
 
-    private static Environment importStandardLibrary(Environment env) throws FunconException {
+    private static Value importStandardLibrary(Value env) throws FunconException {
         funcons.algebras.AllAlg<IEval> alg = new funcons.interpreter.AllFactory() {};
         StandardLibrary<IEval> lib = () -> alg;
 
@@ -107,15 +110,15 @@ public class CamlLight {
             }
             methodName = methodName.substring(0, methodName.length() - 3);
 
-            /*try {
-                final Environment env2 = env;
-                env = (Environment)alg.mapUnion(
+            try {
+                final Value env2 = env;
+                env = alg.mapUnion(
                         (e,f,s,g) -> env2,
                         alg.bindValue(alg.id(methodName), (funcons.carriers.IEval)m.invoke(lib))
-                ).eval(env, new Forwards(), new Store(), new Null());
+                ).eval((IMap)env, new Forwards(), new Store(), new Null());
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
 
         return env;
@@ -141,9 +144,9 @@ public class CamlLight {
 
     private static void runPerformanceTests() throws IOException, FunconException {
         //runPerformance("performanceTests/mandelbrot.ml"); // FunCaml: 387.1s, Ocaml: 75.5s, Py: 170.2s
-        //runPerformance("performanceTests/fib.ml"); // FunCaml: 237.8s, Ocaml: 8.1s
-        //runPerformance("performanceTests/ack.ml"); // FunCaml: 126.s, Ocaml: 1.4s
-        //runPerformance("performanceTests/harmonic.ml"); // FunCaml: 38.7s, Ocaml: 0.2s
+        //runPerformance("performanceTests/fib.ml"); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s
+        runPerformance("performanceTests/ack.ml"); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
+        //runPerformance("performanceTests/harmonic.ml"); // FunCaml: 38.7s, Ocaml: 0.2s, FunCamlOnRascal: 7.2s
         //runPerformance("performanceTests/tak.ml"); // FunCaml: 406.7s, Ocaml: 5.9s
     }
 

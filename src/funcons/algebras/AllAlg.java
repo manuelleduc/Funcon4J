@@ -13,6 +13,7 @@ import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.storage.StoreAlg;
 import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
+import funcons.algebras.types.TupleTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.*;
 
@@ -38,6 +39,7 @@ public interface AllAlg<E> extends
         RecursiveAlg<E>,
         StringAlg<E>,
         TupleAlg<E>,
+        TupleTypeAlg<E>,
         TypeAlg<E>,
         VectorAlg<E>
 {}

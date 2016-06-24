@@ -7,8 +7,8 @@ public class ArrayAlgTest extends TestStub {
 
     @Test
     public void testEmptyArray() throws Exception {
-        test("[||];;", "Vector<[]>");
-        test("[|        |];;", "Vector<[]>");
+        test("[||];;", "[]");
+        test("[|        |];;", "[]");
     }
 
     @Test

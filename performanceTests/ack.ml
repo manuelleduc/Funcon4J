@@ -4,4 +4,4 @@ let rec ack x y =
   ack (x - 1) (ack x (y - 1)) in
 print_int (ack 3 10);;
 
-print_float (Sys.time ());;
+(*print_float (Sys.time ());;*)
