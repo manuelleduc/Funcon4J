@@ -44,6 +44,13 @@ public class RecordFactoryTest implements AllFactory {
                         recordUnion(record(field("foo"), lit(0)), record(field("foo"), lit(1))),
                         field("foo")
                 ).eval());
+
+        assertEquals(
+                lit(0).eval(),
+                recordSelect(
+                        recordUnion(record(field("foo"), lit(0)), record(field("bar"), lit(1))),
+                        field("foo")
+                ).eval());
     }
 
     @Test

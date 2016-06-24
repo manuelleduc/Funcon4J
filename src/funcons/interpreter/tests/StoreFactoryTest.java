@@ -9,18 +9,23 @@ public class StoreFactoryTest implements AllFactory {
 
     @Test
     public void testAlloc() throws Exception {
-        assertEquals(lit(0).eval(), accum(bindValue(id("foo"), alloc(lit(0))), boundValue(id("foo"))).eval());
+        assertEquals(
+                lit(0).eval(),
+                scope(
+                        bindValue(id("foo"), alloc(lit(0))),
+                        assignedValue(boundValue(id("foo")))
+                ).eval());
     }
 
     @Test
     public void testAssign() throws Exception {
         assertEquals(
                 lit(1).eval(),
-                accum(
+                scope(
                         bindValue(id("foo"), alloc(lit(0))),
-                        accum(
+                        seq(
                                 assign(boundValue(id("foo")), lit(1)),
-                                boundValue(id("foo")))).eval());
+                                assignedValue(boundValue(id("foo"))))).eval());
     }
 
     @Test

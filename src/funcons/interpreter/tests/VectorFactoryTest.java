@@ -30,13 +30,12 @@ public class VectorFactoryTest implements AllFactory {
     @Test
     public void testVectorAssign() throws Exception {
         assertEquals(
-                lit(4).eval(),
-                accum(
+                vector(lit(4)).eval(),
+                scope(
                         bindValue(id("foo"), vector(lit(3))),
-                        accum(
+                        seq(
                                 vectorAssign(boundValue(id("foo")), lit(0), lit(4)),
-                                boundValue(id("foo")
-                                )
+                                boundValue(id("foo"))
                         )
                 ).eval()
         );
