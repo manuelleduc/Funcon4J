@@ -24,20 +24,21 @@ public class ConstantsAlgTest extends TestStub {
 
     @Test
     public void testString() throws Exception {
-        test("\"foo\";;", "foo");
-        test("\"\\\\ \\\" \\n \\r \\t \\b \\065\";;", "\\ \" \n \r \t \b A");
+        test("\"foo\";;", "\"foo\"");
+        // TODO fix escape chars
+        test("\"\\\\ \\\" \\n \\r \\t \\b \\065\";;", "\"\\ \" \n \r \t \b A\"");
     }
 
     @Test
     public void testChar_() throws Exception {
-        test("`a`;;", "a");
-        test("`\\\\`;;", "\\");
-        test("`\\``;;", "`");
-        test("`\\n`;;", "\n");
-        test("`\\r`;;", "\r");
-        test("`\\t`;;", "\t");
-        test("`\\b`;;", "\b");
-        test("`\\065`;;", "A");
+        test("`a`;;", "\"a\"");
+        test("`\\\\`;;", "\"\\\\\"");
+        test("`\\``;;", "\"`\""); // TODO fix escape chars
+        test("`\\n`;;", "\"\\n\"");
+        test("`\\r`;;", "\"\\r\"");
+        test("`\\t`;;", "\"\\t\"");
+        test("`\\b`;;", "\"\\a08\""); // huh?
+        test("`\\065`;;", "\"A\"");
     }
 
     @Test

@@ -48,12 +48,12 @@ public class PattAlgTest extends TestStub {
         test("type id = Name of string | SS of int * int;; " +
                 "let get_name = function Name n -> n | _ -> \"\";; " +
                 "get_name (Name \"foo\");;",
-                "foo");
+                "\"foo\"");
 
         test("type id = Name of string | SS of int * int;; " +
                 "let get_name = function Name n -> n | _ -> \"\";; " +
                 "get_name (SS (1,2));;",
-                "");
+                "\"\"");
 
         test("type id = Name of string | SS of int * int;; " +
                 "let check_ss = function SS (1,2) -> true | _ -> false;; " +

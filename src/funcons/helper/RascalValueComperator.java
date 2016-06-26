@@ -1,9 +1,7 @@
 package funcons.helper;
 
-import org.rascalmpl.value.IList;
-import org.rascalmpl.value.IMap;
-import org.rascalmpl.value.INumber;
-import org.rascalmpl.value.IValue;
+import funcons.values.Variable;
+import org.rascalmpl.value.*;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class RascalValueComperator {
@@ -18,6 +16,13 @@ public class RascalValueComperator {
         if (a instanceof IMap && b instanceof IMap) {
             return compare((IMap)a, (IMap)b);
         }
+        if (a instanceof IString && b instanceof IString) {
+            return compare((IString)a, (IString)b);
+        }
+        if (a instanceof Variable && b instanceof Variable) {
+            return compare((Variable)a, (Variable)b);
+        }
+
         throw new NotImplementedException();
     }
 
@@ -57,5 +62,16 @@ public class RascalValueComperator {
         return 0;
     }
 
+    public static int compare(IString a, IString b) {
+        for (int i = 0, length = Math.min(a.length(), b.length()); i < length; i++) {
+            if ((a.charAt(i) != b.charAt(i))) {
+                return a.charAt(i) > b.charAt(i) ? 1 : -1;
+            }
+        }
+        return a.length() - b.length();
+    }
 
+    public static int compare(Variable a, Variable b) {
+        return compare((IValue)a.value(), (IValue)b.value());
+    }
 }

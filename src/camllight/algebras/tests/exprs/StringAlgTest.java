@@ -7,6 +7,6 @@ public class StringAlgTest extends TestStub {
 
     @Test
     public void testStringAppendExp() throws Exception {
-        test("\"foo\" ^ \"bar\";;", "foobar");
+        test("\"foo\" ^ \"bar\";;", "\"foobar\"");
     }
 }

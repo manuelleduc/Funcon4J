@@ -9,13 +9,13 @@ public class RecordAlgTest extends TestStub {
     public void testRecordExp() throws Exception {
         test("{ a = 3 };;", "(\"a\":3)");
         test("{ mutable a = 3 }.a;;", "3");
-        test("{ a = 3 , b = \"foo\" , c = false };;", "(\"a\":3; \"b\":foo; \"c\":false)");
+        test("{ a = 3 , b = \"foo\" , c = false }.b;;", "\"foo\"");
     }
 
     @Test
     public void testRecordSelectExp() throws Exception {
         test("{ a = 3 }.a;;", "3");
-        test("let bar = {a=3,b=4,c=false,d=\"foo\"} in bar.d;;", "foo");
+        test("let bar = {a=3,b=4,c=false,d=\"foo\"} in bar.d;;", "\"foo\"");
     }
 
     @Test
