@@ -4,7 +4,6 @@ import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
 import funcons.carriers.IEval;
-import funcons.entities.Store;
 import funcons.values.Null;
 import funcons.values.properties.Value;
 import funcons.values.signals.FunconException;
@@ -44,7 +43,7 @@ public class CamlLight {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         IEval eval = builder.build(alg);
         Value env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
-        return eval.eval((IMap)env, new Store(), new Null());
+        return eval.eval((IMap)env, new Null());
     }
 
     private static void interpret(String src) throws FunconException {
@@ -72,7 +71,7 @@ public class CamlLight {
         camllight.algebras.AllAlg alg = () -> funconFactory;
         IEval eval = builder.build(alg);
         Value env = importStandardLibrary(funconFactory.environment().eval());
-        eval.eval((IMap)env, new Store(), new Null());
+        eval.eval((IMap)env, new Null());
         long end = System.currentTimeMillis();
         System.out.println("time taken: " + (end - start));
     }
@@ -112,9 +111,9 @@ public class CamlLight {
             try {
                 final Value env2 = env;
                 env = alg.mapUnion(
-                        (e,s,g) -> env2,
+                        (e,g) -> env2,
                         alg.bindValue(alg.id(methodName), (funcons.carriers.IEval)m.invoke(lib))
-                ).eval((IMap)env, new Store(), new Null());
+                ).eval((IMap)env, new Null());
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }

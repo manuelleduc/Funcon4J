@@ -12,40 +12,40 @@ public interface TupleTypeFactory extends TupleTypeAlg<IEval> {
 
     @Override
     default IEval tupleType() {
-        return (env, store, given) -> vf.list();
+        return (env, given) -> vf.list();
     }
 
     @Override
     default IEval tupleType(IEval x) {
-        return (env, store, given) -> vf.list((IValue)x.eval(env, store, given));
+        return (env, given) -> vf.list((IValue)x.eval(env, given));
     }
 
     @Override
     default IEval tupleType(IEval x1, IEval x2) {
-        return (env, store, given) -> vf.list(
-                (IValue)x1.eval(env, store, given),
-                (IValue)x2.eval(env, store, given));
+        return (env, given) -> vf.list(
+                (IValue)x1.eval(env, given),
+                (IValue)x2.eval(env, given));
     }
 
     @Override
     default IEval tupleType(IEval x1, IEval x2, IEval x3) {
-        return (env, store, given) -> vf.list(
-                (IValue)x1.eval(env, store, given),
-                (IValue)x2.eval(env, store, given),
-                (IValue)x3.eval(env, store, given));
+        return (env, given) -> vf.list(
+                (IValue)x1.eval(env, given),
+                (IValue)x2.eval(env, given),
+                (IValue)x3.eval(env, given));
     }
 
     @Override
     default IEval tupleTypePrefix(IEval x, IEval tup) {
-        return (env, store, given) ->
-                ((IList)tup.eval(env, store, given))
-                        .insert((IValue)x.eval(env, store, given));
+        return (env, given) ->
+                ((IList)tup.eval(env, given))
+                        .insert((IValue)x.eval(env, given));
     }
 
     @Override
     default IEval projectType(IEval index, IEval tup) {
-        return (env, store, given) ->
-                ((IList)tup.eval(env, store, given))
-                        .get(((IInteger)index.eval(env, store, given)).intValue());
+        return (env, given) ->
+                ((IList)tup.eval(env, given))
+                        .get(((IInteger)index.eval(env, given)).intValue());
     }
 }

@@ -25,12 +25,12 @@ public class RecursiveFactoryTest implements AllFactory {
     public void testSetForwards() throws Exception {
         IEval bindings = accum(bindValue(id("foo"), lit(3)), bindValue(id("bar"), lit(5)));
         Value fwdsEnvironment = freshFwds(listPrefix(id("foo"), list(id("bar"), id("baz")))).eval();
-        IEval settingFwds = setForwards((e,s,g)->fwdsEnvironment);
+        IEval settingFwds = setForwards((e,g)->fwdsEnvironment);
         scope(bindings, settingFwds).eval();
 
-        assertEquals(lit(3).eval(), followFwd(mapGet((e,s,g)->fwdsEnvironment, id("foo"))).eval());
-        assertEquals(lit(5).eval(),  followFwd(mapGet((e,s,g)->fwdsEnvironment, id("bar"))).eval());
-        assertEquals(undefined().eval(), followFwd(mapGet((e,s,g)->fwdsEnvironment, id("baz"))).eval());
+        assertEquals(lit(3).eval(), followFwd(mapGet((e,g)->fwdsEnvironment, id("foo"))).eval());
+        assertEquals(lit(5).eval(),  followFwd(mapGet((e,g)->fwdsEnvironment, id("bar"))).eval());
+        assertEquals(undefined().eval(), followFwd(mapGet((e,g)->fwdsEnvironment, id("baz"))).eval());
     }
 
     @Test
@@ -49,15 +49,15 @@ public class RecursiveFactoryTest implements AllFactory {
     @Test
     public void testFollowFwd() throws Exception {
         Value fwdEnvironment = freshFwds(list(id("foo"))).eval();
-        scope(bindValue(id("foo"), lit(0)), setForwards((e,s,g)->fwdEnvironment)).eval();
-        assertEquals(lit(0).eval(), followFwd(scope((e,s,g)->fwdEnvironment, boundValue(id("foo")))).eval());
+        scope(bindValue(id("foo"), lit(0)), setForwards((e,g)->fwdEnvironment)).eval();
+        assertEquals(lit(0).eval(), followFwd(scope((e,g)->fwdEnvironment, boundValue(id("foo")))).eval());
     }
 
     @Test
     public void testFollowIfFwd() throws Exception {
         Value fwdEnvironment = freshFwds(list(id("foo"))).eval();
-        scope(bindValue(id("foo"), lit(0)), setForwards((e,s,g)->fwdEnvironment)).eval();
-        assertEquals(lit(0).eval(), followIfFwd(scope((e,s,g) -> fwdEnvironment, boundValue(id("foo")))).eval());
+        scope(bindValue(id("foo"), lit(0)), setForwards((e,g)->fwdEnvironment)).eval();
+        assertEquals(lit(0).eval(), followIfFwd(scope((e,g) -> fwdEnvironment, boundValue(id("foo")))).eval());
 
         assertEquals(lit(1).eval(), followIfFwd(lit(1)).eval());
     }

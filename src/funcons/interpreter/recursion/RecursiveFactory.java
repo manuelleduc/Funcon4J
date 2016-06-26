@@ -23,55 +23,55 @@ public interface RecursiveFactory extends
 
     @Override
     default IEval freshFwd() {
-        return (env, store, given) -> new Fwd();
+        return (env, given) -> new Fwd();
     }
 
     @Override
     default IEval freshFwds(IEval idList) {
-        return (env, store, given) -> {
+        return (env, given) -> {
             IEval envEval = environment();
-            Value idListVal = idList.eval(env, store, given);
-            int length = ((IInteger)listLength((e,s,g)->idListVal).eval(env, store, given)).intValue();
-            Value undefined = undefined().eval(env, store, given);
+            Value idListVal = idList.eval(env, given);
+            int length = ((IInteger)listLength((e,g)->idListVal).eval(env, given)).intValue();
+            Value undefined = undefined().eval(env, given);
 
             for (int i = 0; i < length; i++) {
-                Value id = projectList(lit(i), (e,s,g)->idListVal).eval(env, store, given);
-                Fwd fwd = (Fwd)freshFwd().eval(env, store, given);
+                Value id = projectList(lit(i), (e,g)->idListVal).eval(env, given);
+                Fwd fwd = (Fwd)freshFwd().eval(env, given);
                 fwd.add(undefined);
 
-                envEval = mapUpdate(envEval, (e,s,g) -> id, (e,s,g) -> fwd);
+                envEval = mapUpdate(envEval, (e,g) -> id, (e,g) -> fwd);
             }
 
-            return envEval.eval(env, store, given);
+            return envEval.eval(env, given);
         };
     }
 
     @Override
     default IEval setForwards(IEval idFwdMap) {
-        return (env, store, given) -> {
-            Value mapVal = idFwdMap.eval(env, store, given);
-            Value mapKeys = mapDomain((e,s,g)->mapVal).eval(env, store, given);
-            int length = ((IInteger)listLength((e,s,g)->mapKeys).eval(env, store, given)).intValue();
+        return (env, given) -> {
+            Value mapVal = idFwdMap.eval(env, given);
+            Value mapKeys = mapDomain((e,g)->mapVal).eval(env, given);
+            int length = ((IInteger)listLength((e,g)->mapKeys).eval(env, given)).intValue();
 
             for (int i = 0; i < length; i++) {
-                Value id = projectList(lit(i), (e,s,g)->mapKeys).eval(env, store, given);
-                Value v = boundValue((e,s,g)->id).eval(env, store, given);
+                Value id = projectList(lit(i), (e,g)->mapKeys).eval(env, given);
+                Value v = boundValue((e,g)->id).eval(env, given);
                 if (v == null) {
-                    v = undefined().eval(env, store, given);
+                    v = undefined().eval(env, given);
                 }
-                Fwd fwd = (Fwd)mapGet((e,s,g)->mapVal, (e,s,g)->id).eval(env, store, given);
+                Fwd fwd = (Fwd)mapGet((e,g)->mapVal, (e,g)->id).eval(env, given);
                 fwd.add(v);
             }
 
-            return null_().eval(env, store, given);
+            return null_().eval(env, given);
         };
     }
 
     @Override
     default IEval reclose(IEval map, IEval decl) {
-        return (env, store, given) -> {
-            Value m = map.eval(env, store, given);
-            return accum(scope((e,s,g) -> m, decl), seq(setForwards((e,s,g) -> m), environment())).eval(env, store, given);
+        return (env, given) -> {
+            Value m = map.eval(env, given);
+            return accum(scope((e,g) -> m, decl), seq(setForwards((e,g) -> m), environment())).eval(env, given);
         };
     }
 
@@ -87,13 +87,13 @@ public interface RecursiveFactory extends
 
     @Override
     default IEval followFwd(IEval fwd) {
-        return (env, store, given) -> ((Fwd)fwd.eval(env, store, given)).follow();
+        return (env, given) -> ((Fwd)fwd.eval(env, given)).follow();
     }
 
     @Override
     default IEval followIfFwd(IEval fwd) {
-        return (env, store, given) -> {
-            Value v = fwd.eval(env, store, given);
+        return (env, given) -> {
+            Value v = fwd.eval(env, given);
             if (v instanceof Fwd) {
                 return ((Fwd)v).follow();
             }

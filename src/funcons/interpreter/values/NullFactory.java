@@ -11,11 +11,11 @@ public interface NullFactory extends NullAlg<IEval> {
 
     @Override
     default IEval null_() {
-        return (env, store, given) -> new Null();
+        return (env, given) -> new Null();
     }
 
     @Override
     default IEval undefined() {
-        return (env, store, given) -> new Undefined();
+        return (env, given) -> new Undefined();
     }
 }

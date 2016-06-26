@@ -8,11 +8,11 @@ import org.rascalmpl.value.IReal;
 public interface IntoFloatConversionFactory extends IntFloatConversionAlg<IEval> {
     @Override
     default IEval intToFloat(IEval i) {
-        return (env, store, given) -> ((IInteger)i.eval(env, store, given)).toReal(5);
+        return (env, given) -> ((IInteger)i.eval(env, given)).toReal(5);
     }
 
     @Override
     default IEval floatToInt(IEval f) {
-        return (env, store, given) -> ((IReal)f.eval(env, store, given)).toInteger();
+        return (env, given) -> ((IReal)f.eval(env, given)).toInteger();
     }
 }

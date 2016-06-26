@@ -23,45 +23,45 @@ public interface ListFactory extends
 
     @Override
     default IEval projectList(IEval index, IEval list) {
-        return (env, store, given) -> {
-            IInteger i = (IInteger)index.eval(env, store, given);
-            IList l = (IList)list.eval(env, store, given);
+        return (env, given) -> {
+            IInteger i = (IInteger)index.eval(env, given);
+            IList l = (IList)list.eval(env, given);
             return l.get(i.intValue());
         };
     }
 
     @Override
     default IEval list() {
-        return (env, store, given) -> vf.list();
+        return (env, given) -> vf.list();
     }
 
     @Override
     default IEval list(IEval x) {
-        return (env, store, given) -> vf.list((IValue)x.eval(env, store, given));
+        return (env, given) -> vf.list((IValue)x.eval(env, given));
     }
 
     @Override
     default IEval list(IEval x1, IEval x2) {
-        return (env, store, given) -> vf.list(
-                (IValue)x1.eval(env, store, given),
-                (IValue)x2.eval(env, store, given));
+        return (env, given) -> vf.list(
+                (IValue)x1.eval(env, given),
+                (IValue)x2.eval(env, given));
     }
 
     @Override
     default IEval listPrefix(IEval x, IEval l) {
-        return (env, store, given) -> {
-            IList list = (IList)l.eval(env, store, given);
-            return list.insert((IValue)x.eval(env, store, given));
+        return (env, given) -> {
+            IList list = (IList)l.eval(env, given);
+            return list.insert((IValue)x.eval(env, given));
         };
     }
 
     @Override
     default IEval listPrefixMatch(IEval l, IEval p1, IEval p2) {
-        return (env, store, given) -> {
-            IList list = (IList)l.eval(env, store, given);
+        return (env, given) -> {
+            IList list = (IList)l.eval(env, given);
             IValue head = list.get(0);
             IList tail = list.delete(0);
-            return mapOver(match((e,s,g)->head, p1), match((e,s,g)->tail, p2)).eval(env, store, given);
+            return mapOver(match((e,g)->head, p1), match((e,g)->tail, p2)).eval(env, given);
         };
     }
 
@@ -72,9 +72,9 @@ public interface ListFactory extends
 
     @Override
     default IEval intClosedInterval(IEval m, IEval n) {
-        return (env, store, given) -> {
-            int start = ((IInteger)m.eval(env, store, given)).intValue();
-            int finish = ((IInteger)n.eval(env, store, given)).intValue();
+        return (env, given) -> {
+            int start = ((IInteger)m.eval(env, given)).intValue();
+            int finish = ((IInteger)n.eval(env, given)).intValue();
             IListWriter lw = vf.listWriter();
             for (int i = start; i <= finish; i++) {
                 lw.append(vf.integer(i));
@@ -85,27 +85,27 @@ public interface ListFactory extends
 
     @Override
     default IEval listReverse(IEval l) {
-        return (env, store, given) -> ((IList)l.eval(env, store, given)).reverse();
+        return (env, given) -> ((IList)l.eval(env, given)).reverse();
     }
 
     @Override
     default IEval listAppend(IEval list1, IEval list2) {
-        return (env, store, given) -> {
-            IList l1 = (IList)list1.eval(env, store, given);
-            IList l2 = (IList)list2.eval(env, store, given);
+        return (env, given) -> {
+            IList l1 = (IList)list1.eval(env, given);
+            IList l2 = (IList)list2.eval(env, given);
             return l1.concat(l2);
         };
     }
 
     @Override
     default IEval listHead(IEval list) {
-        return (env, store, given) -> ((IList)list.eval(env, store, given)).get(0);
+        return (env, given) -> ((IList)list.eval(env, given)).get(0);
     }
 
     @Override
     default IEval listTail(IEval list) {
-        return (env, store, given) -> {
-            IList listVal = ((IList)list.eval(env, store, given));
+        return (env, given) -> {
+            IList listVal = ((IList)list.eval(env, given));
             if (listVal.length() <= 1) {
                 return vf.list();
             }
@@ -115,7 +115,7 @@ public interface ListFactory extends
 
     @Override
     default IEval listLength(IEval list) {
-        return (env, store, given) ->
-                vf.integer(((IList)list.eval(env, store, given)).length());
+        return (env, given) ->
+                vf.integer(((IList)list.eval(env, given)).length());
     }
 }

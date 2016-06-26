@@ -24,35 +24,35 @@ public interface FunctionFactory extends
 
     @Override
     default IEval abs(IEval exp) {
-        return (env, store, given) -> new Abs<>(exp);
+        return (env, given) -> new Abs<>(exp);
     }
 
     @Override
     default IEval abs(IEval patt, IEval exp) {
-        return (env, store, given) -> new Abs<IEval>((e, s, g) -> {
+        return (env, given) -> new Abs<IEval>((e,g) -> {
             @SuppressWarnings("unchecked")
-            IEval environment = ((Abs<IEval>)patt.eval(e, s, g)).body();
-            return scope(environment, exp).eval(e, s, g);
+            IEval environment = ((Abs<IEval>)patt.eval(e,g)).body();
+            return scope(environment, exp).eval(e,g);
         });
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default IEval apply(IEval abs, IEval arg) {
-        return (env, store, given) -> supply(arg,
-                ((Abs<IEval>)abs.eval(env, store, given)).body()).eval(env, store, given);
+        return (env, given) -> supply(arg,
+                ((Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);
     }
 
     @Override
     default IEval applyToEach(IEval a, IEval l) {
-        return (env, store, given) -> {
-            Value listVal = l.eval(env, store, given);
-            IEval cachedListEval = (e,s,g) -> listVal;
+        return (env, given) -> {
+            Value listVal = l.eval(env, given);
+            IEval cachedListEval = (e,g) -> listVal;
             return ifTrue(
                     equal(listLength(cachedListEval), lit(0)),
                     null_(),
                     seq(apply(a, listHead(cachedListEval)), applyToEach(a, listTail(cachedListEval)))
-            ).eval(env, store, given);
+            ).eval(env, given);
         };
     }
 
@@ -64,10 +64,10 @@ public interface FunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default IEval close(IEval abs) {
-        return (env, store, given) ->
+        return (env, given) ->
                 abs(closure(
-                        ((Abs<IEval>)abs.eval(env, store, given)).body(),
-                        (e, s, g) -> env)).eval(env, store, given);
+                        ((Abs<IEval>)abs.eval(env, given)).body(),
+                        (e,g) -> env)).eval(env, given);
     }
 
     @Override

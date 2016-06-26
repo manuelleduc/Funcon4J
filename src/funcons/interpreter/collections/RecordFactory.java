@@ -26,24 +26,24 @@ public interface RecordFactory extends
 
     @Override
     default IEval record(IEval field, IEval val) {
-        return (env, store, given) -> {
+        return (env, given) -> {
             IMapWriter mw = vf.mapWriter();
-            mw.put((IValue)field.eval(env, store, given),
-                    (IValue)val.eval(env, store, given));
+            mw.put((IValue)field.eval(env, given),
+                    (IValue)val.eval(env, given));
             return mw.done();
         };
     }
 
     @Override
     default IEval field(java.lang.String name) {
-        return (env, store, given) -> vf.string(name);
+        return (env, given) -> vf.string(name);
     }
 
     @Override
     default IEval recordSelect(IEval record, IEval field) {
-        return (env, store, given) ->
-                ((IMap)record.eval(env, store, given))
-                        .get((IValue)field.eval(env, store, given));
+        return (env, given) ->
+                ((IMap)record.eval(env, given))
+                        .get((IValue)field.eval(env, given));
     }
 
     @Override
@@ -53,31 +53,31 @@ public interface RecordFactory extends
 
     @Override
     default IEval recordUnion(IEval rec1, IEval rec2) {
-        return (env, store, given) ->
-                ((IMap)rec1.eval(env, store, given))
-                        .join(((IMap)rec2.eval(env, store, given)));
+        return (env, given) ->
+                ((IMap)rec1.eval(env, given))
+                        .join(((IMap)rec2.eval(env, given)));
     }
 
     @Override
     default IEval recordMatch(IEval rec, IEval pattMap) {
-        return (env, store, given) -> {
-            IMap recVal = (IMap)rec.eval(env, store, given);
-            IValue pattMapVal = (IValue)pattMap.eval(env, store, given);
-            Value environment = environment().eval(env, store, given);
+        return (env, given) -> {
+            IMap recVal = (IMap)rec.eval(env, given);
+            IValue pattMapVal = (IValue)pattMap.eval(env, given);
+            Value environment = environment().eval(env, given);
 
-            IValue fields = (IValue)mapDomain((e,s,g)->pattMapVal).eval(env, store, given);
-            int length = ((IInteger)listLength((e,s,g)->fields).eval(env, store, given)).intValue();
+            IValue fields = (IValue)mapDomain((e,g)->pattMapVal).eval(env, given);
+            int length = ((IInteger)listLength((e,g)->fields).eval(env, given)).intValue();
 
             for (int i = 0; i < length; i++) {
                 Value environment2 = environment;
-                IValue field = (IValue)projectList(lit(i), (e,s,g)->fields).eval(env, store, given);
+                IValue field = (IValue)projectList(lit(i), (e,g)->fields).eval(env, given);
                 environment = mapUnion(
-                        (e,s,g)->environment2,
+                        (e,g)->environment2,
                         match(
-                                recordSelect((e,s,g)->recVal, (e,s,g)->field),
-                                mapGet((e,s,g)->pattMapVal, (e,s,g)->field)
+                                recordSelect((e,g)->recVal, (e,g)->field),
+                                mapGet((e,g)->pattMapVal, (e,g)->field)
                         )
-                ).eval(env, store, given);
+                ).eval(env, given);
             }
 
             return environment;

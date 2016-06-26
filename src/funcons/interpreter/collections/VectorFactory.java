@@ -13,44 +13,44 @@ public interface VectorFactory extends StoreAlg<IEval>, VectorAlg<IEval> {
 
     @Override
     default IEval vector() {
-        return (env, store, given) -> vf.list();
+        return (env, given) -> vf.list();
     }
 
     @Override
     default IEval vector(IEval val) {
-        return (env, store, given) -> vf.list((IValue)alloc(val).eval(env, store, given));
+        return (env, given) -> vf.list((IValue)alloc(val).eval(env, given));
     }
 
     @Override
     default IEval vectorSelect(IEval vector, IEval index) {
-        return (env, store, given) -> {
-            IList vectorVal = (IList)vector.eval(env, store, given);
-            IValue var = vectorVal.get(((IInteger)index.eval(env, store, given)).intValue());
-            return assignedValue((e,s,g)->var).eval(env, store, given);
+        return (env, given) -> {
+            IList vectorVal = (IList)vector.eval(env, given);
+            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
+            return assignedValue((e,g)->var).eval(env, given);
         };
     }
 
     @Override
     default IEval vectorAppend(IEval vector1, IEval vector2) {
-        return (env, store, given) -> {
-            IList vector1Val = (IList)vector1.eval(env, store, given);
-            IList vector2Val = (IList)vector2.eval(env, store, given);
+        return (env, given) -> {
+            IList vector1Val = (IList)vector1.eval(env, given);
+            IList vector2Val = (IList)vector2.eval(env, given);
             return vector1Val.concat(vector2Val);
         };
     }
 
     @Override
     default IEval vectorLength(IEval vector) {
-        return (env, store, given) ->
-                vf.integer(((IList)vector.eval(env, store, given)).length());
+        return (env, given) ->
+                vf.integer(((IList)vector.eval(env, given)).length());
     }
 
     @Override
     default IEval vectorAssign(IEval vector, IEval index, IEval val) {
-        return (env, store, given) -> {
-            IList vectorVal = (IList)vector.eval(env, store, given);
-            IValue var = vectorVal.get(((IInteger)index.eval(env, store, given)).intValue());
-            return assign((e,s,g)->var, val).eval(env, store, given);
+        return (env, given) -> {
+            IList vectorVal = (IList)vector.eval(env, given);
+            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
+            return assign((e,g)->var, val).eval(env, given);
         };
     }
 }

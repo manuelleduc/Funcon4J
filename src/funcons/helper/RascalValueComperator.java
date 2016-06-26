@@ -22,6 +22,9 @@ public class RascalValueComperator {
         if (a instanceof Variable && b instanceof Variable) {
             return compare((Variable)a, (Variable)b);
         }
+        if (a instanceof IBool && b instanceof IBool) {
+            return compare((IBool)a, (IBool)b);
+        }
 
         throw new NotImplementedException();
     }
@@ -73,5 +76,15 @@ public class RascalValueComperator {
 
     public static int compare(Variable a, Variable b) {
         return compare((IValue)a.value(), (IValue)b.value());
+    }
+
+    public static int compare(IBool a, IBool b) {
+        if (a.getValue() && !b.getValue()) {
+            return 1;
+        }
+        if (!a.getValue() && b.getValue()) {
+            return -1;
+        }
+        return 0;
     }
 }

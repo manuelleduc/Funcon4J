@@ -12,19 +12,19 @@ public interface BoolFactory extends BoolAlg<IEval> {
 
     @Override
     default IEval bool(Boolean b) {
-        return (env, store, given) -> vf.bool(b);
+        return (env, given) -> vf.bool(b);
     }
 
     @Override
     default IEval not(IEval b) {
-        return (env, store, given) -> ((IBool)b.eval(env, store, given)).not();
+        return (env, given) -> ((IBool)b.eval(env, given)).not();
     }
 
     @Override
     default IEval greater(IEval a, IEval b) {
-        return (env, store, given) -> {
-            IValue aVal = (IValue)a.eval(env, store, given);
-            IValue bVal = (IValue)b.eval(env, store, given);
+        return (env, given) -> {
+            IValue aVal = (IValue)a.eval(env, given);
+            IValue bVal = (IValue)b.eval(env, given);
             return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
         };
     }
@@ -36,11 +36,11 @@ public interface BoolFactory extends BoolAlg<IEval> {
 
     @Override
     default IEval greaterEqual(IEval a, IEval b) {
-        return (env, store, given) -> {
-            if (((IBool)greater(a,b).eval(env, store, given)).getValue()) {
-                return bool(true).eval(env, store, given);
+        return (env, given) -> {
+            if (((IBool)greater(a,b).eval(env, given)).getValue()) {
+                return bool(true).eval(env, given);
             }
-            return equal(a, b).eval(env, store, given);
+            return equal(a, b).eval(env, given);
         };
     }
 
@@ -51,13 +51,13 @@ public interface BoolFactory extends BoolAlg<IEval> {
 
     @Override
     default IEval equal(IEval e1, IEval e2) {
-        return (env, store, given) ->
-                vf.bool(e1.eval(env, store, given).equals(e2.eval(env, store, given)));
+        return (env, given) ->
+                vf.bool(((IValue)e1.eval(env, given)).isEqual((IValue)e2.eval(env, given)));
     }
 
     @Override
     default IEval physicalEqual(IEval e1, IEval e2) {
-        return (env, store, given) ->
-            vf.bool(e1.eval(env, store, given) == e2.eval(env, store, given));
+        return (env, given) ->
+            vf.bool(e1.eval(env, given) == e2.eval(env, given));
         }
 }

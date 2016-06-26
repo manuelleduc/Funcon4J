@@ -1,6 +1,5 @@
 package funcons.values;
 
-import funcons.entities.Store;
 import funcons.values.properties.ExternalRascalValue;
 import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
@@ -8,16 +7,26 @@ import org.rascalmpl.value.IValue;
 import java.lang.String;
 
 public class Variable implements Value, ExternalRascalValue {
+    private static java.lang.Integer allocCount = 0;
     private java.lang.Integer loc;
-    private Store store;
+    private Value value;
 
-    public Variable(java.lang.Integer location, Store store) {
-        this.loc = location;
-        this.store = store;
+    public Variable() {
+        this.loc = allocCount;
+        allocCount++;
+    }
+
+    public Variable(Value val) {
+        this();
+        store(val);
+    }
+
+    public void store(Value val) {
+        value = val;
     }
 
     public Value value() {
-        return store.val(this);
+        return value;
     }
 
     @Override
@@ -37,6 +46,9 @@ public class Variable implements Value, ExternalRascalValue {
 
     @Override
     public boolean isEqual(IValue other) {
-        return equals(other);
+        if (other instanceof Variable) {
+            return ((IValue)((Variable) other).value()).isEqual((IValue)value());
+        }
+        return other.isEqual((IValue)value());
     }
 }

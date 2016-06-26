@@ -15,37 +15,37 @@ public interface LogicControlFactory extends
 
     @Override
     default IEval effect(IEval e) {
-        return (env, store, given) -> {
-            e.eval(env, store, given);
-            return null_().eval(env, store, given);
+        return (env, given) -> {
+            e.eval(env, given);
+            return null_().eval(env, given);
         };
     }
 
     @Override
     default IEval seq(IEval c, IEval t) {
-        return (env, store, given) -> {
-            c.eval(env, store, given);
-            return t.eval(env, store, given);
+        return (env, given) -> {
+            c.eval(env, given);
+            return t.eval(env, given);
         };
     }
 
     @Override
     default IEval ifTrue(IEval e, IEval c1, IEval c2) {
-        return (env, store, given) ->
-                (((IBool)e.eval(env, store, given)).getValue() ? c1 : c2).eval(env, store, given);
+        return (env, given) ->
+                (((IBool)e.eval(env, given)).getValue() ? c1 : c2).eval(env, given);
     }
 
     @Override
     default IEval whileTrue(IEval e, IEval c) {
-        return (env, store, given) -> {
-            while (((IBool)e.eval(env, store, given)).getValue()) {
-                c.eval(env, store, given);
+        return (env, given) -> {
+            while (((IBool)e.eval(env, given)).getValue()) {
+                c.eval(env, given);
             }
-            return null_().eval(env, store, given);
+            return null_().eval(env, given);
         };
 /*        return ifTrue(
                 e,
-                seq(c, (env, forward, store, given) -> whileTrue(e, c).eval(env, forward, store, given)),
+                seq(c, (env, forward, given) -> whileTrue(e, c).eval(env, forward, given)),
                 null_()
         );*/
     }
@@ -53,13 +53,13 @@ public interface LogicControlFactory extends
     @Override
     default IEval for_(IEval id, IEval startValue, IEval cond, IEval incr, IEval exp) {
         return null;
-        /*return (env, forward, store, given) -> {
-            for (env = env.join((Environment)bindValue(id, startValue).eval(env, forward, store, given));
-                 ((Bool)cond.eval(env, forward, store, given)).boolValue();
-                 env = env.join((Environment)bindValue(id, incr).eval(env, forward, store, given))) {
-                exp.eval(env, forward, store, given);
+        /*return (env, forward, given) -> {
+            for (env = env.join((Environment)bindValue(id, startValue).eval(env, forward, given));
+                 ((Bool)cond.eval(env, forward, given)).boolValue();
+                 env = env.join((Environment)bindValue(id, incr).eval(env, forward, given))) {
+                exp.eval(env, forward, given);
             }
-            return null_().eval(env, forward, store, given);
+            return null_().eval(env, forward, given);
         };*/
     }
 }

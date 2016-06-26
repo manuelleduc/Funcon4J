@@ -2,6 +2,7 @@ package funcons.interpreter.tests;
 
 import funcons.interpreter.AllFactory;
 import org.junit.Test;
+import org.rascalmpl.value.IList;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,12 +31,15 @@ public class VectorFactoryTest implements AllFactory {
     @Test
     public void testVectorAssign() throws Exception {
         assertEquals(
-                vector(lit(4)).eval(),
-                scope(
-                        bindValue(id("foo"), vector(lit(3))),
-                        seq(
-                                vectorAssign(boundValue(id("foo")), lit(0), lit(4)),
-                                boundValue(id("foo"))
+                bool(true).eval(),
+                equal(
+                        vector(lit(4)),
+                        scope(
+                                bindValue(id("foo"), vector(lit(3))),
+                                seq(
+                                        vectorAssign(boundValue(id("foo")), lit(0), lit(4)),
+                                        boundValue(id("foo"))
+                                )
                         )
                 ).eval()
         );
