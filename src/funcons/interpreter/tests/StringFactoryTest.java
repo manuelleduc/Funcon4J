@@ -1,82 +1,45 @@
 package funcons.interpreter.tests;
 
 import funcons.interpreter.AllFactory;
-import funcons.values.Char;
-import funcons.values.String;
-import funcons.values.cl.CLChar;
-import funcons.values.cl.CLString;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class StringFactoryTest implements AllFactory {
 
     @Test
     public void testString() throws Exception {
-        String s = (String)string("foo")
-                .eval();
-        assertEquals(new String("foo"), s);
-        assertEquals("foo", s.toString());
+        assertEquals(string("foo").eval(), string("foo").eval());
+        assertNotEquals(string("bar").eval(), string("foo").eval());
     }
 
     @Test
     public void testCamlLightString() throws Exception {
-        CLString s = (CLString)camlLightString("foo")
-                .eval();
-        assertEquals(new String("foo"), s);
-        assertEquals("foo", s.toString());
-
-        s = (CLString)camlLightString("\\\\ \\\" \\n \\r \\t \\b \\065")
-                .eval();
-        assertEquals(new String("\\ \" \n \r \t \b A"), s);
+        assertEquals(string("foo").eval(), camlLightString("foo").eval());
+        assertEquals(string("\\ \" \n \r \t \b A").eval(), camlLightString("\\\\ \\\" \\n \\r \\t \\b \\065").eval());
     }
 
     @Test
     public void testChar_() throws Exception {
-        Char c = (Char)char_('a')
-                .eval();
-        assertEquals(new Char('a'), c);
+        assertEquals(char_('a').eval(), char_('a').eval());
+        assertNotEquals(char_('b').eval(), char_('a').eval());
     }
 
     @Test
     public void testCamlLightChar() throws Exception {
-        CLChar c = (CLChar)camlLightChar("a")
-                .eval();
-        assertEquals(new CLChar("a"), c);
-
-        c = (CLChar)camlLightChar("\\\\")
-                .eval();
-        assertEquals("\\", c.toString());
-
-        c = (CLChar)camlLightChar("\\`")
-                .eval();
-        assertEquals("`", c.toString());
-
-        c = (CLChar)camlLightChar("\\n")
-                .eval();
-        assertEquals("\n", c.toString());
-
-        c = (CLChar)camlLightChar("\\r")
-                .eval();
-        assertEquals("\r", c.toString());
-
-        c = (CLChar)camlLightChar("\\t")
-                .eval();
-        assertEquals("\t", c.toString());
-
-        c = (CLChar)camlLightChar("\\b")
-                .eval();
-        assertEquals("\b", c.toString());
-
-        c = (CLChar)camlLightChar("\\065")
-                .eval();
-        assertEquals("A", c.toString());
+        assertEquals(camlLightChar("a").eval(), camlLightChar("a").eval());
+        assertEquals(char_('\\').eval(), camlLightChar("\\\\").eval());
+        assertEquals(char_('`').eval(), camlLightChar("\\`").eval());
+        assertEquals(char_('\n').eval(), camlLightChar("\\n").eval());
+        assertEquals(char_('\r').eval(), camlLightChar("\\r").eval());
+        assertEquals(char_('\t').eval(), camlLightChar("\\t").eval());
+        assertEquals(char_('\b').eval(), camlLightChar("\\b").eval());
+        assertEquals(char_('A').eval(), camlLightChar("\\065").eval());
     }
 
     @Test
     public void testStringAppend() throws Exception {
-        String s = (String)stringAppend(string("foo"), string("bar"))
-                .eval();
-        assertEquals("foobar", s.stringValue());
+        assertEquals(string("foobar").eval(), stringAppend(string("foo"), string("bar")).eval());
     }
 }

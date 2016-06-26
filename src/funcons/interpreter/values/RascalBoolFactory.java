@@ -2,7 +2,9 @@ package funcons.interpreter.values;
 
 import funcons.algebras.values.BoolAlg;
 import funcons.carriers.IEval;
+import funcons.helper.RascalValueComperator;
 import org.rascalmpl.value.IBool;
+import org.rascalmpl.value.IList;
 import org.rascalmpl.value.INumber;
 import org.rascalmpl.value.IValue;
 import org.rascalmpl.value.impl.fast.ValueFactory;
@@ -25,7 +27,7 @@ public interface RascalBoolFactory extends BoolAlg<IEval> {
         return (env, forwards, store, given) -> {
             IValue aVal = (IValue)a.eval(env, forwards, store, given);
             IValue bVal = (IValue)b.eval(env, forwards, store, given);
-            return ((INumber)aVal).greater((INumber)bVal);
+            return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
         };
     }
 
