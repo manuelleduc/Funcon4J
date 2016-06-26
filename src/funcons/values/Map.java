@@ -1,6 +1,5 @@
 package funcons.values;
 
-import funcons.values.properties.Comparable;
 import funcons.values.properties.Value;
 
 import java.lang.String;
@@ -8,7 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Map<K, V> implements Value, Comparable {
+public class Map<K, V> implements Value {
     private interface Keys<K> {
         Set<K> get();
     }
@@ -116,19 +115,5 @@ public class Map<K, V> implements Value, Comparable {
         }
 
         return true;
-    }
-
-    @Override
-    public Boolean greaterThan(Comparable other) {
-        int nGreater = 0;
-        for (K k : keys()) {
-            V v = val(k);
-            @SuppressWarnings("unchecked")
-            Object otherV = ((Map)other).val(k);
-            if (otherV != null && !((Comparable)v).equalsComparable(otherV)) {
-                nGreater += ((Comparable)v).greaterThan(otherV) ? 1 : -1;
-            }
-        }
-        return nGreater > 0;
     }
 }

@@ -2,67 +2,64 @@ package funcons.interpreter.values;
 
 import funcons.algebras.values.BoolAlg;
 import funcons.carriers.IEval;
-import funcons.values.Bool;
-import funcons.values.properties.Comparable;
+import funcons.helper.RascalValueComperator;
+import org.rascalmpl.value.IBool;
+import org.rascalmpl.value.IList;
+import org.rascalmpl.value.INumber;
+import org.rascalmpl.value.IValue;
+import org.rascalmpl.value.impl.fast.ValueFactory;
 
 public interface BoolFactory extends BoolAlg<IEval> {
+    ValueFactory vf = ValueFactory.getInstance();
+
     @Override
-    default IEval bool(java.lang.Boolean b) {
-        return (env, forward, store, given) -> new Bool(b);
+    default IEval bool(Boolean b) {
+        return (env, forwards, store, given) -> vf.bool(b);
     }
 
     @Override
-    default IEval not(IEval bool) {
-        return (env, forward, store, given) -> new Bool(!((Bool)bool.eval(env, forward, store, given)).boolValue());
+    default IEval not(IEval b) {
+        return (env, forwards, store, given) -> ((IBool)b.eval(env, forwards, store, given)).not();
     }
 
     @Override
     default IEval greater(IEval a, IEval b) {
-        return (env, forward, store, given) ->
-                new Bool(
-                        ((Comparable)a.eval(env, forward, store, given)).greaterThan(
-                            (b.eval(env, forward, store, given))));
+        return (env, forwards, store, given) -> {
+            IValue aVal = (IValue)a.eval(env, forwards, store, given);
+            IValue bVal = (IValue)b.eval(env, forwards, store, given);
+            return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
+        };
     }
 
     @Override
     default IEval smaller(IEval a, IEval b) {
-        return (env, forward, store, given) ->
-                new Bool(
-                        ((Comparable)a.eval(env, forward, store, given)).smallerThan(
-                                (b.eval(env, forward, store, given))));
+        return not(greaterEqual(a, b));
     }
 
     @Override
     default IEval greaterEqual(IEval a, IEval b) {
-        return (env, forward, store, given) ->
-                new Bool(
-                        ((Comparable)a.eval(env, forward, store, given)).greaterEqualThan(
-                                (b.eval(env, forward, store, given))));
+        return (env, forwards, store, given) -> {
+            if (((IBool)greater(a,b).eval(env, forwards, store, given)).getValue()) {
+                return bool(true).eval(env, forwards, store, given);
+            }
+            return equal(a, b).eval(env, forwards, store, given);
+        };
     }
 
     @Override
     default IEval smallerEqual(IEval a, IEval b) {
-        return (env, forward, store, given) ->
-                new Bool(
-                        ((Comparable)a.eval(env, forward, store, given)).smallerEqualThan(
-                                (b.eval(env, forward, store, given))));
+        return not(greater(a, b));
     }
 
     @Override
-    default IEval equal(IEval x1, IEval x2) {
-        return (env, forward, store, given) -> new Bool(
-                x1.eval(env, forward, store, given)
-                        .equals(
-                x2.eval(env, forward, store, given)));
-
+    default IEval equal(IEval e1, IEval e2) {
+        return (env, forwards, store, given) ->
+                vf.bool(e1.eval(env, forwards, store, given).equals(e2.eval(env, forwards, store, given)));
     }
 
     @Override
     default IEval physicalEqual(IEval e1, IEval e2) {
-        return (env, forward, store, given) -> new Bool(
-                e1.eval(env, forward, store, given)
-                        ==
-                e2.eval(env, forward, store, given)
-        );
-    }
+        return (env, forwards, store, given) ->
+            vf.bool(e1.eval(env, forwards, store, given) == e2.eval(env, forwards, store, given));
+        }
 }

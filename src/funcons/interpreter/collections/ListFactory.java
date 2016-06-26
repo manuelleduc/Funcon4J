@@ -1,57 +1,67 @@
 package funcons.interpreter.collections;
 
 import funcons.algebras.collections.ListAlg;
-import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.collections.MapAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.storage.SupplyGivenAlg;
-import funcons.algebras.values.BoolAlg;
-import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import funcons.values.Bool;
-import funcons.values.Environment;
-import funcons.values.Int;
-import funcons.values.List;
+import org.rascalmpl.value.IInteger;
+import org.rascalmpl.value.IList;
+import org.rascalmpl.value.IListWriter;
+import org.rascalmpl.value.IValue;
+import org.rascalmpl.value.impl.fast.ValueFactory;
 
 public interface ListFactory extends
-        EnvironmentAlg<IEval>,
-        LogicControlAlg<IEval>,
-        FunctionAlg<IEval>,
         PatternAlg<IEval>,
-        IntAlg<IEval>,
-        BoolAlg<IEval>,
+        MapAlg<IEval>,
+        FunctionAlg<IEval>,
         SupplyGivenAlg<IEval>,
         ListAlg<IEval> {
 
+    ValueFactory vf = ValueFactory.getInstance();
+
+    @Override
+    default IEval projectList(IEval index, IEval list) {
+        return (env, forwards, store, given) -> {
+            IInteger i = (IInteger)index.eval(env, forwards, store, given);
+            IList l = (IList)list.eval(env, forwards, store, given);
+            return l.get(i.intValue());
+        };
+    }
+
     @Override
     default IEval list() {
-        return (env, forward, store, given) -> new List();
+        return (env, forwards, store, given) -> vf.list();
     }
 
     @Override
     default IEval list(IEval x) {
-        return (env, forward, store, given) -> new List(x.eval(env, forward, store, given));
+        return (env, forwards, store, given) -> vf.list((IValue)x.eval(env, forwards, store, given));
     }
 
     @Override
     default IEval list(IEval x1, IEval x2) {
-        return (env, forward, store, given) -> new List(x1.eval(env, forward, store, given), x2.eval(env, forward, store, given));
+        return (env, forwards, store, given) -> vf.list(
+                (IValue)x1.eval(env, forwards, store, given),
+                (IValue)x2.eval(env, forwards, store, given));
     }
 
     @Override
     default IEval listPrefix(IEval x, IEval l) {
-        return (env, forward, store, given) ->
-                ((List)l.eval(env, forward, store, given)).prepend(x.eval(env, forward, store, given));
+        return (env, forwards, store, given) -> {
+            IList list = (IList)l.eval(env, forwards, store, given);
+            return list.insert((IValue)x.eval(env, forwards, store, given));
+        };
     }
 
     @Override
     default IEval listPrefixMatch(IEval l, IEval p1, IEval p2) {
-        return (env, forward, store, given) -> {
-            List list = (List)l.eval(env, forward, store, given);
-            Environment e1 = (Environment)match((e, f, s, g) -> list.head(), p1).eval(env, forward, store, given);
-            Environment e2 = (Environment)match((e, f, s, g) -> list.tail(), p2).eval(env, forward, store, given);
-            return e1.join(e2);
+        return (env, forwards, store, given) -> {
+            IList list = (IList)l.eval(env, forwards, store, given);
+            IValue head = list.get(0);
+            IList tail = list.delete(0);
+            return mapOver(match((e,f,s,g)->head, p1), match((e,f,s,g)->tail, p2)).eval(env, forwards, store, given);
         };
     }
 
@@ -62,54 +72,50 @@ public interface ListFactory extends
 
     @Override
     default IEval intClosedInterval(IEval m, IEval n) {
-        return (env, forward, store, given) -> {
-            Int mValue = (Int)m.eval(env, forward, store, given);
-            Int nValue = (Int)n.eval(env, forward, store, given);
-
-            if (((Bool)greater((e,f,s,g) -> mValue, (e,f,s,g) -> nValue).eval(env, forward, store, given)).boolValue()) {
-                return new List();
+        return (env, forwards, store, given) -> {
+            int start = ((IInteger)m.eval(env, forwards, store, given)).intValue();
+            int finish = ((IInteger)n.eval(env, forwards, store, given)).intValue();
+            IListWriter lw = vf.listWriter();
+            for (int i = start; i <= finish; i++) {
+                lw.append(vf.integer(i));
             }
-
-            return listPrefix(m, intClosedInterval(intAdd((e,f,s,g) -> mValue, lit(1)), (e,f,s,g) -> nValue)).eval(env, forward, store, given);
+            return lw.done();
         };
     }
 
     @Override
     default IEval listReverse(IEval l) {
-        return (env, forward, store, given) -> ((List)l.eval(env, forward, store, given)).reverse();
+        return (env, forwards, store, given) -> ((IList)l.eval(env, forwards, store, given)).reverse();
     }
 
     @Override
     default IEval listAppend(IEval list1, IEval list2) {
-        return (env, forward, store, given) -> {
-            List l1 = (List)list1.eval(env, forward, store, given);
-            List l2 = (List)list2.eval(env, forward, store, given);
-            return l1.append(l2);
+        return (env, forwards, store, given) -> {
+            IList l1 = (IList)list1.eval(env, forwards, store, given);
+            IList l2 = (IList)list2.eval(env, forwards, store, given);
+            return l1.concat(l2);
         };
     }
 
     @Override
     default IEval listHead(IEval list) {
-        return (env, forwards, store, given) -> ((List)list.eval(env, forwards, store, given)).head();
+        return (env, forwards, store, given) -> ((IList)list.eval(env, forwards, store, given)).get(0);
     }
 
     @Override
     default IEval listTail(IEval list) {
-        return (env, forwards, store, given) -> ((List)list.eval(env, forwards, store, given)).tail();
-    }
-
-    @Override
-    default IEval projectList(IEval index, IEval list)  {
         return (env, forwards, store, given) -> {
-            Int i = (Int)index.eval(env, forwards, store, given);
-            List l = (List)list.eval(env, forwards, store, given);
-            return l.get(i);
+            IList listVal = ((IList)list.eval(env, forwards, store, given));
+            if (listVal.length() <= 1) {
+                return vf.list();
+            }
+            return listVal.sublist(1, listVal.length() - 1);
         };
     }
 
     @Override
     default IEval listLength(IEval list) {
         return (env, forwards, store, given) ->
-                ((List)list.eval(env, forwards, store, given)).length();
+                vf.integer(((IList)list.eval(env, forwards, store, given)).length());
     }
 }

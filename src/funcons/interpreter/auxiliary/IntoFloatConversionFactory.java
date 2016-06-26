@@ -5,7 +5,7 @@ import funcons.carriers.IEval;
 import org.rascalmpl.value.IInteger;
 import org.rascalmpl.value.IReal;
 
-public interface RascalIntoFloatConversionFactory extends IntFloatConversionAlg<IEval> {
+public interface IntoFloatConversionFactory extends IntFloatConversionAlg<IEval> {
     @Override
     default IEval intToFloat(IEval i) {
         return (env, forwards, store, given) -> ((IInteger)i.eval(env, forwards, store, given)).toReal(5);

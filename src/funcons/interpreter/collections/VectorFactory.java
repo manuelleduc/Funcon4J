@@ -3,50 +3,54 @@ package funcons.interpreter.collections;
 import funcons.algebras.collections.VectorAlg;
 import funcons.algebras.storage.StoreAlg;
 import funcons.carriers.IEval;
-import funcons.values.Int;
-import funcons.values.Vector;
+import org.rascalmpl.value.IInteger;
+import org.rascalmpl.value.IList;
+import org.rascalmpl.value.IValue;
+import org.rascalmpl.value.impl.fast.ValueFactory;
 
 public interface VectorFactory extends StoreAlg<IEval>, VectorAlg<IEval> {
+    ValueFactory vf = ValueFactory.getInstance();
+
     @Override
     default IEval vector() {
-        return (env, forwards, store, given) -> new Vector();
+        return (env, forwards, store, given) -> vf.list();
     }
 
     @Override
     default IEval vector(IEval val) {
-        return (env, forwards, store, given) -> new Vector(alloc(val).eval(env, forwards, store, given));
+        return (env, forwards, store, given) -> vf.list((IValue)alloc(val).eval(env, forwards, store, given));
     }
 
     @Override
     default IEval vectorSelect(IEval vector, IEval index) {
         return (env, forwards, store, given) -> {
-            Vector v = (Vector)vector.eval(env, forwards, store, given);
-            Int i = (Int)index.eval(env, forwards, store, given);
-            return assignedValue((e,f,s,g) -> v.get(i)).eval(env, forwards, store, given);
+            IList vectorVal = (IList)vector.eval(env, forwards, store, given);
+            IValue var = vectorVal.get(((IInteger)index.eval(env, forwards, store, given)).intValue());
+            return assignedValue((e,f,s,g)->var).eval(env, forwards, store, given);
         };
     }
 
     @Override
     default IEval vectorAppend(IEval vector1, IEval vector2) {
         return (env, forwards, store, given) -> {
-            Vector v1 = (Vector)vector1.eval(env, forwards, store, given);
-            Vector v2 = (Vector)vector2.eval(env, forwards, store, given);
-            return v1.append(v2);
+            IList vector1Val = (IList)vector1.eval(env, forwards, store, given);
+            IList vector2Val = (IList)vector2.eval(env, forwards, store, given);
+            return vector1Val.concat(vector2Val);
         };
     }
 
     @Override
-    default IEval vectorLength(IEval vect) {
+    default IEval vectorLength(IEval vector) {
         return (env, forwards, store, given) ->
-                ((Vector)vect.eval(env, forwards, store, given)).length();
+                vf.integer(((IList)vector.eval(env, forwards, store, given)).length());
     }
 
     @Override
     default IEval vectorAssign(IEval vector, IEval index, IEval val) {
         return (env, forwards, store, given) -> {
-            Vector vec = (Vector)vector.eval(env, forwards, store, given);
-            Int i = (Int)index.eval(env, forwards, store, given);
-            return assign((e,f,s,g) -> vec.get(i), val).eval(env, forwards, store, given);
+            IList vectorVal = (IList)vector.eval(env, forwards, store, given);
+            IValue var = vectorVal.get(((IInteger)index.eval(env, forwards, store, given)).intValue());
+            return assign((e,f,s,g)->var, val).eval(env, forwards, store, given);
         };
     }
 }

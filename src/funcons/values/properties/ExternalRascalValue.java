@@ -6,7 +6,7 @@ import org.rascalmpl.value.type.TypeFactory;
 import org.rascalmpl.value.visitors.IValueVisitor;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public interface RascalValue extends IExternalValue {
+public interface ExternalRascalValue extends IExternalValue {
     TypeFactory typeFactory = TypeFactory.getInstance();
 
     @Override

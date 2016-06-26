@@ -2,77 +2,69 @@ package funcons.interpreter.collections;
 
 import funcons.algebras.collections.MapAlg;
 import funcons.carriers.IEval;
-import funcons.values.List;
-import funcons.values.Map;
-import funcons.values.properties.Value;
-
-import java.util.Set;
+import org.rascalmpl.value.IListWriter;
+import org.rascalmpl.value.IMap;
+import org.rascalmpl.value.IMapWriter;
+import org.rascalmpl.value.IValue;
+import org.rascalmpl.value.impl.fast.ValueFactory;
 
 public interface MapFactory extends MapAlg<IEval> {
+    ValueFactory vf = ValueFactory.getInstance();
 
     @Override
     default IEval map(IEval key, IEval val) {
-        return (env, forward, store, given) -> {
-            Value keyVal = key.eval(env, forward, store, given);
-            Value valVal = val.eval(env, forward, store, given);
-            return new Map<>(keyVal, valVal);
+        return (env, forwards, store, given) -> {
+            IValue k = (IValue)key.eval(env, forwards, store, given);
+            IValue v = (IValue)val.eval(env, forwards, store, given);
+            IMapWriter mw = vf.mapWriter();
+            mw.put(k, v);
+            return mw.done();
         };
     }
 
     @Override
-    default IEval mapUpdate(IEval map, IEval key, IEval e) {
-        return (env, forward, store, given) -> {
-            Map m = (Map)map.eval(env, forward, store, given);
-            Value k = key.eval(env, forward, store, given);
-            Value v = e.eval(env, forward, store, given);
-            @SuppressWarnings("unchecked")
-            Map m2 = m.add(k, v);
-            return m2;
+    default IEval mapUpdate(IEval map, IEval key, IEval val) {
+        return (env, forwards, store, given) -> {
+            IValue k = (IValue)key.eval(env, forwards, store, given);
+            IValue v = (IValue)val.eval(env, forwards, store, given);
+            IMap m = (IMap)map.eval(env, forwards, store, given);
+            return m.put(k, v);
         };
     }
 
     @Override
     default IEval mapDomain(IEval map) {
-        return (env, forward, store, given) -> {
-            Map m = (Map)map.eval(env, forward, store, given);
-            @SuppressWarnings("unchecked")
-            Set<Value> keys = m.keys();
-            List l = new List();
-            for (Value key : keys) {
-                l = l.prepend(key);
-            }
-            return l;
+        return (env, forwards, store, given) -> {
+            IMap m = (IMap)map.eval(env, forwards, store, given);
+            IListWriter lw = vf.listWriter();
+            m.forEach(lw::append);
+            return lw.done();
         };
     }
 
     @Override
     default IEval mapUnion(IEval map1, IEval map2) {
-        return (env, forward, store, given) -> {
-            Map m1 = (Map)map1.eval(env, forward, store, given);
-            Map m2 = (Map)map2.eval(env, forward, store, given);
-            @SuppressWarnings("unchecked")
-            Map m3 = m1.join(m2);
-            return m3;
+        return (env, forwards, store, given) -> {
+            IMap m1 = (IMap)map1.eval(env, forwards, store, given);
+            IMap m2 = (IMap)map2.eval(env, forwards, store, given);
+            return m1.join(m2);
         };
     }
 
     @Override
     default IEval mapOver(IEval map1, IEval map2) {
-        return (env, forward, store, given) -> {
-            Map m1 = (Map)map1.eval(env, forward, store, given);
-            Map m2 = (Map)map2.eval(env, forward, store, given);
-            @SuppressWarnings("unchecked")
-            Map m3 = m2.join(m1);
-            return m3;
+        return (env, forwards, store, given) -> {
+            IMap m1 = (IMap)map1.eval(env, forwards, store, given);
+            IMap m2 = (IMap)map2.eval(env, forwards, store, given);
+            return m2.join(m1);
         };
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     default IEval mapGet(IEval map, IEval key) {
-        return (env, forward, store, given) -> {
-            Map m = (Map)map.eval(env, forward, store, given);
-            return (Value)m.val(key.eval(env, forward, store, given));
+        return (env, forwards, store, given) -> {
+            IMap m = (IMap)map.eval(env, forwards, store, given);
+            return m.get((IValue)key.eval(env, forwards, store, given));
         };
     }
 }

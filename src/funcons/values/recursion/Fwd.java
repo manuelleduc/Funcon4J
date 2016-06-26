@@ -1,10 +1,10 @@
 package funcons.values.recursion;
 
-import funcons.values.properties.RascalValue;
+import funcons.values.properties.ExternalRascalValue;
 import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 
-public class Fwd implements Value, RascalValue {
+public class Fwd implements Value, ExternalRascalValue {
     private final java.lang.Integer n;
 
     public Fwd(java.lang.Integer n) {

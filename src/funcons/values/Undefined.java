@@ -1,12 +1,12 @@
 package funcons.values;
 
-import funcons.values.properties.RascalValue;
+import funcons.values.properties.ExternalRascalValue;
 import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 
 import java.lang.String;
 
-public class Undefined implements Value, RascalValue {
+public class Undefined implements Value, ExternalRascalValue {
     @Override
     public int hashCode() {
         return 0;

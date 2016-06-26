@@ -1,10 +1,9 @@
 package funcons.values;
 
-import funcons.values.properties.RascalValue;
-import funcons.values.properties.Unit;
+import funcons.values.properties.ExternalRascalValue;
 import org.rascalmpl.value.IValue;
 
-public class Null implements Unit, RascalValue {
+public class Null implements ExternalRascalValue {
     @Override
     public int hashCode() {
         return 0;

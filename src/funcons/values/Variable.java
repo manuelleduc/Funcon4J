@@ -1,14 +1,13 @@
 package funcons.values;
 
 import funcons.entities.Store;
-import funcons.values.properties.Comparable;
-import funcons.values.properties.RascalValue;
+import funcons.values.properties.ExternalRascalValue;
 import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 
 import java.lang.String;
 
-public class Variable implements Value, Comparable, RascalValue {
+public class Variable implements Value, ExternalRascalValue {
     private java.lang.Integer loc;
     private Store store;
 
@@ -39,27 +38,5 @@ public class Variable implements Value, Comparable, RascalValue {
     @Override
     public boolean isEqual(IValue other) {
         return equals(other);
-    }
-
-    @Override
-    public Boolean equalsComparable(Comparable other) {
-        Value v = value();
-        return !((Comparable)v).greaterThan(other) && !other.greaterThan(v);
-    }
-
-    @Override
-    public Boolean equalsComparable(Object other) {
-        return ((Comparable)other).equalsComparable(value());
-    }
-
-    @Override
-    public Boolean greaterThan(Comparable other) {
-        return other.smallerThan(this.value());
-    }
-
-    @Override
-    public Boolean greaterThan(Object other) {
-        Value v = this.value();
-        return !((Comparable)other).equalsComparable(v) && ((Comparable)other).smallerThan(this.value());
     }
 }

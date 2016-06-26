@@ -1,8 +1,10 @@
 package funcons.values.signals;
 
+import funcons.values.properties.ExternalRascalValue;
 import funcons.values.properties.Value;
+import org.rascalmpl.value.IValue;
 
-public abstract class FunconException extends Exception implements Value {
+public abstract class FunconException extends Exception implements Value, ExternalRascalValue {
     private java.lang.String message;
 
     public FunconException(java.lang.String message) {
@@ -18,5 +20,10 @@ public abstract class FunconException extends Exception implements Value {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof FunconException && ((FunconException)obj).message.equals(message);
+    }
+
+    @Override
+    public boolean isEqual(IValue other) {
+        return equals(other);
     }
 }

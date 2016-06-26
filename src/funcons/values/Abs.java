@@ -1,11 +1,11 @@
 package funcons.values;
 
-import funcons.values.properties.RascalValue;
+import funcons.values.properties.ExternalRascalValue;
 import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public class Abs<E> implements Value, RascalValue {
+public class Abs<E> implements Value, ExternalRascalValue {
 
     private final E body;
 
