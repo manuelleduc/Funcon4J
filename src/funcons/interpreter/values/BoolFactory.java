@@ -4,8 +4,6 @@ import funcons.algebras.values.BoolAlg;
 import funcons.carriers.IEval;
 import funcons.helper.RascalValueComperator;
 import org.rascalmpl.value.IBool;
-import org.rascalmpl.value.IList;
-import org.rascalmpl.value.INumber;
 import org.rascalmpl.value.IValue;
 import org.rascalmpl.value.impl.fast.ValueFactory;
 
@@ -14,19 +12,19 @@ public interface BoolFactory extends BoolAlg<IEval> {
 
     @Override
     default IEval bool(Boolean b) {
-        return (env, forwards, store, given) -> vf.bool(b);
+        return (env, store, given) -> vf.bool(b);
     }
 
     @Override
     default IEval not(IEval b) {
-        return (env, forwards, store, given) -> ((IBool)b.eval(env, forwards, store, given)).not();
+        return (env, store, given) -> ((IBool)b.eval(env, store, given)).not();
     }
 
     @Override
     default IEval greater(IEval a, IEval b) {
-        return (env, forwards, store, given) -> {
-            IValue aVal = (IValue)a.eval(env, forwards, store, given);
-            IValue bVal = (IValue)b.eval(env, forwards, store, given);
+        return (env, store, given) -> {
+            IValue aVal = (IValue)a.eval(env, store, given);
+            IValue bVal = (IValue)b.eval(env, store, given);
             return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
         };
     }
@@ -38,11 +36,11 @@ public interface BoolFactory extends BoolAlg<IEval> {
 
     @Override
     default IEval greaterEqual(IEval a, IEval b) {
-        return (env, forwards, store, given) -> {
-            if (((IBool)greater(a,b).eval(env, forwards, store, given)).getValue()) {
-                return bool(true).eval(env, forwards, store, given);
+        return (env, store, given) -> {
+            if (((IBool)greater(a,b).eval(env, store, given)).getValue()) {
+                return bool(true).eval(env, store, given);
             }
-            return equal(a, b).eval(env, forwards, store, given);
+            return equal(a, b).eval(env, store, given);
         };
     }
 
@@ -53,13 +51,13 @@ public interface BoolFactory extends BoolAlg<IEval> {
 
     @Override
     default IEval equal(IEval e1, IEval e2) {
-        return (env, forwards, store, given) ->
-                vf.bool(e1.eval(env, forwards, store, given).equals(e2.eval(env, forwards, store, given)));
+        return (env, store, given) ->
+                vf.bool(e1.eval(env, store, given).equals(e2.eval(env, store, given)));
     }
 
     @Override
     default IEval physicalEqual(IEval e1, IEval e2) {
-        return (env, forwards, store, given) ->
-            vf.bool(e1.eval(env, forwards, store, given) == e2.eval(env, forwards, store, given));
+        return (env, store, given) ->
+            vf.bool(e1.eval(env, store, given) == e2.eval(env, store, given));
         }
 }

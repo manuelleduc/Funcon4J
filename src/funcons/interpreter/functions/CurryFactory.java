@@ -31,21 +31,21 @@ public interface CurryFactory extends
 
     @Override
     default IEval curry(IEval a) {
-        return abs((env, forward, store, given) -> partialApp(a, (e,f,s,g) -> given).eval(env, forward, store, given));
+        return abs((env, store, given) -> partialApp(a, (e,s,g) -> given).eval(env, store, given));
     }
 
     @Override
     default IEval curryN(IEval n, IEval a) {
-        return (env, forward, store, given) -> {
-            Value index = n.eval(env, forward, store, given);
+        return (env, store, given) -> {
+            Value index = n.eval(env, store, given);
             return ifTrue(
-                    equal((e,f,s,g)->index, lit(0)),
+                    equal((e,s,g)->index, lit(0)),
                     apply(a, tuple()),
-                    abs((localEnv, localForward, localStore, localGiven) -> curryN(
+                    abs((localEnv, localStore, localGiven) -> curryN(
                             intSubtract(n, lit(1)),
-                            partialAppN(a, (e,f,s,g) -> localGiven))
-                            .eval(env, forward, store, given)))
-                    .eval(env, forward, store, given);
+                            partialAppN(a, (e,s,g) -> localGiven))
+                            .eval(env, store, given)))
+                    .eval(env, store, given);
         };
     }
 

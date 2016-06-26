@@ -15,33 +15,33 @@ public interface LogicControlFactory extends
 
     @Override
     default IEval effect(IEval e) {
-        return (env, forward, store, given) -> {
-            e.eval(env, forward, store, given);
-            return null_().eval(env, forward, store, given);
+        return (env, store, given) -> {
+            e.eval(env, store, given);
+            return null_().eval(env, store, given);
         };
     }
 
     @Override
     default IEval seq(IEval c, IEval t) {
-        return (env, forward, store, given) -> {
-            c.eval(env, forward, store, given);
-            return t.eval(env, forward, store, given);
+        return (env, store, given) -> {
+            c.eval(env, store, given);
+            return t.eval(env, store, given);
         };
     }
 
     @Override
     default IEval ifTrue(IEval e, IEval c1, IEval c2) {
-        return (env, forward, store, given) ->
-                (((IBool)e.eval(env, forward, store, given)).getValue() ? c1 : c2).eval(env, forward, store, given);
+        return (env, store, given) ->
+                (((IBool)e.eval(env, store, given)).getValue() ? c1 : c2).eval(env, store, given);
     }
 
     @Override
     default IEval whileTrue(IEval e, IEval c) {
-        return (env, forward, store, given) -> {
-            while (((IBool)e.eval(env, forward, store, given)).getValue()) {
-                c.eval(env, forward, store, given);
+        return (env, store, given) -> {
+            while (((IBool)e.eval(env, store, given)).getValue()) {
+                c.eval(env, store, given);
             }
-            return null_().eval(env, forward, store, given);
+            return null_().eval(env, store, given);
         };
 /*        return ifTrue(
                 e,

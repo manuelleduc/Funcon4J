@@ -11,28 +11,28 @@ public interface StringFactory extends StringAlg<IEval> {
 
     @Override
     default IEval string(String s) {
-        return (env, forwards, store, given) -> vf.string(s);
+        return (env, store, given) -> vf.string(s);
     }
 
     @Override
     default IEval char_(Character c) {
-        return (env, forwards, store, given) -> vf.string(c);
+        return (env, store, given) -> vf.string(c);
     }
 
     @Override
     default IEval camlLightString(String s) {
-        return (env, forwards, store, given) -> funcons.helper.RascalCLStringFactory.clString(vf, s);
+        return (env, store, given) -> funcons.helper.RascalCLStringFactory.clString(vf, s);
     }
 
     @Override
     default IEval camlLightChar(String s) {
-        return (env, forwards, store, given) -> funcons.helper.RascalCLStringFactory.clChar(vf, s);
+        return (env, store, given) -> funcons.helper.RascalCLStringFactory.clChar(vf, s);
     }
 
     @Override
     default IEval stringAppend(IEval str1, IEval str2) {
-        return (env, forwards, store, given) ->
-                ((IString)str1.eval(env, forwards, store, given))
-                    .concat((IString)str2.eval(env, forwards, store, given));
+        return (env, store, given) ->
+                ((IString)str1.eval(env, store, given))
+                    .concat((IString)str2.eval(env, store, given));
     }
 }

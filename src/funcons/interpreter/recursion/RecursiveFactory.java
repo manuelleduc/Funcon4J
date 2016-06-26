@@ -8,7 +8,6 @@ import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
-import funcons.values.Undefined;
 import funcons.values.properties.Value;
 import funcons.values.recursion.Fwd;
 import org.rascalmpl.value.IInteger;
@@ -24,55 +23,55 @@ public interface RecursiveFactory extends
 
     @Override
     default IEval freshFwd() {
-        return (env, forward, store, given) -> forward.freshFwd();
+        return (env, store, given) -> new Fwd();
     }
 
     @Override
     default IEval freshFwds(IEval idList) {
-        return (env, forward, store, given) -> {
+        return (env, store, given) -> {
             IEval envEval = environment();
-            Value idListVal = idList.eval(env, forward, store, given);
-            int length = ((IInteger)listLength((e, f, s, g)->idListVal).eval(env, forward, store, given)).intValue();
-            Value undefined = undefined().eval(env, forward, store, given);
+            Value idListVal = idList.eval(env, store, given);
+            int length = ((IInteger)listLength((e,s,g)->idListVal).eval(env, store, given)).intValue();
+            Value undefined = undefined().eval(env, store, given);
 
             for (int i = 0; i < length; i++) {
-                Value id = projectList(lit(i), (e,f,s,g)->idListVal).eval(env, forward, store, given);
-                Value fwd = freshFwd().eval(env, forward, store, given);
-                forward.add((Fwd)fwd, undefined);
+                Value id = projectList(lit(i), (e,s,g)->idListVal).eval(env, store, given);
+                Fwd fwd = (Fwd)freshFwd().eval(env, store, given);
+                fwd.add(undefined);
 
-                envEval = mapUpdate(envEval, (e,f,s,g) -> id, (e,f,s,g) -> fwd);
+                envEval = mapUpdate(envEval, (e,s,g) -> id, (e,s,g) -> fwd);
             }
 
-            return envEval.eval(env, forward, store, given);
+            return envEval.eval(env, store, given);
         };
     }
 
     @Override
     default IEval setForwards(IEval idFwdMap) {
-        return (env, forward, store, given) -> {
-            Value mapVal = idFwdMap.eval(env, forward, store, given);
-            Value mapKeys = mapDomain((e,f,s,g)->mapVal).eval(env, forward, store, given);
-            int length = ((IInteger)listLength((e,f,s,g)->mapKeys).eval(env, forward, store, given)).intValue();
+        return (env, store, given) -> {
+            Value mapVal = idFwdMap.eval(env, store, given);
+            Value mapKeys = mapDomain((e,s,g)->mapVal).eval(env, store, given);
+            int length = ((IInteger)listLength((e,s,g)->mapKeys).eval(env, store, given)).intValue();
 
             for (int i = 0; i < length; i++) {
-                Value id = projectList(lit(i), (e,f,s,g)->mapKeys).eval(env, forward, store, given);
-                Value v = boundValue((e,f,s,g)->id).eval(env, forward, store, given);
+                Value id = projectList(lit(i), (e,s,g)->mapKeys).eval(env, store, given);
+                Value v = boundValue((e,s,g)->id).eval(env, store, given);
                 if (v == null) {
-                    v = new Undefined();
+                    v = undefined().eval(env, store, given);
                 }
-                Value fwd = mapGet((e,f,s,g)->mapVal, (e,f,s,g)->id).eval(env, forward, store, given);
-                forward.add((Fwd)fwd, v);
+                Fwd fwd = (Fwd)mapGet((e,s,g)->mapVal, (e,s,g)->id).eval(env, store, given);
+                fwd.add(v);
             }
 
-            return null_().eval(env, forward, store, given);
+            return null_().eval(env, store, given);
         };
     }
 
     @Override
     default IEval reclose(IEval map, IEval decl) {
-        return (env, forward, store, given) -> {
-            Value m = map.eval(env, forward, store, given);
-            return accum(scope((e,s,f,g) -> m, decl), seq(setForwards((e,s,f,g) -> m), environment())).eval(env, forward, store, given);
+        return (env, store, given) -> {
+            Value m = map.eval(env, store, given);
+            return accum(scope((e,s,g) -> m, decl), seq(setForwards((e,s,g) -> m), environment())).eval(env, store, given);
         };
     }
 
@@ -88,18 +87,17 @@ public interface RecursiveFactory extends
 
     @Override
     default IEval followFwd(IEval fwd) {
-        return (env, forward, store, given) -> forward.follow((Fwd)fwd.eval(env, forward, store, given));
+        return (env, store, given) -> ((Fwd)fwd.eval(env, store, given)).follow();
     }
 
     @Override
     default IEval followIfFwd(IEval fwd) {
-        return (env, forward, store, given) -> {
-            Value v = fwd.eval(env, forward, store, given);
-            try {
-                return forward.follow((Fwd)v);
-            } catch (ClassCastException ignore) {
-                return v;
+        return (env, store, given) -> {
+            Value v = fwd.eval(env, store, given);
+            if (v instanceof Fwd) {
+                return ((Fwd)v).follow();
             }
+            return v;
         };
     }
 }

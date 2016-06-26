@@ -44,7 +44,7 @@ public class TypeFactoryTest implements AllFactory {
     public void testNomTag() throws Exception {
         assertNotEquals(nomTag(freshToken()).eval(), nomTag(freshToken()).eval());
         Value v = freshToken().eval();
-        assertEquals(nomTag((e,f,s,g) -> v).eval(), nomTag((e,f,s,g) -> v).eval());
+        assertEquals(nomTag((e,s,g) -> v).eval(), nomTag((e,s,g) -> v).eval());
     }
 
     @Test
@@ -52,8 +52,8 @@ public class TypeFactoryTest implements AllFactory {
         assertNotEquals(nomVal(nomTag(freshToken()), lit(0)).eval(), nomVal(nomTag(freshToken()), lit(0)).eval());
 
         Value v = nomTag(freshToken()).eval();
-        assertNotEquals(nomVal((e,f,s,g) -> v, lit(0)).eval(), nomVal((e,f,s,g) -> v, lit(1)).eval());
-        assertEquals(nomVal((e,f,s,g) -> v, lit(0)).eval(), nomVal((e,f,s,g) -> v, lit(0)).eval());
+        assertNotEquals(nomVal((e,s,g) -> v, lit(0)).eval(), nomVal((e,s,g) -> v, lit(1)).eval());
+        assertEquals(nomVal((e,s,g) -> v, lit(0)).eval(), nomVal((e,s,g) -> v, lit(0)).eval());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class TypeFactoryTest implements AllFactory {
         Value v = freshToken().eval();
         assertEquals(
                 lit(0).eval(),
-                nomValSelect(nomTag((e,f,s,g) -> v), nomVal(nomTag((e,f,s,g) -> v), lit(0))).eval());
+                nomValSelect(nomTag((e,s,g) -> v), nomVal(nomTag((e,s,g) -> v), lit(0))).eval());
 
         // should fail
         try {

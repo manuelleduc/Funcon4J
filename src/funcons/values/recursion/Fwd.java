@@ -5,10 +5,22 @@ import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 
 public class Fwd implements Value, ExternalRascalValue {
+    private static java.lang.Integer fwdCount = 0;
     private final java.lang.Integer n;
 
-    public Fwd(java.lang.Integer n) {
-        this.n = n;
+    private Value value;
+
+    public Fwd() {
+        this.n = fwdCount;
+        fwdCount++;
+    }
+
+    public void add(Value v) {
+        value = v;
+    }
+
+    public Value follow() {
+        return value;
     }
 
     @Override
@@ -28,6 +40,6 @@ public class Fwd implements Value, ExternalRascalValue {
 
     @Override
     public String toString() {
-        return "Forward:" + n;
+        return "Fwd:" + n;
     }
 }

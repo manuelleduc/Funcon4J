@@ -2,107 +2,70 @@ package funcons.interpreter.tests;
 
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
+import funcons.values.properties.Value;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class RecursiveFactoryTest implements AllFactory {
 
     @Test
     public void testFreshFwd() throws Exception {
-        assertEquals(freshFwd().eval(), freshFwd().eval());
+        assertNotEquals(freshFwd().eval(), freshFwd().eval());
     }
 
     @Test
     public void testFreshFwds() throws Exception {
         IEval fwds = freshFwds(list(id("x"), id("y")));
-        assertEquals(freshFwd().eval(), scope(fwds, boundValue(id("x"))).eval());
+        assertEquals(undefined().eval(), followFwd(scope(fwds, boundValue(id("x")))).eval());
     }
 
     @Test
     public void testSetForwards() throws Exception {
-        // TODO
-        /*
-        Forwards forwards = new Forwards();
-        Environment env = new Environment();
-        env = env.add(new Id("foo"), new Int(3));
-        env = env.add(new Id("bar"), new Int(5));
         IEval bindings = accum(bindValue(id("foo"), lit(3)), bindValue(id("bar"), lit(5)));
-        IEval settingFwds = setForwards(freshFwds(listPrefix(id("foo"), list(id("bar"), id("baz")))));
-        accum(bindings, settingFwds).eval();
+        Value fwdsEnvironment = freshFwds(listPrefix(id("foo"), list(id("bar"), id("baz")))).eval();
+        IEval settingFwds = setForwards((e,s,g)->fwdsEnvironment);
+        scope(bindings, settingFwds).eval();
 
-        IEval fwdsEval = freshFwds(listPrefix(id("foo"), list(id("bar"), id("baz"))));
-        Map fwds = (Map)fwdsEval.eval(env, forwards, new Store(), new Null());
-        setForwards((e,f,s,g) -> fwds).eval(env, forwards, new Store(), new Null());
-
-        assertEquals(new Integer(3), ((Int)forwards.follow(new Fwd(0))).intValue());
-        assertEquals(new Integer(5), ((Int)forwards.follow(new Fwd(1))).intValue());
-        assertEquals(new Undefined(), forwards.follow(new Fwd(2)));
-        */
+        assertEquals(lit(3).eval(), followFwd(mapGet((e,s,g)->fwdsEnvironment, id("foo"))).eval());
+        assertEquals(lit(5).eval(),  followFwd(mapGet((e,s,g)->fwdsEnvironment, id("bar"))).eval());
+        assertEquals(undefined().eval(), followFwd(mapGet((e,s,g)->fwdsEnvironment, id("baz"))).eval());
     }
 
     @Test
     public void testReclose() throws Exception {
-        // TODO
-        /*
         IEval recloseEval = reclose(freshFwds(list(id("foo"), id("bar"))), bindValue(id("foo"), lit(0)));
-        Forwards forwards = new Forwards();
-        recloseEval.eval(new Environment(), forwards, new Store(), new Null());
-        assertEquals(new Integer(0), ((Int)forwards.follow(new Fwd(0))).intValue());
-        assertEquals(new Undefined(), forwards.follow(new Fwd(1)));
-        */
+        assertEquals(lit(0).eval(), scope(recloseEval, boundValue(id("foo"))).eval());
+        assertEquals(null, scope(recloseEval, boundValue(id("bar"))).eval());
     }
 
     @Test
     public void testRecursive() throws Exception {
-        // TODO
-        /*
-        Forwards forwards = new Forwards();
-        recursive(list(id("foo")), bindValue(id("foo"), lit(0)))
-                .eval(new Environment(), forwards, new Store(), new Null());
-        assertEquals(new Integer(0), ((Int)forwards.follow(new Fwd(0))).intValue());
-        */
+        IEval env = recursive(list(id("foo")), bindValue(id("foo"), lit(0)));
+        assertEquals(lit(0).eval(), scope(env, boundValue(id("foo"))).eval());
     }
 
     @Test
     public void testFollowFwd() throws Exception {
-        // TODO
-        /*
-        Forwards forwards = new Forwards();
-
-        Environment env = new Environment();
-        env = env.add(new Id("foo"), new Int(0));
-        setForwards(freshFwds(list(id("foo")))).eval(env, forwards, new Store(), new Null());
-        Int i = (Int)followFwd((e,f,s,g) -> new Fwd(0)).eval(env, forwards, new Store(), new Null());
-        assertEquals(new Integer(0), i.intValue());
-         */
+        Value fwdEnvironment = freshFwds(list(id("foo"))).eval();
+        scope(bindValue(id("foo"), lit(0)), setForwards((e,s,g)->fwdEnvironment)).eval();
+        assertEquals(lit(0).eval(), followFwd(scope((e,s,g)->fwdEnvironment, boundValue(id("foo")))).eval());
     }
 
     @Test
     public void testFollowIfFwd() throws Exception {
-        // TODO
-        /*
-        Forwards forwards = new Forwards();
-        Environment env = new Environment();
-        env = env.add(new Id("foo"), new Int(0));
-        setForwards(freshFwds(list(id("foo")))).eval(env, forwards, new Store(), new Null());
-        Int i = (Int)followIfFwd((e,f,s,g) -> new Fwd(0)).eval(env, forwards, new Store(), new Null());
-        assertEquals(new Integer(0), i.intValue());
+        Value fwdEnvironment = freshFwds(list(id("foo"))).eval();
+        scope(bindValue(id("foo"), lit(0)), setForwards((e,s,g)->fwdEnvironment)).eval();
+        assertEquals(lit(0).eval(), followIfFwd(scope((e,s,g) -> fwdEnvironment, boundValue(id("foo")))).eval());
 
-        i = (Int)followIfFwd(lit(1)).eval(env, forwards, new Store(), new Null());
-        assertEquals(new Integer(1), i.intValue());
-        */
+        assertEquals(lit(1).eval(), followIfFwd(lit(1)).eval());
     }
 
     @Test
     public void testRecursiveTyped() throws Exception {
-        // TODO
-        /*
-        Forwards forwards = new Forwards();
         IEval map = mapUpdate(environment(), id("foo"), type("bar"));
-        recursiveTyped(map, bindValue(id("foo"), lit(0)))
-                .eval(new Environment(), forwards, new Store(), new Null());
-        assertEquals(new Integer(0), ((Int)forwards.follow(new Fwd(0))).intValue());
-        */
+        IEval env = recursiveTyped(map, bindValue(id("foo"), lit(0)));
+        assertEquals(lit(0).eval(), scope(env, boundValue(id("foo"))).eval());
     }
 }

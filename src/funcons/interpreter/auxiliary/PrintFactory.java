@@ -7,9 +7,9 @@ import funcons.carriers.IEval;
 public interface PrintFactory extends NullAlg<IEval>, PrintAlg<IEval> {
     @Override
     default IEval print(IEval x) {
-        return (env, forward, store, given) -> {
-            System.out.print(x.eval(env, forward, store, given));
-            return null_().eval(env, forward, store, given);
+        return (env, store, given) -> {
+            System.out.print(x.eval(env, store, given));
+            return null_().eval(env, store, given);
         };
     }
 }

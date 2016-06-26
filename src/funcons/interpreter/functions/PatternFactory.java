@@ -44,19 +44,19 @@ public interface PatternFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default IEval pattUnion(IEval pat1, IEval pat2) {
-        return abs((env, forward, store, given) -> {
-            IEval env1 = ((Abs<IEval>)pat1.eval(env, forward, store, given)).body();
-            IEval env2 = ((Abs<IEval>)pat2.eval(env, forward, store, given)).body();
-            return mapUnion(env1, env2).eval(env, forward, store, given);
+        return abs((env, store, given) -> {
+            IEval env1 = ((Abs<IEval>)pat1.eval(env, store, given)).body();
+            IEval env2 = ((Abs<IEval>)pat2.eval(env, store, given)).body();
+            return mapUnion(env1, env2).eval(env, store, given);
         });
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default IEval pattNonBinding(IEval patt) {
-        return abs((env, forward, store, given) -> {
-            ((Abs<IEval>)patt.eval(env, forward, store, given)).body().eval(env, forward, store, given);
-            return environment().eval(env, forward, store, given);
+        return abs((env, store, given) -> {
+            ((Abs<IEval>)patt.eval(env, store, given)).body().eval(env, store, given);
+            return environment().eval(env, store, given);
         });
     }
 }

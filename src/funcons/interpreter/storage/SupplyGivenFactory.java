@@ -6,11 +6,11 @@ import funcons.carriers.IEval;
 public interface SupplyGivenFactory extends SupplyGivenAlg<IEval> {
     @Override
     default IEval given() {
-        return (env, forward, store, given) -> given;
+        return (env, store, given) -> given;
     }
 
     @Override
     default IEval supply(IEval exp, IEval x) {
-        return (env, forward, store, given) -> x.eval(env, forward, store, exp.eval(env, forward, store, given));
+        return (env, store, given) -> x.eval(env, store, exp.eval(env, store, given));
     }
 }

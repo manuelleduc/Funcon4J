@@ -23,47 +23,47 @@ public interface TupleFactory extends
 
     @Override
     default IEval tuple() {
-        return (env, forwards, store, given) -> vf.list();
+        return (env, store, given) -> vf.list();
     }
 
     @Override
     default IEval tuple(IEval x) {
-        return (env, forwards, store, given) -> vf.list((IValue)x.eval(env, forwards, store, given));
+        return (env, store, given) -> vf.list((IValue)x.eval(env, store, given));
     }
 
     @Override
     default IEval tuple(IEval x1, IEval x2) {
-        return (env, forwards, store, given) -> vf.list(
-                (IValue)x1.eval(env, forwards, store, given),
-                (IValue)x2.eval(env, forwards, store, given)
+        return (env, store, given) -> vf.list(
+                (IValue)x1.eval(env, store, given),
+                (IValue)x2.eval(env, store, given)
         );
     }
 
     @Override
     default IEval tuple(IEval x1, IEval x2, IEval x3) {
-        return (env, forwards, store, given) -> vf.list(
-                (IValue)x1.eval(env, forwards, store, given),
-                (IValue)x2.eval(env, forwards, store, given),
-                (IValue)x3.eval(env, forwards, store, given)
+        return (env, store, given) -> vf.list(
+                (IValue)x1.eval(env, store, given),
+                (IValue)x2.eval(env, store, given),
+                (IValue)x3.eval(env, store, given)
         );
     }
 
     @Override
     default IEval tuplePrefix(IEval x, IEval tup) {
-        return (env, forwards, store, given) ->
-                ((IList)tup.eval(env, forwards, store, given))
-                        .insert((IValue)x.eval(env, forwards, store, given));
+        return (env, store, given) ->
+                ((IList)tup.eval(env, store, given))
+                        .insert((IValue)x.eval(env, store, given));
     }
 
     @Override
     default IEval tupleHead(IEval tup) {
-        return (env, forwards, store, given) -> ((IList)tup.eval(env, forwards, store, given)).get(0);
+        return (env, store, given) -> ((IList)tup.eval(env, store, given)).get(0);
     }
 
     @Override
     default IEval tupleTail(IEval tup) {
-        return (env, forwards, store, given) -> {
-            IList tupVal = ((IList)tup.eval(env, forwards, store, given));
+        return (env, store, given) -> {
+            IList tupVal = ((IList)tup.eval(env, store, given));
             if (tupVal.length() <= 1) {
                 return vf.list();
             }
@@ -73,19 +73,19 @@ public interface TupleFactory extends
 
     @Override
     default IEval project(IEval index, IEval tup) {
-        return (env, forwards, store, given) ->
-                ((IList)tup.eval(env, forwards, store, given))
-                        .get(((IInteger)index.eval(env, forwards, store, given)).intValue());
+        return (env, store, given) ->
+                ((IList)tup.eval(env, store, given))
+                        .get(((IInteger)index.eval(env, store, given)).intValue());
     }
 
     @Override
     default IEval tuplePrefixMatch(IEval tup, IEval p1, IEval p2) {
-        return (env, forwards, store, given) -> {
-            Value tupVal = tup.eval(env, forwards, store, given);
+        return (env, store, given) -> {
+            Value tupVal = tup.eval(env, store, given);
             return mapUnion(
-                    match(tupleHead((e,f,s,g)->tupVal), p1),
-                    match(tupleTail((e,f,s,g)->tupVal), p2)
-            ).eval(env, forwards, store, given);
+                    match(tupleHead((e,s,g)->tupVal), p1),
+                    match(tupleTail((e,s,g)->tupVal), p2)
+            ).eval(env, store, given);
         };
     }
 

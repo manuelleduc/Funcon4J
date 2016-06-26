@@ -3,7 +3,6 @@ package funcons.debug;
 import camllight.CamlLight;
 import camllight.algebras.AllAlg;
 import funcons.carriers.IEval;
-import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.interpreter.AllFactory;
 import funcons.values.properties.Value;
@@ -39,12 +38,11 @@ public class Tracer<A> implements InvocationHandler{
                 new Class<?>[] {IEval.class},
                 (Object p, Method m, Object[] as) -> {
                     IMap env = (IMap) as[0];
-                    Forwards forwards = (Forwards) as[1];
-                    Store store = (Store)as[2];
-                    Value given = (Value)as[3];
+                    Store store = (Store)as[1];
+                    Value given = (Value)as[2];
                     print("Given to " + method.getName() + ": " + given + " env: " + env);
                     depth++;
-                    Value v = myEval.eval(env, forwards, store, given);
+                    Value v = myEval.eval(env, store, given);
                     depth--;
                     print("Resulting in: " + v);
                     return v;

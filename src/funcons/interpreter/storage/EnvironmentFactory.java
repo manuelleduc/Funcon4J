@@ -16,52 +16,52 @@ public interface EnvironmentFactory extends
 
     @Override
     default IEval id(java.lang.String s) {
-        return (env, forward, store, given) -> vf.string(s);
+        return (env, store, given) -> vf.string(s);
     }
 
     @Override
     default IEval nameId(java.lang.String namespace, java.lang.String id) {
-        return (env, forward, store, given) -> vf.tuple(vf.string(namespace), vf.string(id));
+        return (env, store, given) -> vf.tuple(vf.string(namespace), vf.string(id));
     }
 
     @Override
     default IEval bindValue(IEval id, IEval exp) {
-        return (env, forward, store, given) -> {
+        return (env, store, given) -> {
             IMapWriter mw = vf.mapWriter();
-            mw.put((IValue)id.eval(env, forward, store, given), (IValue)exp.eval(env, forward, store, given));
+            mw.put((IValue)id.eval(env, store, given), (IValue)exp.eval(env, store, given));
             return mw.done();
         };
     }
 
     @Override
     default IEval boundValue(IEval id) {
-        return (env, forward, store, given) -> env.get((IValue)id.eval(env, forward, store, given));
+        return (env, store, given) -> env.get((IValue)id.eval(env, store, given));
     }
 
     @Override
     default IEval scope(IEval localBindings, IEval exp) {
-        return (env, forward, store, given) -> {
-            IMap local = (IMap)localBindings.eval(env, forward, store, given);
-            return exp.eval(env.join(local), forward, store, given);
+        return (env, store, given) -> {
+            IMap local = (IMap)localBindings.eval(env, store, given);
+            return exp.eval(env.join(local), store, given);
         };
     }
 
     @Override
     default IEval closure(IEval x, IEval environment) {
-        return (env, forward, store, given) ->
-                x.eval((IMap)environment.eval(env, forward, store, given), forward, store, given);
+        return (env, store, given) ->
+                x.eval((IMap)environment.eval(env, store, given), store, given);
     }
 
     @Override
     default IEval environment() {
-        return (env, forward, store, given) -> vf.mapWriter().done();
+        return (env, store, given) -> vf.mapWriter().done();
     }
 
     @Override
     default IEval accum(IEval environment, IEval decl) {
-        return (env, forward, store, given) -> {
-            IValue currentEnv = (IValue)environment.eval(env, forward, store, given);
-            return scope((e,f,s,g) -> currentEnv, mapOver(decl, (e,f,s,g) -> currentEnv)).eval(env, forward, store, given);
+        return (env, store, given) -> {
+            IValue currentEnv = (IValue)environment.eval(env, store, given);
+            return scope((e,s,g) -> currentEnv, mapOver(decl, (e,s,g) -> currentEnv)).eval(env, store, given);
         };
     }
 }

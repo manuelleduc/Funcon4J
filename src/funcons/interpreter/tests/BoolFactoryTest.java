@@ -71,7 +71,7 @@ public class BoolFactoryTest implements AllFactory {
     @Test
     public void testPhysicalEqual() throws Exception {
         Value v = lit(1).eval();
-        assertEquals(bool(true).eval(), physicalEqual((e,f,s,g) -> v, (e,f,s,g) -> v).eval());
+        assertEquals(bool(true).eval(), physicalEqual((e,s,g) -> v, (e,s,g) -> v).eval());
         assertEquals(bool(false).eval(), physicalEqual(lit(1), lit(1)).eval());
     }
 }

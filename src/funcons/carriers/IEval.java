@@ -1,6 +1,5 @@
 package funcons.carriers;
 
-import funcons.entities.Forwards;
 import funcons.entities.Store;
 import funcons.values.Null;
 import funcons.values.properties.Value;
@@ -11,10 +10,10 @@ import org.rascalmpl.value.impl.fast.ValueFactory;
 public interface IEval {
     ValueFactory vf = ValueFactory.getInstance();
 
-    Value eval(IMap env, Forwards forward, Store store, Value given) throws FunconException;
+    Value eval(IMap env, Store store, Value given) throws FunconException;
 
     default Value eval() throws FunconException {
-        return eval(vf.mapWriter().done(), new Forwards(), new Store(), new Null());
+        return eval(vf.mapWriter().done(), new Store(), new Null());
     }
 
     /*
