@@ -9,12 +9,16 @@ import funcons.values.Abs;
 import funcons.values.cl.CLMatchFailureException;
 import funcons.values.signals.FailureTrue;
 import funcons.values.signals.RunTimeFunconException;
+import org.rascalmpl.value.IValueFactory;
+import org.rascalmpl.value.impl.fast.ValueFactory;
 
 public interface ExceptionFactory extends
         LogicControlAlg<IEval>,
         FunctionAlg<IEval>,
         SupplyGivenAlg<IEval>,
         ExceptionAlg<IEval> {
+
+    IValueFactory vf = ValueFactory.getInstance();
 
     @Override
     default IEval fail() {
@@ -30,7 +34,7 @@ public interface ExceptionFactory extends
 
     @Override
     default IEval matchFailure() {
-        return (env, forward, store, given) -> new CLMatchFailureException();
+        return (env, forward, store, given) -> new CLMatchFailureException(vf);
     }
 
     @Override

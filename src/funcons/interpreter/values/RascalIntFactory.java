@@ -51,8 +51,8 @@ public interface RascalIntFactory extends IntAlg<IEval> {
     @Override
     default IEval intModulo(IEval a, IEval b) {
         return (env, forward, store, given) -> {
-            IInteger aNumber = ((INumber) a.eval(env, forward, store, given)).toInteger();
-            IInteger bNumber = ((INumber) a.eval(env, forward, store, given)).toInteger();
+            IInteger aNumber = ((INumber)a.eval(env, forward, store, given)).toInteger();
+            IInteger bNumber = ((INumber)b.eval(env, forward, store, given)).toInteger();
             return aNumber.subtract(aNumber.divide(bNumber).multiply(bNumber));
         };
     }
