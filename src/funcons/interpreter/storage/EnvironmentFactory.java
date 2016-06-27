@@ -6,7 +6,7 @@ import funcons.carriers.IEval;
 import org.rascalmpl.value.IMap;
 import org.rascalmpl.value.IMapWriter;
 import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.fast.ValueFactory;
+import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface EnvironmentFactory extends
         MapAlg<IEval>,

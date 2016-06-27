@@ -3,7 +3,6 @@ package funcons.values;
 import funcons.values.properties.ExternalRascalValue;
 import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Abs<E> implements Value, ExternalRascalValue {
 
@@ -29,7 +28,7 @@ public class Abs<E> implements Value, ExternalRascalValue {
 
     @Override
     public int hashCode() {
-        throw new NotImplementedException();
+        return body().hashCode();
     }
 
     @Override

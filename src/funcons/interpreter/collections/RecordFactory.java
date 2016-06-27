@@ -12,7 +12,7 @@ import org.rascalmpl.value.IInteger;
 import org.rascalmpl.value.IMap;
 import org.rascalmpl.value.IMapWriter;
 import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.fast.ValueFactory;
+import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface RecordFactory extends
         PatternAlg<IEval>,

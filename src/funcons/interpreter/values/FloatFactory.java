@@ -3,7 +3,7 @@ package funcons.interpreter.values;
 import funcons.algebras.values.FloatAlg;
 import funcons.carriers.IEval;
 import org.rascalmpl.value.INumber;
-import org.rascalmpl.value.impl.fast.ValueFactory;
+import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface FloatFactory extends FloatAlg<IEval> {
     ValueFactory vf = ValueFactory.getInstance();

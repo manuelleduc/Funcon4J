@@ -4,7 +4,7 @@ import funcons.values.Null;
 import funcons.values.properties.Value;
 import funcons.values.signals.FunconException;
 import org.rascalmpl.value.IMap;
-import org.rascalmpl.value.impl.fast.ValueFactory;
+import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface IEval {
     ValueFactory vf = ValueFactory.getInstance();

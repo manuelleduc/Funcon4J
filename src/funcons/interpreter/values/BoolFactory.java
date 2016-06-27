@@ -5,7 +5,7 @@ import funcons.carriers.IEval;
 import funcons.helper.RascalValueComperator;
 import org.rascalmpl.value.IBool;
 import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.fast.ValueFactory;
+import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface BoolFactory extends BoolAlg<IEval> {
     ValueFactory vf = ValueFactory.getInstance();

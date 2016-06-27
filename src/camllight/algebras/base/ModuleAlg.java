@@ -35,15 +35,4 @@ public interface ModuleAlg<E, A extends EnvironmentAlg<E> & LogicControlAlg<E> &
     default E declOrExpDecl(E decl) {
         return decl;
     }
-
-    @Syntax("ident = IDTOKEN") @Level(0)
-    default E id(java.lang.String name) {
-        return alg().id(name);
-    }
-
-    // Not part of the language, just used for easy testing purposes
-    @Syntax("exp = 'print' exp")
-    default E print(E e) {
-        return alg().print(e);
-    }
 }

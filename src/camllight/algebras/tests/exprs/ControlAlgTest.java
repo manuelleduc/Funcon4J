@@ -27,12 +27,12 @@ public class ControlAlgTest extends TestStub {
 
     @Test
     public void testFor_() throws Exception {
-        test("for i = 1 to 10 do print i done;;", "12345678910NULL");
+        test("for i = 1 to 10 do print_int i done;;", "12345678910NULL");
     }
 
     @Test
     public void testForDownto() throws Exception {
-        test("for i = 10 downto 1 do print i done;;", "10987654321NULL");
+        test("for i = 10 downto 1 do print_int i done;;", "10987654321NULL");
     }
 
     @Test

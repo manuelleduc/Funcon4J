@@ -11,7 +11,7 @@ import noa.proxy.Recorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.rascalmpl.value.IMap;
-import org.rascalmpl.value.impl.fast.ValueFactory;
+import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CamlLight {
@@ -63,17 +64,24 @@ public class CamlLight {
         interpret(fileContent);
     }
 
-    private static void runPerformance(String fileLoc) throws IOException, FunconException {
-        long start = System.currentTimeMillis();
-        String src = new String(Files.readAllBytes(Paths.get(fileLoc)));
-        Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        funcons.interpreter.AllFactory funconFactory = new funcons.interpreter.AllFactory() {};
-        camllight.algebras.AllAlg alg = () -> funconFactory;
-        IEval eval = builder.build(alg);
-        Value env = importStandardLibrary(funconFactory.environment().eval());
-        eval.eval((IMap)env, new Null());
-        long end = System.currentTimeMillis();
-        System.out.println("time taken: " + (end - start));
+    private static void runPerformance(String fileLoc, int n) throws IOException, FunconException {
+        List<Long> timings = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            long start = System.currentTimeMillis();
+            String src = new String(Files.readAllBytes(Paths.get(fileLoc)));
+            Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
+            funcons.interpreter.AllFactory funconFactory = new funcons.interpreter.AllFactory() {
+            };
+            camllight.algebras.AllAlg alg = () -> funconFactory;
+            IEval eval = builder.build(alg);
+            Value env = importStandardLibrary(funconFactory.environment().eval());
+            eval.eval((IMap) env, new Null());
+            long end = System.currentTimeMillis();
+            timings.add(end - start);
+            System.out.println("time taken: " + (end - start));
+        }
+        System.out.println("fastest time: " + Collections.min(timings));
     }
 
     private static void runAll(String folderLoc) throws IOException, FunconException {
@@ -143,9 +151,9 @@ public class CamlLight {
     private static void runPerformanceTests() throws IOException, FunconException {
         //runPerformance("performanceTests/mandelbrot.ml"); // FunCaml: 387.1s, Ocaml: 75.5s, Py: 170.2s
         //runPerformance("performanceTests/fib.ml"); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s
-        //runPerformance("performanceTests/ack.ml"); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
-        runPerformance("performanceTests/harmonic.ml"); // FunCaml: 38.7s, Ocaml: 0.2s, FunCamlOnRascal: 7.2s
-        //runPerformance("performanceTests/tak.ml"); // FunCaml: 406.7s, Ocaml: 5.9s
+        runPerformance("performanceTests/ack.ml", 10); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
+        //runPerformance("performanceTests/harmonic.ml", 10); // FunCaml: 38.7s, Ocaml: 0.2s, FunCamlOnRascal: 7.2s
+        //runPerformance("performanceTests/tak.ml", 10); // FunCaml: 406.7s, Ocaml: 5.9s
     }
 
     public static void main(String[] args) throws FunconException, IOException {

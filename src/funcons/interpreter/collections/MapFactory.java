@@ -6,7 +6,7 @@ import org.rascalmpl.value.IListWriter;
 import org.rascalmpl.value.IMap;
 import org.rascalmpl.value.IMapWriter;
 import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.fast.ValueFactory;
+import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface MapFactory extends MapAlg<IEval> {
     ValueFactory vf = ValueFactory.getInstance();

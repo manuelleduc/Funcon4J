@@ -4,7 +4,7 @@ import funcons.algebras.values.StringAlg;
 import funcons.carriers.IEval;
 import org.rascalmpl.value.IString;
 import org.rascalmpl.value.IValueFactory;
-import org.rascalmpl.value.impl.fast.ValueFactory;
+import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface StringFactory extends StringAlg<IEval> {
     IValueFactory vf = ValueFactory.getInstance();

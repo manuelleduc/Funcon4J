@@ -4,7 +4,7 @@ import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
 import org.rascalmpl.value.IInteger;
 import org.rascalmpl.value.INumber;
-import org.rascalmpl.value.impl.fast.ValueFactory;
+import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface IntFactory extends IntAlg<IEval> {
     ValueFactory vf = ValueFactory.getInstance();

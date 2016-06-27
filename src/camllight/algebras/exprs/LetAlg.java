@@ -7,6 +7,11 @@ import noa.syntax.Syntax;
 public interface LetAlg<E, A extends EnvironmentAlg<E>> {
     A alg();
 
+    @Syntax("ident = IDTOKEN") @Level(0)
+    default E id(java.lang.String name) {
+        return alg().id(name);
+    }
+
     @Syntax("exp = letExp") @Level(1)
     default E letExp(E letExp) {
         return letExp;
