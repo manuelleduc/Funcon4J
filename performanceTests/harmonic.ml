@@ -21,7 +21,7 @@ let f n =
 		!s +. 0.0
 	);;
 
-print_float(f 1000000);;
+print_float(f 10000000);;
 print_newline ();;
 
 (*print_float (Sys.time ());;*)

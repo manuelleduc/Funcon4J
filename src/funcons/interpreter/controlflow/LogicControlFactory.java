@@ -1,16 +1,21 @@
 package funcons.interpreter.controlflow;
 
+import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import org.rascalmpl.value.IBool;
+import org.rascalmpl.value.IMap;
 
 public interface LogicControlFactory extends
         NullAlg<IEval>,
         FunctionAlg<IEval>,
         EnvironmentAlg<IEval>,
+        MapAlg<IEval>,
+        BoolAlg<IEval>,
         LogicControlAlg<IEval> {
 
     @Override
@@ -43,23 +48,15 @@ public interface LogicControlFactory extends
             }
             return null_().eval(env, given);
         };
-/*        return ifTrue(
-                e,
-                seq(c, (env, forward, given) -> whileTrue(e, c).eval(env, forward, given)),
-                null_()
-        );*/
     }
 
     @Override
-    default IEval for_(IEval id, IEval startValue, IEval cond, IEval incr, IEval exp) {
-        return null;
-        /*return (env, forward, given) -> {
-            for (env = env.join((Environment)bindValue(id, startValue).eval(env, forward, given));
-                 ((Bool)cond.eval(env, forward, given)).boolValue();
-                 env = env.join((Environment)bindValue(id, incr).eval(env, forward, given))) {
-                exp.eval(env, forward, given);
+    default IEval for_(IEval cond, IEval incr, IEval exp) {
+        return (env, given) -> {
+            for (; (((IBool) cond.eval(env, given)).getValue()); env = env.join((IMap)incr.eval(env, given))){
+                exp.eval(env, given);
             }
-            return null_().eval(env, forward, given);
-        };*/
+            return null_().eval(env, given);
+        };
     }
 }
