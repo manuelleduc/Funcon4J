@@ -1,6 +1,6 @@
-package funcons.algebras.storage;
+package funcons.algebras.entities;
 
-public interface EnvironmentAlg<E> {
+public interface BindingAlg<E> {
     E id(java.lang.String s);
     E nameId(java.lang.String namespace, java.lang.String id);
     E bindValue(E id, E exp);

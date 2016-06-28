@@ -1,12 +1,12 @@
-package camllight.algebras.base;
+package camllight.algebras.toplevel;
 
 import funcons.algebras.auxiliary.PrintAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
-import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.entities.BindingAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface ModuleAlg<E, A extends EnvironmentAlg<E> & LogicControlAlg<E> & PrintAlg<E>> {
+public interface ModuleAlg<E, A extends BindingAlg<E> & LogicControlAlg<E> & PrintAlg<E>> {
     A alg();
 
     //|[ prog[: IMPL :] ]| ->

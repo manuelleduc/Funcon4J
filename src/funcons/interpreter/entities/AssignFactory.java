@@ -1,12 +1,12 @@
-package funcons.interpreter.storage;
+package funcons.interpreter.entities;
 
-import funcons.algebras.storage.StoreAlg;
+import funcons.algebras.entities.AssignAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.Variable;
-import funcons.values.properties.Value;
+import org.rascalmpl.value.IValue;
 
-public interface StoreFactory extends NullAlg<IEval>, StoreAlg<IEval> {
+public interface AssignFactory extends NullAlg<IEval>, AssignAlg<IEval> {
 
     @Override
     default IEval assign(IEval var, IEval x) {
@@ -24,7 +24,7 @@ public interface StoreFactory extends NullAlg<IEval>, StoreAlg<IEval> {
     @Override
     default IEval assignedValueIfVar(IEval v) {
         return (env, given) -> {
-            Value val = v.eval(env, given);
+            IValue val = v.eval(env, given);
             if (val instanceof Variable) {
                 return ((Variable)val).value();
             }

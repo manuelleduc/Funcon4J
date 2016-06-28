@@ -2,8 +2,8 @@ package funcons.interpreter.controlflow;
 
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
-import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
@@ -13,7 +13,7 @@ import org.rascalmpl.value.IMap;
 public interface LogicControlFactory extends
         NullAlg<IEval>,
         FunctionAlg<IEval>,
-        EnvironmentAlg<IEval>,
+        BindingAlg<IEval>,
         MapAlg<IEval>,
         BoolAlg<IEval>,
         LogicControlAlg<IEval> {

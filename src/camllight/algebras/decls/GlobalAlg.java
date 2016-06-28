@@ -4,12 +4,12 @@ import funcons.algebras.collections.MapAlg;
 import funcons.algebras.collections.RecordAlg;
 import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.entities.BindingAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.recursion.RecursiveAlg;
-import funcons.algebras.storage.EnvironmentAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.IntAlg;
@@ -25,7 +25,7 @@ public interface GlobalAlg
                 RecordAlg<E> &
                 TypeAlg<E> &
                 SupplyGivenAlg<E> &
-                EnvironmentAlg<E> &
+                BindingAlg<E> &
                 NullAlg<E> &
                 FunctionAlg<E> &
                 TupleAlg<E> &
@@ -39,25 +39,6 @@ public interface GlobalAlg
 
     @Override
     A alg();
-
-    /*@Syntax("decllabelsandvariants = ident '=' IDTOKEN 'of' type")
-    default E declLabelsAndVariantsDecl(E id, java.lang.String idToken, E type) {
-        return alg().scopeNominalCoercion(
-                variantTypeDecl(idToken, type),
-                alg().boundType(id),
-                alg().pattAbs(
-                        alg().bind(alg().meta("nom_tag")),
-                        alg().mapUnion(
-                                alg().bindValue(
-                                        alg().id(idToken),
-                                        alg().close(alg().abs(alg().nomVal(
-                                                alg().boundValue(alg().meta("nom_tag")),
-                                                alg().variant(idToken, alg().given()))))),
-                                alg().bindValue(alg().nameId("variant_selector", idToken),
-                                        alg().close(alg().abs(alg().nomValSelect(
-                                                alg().boundValue(alg().meta("nom_tag")),
-                                                alg().given())))))));
-    }*/
 
     @Syntax("decl = 'type' decloptionalvartypes declnewtypeappendix*")
     default E declNewType(E environment, List<E> environments) {

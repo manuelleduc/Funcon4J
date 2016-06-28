@@ -1,7 +1,7 @@
 package camllight.algebras.constants;
 
 import funcons.algebras.collections.ListAlg;
-import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.values.*;
 import noa.syntax.Syntax;
@@ -10,7 +10,7 @@ public interface ConstantsAlg
         <E, A extends
                 PolyTypeAlg<E> &
                 IntAlg<E> &
-                EnvironmentAlg<E> &
+                BindingAlg<E> &
                 StringAlg<E> &
                 BoolAlg<E> &
                 FloatAlg<E> &

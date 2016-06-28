@@ -1,7 +1,7 @@
 package camllight.algebras;
 
 public interface AllAlg<E> extends
-        camllight.algebras.base.ModuleAlg<E, funcons.algebras.AllAlg<E>>,
+        camllight.algebras.toplevel.ModuleAlg<E, funcons.algebras.AllAlg<E>>,
 
         camllight.algebras.constants.ConstantsAlg<E, funcons.algebras.AllAlg<E>>,
 

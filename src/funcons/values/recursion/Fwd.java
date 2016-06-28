@@ -1,25 +1,24 @@
 package funcons.values.recursion;
 
 import funcons.values.properties.ExternalRascalValue;
-import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 
-public class Fwd implements Value, ExternalRascalValue {
+public class Fwd implements ExternalRascalValue {
     private static java.lang.Integer fwdCount = 0;
     private final java.lang.Integer n;
 
-    private Value value;
+    private IValue value;
 
     public Fwd() {
         this.n = fwdCount;
         fwdCount++;
     }
 
-    public void add(Value v) {
+    public void add(IValue v) {
         value = v;
     }
 
-    public Value follow() {
+    public IValue follow() {
         return value;
     }
 

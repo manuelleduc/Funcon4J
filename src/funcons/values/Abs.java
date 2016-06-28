@@ -1,10 +1,9 @@
 package funcons.values;
 
 import funcons.values.properties.ExternalRascalValue;
-import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 
-public class Abs<E> implements Value, ExternalRascalValue {
+public class Abs<E> implements ExternalRascalValue {
 
     private final E body;
 

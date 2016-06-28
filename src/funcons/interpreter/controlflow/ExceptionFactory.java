@@ -2,8 +2,8 @@ package funcons.interpreter.controlflow;
 
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.carriers.IEval;
 import funcons.values.Abs;
 import funcons.values.cl.CLMatchFailureException;

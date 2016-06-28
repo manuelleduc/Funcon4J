@@ -1,10 +1,10 @@
 package camllight.algebras.patts;
 
 import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.entities.BindingAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.algebras.storage.EnvironmentAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import noa.syntax.Level;
@@ -16,7 +16,7 @@ public interface PattAlg
                 TypeAlg<E> &
                 PatternAlg<E> &
                 SupplyGivenAlg<E> &
-                EnvironmentAlg<E> &
+                BindingAlg<E> &
                 FunctionAlg<E> &
                 ExceptionAlg<E>> {
     A alg();

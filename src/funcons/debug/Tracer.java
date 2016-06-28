@@ -4,9 +4,9 @@ import camllight.CamlLight;
 import camllight.algebras.AllAlg;
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
-import funcons.values.properties.Value;
 import funcons.values.signals.FunconException;
 import org.rascalmpl.value.IMap;
+import org.rascalmpl.value.IValue;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -37,10 +37,10 @@ public class Tracer<A> implements InvocationHandler{
                 new Class<?>[] {IEval.class},
                 (Object p, Method m, Object[] as) -> {
                     IMap env = (IMap) as[0];
-                    Value given = (Value)as[1];
+                    IValue given = (IValue)as[1];
                     print("Given to " + method.getName() + ": " + given + " env: " + env);
                     depth++;
-                    Value v = myEval.eval(env, given);
+                    IValue v = myEval.eval(env, given);
                     depth--;
                     print("Resulting in: " + v);
                     return v;
@@ -55,7 +55,7 @@ public class Tracer<A> implements InvocationHandler{
 
     public static void main(String[] args) throws FunconException {
         AllAlg<IEval> myalg = () -> new AllFactory() {};
-        Value v = CamlLight.eval("let add x y = x + y;; add 1 2;;", new Tracer<>(myalg, new Class<?>[] {AllAlg.class}).make());
+        IValue v = CamlLight.eval("let add x y = x + y;; add 1 2;;", new Tracer<>(myalg, new Class<?>[] {AllAlg.class}).make());
         System.out.println(v);
     }
 }

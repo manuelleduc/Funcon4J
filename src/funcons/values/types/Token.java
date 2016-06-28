@@ -1,10 +1,9 @@
 package funcons.values.types;
 
 import funcons.values.properties.ExternalRascalValue;
-import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 
-public class Token implements Value, ExternalRascalValue {
+public class Token implements ExternalRascalValue {
     private static Integer tokenCount = 0;
 
     private final Integer identifier;

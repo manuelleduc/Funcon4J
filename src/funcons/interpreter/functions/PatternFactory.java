@@ -3,10 +3,10 @@ package funcons.interpreter.functions;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.entities.BindingAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.algebras.storage.EnvironmentAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.carriers.IEval;
 import funcons.values.Abs;
@@ -17,7 +17,7 @@ public interface PatternFactory extends
         SupplyGivenAlg<IEval>,
         FunctionAlg<IEval>,
         ExceptionAlg<IEval>,
-        EnvironmentAlg<IEval>,
+        BindingAlg<IEval>,
         MapAlg<IEval>,
         PatternAlg<IEval> {
 

@@ -1,14 +1,14 @@
 package funcons.interpreter.collections;
 
 import funcons.algebras.collections.VectorAlg;
-import funcons.algebras.storage.StoreAlg;
+import funcons.algebras.entities.AssignAlg;
 import funcons.carriers.IEval;
 import org.rascalmpl.value.IInteger;
 import org.rascalmpl.value.IList;
 import org.rascalmpl.value.IValue;
 import org.rascalmpl.value.impl.persistent.ValueFactory;
 
-public interface VectorFactory extends StoreAlg<IEval>, VectorAlg<IEval> {
+public interface VectorFactory extends AssignAlg<IEval>, VectorAlg<IEval> {
     ValueFactory vf = ValueFactory.getInstance();
 
     @Override

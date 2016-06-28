@@ -18,6 +18,7 @@ public interface PattMatchAlg
                 CurryAlg<E> &
                 IntAlg<E>>
         extends TuplePattAlg<E, A> {
+
     @Syntax("pattmatch = pattmatchsingle") @Level(0)
     default E pattMatch(E pm) {
         return pm;

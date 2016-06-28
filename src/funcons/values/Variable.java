@@ -1,31 +1,28 @@
 package funcons.values;
 
 import funcons.values.properties.ExternalRascalValue;
-import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 
-import java.lang.String;
-
-public class Variable implements Value, ExternalRascalValue {
+public class Variable implements ExternalRascalValue {
     private static java.lang.Integer allocCount = 0;
     private java.lang.Integer loc;
-    private Value value;
+    private IValue value;
 
     public Variable() {
         this.loc = allocCount;
         allocCount++;
     }
 
-    public Variable(Value val) {
+    public Variable(IValue val) {
         this();
         store(val);
     }
 
-    public void store(Value val) {
+    public void store(IValue val) {
         value = val;
     }
 
-    public Value value() {
+    public IValue value() {
         return value;
     }
 
@@ -47,8 +44,8 @@ public class Variable implements Value, ExternalRascalValue {
     @Override
     public boolean isEqual(IValue other) {
         if (other instanceof Variable) {
-            return ((IValue)((Variable) other).value()).isEqual((IValue)value());
+            return ((Variable) other).value().isEqual(value());
         }
-        return other.isEqual((IValue)value());
+        return other.isEqual(value());
     }
 }

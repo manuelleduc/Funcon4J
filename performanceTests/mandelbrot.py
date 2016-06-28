@@ -1,5 +1,5 @@
 import time
-time.clock()
+start = time.clock()
 
 def dbl(f):
   return 2.0 * f

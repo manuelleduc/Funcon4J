@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class StoreFactoryTest implements AllFactory {
+public class AssignFactoryTest implements AllFactory {
 
     @Test
     public void testAlloc() throws Exception {

@@ -27,15 +27,6 @@ public interface TypeExpAlg<E, A extends TypeAlg<E> & TupleTypeAlg<E>> {
         return alg().depends(t1, t2);
     }
 
-    /*
-    to-funcons:
-    |[ type[: ~T ~LI :] ]| ->
-    |[ instantiate_type(type[: ~LI :], type_list[: ~T :]) ]|
-    to-funcons:
-    |[ type[: (~T1 , ~T2 ...) ~LI :] ]| ->
-    |[ instantiate_type(type[: ~LI :], type_list[: ~T1 , ~T2 ... :]) ]|
-     */
-
     // Syntax only
     @Syntax("type = type IDTOKEN")
     default E typeIdType(E type, java.lang.String idToken) {

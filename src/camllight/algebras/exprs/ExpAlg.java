@@ -1,7 +1,7 @@
 package camllight.algebras.exprs;
 
+import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.recursion.RecursiveAlg;
-import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import noa.syntax.Level;
@@ -11,7 +11,7 @@ public interface ExpAlg
         <E, A extends
                 RecursiveAlg<E> &
                 PolyTypeAlg<E> &
-                EnvironmentAlg<E> &
+                BindingAlg<E> &
                 TypeAlg<E> &
                 funcons.algebras.functions.FunctionAlg<E>> {
     A alg();

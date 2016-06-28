@@ -2,8 +2,8 @@ package funcons.interpreter.tests;
 
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
-import funcons.values.properties.Value;
 import org.junit.Test;
+import org.rascalmpl.value.IValue;
 
 import java.util.function.BiFunction;
 
@@ -70,7 +70,7 @@ public class BoolFactoryTest implements AllFactory {
 
     @Test
     public void testPhysicalEqual() throws Exception {
-        Value v = lit(1).eval();
+        IValue v = lit(1).eval();
         assertEquals(bool(true).eval(), physicalEqual((e,g) -> v, (e,g) -> v).eval());
         assertEquals(bool(false).eval(), physicalEqual(lit(1), lit(1)).eval());
     }

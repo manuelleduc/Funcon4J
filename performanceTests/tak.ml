@@ -5,6 +5,17 @@ let rec tak x y z =
 let n = 9.0;;
 
 print_int (int_of_float (tak (n *. 3.0) (n *. 2.0) (n *. 1.0)));;
-print_newline ();;
 
+(*
+let time f x y z=
+	let start = Unix.gettimeofday ()
+	in let res = f x y z
+	in let stop = Unix.gettimeofday ()
+	in let () = Printf.printf "Execution time: %fs\n%!" (stop -. start)
+	in 
+		res;;
+
+for i = 0 to 9 do
+	time tak (n *. 3.0) (n *. 2.0) (n *. 1.0)
+done;;*)
 (*print_float (Sys.time ());;*)

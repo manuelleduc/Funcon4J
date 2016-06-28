@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class EnvironmentFactoryTest implements AllFactory {
+public class BindingFactoryTest implements AllFactory {
 
     @Test
     public void testId() throws Exception {

@@ -1,9 +1,9 @@
 package funcons.interpreter.types;
 
 import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
@@ -11,7 +11,6 @@ import funcons.carriers.IEval;
 import funcons.values.cl.CLVariant;
 import funcons.values.types.Token;
 import org.rascalmpl.value.ITuple;
-import org.rascalmpl.value.IValue;
 import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface TypeFactory extends
@@ -20,7 +19,7 @@ public interface TypeFactory extends
         PatternAlg<IEval>,
         ExceptionAlg<IEval>,
         NullAlg<IEval>,
-        EnvironmentAlg<IEval>,
+        BindingAlg<IEval>,
         TypeAlg<IEval> {
 
         ValueFactory vf = ValueFactory.getInstance();
@@ -58,7 +57,7 @@ public interface TypeFactory extends
         @Override
         default IEval nomVal(IEval nomTag, IEval val) {
             return (env, given) ->
-                    vf.tuple((IValue)nomTag.eval(env, given), (IValue)val.eval(env, given));
+                    vf.tuple(nomTag.eval(env, given), val.eval(env, given));
         }
 
         @Override
@@ -83,8 +82,8 @@ public interface TypeFactory extends
         default IEval depends(IEval type1, IEval type2) {
             return (env, given) ->
                     vf.tuple(
-                            (IValue)type1.eval(env, given),
-                            (IValue)type2.eval(env, given));
+                            type1.eval(env, given),
+                            type2.eval(env, given));
         }
 
         @Override
@@ -106,8 +105,8 @@ public interface TypeFactory extends
         default IEval newType(IEval name) {
             return (env, given) ->
                     vf.tuple(
-                            (IValue)name.eval(env, given),
-                            (IValue)freshToken().eval(env, given));
+                            name.eval(env, given),
+                            freshToken().eval(env, given));
         }
 
         @Override

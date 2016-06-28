@@ -3,11 +3,10 @@ package funcons.interpreter.collections;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.collections.RecordAlg;
+import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.algebras.storage.EnvironmentAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import funcons.values.properties.Value;
 import org.rascalmpl.value.IInteger;
 import org.rascalmpl.value.IMap;
 import org.rascalmpl.value.IMapWriter;
@@ -16,7 +15,7 @@ import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface RecordFactory extends
         PatternAlg<IEval>,
-        EnvironmentAlg<IEval>,
+        BindingAlg<IEval>,
         MapAlg<IEval>,
         ListAlg<IEval>,
         IntAlg<IEval>,
@@ -28,8 +27,8 @@ public interface RecordFactory extends
     default IEval record(IEval field, IEval val) {
         return (env, given) -> {
             IMapWriter mw = vf.mapWriter();
-            mw.put((IValue)field.eval(env, given),
-                    (IValue)val.eval(env, given));
+            mw.put(field.eval(env, given),
+                    val.eval(env, given));
             return mw.done();
         };
     }
@@ -43,7 +42,7 @@ public interface RecordFactory extends
     default IEval recordSelect(IEval record, IEval field) {
         return (env, given) ->
                 ((IMap)record.eval(env, given))
-                        .get((IValue)field.eval(env, given));
+                        .get(field.eval(env, given));
     }
 
     @Override
@@ -62,15 +61,15 @@ public interface RecordFactory extends
     default IEval recordMatch(IEval rec, IEval pattMap) {
         return (env, given) -> {
             IMap recVal = (IMap)rec.eval(env, given);
-            IValue pattMapVal = (IValue)pattMap.eval(env, given);
-            Value environment = environment().eval(env, given);
+            IValue pattMapVal = pattMap.eval(env, given);
+            IValue environment = environment().eval(env, given);
 
-            IValue fields = (IValue)mapDomain((e,g)->pattMapVal).eval(env, given);
+            IValue fields = mapDomain((e,g)->pattMapVal).eval(env, given);
             int length = ((IInteger)listLength((e,g)->fields).eval(env, given)).intValue();
 
             for (int i = 0; i < length; i++) {
-                Value environment2 = environment;
-                IValue field = (IValue)projectList(lit(i), (e,g)->fields).eval(env, given);
+                IValue environment2 = environment;
+                IValue field = projectList(lit(i), (e,g)->fields).eval(env, given);
                 environment = mapUnion(
                         (e,g)->environment2,
                         match(

@@ -2,9 +2,9 @@ package funcons.interpreter.tests;
 
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
-import funcons.values.properties.Value;
 import funcons.values.signals.FailureTrue;
 import org.junit.Test;
+import org.rascalmpl.value.IValue;
 
 import static org.junit.Assert.*;
 
@@ -43,7 +43,7 @@ public class TypeFactoryTest implements AllFactory {
     @Test
     public void testNomTag() throws Exception {
         assertNotEquals(nomTag(freshToken()).eval(), nomTag(freshToken()).eval());
-        Value v = freshToken().eval();
+        IValue v = freshToken().eval();
         assertEquals(nomTag((e,g) -> v).eval(), nomTag((e,g) -> v).eval());
     }
 
@@ -51,14 +51,14 @@ public class TypeFactoryTest implements AllFactory {
     public void testNomVal() throws Exception {
         assertNotEquals(nomVal(nomTag(freshToken()), lit(0)).eval(), nomVal(nomTag(freshToken()), lit(0)).eval());
 
-        Value v = nomTag(freshToken()).eval();
+        IValue v = nomTag(freshToken()).eval();
         assertNotEquals(nomVal((e,g) -> v, lit(0)).eval(), nomVal((e,g) -> v, lit(1)).eval());
         assertEquals(nomVal((e,g) -> v, lit(0)).eval(), nomVal((e,g) -> v, lit(0)).eval());
     }
 
     @Test
     public void testNomValSelect() throws Exception {
-        Value v = freshToken().eval();
+        IValue v = freshToken().eval();
         assertEquals(
                 lit(0).eval(),
                 nomValSelect(nomTag((e,g) -> v), nomVal(nomTag((e,g) -> v), lit(0))).eval());

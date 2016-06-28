@@ -2,20 +2,20 @@ package funcons.interpreter.functions;
 
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.entities.BindingAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
-import funcons.algebras.storage.EnvironmentAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.Abs;
-import funcons.values.properties.Value;
+import org.rascalmpl.value.IValue;
 
 public interface FunctionFactory extends
         IntAlg<IEval>,
         SupplyGivenAlg<IEval>,
-        EnvironmentAlg<IEval>,
+        BindingAlg<IEval>,
         LogicControlAlg<IEval>,
         ListAlg<IEval>,
         BoolAlg<IEval>,
@@ -46,7 +46,7 @@ public interface FunctionFactory extends
     @Override
     default IEval applyToEach(IEval a, IEval l) {
         return (env, given) -> {
-            Value listVal = l.eval(env, given);
+            IValue listVal = l.eval(env, given);
             IEval cachedListEval = (e,g) -> listVal;
             return ifTrue(
                     equal(listLength(cachedListEval), lit(0)),

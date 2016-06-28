@@ -1,7 +1,6 @@
 package funcons.values.cl;
 
 import funcons.values.properties.ExternalRascalValue;
-import funcons.values.properties.Value;
 import funcons.values.signals.RunTimeFunconException;
 import org.rascalmpl.value.IString;
 import org.rascalmpl.value.IValue;
@@ -9,9 +8,9 @@ import org.rascalmpl.value.IValue;
 public class CLVariant extends RunTimeFunconException implements ExternalRascalValue {
 
     private final IString tag;
-    private final Value value;
+    private final IValue value;
 
-    public CLVariant(IString tag, Value v) {
+    public CLVariant(IString tag, IValue v) {
         super(tag.toString());
         this.tag = tag;
         this.value = v;
@@ -21,7 +20,7 @@ public class CLVariant extends RunTimeFunconException implements ExternalRascalV
         return tag;
     }
 
-    public Value value() {
+    public IValue value() {
         return value;
     }
 

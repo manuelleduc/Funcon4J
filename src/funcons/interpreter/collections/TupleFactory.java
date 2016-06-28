@@ -2,11 +2,10 @@ package funcons.interpreter.collections;
 
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.collections.TupleAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.carriers.IEval;
-import funcons.values.properties.Value;
 import org.rascalmpl.value.IInteger;
 import org.rascalmpl.value.IList;
 import org.rascalmpl.value.IValue;
@@ -34,17 +33,17 @@ public interface TupleFactory extends
     @Override
     default IEval tuple(IEval x1, IEval x2) {
         return (env, given) -> vf.list(
-                (IValue)x1.eval(env, given),
-                (IValue)x2.eval(env, given)
+                x1.eval(env, given),
+                x2.eval(env, given)
         );
     }
 
     @Override
     default IEval tuple(IEval x1, IEval x2, IEval x3) {
         return (env, given) -> vf.list(
-                (IValue)x1.eval(env, given),
-                (IValue)x2.eval(env, given),
-                (IValue)x3.eval(env, given)
+                x1.eval(env, given),
+                x2.eval(env, given),
+                x3.eval(env, given)
         );
     }
 
@@ -52,7 +51,7 @@ public interface TupleFactory extends
     default IEval tuplePrefix(IEval x, IEval tup) {
         return (env, given) ->
                 ((IList)tup.eval(env, given))
-                        .insert((IValue)x.eval(env, given));
+                        .insert(x.eval(env, given));
     }
 
     @Override
@@ -81,7 +80,7 @@ public interface TupleFactory extends
     @Override
     default IEval tuplePrefixMatch(IEval tup, IEval p1, IEval p2) {
         return (env, given) -> {
-            Value tupVal = tup.eval(env, given);
+            IValue tupVal = tup.eval(env, given);
             return mapUnion(
                     match(tupleHead((e,g)->tupVal), p1),
                     match(tupleTail((e,g)->tupVal), p2)

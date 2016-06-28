@@ -1,4 +1,4 @@
-package funcons.algebras.storage;
+package funcons.algebras.entities;
 
 public interface SupplyGivenAlg<E> {
     E given();

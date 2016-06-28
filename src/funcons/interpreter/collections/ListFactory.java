@@ -2,9 +2,9 @@ package funcons.interpreter.collections;
 
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.carriers.IEval;
 import org.rascalmpl.value.IInteger;
 import org.rascalmpl.value.IList;
@@ -43,15 +43,15 @@ public interface ListFactory extends
     @Override
     default IEval list(IEval x1, IEval x2) {
         return (env, given) -> vf.list(
-                (IValue)x1.eval(env, given),
-                (IValue)x2.eval(env, given));
+                x1.eval(env, given),
+                x2.eval(env, given));
     }
 
     @Override
     default IEval listPrefix(IEval x, IEval l) {
         return (env, given) -> {
             IList list = (IList)l.eval(env, given);
-            return list.insert((IValue)x.eval(env, given));
+            return list.insert(x.eval(env, given));
         };
     }
 

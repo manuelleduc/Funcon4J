@@ -5,21 +5,21 @@ import funcons.algebras.auxiliary.PrintAlg;
 import funcons.algebras.collections.*;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.entities.AssignAlg;
+import funcons.algebras.entities.BindingAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.recursion.RecursiveAlg;
-import funcons.algebras.storage.EnvironmentAlg;
-import funcons.algebras.storage.StoreAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TupleTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.*;
 
 public interface AllAlg<E> extends
-        StoreAlg<E>,
-        EnvironmentAlg<E>,
+        AssignAlg<E>,
+        BindingAlg<E>,
         SupplyGivenAlg<E>,
         BoolAlg<E>,
         CurryAlg<E>,

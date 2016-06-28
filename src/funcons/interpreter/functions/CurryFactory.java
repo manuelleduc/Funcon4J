@@ -2,13 +2,13 @@ package funcons.interpreter.functions;
 
 import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import funcons.values.properties.Value;
+import org.rascalmpl.value.IValue;
 
 public interface CurryFactory extends
         FunctionAlg<IEval>,
@@ -37,7 +37,7 @@ public interface CurryFactory extends
     @Override
     default IEval curryN(IEval n, IEval a) {
         return (env, given) -> {
-            Value index = n.eval(env, given);
+            IValue index = n.eval(env, given);
             return ifTrue(
                     equal((e,g)->index, lit(0)),
                     apply(a, tuple()),

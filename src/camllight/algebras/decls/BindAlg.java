@@ -5,12 +5,12 @@ import camllight.algebras.patts.PattMatchAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
+import funcons.algebras.entities.BindingAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.recursion.RecursiveAlg;
-import funcons.algebras.storage.EnvironmentAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
 import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.IntAlg;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public interface BindAlg
         <E, A extends
-                EnvironmentAlg<E> &
+                BindingAlg<E> &
                 PolyTypeAlg<E> &
                 TupleAlg<E> &
                 IntAlg<E> &

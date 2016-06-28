@@ -1,6 +1,6 @@
-package funcons.interpreter.storage;
+package funcons.interpreter.entities;
 
-import funcons.algebras.storage.SupplyGivenAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.carriers.IEval;
 
 public interface SupplyGivenFactory extends SupplyGivenAlg<IEval> {

@@ -1,9 +1,9 @@
 package camllight.algebras.exprs;
 
 import funcons.algebras.controlflow.LogicControlAlg;
-import funcons.algebras.storage.EnvironmentAlg;
-import funcons.algebras.storage.StoreAlg;
-import funcons.algebras.storage.SupplyGivenAlg;
+import funcons.algebras.entities.AssignAlg;
+import funcons.algebras.entities.BindingAlg;
+import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
@@ -20,8 +20,8 @@ public interface ControlAlg
                 SupplyGivenAlg<E> &
                 BoolAlg<E> &
                 IntAlg<E> &
-                EnvironmentAlg<E> &
-                StoreAlg<E>> {
+                BindingAlg<E> &
+                AssignAlg<E>> {
     A alg();
 
     @Syntax("exp = 'if' exp 'then' exp") @Level(800)

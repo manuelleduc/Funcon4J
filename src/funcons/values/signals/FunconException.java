@@ -1,10 +1,9 @@
 package funcons.values.signals;
 
 import funcons.values.properties.ExternalRascalValue;
-import funcons.values.properties.Value;
 import org.rascalmpl.value.IValue;
 
-public abstract class FunconException extends Exception implements Value, ExternalRascalValue {
+public abstract class FunconException extends Exception implements ExternalRascalValue {
     private java.lang.String message;
 
     public FunconException(java.lang.String message) {

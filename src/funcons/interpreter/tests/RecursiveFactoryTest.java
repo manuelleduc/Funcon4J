@@ -2,8 +2,8 @@ package funcons.interpreter.tests;
 
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
-import funcons.values.properties.Value;
 import org.junit.Test;
+import org.rascalmpl.value.IValue;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -24,7 +24,7 @@ public class RecursiveFactoryTest implements AllFactory {
     @Test
     public void testSetForwards() throws Exception {
         IEval bindings = accum(bindValue(id("foo"), lit(3)), bindValue(id("bar"), lit(5)));
-        Value fwdsEnvironment = freshFwds(listPrefix(id("foo"), list(id("bar"), id("baz")))).eval();
+        IValue fwdsEnvironment = freshFwds(listPrefix(id("foo"), list(id("bar"), id("baz")))).eval();
         IEval settingFwds = setForwards((e,g)->fwdsEnvironment);
         scope(bindings, settingFwds).eval();
 
@@ -48,14 +48,14 @@ public class RecursiveFactoryTest implements AllFactory {
 
     @Test
     public void testFollowFwd() throws Exception {
-        Value fwdEnvironment = freshFwds(list(id("foo"))).eval();
+        IValue fwdEnvironment = freshFwds(list(id("foo"))).eval();
         scope(bindValue(id("foo"), lit(0)), setForwards((e,g)->fwdEnvironment)).eval();
         assertEquals(lit(0).eval(), followFwd(scope((e,g)->fwdEnvironment, boundValue(id("foo")))).eval());
     }
 
     @Test
     public void testFollowIfFwd() throws Exception {
-        Value fwdEnvironment = freshFwds(list(id("foo"))).eval();
+        IValue fwdEnvironment = freshFwds(list(id("foo"))).eval();
         scope(bindValue(id("foo"), lit(0)), setForwards((e,g)->fwdEnvironment)).eval();
         assertEquals(lit(0).eval(), followIfFwd(scope((e,g) -> fwdEnvironment, boundValue(id("foo")))).eval());
 

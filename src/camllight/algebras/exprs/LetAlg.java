@@ -1,10 +1,10 @@
 package camllight.algebras.exprs;
 
-import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.entities.BindingAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
-public interface LetAlg<E, A extends EnvironmentAlg<E>> {
+public interface LetAlg<E, A extends BindingAlg<E>> {
     A alg();
 
     @Syntax("ident = IDTOKEN") @Level(0)

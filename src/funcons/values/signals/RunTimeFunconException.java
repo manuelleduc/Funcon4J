@@ -1,17 +1,17 @@
 package funcons.values.signals;
 
 import funcons.values.Null;
-import funcons.values.properties.Value;
+import org.rascalmpl.value.IValue;
 
 public class RunTimeFunconException extends FunconException {
-    final Value value;
+    final IValue value;
 
     public RunTimeFunconException(java.lang.String message) {
         super(message);
         value = new Null();
     }
 
-    public RunTimeFunconException(java.lang.String message, Value v) {
+    public RunTimeFunconException(java.lang.String message, IValue v) {
         super(message);
         value = v;
     }

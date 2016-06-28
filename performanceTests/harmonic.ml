@@ -21,7 +21,18 @@ let f n =
 		!s +. 0.0
 	);;
 
-print_float(f 10000000);;
-print_newline ();;
+print_float (f 10000000);;
+(*
+let time f x =
+	let start = Unix.gettimeofday ()
+	in let res = f x
+	in let stop = Unix.gettimeofday ()
+	in let () = Printf.printf "Execution time: %fs\n%!" (stop -. start)
+	in 
+		res;;
 
+for i = 0 to 9 do
+	time f 10000000
+done;;
+*)
 (*print_float (Sys.time ());;*)

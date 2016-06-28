@@ -1,16 +1,16 @@
-package funcons.interpreter.storage;
+package funcons.interpreter.entities;
 
 import funcons.algebras.collections.MapAlg;
-import funcons.algebras.storage.EnvironmentAlg;
+import funcons.algebras.entities.BindingAlg;
 import funcons.carriers.IEval;
 import org.rascalmpl.value.IMap;
 import org.rascalmpl.value.IMapWriter;
 import org.rascalmpl.value.IValue;
 import org.rascalmpl.value.impl.persistent.ValueFactory;
 
-public interface EnvironmentFactory extends
+public interface BindingFactory extends
         MapAlg<IEval>,
-        EnvironmentAlg<IEval> {
+        BindingAlg<IEval> {
 
     ValueFactory vf = ValueFactory.getInstance();
 
@@ -28,7 +28,7 @@ public interface EnvironmentFactory extends
     default IEval bindValue(IEval id, IEval exp) {
         return (env, given) -> {
             IMapWriter mw = vf.mapWriter();
-            mw.put((IValue)id.eval(env, given), (IValue)exp.eval(env, given));
+            mw.put(id.eval(env, given), exp.eval(env, given));
             return mw.done();
         };
     }
@@ -60,7 +60,7 @@ public interface EnvironmentFactory extends
     @Override
     default IEval accum(IEval environment, IEval decl) {
         return (env, given) -> {
-            IValue currentEnv = (IValue)environment.eval(env, given);
+            IValue currentEnv = environment.eval(env, given);
             return scope((e,g) -> currentEnv, mapOver(decl, (e,g) -> currentEnv)).eval(env, given);
         };
     }

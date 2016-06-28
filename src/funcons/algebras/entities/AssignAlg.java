@@ -1,6 +1,6 @@
-package funcons.algebras.storage;
+package funcons.algebras.entities;
 
-public interface StoreAlg<E> {
+public interface AssignAlg<E> {
     E assign(E var, E x);
     E assignedValue(E var);
     E assignedValueIfVar(E v);
