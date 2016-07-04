@@ -19,10 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class CamlLight {
 
@@ -105,8 +102,13 @@ public class CamlLight {
         }
     }
 
-    private static IValue importStandardLibrary(IValue env) throws FunconException {
-        funcons.algebras.AllAlg<IEval> alg = new funcons.interpreter.AllFactory() {};
+    public static IValue importStandardLibrary(IValue env) throws FunconException {
+        return importStandardLibrary(env, new HashSet<>());
+    }
+
+    public static IValue importStandardLibrary(IValue env, Set<String> excludes) throws FunconException {
+        funcons.algebras.AllAlg<IEval> alg = new funcons.interpreter.AllFactory() {
+        };
         StandardLibrary<IEval> lib = () -> alg;
 
         for (Method m : lib.getClass().getMethods()) {
@@ -116,12 +118,16 @@ public class CamlLight {
             }
             methodName = methodName.substring(0, methodName.length() - 3);
 
+            if (excludes.contains(methodName)) {
+                continue;
+            }
+
             try {
                 final IValue env2 = env;
                 env = alg.mapUnion(
-                        (e,g) -> env2,
-                        alg.bindValue(alg.id(methodName), (funcons.carriers.IEval)m.invoke(lib))
-                ).eval((IMap)env, new Null());
+                        (e, g) -> env2,
+                        alg.bindValue(alg.id(methodName), (funcons.carriers.IEval) m.invoke(lib))
+                ).eval((IMap) env, new Null());
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }

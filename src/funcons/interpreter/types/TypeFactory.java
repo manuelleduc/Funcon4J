@@ -11,6 +11,7 @@ import funcons.carriers.IEval;
 import funcons.values.cl.CLVariant;
 import funcons.values.types.Token;
 import org.rascalmpl.value.ITuple;
+import org.rascalmpl.value.IValue;
 import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public interface TypeFactory extends
@@ -56,8 +57,7 @@ public interface TypeFactory extends
 
         @Override
         default IEval nomVal(IEval nomTag, IEval val) {
-            return (env, given) ->
-                    vf.tuple(nomTag.eval(env, given), val.eval(env, given));
+            return (env, given) -> vf.tuple(nomTag.eval(env, given), val.eval(env, given));
         }
 
         @Override
@@ -127,12 +127,12 @@ public interface TypeFactory extends
         @Override
         default IEval variantMatch(IEval tag, IEval variant, IEval patt) {
             return (env, given) -> {
-                try {
-                    CLVariant v = (CLVariant)variant.eval(env, given);
-                    return whenTrue(equal(tag, (e,g) -> v.tag()), match((e,g) -> v.value(), patt)).eval(env, given);
-                } catch (ClassCastException e) {
-                    return fail().eval(env, given);
+                IValue v = variant.eval(env, given);
+                if (v instanceof CLVariant) {
+                    CLVariant vVar  = (CLVariant)v;
+                    return whenTrue(equal(tag, (e,g) -> vVar.tag()), match((e,g) -> vVar.value(), patt)).eval(env, given);
                 }
+                return fail().eval(env, given);
             };
         }
 }
