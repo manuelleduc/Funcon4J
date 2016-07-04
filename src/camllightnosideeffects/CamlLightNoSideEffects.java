@@ -4,6 +4,22 @@ import camllight.CamlLight;
 import camllightnosideeffects.parser.CLNoSELexer;
 import camllightnosideeffects.parser.CLNoSEParser;
 import funcons.carriers.IEval;
+import funcons.interpreter.auxiliary.IntoFloatConversionFactory;
+import funcons.interpreter.collections.ListFactory;
+import funcons.interpreter.collections.MapFactory;
+import funcons.interpreter.collections.TupleFactory;
+import funcons.interpreter.controlflow.ExceptionFactory;
+import funcons.interpreter.controlflow.LogicControlFactory;
+import funcons.interpreter.entities.BindingFactory;
+import funcons.interpreter.entities.SupplyGivenFactory;
+import funcons.interpreter.functions.CurryFactory;
+import funcons.interpreter.functions.FunctionFactory;
+import funcons.interpreter.functions.PatternFactory;
+import funcons.interpreter.recursion.RecursiveFactory;
+import funcons.interpreter.types.PolyTypeFactory;
+import funcons.interpreter.types.TupleTypeFactory;
+import funcons.interpreter.types.TypeFactory;
+import funcons.interpreter.values.*;
 import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import noa.proxy.Recorder;
@@ -18,7 +34,7 @@ import java.util.Set;
 
 public class CamlLightNoSideEffects {
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <X> X parse(String s, NoSideEffectsAlg alg) {
+    public static <X> X parse(String s, NoSEAlg alg) {
         CLNoSELexer lexer = new CLNoSELexer(new ANTLRInputStream(s));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CLNoSEParser parser = new CLNoSEParser(tokens);
@@ -26,8 +42,8 @@ public class CamlLightNoSideEffects {
         return (X) parser.prog()._prog;
     }
 
-    public static IValue eval(String src, NoSideEffectsAlg alg) throws FunconException {
-        Recorder builder = parse(src, Recorder.create(NoSideEffectsAlg.class));
+    public static IValue eval(String src, NoSEAlg alg) throws FunconException {
+        Recorder builder = parse(src, Recorder.create(NoSEAlg.class));
         IEval eval = builder.build(alg);
         Set<String> excludes = new HashSet<>();
         excludes.add("ref");
@@ -36,12 +52,38 @@ public class CamlLightNoSideEffects {
         excludes.add("print_string");
         excludes.add("print_newline");
         excludes.add("vect_length");
+        excludes.add("concat_vect");
         excludes.add("make_vect");
+        excludes.add("raise");
         IValue env = CamlLight.importStandardLibrary(ValueFactory.getInstance().mapWriter().done(), excludes);
         return eval.eval((IMap)env, new Null());
     }
 
+    private interface NoSEFunconFactory extends
+            NoSEFunconAlg<IEval>,
+            BindingFactory,
+            SupplyGivenFactory,
+            BoolFactory,
+            CurryFactory,
+            PatternFactory,
+            ExceptionFactory,
+            FloatFactory,
+            FunctionFactory,
+            IntFactory,
+            IntoFloatConversionFactory,
+            ListFactory,
+            LogicControlFactory,
+            MapFactory,
+            NullFactory,
+            PolyTypeFactory,
+            RecursiveFactory,
+            StringFactory,
+            TupleFactory,
+            TupleTypeFactory,
+            TypeFactory
+    {}
+
     public static void main(String[] args) throws FunconException {
-        eval("float_of_int 1;;", () -> new funcons.interpreter.AllFactory() {} );
+        eval("float_of_int 1;;", () -> new NoSEFunconFactory() {} );
     }
 }

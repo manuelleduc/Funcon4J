@@ -1,7 +1,6 @@
 package camllight.algebras.exprs;
 
 import funcons.algebras.controlflow.LogicControlAlg;
-import funcons.algebras.entities.AssignAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.values.BoolAlg;
@@ -20,8 +19,7 @@ public interface ControlAlg
                 SupplyGivenAlg<E> &
                 BoolAlg<E> &
                 IntAlg<E> &
-                BindingAlg<E> &
-                AssignAlg<E>> {
+                BindingAlg<E>> {
     A alg();
 
     @Syntax("exp = 'if' exp 'then' exp") @Level(800)

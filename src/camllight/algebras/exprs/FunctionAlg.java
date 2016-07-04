@@ -1,6 +1,5 @@
 package camllight.algebras.exprs;
 
-import funcons.algebras.entities.AssignAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.recursion.RecursiveAlg;
 import funcons.algebras.types.PolyTypeAlg;
@@ -9,12 +8,10 @@ import noa.syntax.Syntax;
 
 public interface FunctionAlg
         <E, A extends
-                funcons.algebras.collections.RecordAlg<E> &
                 funcons.algebras.functions.FunctionAlg<E> &
                 PolyTypeAlg<E> &
                 BindingAlg<E> &
                 RecursiveAlg<E> &
-                AssignAlg<E> &
                 funcons.algebras.controlflow.ExceptionAlg<E>> {
     A alg();
 
@@ -46,11 +43,6 @@ public interface FunctionAlg
     @Syntax("function = ident")
     default E functionId(E id) {
         return alg().instantiateIfPoly(alg().followIfFwd(alg().boundValue(id)));
-    }
-
-    @Syntax("function = function '.' IDTOKEN")
-    default E functionRecordSelect(E record, java.lang.String fieldName) {
-        return alg().assignedValueIfVar(alg().recordSelect(record, alg().field(fieldName)));
     }
 
     @Syntax("function = '(' function ')'")

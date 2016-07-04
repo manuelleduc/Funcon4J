@@ -1,7 +1,6 @@
 package camllight.algebras.decls;
 
 import funcons.algebras.collections.MapAlg;
-import funcons.algebras.collections.RecordAlg;
 import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.entities.BindingAlg;
@@ -14,6 +13,7 @@ import funcons.algebras.types.PolyTypeAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
+import funcons.algebras.values.StringAlg;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 
@@ -22,7 +22,6 @@ import java.util.List;
 public interface GlobalAlg
         <E, A extends
                 MapAlg<E> &
-                RecordAlg<E> &
                 TypeAlg<E> &
                 SupplyGivenAlg<E> &
                 BindingAlg<E> &
@@ -34,6 +33,7 @@ public interface GlobalAlg
                 RecursiveAlg<E> &
                 ExceptionAlg<E> &
                 PatternAlg<E> &
+                StringAlg<E> &
                 CurryAlg<E>>
         extends BindAlg<E, A> {
 
@@ -113,12 +113,12 @@ public interface GlobalAlg
 
     @Syntax("decllabeltype = IDTOKEN ':' type")
     default E declLabelType(java.lang.String idToken, E type) {
-        return alg().tuple(alg().field(idToken), type);
+        return alg().tuple(alg().string(idToken), type);
     }
 
     @Syntax("decllabeltype = 'mutable' IDTOKEN ':' type")
     default E declMutableLabelType(java.lang.String idToken, E type) {
-        return alg().tuple(alg().field(idToken), type);
+        return alg().tuple(alg().string(idToken), type);
     }
 
     @Syntax("decl = 'exception' CONSTRTOKEN declexceptionappendix*")
