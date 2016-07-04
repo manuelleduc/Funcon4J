@@ -163,14 +163,16 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException, IOException {
-        runExamples();
-        runGivenTests();
-        runPerformanceTests();
+        //runExamples();
+        //runGivenTests();
+        //runPerformanceTests();
+
         /*
         camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.AllFactory() {};
         IValue v = CamlLight.eval(
-                "let add x y = x + y;; add 1 2;;",
+                "let rec countdown x = ( if x > 0 then countdown (x - 1));; countdown 2;;",
                 new Tracer<>(myalg, new Class<?>[] {camllight.algebras.AllAlg.class}).make());
+
         */
     }
 }

@@ -36,13 +36,6 @@ public interface BindAlg
         extends PattAlg<E, A>, PattMatchAlg<E, A> {
     A alg();
 
-    @Syntax("decl = 'let' 'rec' recdecl")
-    default E declRec(E declTuple) {
-        return alg().generaliseDecl(alg().recursiveTyped(
-                alg().project(alg().lit(0), declTuple),
-                alg().project(alg().lit(1), declTuple)));
-    }
-
     @Syntax("recdecl = recdeclmono")
     default E recDeclMono(E declTuple) {
         return declTuple;
@@ -111,8 +104,8 @@ public interface BindAlg
     @Syntax("declmono = ident patt+ '=' exp")
     default E declBindMonoFunc(E id, java.util.List<E> patts, E exp) {
         if (patts.size() == 1) {
-            return alg().bindValue(id, pattMatchSingle(patts.get(0), exp));
+            return alg().bindValue(id, alg().close(pattMatchSingle(patts.get(0), exp)));
         }
-        return alg().bindValue(id, pattMatchCurriedMulti(patts, exp));
+        return alg().bindValue(id, alg().close(pattMatchCurriedMulti(patts, exp)));
     }
 }

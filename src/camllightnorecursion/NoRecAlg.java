@@ -1,13 +1,13 @@
-package camllight.algebras;
+package camllightnorecursion;
 
-public interface AllAlg<E> extends
+public interface NoRecAlg<E> extends
         camllight.algebras.toplevel.ModuleAlg<E, funcons.algebras.AllAlg<E>>,
 
         camllight.algebras.constants.ConstantsAlg<E, funcons.algebras.AllAlg<E>>,
 
         camllight.algebras.decls.BindAlg<E, funcons.algebras.AllAlg<E>>,
         camllight.algebras.decls.GlobalAlg<E, funcons.algebras.AllAlg<E>>,
-        camllight.algebras.decls.RecBindAlg<E, funcons.algebras.AllAlg<E>>,
+        //camllight.algebras.decls.RecBindAlg<E, funcons.algebras.AllAlg<E>>,
 
         camllight.algebras.exprs.ArrayAlg<E, funcons.algebras.AllAlg<E>>,
         camllight.algebras.exprs.BoolLogicAlg<E, funcons.algebras.AllAlg<E>>,
