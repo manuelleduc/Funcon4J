@@ -1,6 +1,7 @@
 package camllight.algebras.tests.decls;
 
 import camllight.algebras.tests.TestStub;
+import funcons.values.cl.CLMatchFailureException;
 import org.junit.Test;
 
 public class BindAlgTest extends TestStub {
@@ -28,5 +29,10 @@ public class BindAlgTest extends TestStub {
         test("let f 2 3 4 = true in (f 2) 3 4;;", "true");
         test("let f _ 3 = true in f 1 3;;", "true");
         test("let f x y z = z in f 1 2 3;;", "3");
+
+        try {
+            test("let f x y 3 = x in (f 1 2 4);;");
+            assert false;
+        } catch (CLMatchFailureException ignore) {}
     }
 }

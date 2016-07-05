@@ -103,9 +103,11 @@ public interface BindAlg
 
     @Syntax("declmono = ident patt+ '=' exp")
     default E declBindMonoFunc(E id, java.util.List<E> patts, E exp) {
-        if (patts.size() == 1) {
-            return alg().bindValue(id, alg().close(pattMatchSingle(patts.get(0), exp)));
+        for (int i = 0, l = patts.size(); i < l; i++) {
+            patts.set(i, alg().preferOver(patts.get(i), alg().abs(alg().throw_(alg().matchFailure()))));
         }
-        return alg().bindValue(id, alg().close(pattMatchCurriedMulti(patts, exp)));
+
+        E pm = patts.size() == 1 ? pattMatchSingle(patts.get(0), exp) : pattMatchCurriedMulti(patts, exp);
+        return alg().bindValue(id, alg().close(pm));
     }
 }

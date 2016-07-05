@@ -1,7 +1,10 @@
 package camllightnorecursion;
 
+import camllight.algebras.toplevel.TestableModuleAlg;
+import funcons.algebras.AllAlg;
+
 public interface NoRecAlg<E> extends
-        camllight.algebras.toplevel.ModuleAlg<E, funcons.algebras.AllAlg<E>>,
+        TestableModuleAlg<E, AllAlg<E>>,
 
         camllight.algebras.constants.ConstantsAlg<E, funcons.algebras.AllAlg<E>>,
 

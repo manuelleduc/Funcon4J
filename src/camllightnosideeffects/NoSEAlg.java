@@ -1,7 +1,10 @@
 package camllightnosideeffects;
 
+import camllight.algebras.toplevel.ModuleAlg;
+import funcons.algebras.AllAlg;
+
 public interface NoSEAlg<E> extends
-    camllight.algebras.toplevel.NoSEModuleAlg<E, funcons.algebras.AllAlg<E>>,
+        ModuleAlg<E, AllAlg<E>>,
     camllight.algebras.constants.ConstantsAlg<E, funcons.algebras.AllAlg<E>>,
 
     camllight.algebras.decls.BindAlg<E, funcons.algebras.AllAlg<E>>,
