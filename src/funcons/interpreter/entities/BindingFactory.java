@@ -28,6 +28,7 @@ public interface BindingFactory extends
     default IEval bindValue(IEval id, IEval exp) {
         return (env, given) -> {
             IMapWriter mw = vf.mapWriter();
+
             mw.put(id.eval(env, given), exp.eval(env, given));
             return mw.done();
         };

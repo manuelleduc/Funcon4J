@@ -36,6 +36,7 @@ public interface StandardLibrary<E> {
         return alg().abs(alg().throw_(alg().given()));
     }
 
+
     default E concat_vectFun() {
         return alg().curry(alg().abs(
                 alg().vectorAppend(

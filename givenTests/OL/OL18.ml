@@ -16,7 +16,7 @@ let r2 = {mutable id = function x -> x};;
 g r2 true;;
 (* - : bool = true *)
 
-r2.id <- (function x -> print_string "called id\n"; x);;
+r2.id <- (function x -> (print_string "called id\n"; x));;
 (* - : unit = () *)
 
 g r2 false;;

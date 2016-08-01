@@ -2,6 +2,7 @@ package funcons.interpreter.collections;
 
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
+import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
@@ -17,7 +18,8 @@ public interface ListFactory extends
         MapAlg<IEval>,
         FunctionAlg<IEval>,
         SupplyGivenAlg<IEval>,
-        ListAlg<IEval> {
+        ListAlg<IEval>,
+        ExceptionAlg<IEval> {
 
     ValueFactory vf = ValueFactory.getInstance();
 
@@ -59,6 +61,9 @@ public interface ListFactory extends
     default IEval listPrefixMatch(IEval l, IEval p1, IEval p2) {
         return (env, given) -> {
             IList list = (IList)l.eval(env, given);
+            if (list.length() == 0) {
+                return fail().eval(env, given);
+            }
             IValue head = list.get(0);
             IList tail = list.delete(0);
             return mapOver(match((e,g)->head, p1), match((e,g)->tail, p2)).eval(env, given);

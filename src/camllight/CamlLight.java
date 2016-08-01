@@ -20,6 +20,7 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class CamlLight {
 
@@ -146,9 +147,9 @@ public class CamlLight {
         runAll("givenTests/Basic");
         runAll("givenTests/Equality"); // structural equality on variables fails???
         runAll("givenTests/MuRecTypes");
-        runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml", "OL25.ml", "OL18.ml")); // precedence issues in OL5.ml
-        runAllButExclude("givenTests/PM", Arrays.asList("PM10.ml", "PM14.ml", "PM4.ml")); // curried fun with multiple patterns, should they be supported?
-        runAllButExclude("givenTests/Shadowing", Arrays.asList("Shadowing3.ml", "Shadowing6.ml")); // shadowing 3 & 6 -> patternmatching on type?
+        runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml", "OL25.ml")); // precedence issues in OL5.ml
+        runAllButExclude("givenTests/PM", Collections.emptyList()); // curried fun with multiple patterns, should they be supported?
+        runAllButExclude("givenTests/Shadowing", Collections.singletonList("Shadowing6.ml")); // shadowing 3 & 6 -> patternmatching on type?
         //runAll("givenTests/Syntax"); // missing the syntactic sugar, fix?
         runAll("givenTests/Types");
         runAll("givenTests/Valres");
@@ -163,8 +164,9 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException, IOException {
+        //interpret("1 + if true then 2 else 2 + 3;;");
         //runExamples();
-        //runGivenTests();
+        runGivenTests();
         //runPerformanceTests();
 
         /*

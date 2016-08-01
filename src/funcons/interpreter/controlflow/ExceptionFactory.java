@@ -28,11 +28,6 @@ public interface ExceptionFactory extends
     }
 
     @Override
-    default IEval whenTrue(IEval exp, IEval x) {
-        return ifTrue(exp, x, fail());
-    }
-
-    @Override
     default IEval matchFailure() {
         return (env, given) -> new CLMatchFailureException(vf);
     }
@@ -89,5 +84,10 @@ public interface ExceptionFactory extends
                         ((Abs<IEval>)a1.eval(env, given)).body(),
                         ((Abs<IEval>)a2.eval(env, given)).body()
                 )).eval(env, given);
+    }
+
+    @Override
+    default IEval whenTrue(IEval exp, IEval x) {
+        return ifTrue(exp, x, fail());
     }
 }
