@@ -2,6 +2,7 @@ package funcons.values;
 
 import funcons.values.properties.ExternalRascalValue;
 import org.rascalmpl.value.IValue;
+import org.rascalmpl.value.visitors.IValueVisitor;
 
 public class Variable implements ExternalRascalValue {
     private static java.lang.Integer allocCount = 0;
@@ -16,6 +17,11 @@ public class Variable implements ExternalRascalValue {
     public Variable(IValue val) {
         this();
         store(val);
+    }
+
+    @Override
+    public <T, E extends Throwable> T accept(IValueVisitor<T, E> v) throws E {
+        return value.accept(v);
     }
 
     public void store(IValue val) {
