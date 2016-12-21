@@ -43,31 +43,9 @@ public class CamlLightNoSideEffects {
         return eval.eval((IMap)env, new Null());
     }
 
-    /*private interface NoSEFunconFactory extends
-            NoSEFunconAlg<IEval>,
-            BindingFactory,
-            SupplyGivenFactory,
-            BoolFactory,
-            CurryFactory,
-            PatternFactory,
-            ExceptionFactory,
-            FloatFactory,
-            FunctionFactory,
-            IntFactory,
-            IntoFloatConversionFactory,
-            ListFactory,
-            LogicControlFactory,
-            MapFactory,
-            NullFactory,
-            PolyTypeFactory,
-            RecursiveFactory,
-            StringFactory,
-            TupleFactory,
-            TupleTypeFactory,
-            TypeFactory
-    {}*/
-
     public static void main(String[] args) throws FunconException {
-        eval("float_of_int 1;;", () -> new funcons.interpreter.AllFactory() {} );
+        // Testing a program without side effects (printing) is tricky
+        // try including (i.e. not excluding) a printing function from above so you can see results ;)
+        //eval("print_int 4;;", () -> new funcons.interpreter.AllFactory() {} );
     }
 }

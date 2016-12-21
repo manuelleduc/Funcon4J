@@ -57,6 +57,7 @@ public class CamlLight {
     private static void run(String fileLoc) throws IOException, FunconException {
         String fileContent = new String(Files.readAllBytes(Paths.get(fileLoc)));
         System.out.println("== Running: " + fileLoc + " ==");
+        // run with a proxy showing all funcons used
 //        camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.value.RecordFactory() {};
 //        eval(fileContent, new Tracer<>(myalg, new Class<?>[] {camllight.algebras.AllAlg.class}).make());
         interpret(fileContent);
@@ -148,15 +149,15 @@ public class CamlLight {
         runAll("givenTests/Equality"); // structural equality on variables fails???
         runAll("givenTests/MuRecTypes");
         runAllButExclude("givenTests/OL", Arrays.asList("OL12.ml", "OL17.ml", "OL25.ml")); // precedence issues in OL5.ml
-        runAllButExclude("givenTests/PM", Collections.emptyList()); // curried fun with multiple patterns, should they be supported?
+        runAll("givenTests/PM");
         runAllButExclude("givenTests/Shadowing", Collections.singletonList("Shadowing6.ml")); // shadowing 3 & 6 -> patternmatching on type?
-        //runAll("givenTests/Syntax"); // missing the syntactic sugar, fix?
+        //runAll("givenTests/Syntax"); // missing the syntactic sugar
         runAll("givenTests/Types");
         runAll("givenTests/Valres");
     }
 
     private static void runPerformanceTests() throws IOException, FunconException {
-        // runPerformance("performanceTests/mandelbrot.ml", 10); // FunCaml: 387.1s, Ocaml: 75.5s, Py: 170.2s
+        //runPerformance("performanceTests/mandelbrot.ml", 10); // FunCaml: Xs, Ocaml: 75.5s, Py: 170.2s
         runPerformance("performanceTests/fib.ml", 10); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s
         runPerformance("performanceTests/ack.ml", 10); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
         runPerformance("performanceTests/harmonic.ml", 10); // FunCaml: 38.7s, Ocaml: 0.2s, FunCamlOnRascal: 7.2s
@@ -164,17 +165,16 @@ public class CamlLight {
     }
 
     public static void main(String[] args) throws FunconException, IOException {
+        // interpret a FunCaml program given as String
         //interpret("1 + if true then 2 else 2 + 3;;");
+
+        // run examples found in the examples folder
         //runExamples();
-        runGivenTests();
+
+        // run tests as provided by Mosses
+        //runGivenTests();
+
+        // run several performance tests
         //runPerformanceTests();
-
-        /*
-        camllight.algebras.AllAlg<IEval> myalg = () -> new funcons.interpreter.AllFactory() {};
-        IValue v = CamlLight.eval(
-                "let rec countdown x = ( if x > 0 then countdown (x - 1));; countdown 2;;",
-                new Tracer<>(myalg, new Class<?>[] {camllight.algebras.AllAlg.class}).make());
-
-        */
     }
 }

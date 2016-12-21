@@ -31,8 +31,9 @@ public class CamlLightNoRecursion {
     }
 
     public static void main(String[] args) throws FunconException {
-        //eval("let countdown = fun x -> ((print_int x) ; if x > 0 then countdown (x - 1));; countdown 10;;", () -> new funcons.interpreter.AllFactory() {} );
-        //eval("let countdown = function x -> ((print_int x) ; if x > 0 then countdown (x - 1));; countdown 10;;", () -> new funcons.interpreter.AllFactory() {} );
-        //eval("let countdown x = ((print_int x) ; if x > 0 then countdown (x - 1));; countdown 10;;", () -> new funcons.interpreter.AllFactory() {} );
+        //eval("let add a b = a + b;; (add 4 5);;", () -> new funcons.interpreter.AllFactory() {} );
+        //eval("let rec countdown = fun x -> ((print_int x) ; if x > 0 then countdown (x - 1));; countdown 10;;", () -> new funcons.interpreter.AllFactory() {} );
+        //eval("let rec countdown = function x -> ((print_int x) ; if x > 0 then countdown (x - 1));; countdown 10;;", () -> new funcons.interpreter.AllFactory() {} );
+        //eval("let rec countdown x = ((print_int x) ; if x > 0 then countdown (x - 1));; countdown 10;;", () -> new funcons.interpreter.AllFactory() {} );
     }
 }
