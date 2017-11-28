@@ -2,8 +2,8 @@ package funcons.interpreter.auxiliary;
 
 import funcons.algebras.auxiliary.IntFloatConversionAlg;
 import funcons.carriers.IEval;
-import org.rascalmpl.value.IInteger;
-import org.rascalmpl.value.IReal;
+import io.usethesource.vallang.IInteger;
+import io.usethesource.vallang.IReal;
 
 public interface IntoFloatConversionFactory extends IntFloatConversionAlg<IEval> {
     @Override

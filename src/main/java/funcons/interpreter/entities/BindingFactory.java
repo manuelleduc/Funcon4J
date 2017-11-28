@@ -3,10 +3,10 @@ package funcons.interpreter.entities;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.carriers.IEval;
-import org.rascalmpl.value.IMap;
-import org.rascalmpl.value.IMapWriter;
-import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
+import io.usethesource.vallang.IMap;
+import io.usethesource.vallang.IMapWriter;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface BindingFactory extends
         MapAlg<IEval>,

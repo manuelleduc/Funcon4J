@@ -2,9 +2,9 @@ package funcons.interpreter.values;
 
 import funcons.algebras.values.StringAlg;
 import funcons.carriers.IEval;
-import org.rascalmpl.value.IString;
-import org.rascalmpl.value.IValueFactory;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
+import io.usethesource.vallang.IString;
+import io.usethesource.vallang.IValueFactory;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface StringFactory extends StringAlg<IEval> {
     IValueFactory vf = ValueFactory.getInstance();

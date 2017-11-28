@@ -1,12 +1,16 @@
 package funcons.interpreter.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
 import funcons.values.signals.FailureTrue;
-import org.junit.Test;
-import org.rascalmpl.value.IValue;
-
-import static org.junit.Assert.*;
+import io.usethesource.vallang.IValue;
 
 public class TypeFactoryTest implements AllFactory {
     @Test

@@ -1,17 +1,18 @@
 package camllightnorecursion;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+
 import camllight.CamlLight;
 import camllightnorecursion.parser.CLNoRecLexer;
 import camllightnorecursion.parser.CLNoRecParser;
 import funcons.carriers.IEval;
 import funcons.values.Null;
 import funcons.values.signals.FunconException;
+import io.usethesource.vallang.IMap;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 import noa.proxy.Recorder;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.rascalmpl.value.IMap;
-import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
 
 public class CamlLightNoRecursion {
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -1,9 +1,10 @@
 package funcons.interpreter.tests;
 
-import funcons.interpreter.AllFactory;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import funcons.interpreter.AllFactory;
 
 public class NullFactoryTest implements AllFactory {
 

@@ -1,7 +1,7 @@
 package funcons.values.signals;
 
 import funcons.values.Null;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IValue;
 
 public class RunTimeFunconException extends FunconException {
     final IValue value;
@@ -22,4 +22,10 @@ public class RunTimeFunconException extends FunconException {
                 ((RunTimeFunconException)obj).value.equals(value) &&
                 super.equals(obj);
     }
+
+	@Override
+	public boolean match(IValue other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

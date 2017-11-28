@@ -1,10 +1,10 @@
 package funcons.helper;
 
-import org.rascalmpl.value.IString;
-import org.rascalmpl.value.IValueFactory;
-
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import io.usethesource.vallang.IString;
+import io.usethesource.vallang.IValueFactory;
 
 public class RascalCLStringFactory {
     public static IString clChar(IValueFactory vf, java.lang.String s) {

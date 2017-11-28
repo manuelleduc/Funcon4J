@@ -2,9 +2,9 @@ package funcons.carriers;
 
 import funcons.values.Null;
 import funcons.values.signals.FunconException;
-import org.rascalmpl.value.IMap;
-import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
+import io.usethesource.vallang.IMap;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface IEval {
     ValueFactory vf = ValueFactory.getInstance();

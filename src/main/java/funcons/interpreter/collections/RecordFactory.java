@@ -7,11 +7,11 @@ import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import org.rascalmpl.value.IInteger;
-import org.rascalmpl.value.IMap;
-import org.rascalmpl.value.IMapWriter;
-import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
+import io.usethesource.vallang.IInteger;
+import io.usethesource.vallang.IMap;
+import io.usethesource.vallang.IMapWriter;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface RecordFactory extends
         PatternAlg<IEval>,

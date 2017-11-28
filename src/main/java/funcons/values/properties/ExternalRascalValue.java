@@ -1,9 +1,13 @@
 package funcons.values.properties;
 
-import org.rascalmpl.value.*;
-import org.rascalmpl.value.type.Type;
-import org.rascalmpl.value.type.TypeFactory;
-import org.rascalmpl.value.visitors.IValueVisitor;
+import io.usethesource.vallang.IAnnotatable;
+import io.usethesource.vallang.IConstructor;
+import io.usethesource.vallang.IExternalValue;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.IWithKeywordParameters;
+import io.usethesource.vallang.type.Type;
+import io.usethesource.vallang.type.TypeFactory;
+import io.usethesource.vallang.visitors.IValueVisitor;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public interface ExternalRascalValue extends IExternalValue {

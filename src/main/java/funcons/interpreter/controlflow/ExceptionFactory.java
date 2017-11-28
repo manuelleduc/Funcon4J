@@ -9,8 +9,8 @@ import funcons.values.Abs;
 import funcons.values.cl.CLMatchFailureException;
 import funcons.values.signals.FailureTrue;
 import funcons.values.signals.RunTimeFunconException;
-import org.rascalmpl.value.IValueFactory;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
+import io.usethesource.vallang.IValueFactory;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface ExceptionFactory extends
         LogicControlAlg<IEval>,

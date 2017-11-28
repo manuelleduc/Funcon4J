@@ -1,10 +1,10 @@
 package funcons.interpreter.tests;
 
-import funcons.interpreter.AllFactory;
-import org.junit.Test;
-import org.rascalmpl.value.IList;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import funcons.interpreter.AllFactory;
 
 public class VectorFactoryTest implements AllFactory {
 

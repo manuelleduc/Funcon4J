@@ -1,7 +1,7 @@
 package funcons.values;
 
 import funcons.values.properties.ExternalRascalValue;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IValue;
 
 public class Undefined implements ExternalRascalValue {
     @Override
@@ -23,4 +23,10 @@ public class Undefined implements ExternalRascalValue {
     public String toString() {
         return "UNDEFINED";
     }
+
+	@Override
+	public boolean match(IValue other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

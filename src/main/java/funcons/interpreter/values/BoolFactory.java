@@ -3,9 +3,9 @@ package funcons.interpreter.values;
 import funcons.algebras.values.BoolAlg;
 import funcons.carriers.IEval;
 import funcons.helper.RascalValueComperator;
-import org.rascalmpl.value.IBool;
-import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
+import io.usethesource.vallang.IBool;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface BoolFactory extends BoolAlg<IEval> {
     ValueFactory vf = ValueFactory.getInstance();

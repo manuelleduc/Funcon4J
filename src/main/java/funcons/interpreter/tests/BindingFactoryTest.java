@@ -1,11 +1,12 @@
 package funcons.interpreter.tests;
 
-import funcons.carriers.IEval;
-import funcons.interpreter.AllFactory;
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+
+import org.junit.Test;
+
+import funcons.carriers.IEval;
+import funcons.interpreter.AllFactory;
 
 public class BindingFactoryTest implements AllFactory {
 

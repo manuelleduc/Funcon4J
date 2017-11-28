@@ -1,11 +1,14 @@
 package funcons.interpreter.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
 import funcons.values.signals.FailureTrue;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class PatternFactoryTest implements AllFactory {
 

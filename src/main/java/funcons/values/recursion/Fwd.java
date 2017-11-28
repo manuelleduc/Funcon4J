@@ -1,7 +1,7 @@
 package funcons.values.recursion;
 
 import funcons.values.properties.ExternalRascalValue;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IValue;
 
 public class Fwd implements ExternalRascalValue {
     private static java.lang.Integer fwdCount = 0;
@@ -41,4 +41,10 @@ public class Fwd implements ExternalRascalValue {
     public String toString() {
         return "Fwd:" + n;
     }
+
+	@Override
+	public boolean match(IValue other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

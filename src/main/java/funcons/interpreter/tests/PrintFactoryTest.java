@@ -1,12 +1,13 @@
 package funcons.interpreter.tests;
 
-import funcons.interpreter.AllFactory;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+import funcons.interpreter.AllFactory;
 
 public class PrintFactoryTest implements AllFactory {
 

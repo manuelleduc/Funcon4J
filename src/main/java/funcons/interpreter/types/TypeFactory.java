@@ -10,9 +10,9 @@ import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.cl.CLVariant;
 import funcons.values.types.Token;
-import org.rascalmpl.value.ITuple;
-import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
+import io.usethesource.vallang.ITuple;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TypeFactory extends
         BoolAlg<IEval>,

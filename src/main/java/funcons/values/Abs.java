@@ -1,7 +1,7 @@
 package funcons.values;
 
 import funcons.values.properties.ExternalRascalValue;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IValue;
 
 public class Abs<E> implements ExternalRascalValue {
 
@@ -34,4 +34,10 @@ public class Abs<E> implements ExternalRascalValue {
     public java.lang.String toString() {
         return "ABS: " + body.toString();
     }
+
+	@Override
+	public boolean match(IValue other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

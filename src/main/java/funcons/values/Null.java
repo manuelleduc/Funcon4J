@@ -1,9 +1,9 @@
 package funcons.values;
 
 import funcons.values.properties.ExternalRascalValue;
-import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
-import org.rascalmpl.value.visitors.IValueVisitor;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
+import io.usethesource.vallang.visitors.IValueVisitor;
 
 public class Null implements ExternalRascalValue {
     @Override
@@ -30,4 +30,10 @@ public class Null implements ExternalRascalValue {
     public java.lang.String toString() {
         return "NULL";
     }
+
+	@Override
+	public boolean match(IValue other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

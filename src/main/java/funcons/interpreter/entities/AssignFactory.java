@@ -4,7 +4,7 @@ import funcons.algebras.entities.AssignAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.Variable;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IValue;
 
 public interface AssignFactory extends NullAlg<IEval>, AssignAlg<IEval> {
 

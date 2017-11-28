@@ -9,8 +9,8 @@ import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.recursion.Fwd;
-import org.rascalmpl.value.IInteger;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IInteger;
+import io.usethesource.vallang.IValue;
 
 public interface RecursiveFactory extends
         NullAlg<IEval>,

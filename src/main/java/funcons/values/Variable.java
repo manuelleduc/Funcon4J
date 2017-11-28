@@ -1,8 +1,8 @@
 package funcons.values;
 
 import funcons.values.properties.ExternalRascalValue;
-import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.visitors.IValueVisitor;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.visitors.IValueVisitor;
 
 public class Variable implements ExternalRascalValue {
     private static java.lang.Integer allocCount = 0;
@@ -54,4 +54,10 @@ public class Variable implements ExternalRascalValue {
         }
         return other.isEqual(value());
     }
+
+	@Override
+	public boolean match(IValue other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

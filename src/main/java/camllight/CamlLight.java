@@ -1,26 +1,31 @@
 package camllight;
 
-import camllight.lib.StandardLibrary;
-import camllight.parser.CLLexer;
-import camllight.parser.CLParser;
-import funcons.carriers.IEval;
-import funcons.values.Null;
-import funcons.values.signals.FunconException;
-import noa.proxy.Recorder;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.rascalmpl.value.IMap;
-import org.rascalmpl.value.IValue;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+
+import camllight.lib.StandardLibrary;
+import camllight.parser.CLLexer;
+import camllight.parser.CLParser;
+import funcons.carriers.IEval;
+import funcons.values.Null;
+import funcons.values.signals.FunconException;
+import io.usethesource.vallang.IMap;
+import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
+import noa.proxy.Recorder;
 
 public class CamlLight {
 

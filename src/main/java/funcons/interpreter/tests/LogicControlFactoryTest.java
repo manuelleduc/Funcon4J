@@ -1,10 +1,11 @@
 package funcons.interpreter.tests;
 
-import funcons.carriers.IEval;
-import funcons.interpreter.AllFactory;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import funcons.carriers.IEval;
+import funcons.interpreter.AllFactory;
 
 public class LogicControlFactoryTest implements AllFactory {
 

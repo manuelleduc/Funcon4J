@@ -10,7 +10,7 @@ import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.Abs;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IValue;
 
 public interface FunctionFactory extends
         IntAlg<IEval>,

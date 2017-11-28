@@ -4,7 +4,7 @@ import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
 import funcons.values.Null;
 import funcons.values.Undefined;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface NullFactory extends NullAlg<IEval> {
     ValueFactory vf = ValueFactory.getInstance();

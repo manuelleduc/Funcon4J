@@ -8,7 +8,7 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IValue;
 
 public interface CurryFactory extends
         FunctionAlg<IEval>,

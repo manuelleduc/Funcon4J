@@ -1,10 +1,13 @@
 package funcons.interpreter.tests;
 
-import funcons.interpreter.AllFactory;
-import funcons.values.signals.FailureTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import funcons.interpreter.AllFactory;
+import funcons.values.signals.FailureTrue;
 
 public class ListFactoryTest implements AllFactory {
 

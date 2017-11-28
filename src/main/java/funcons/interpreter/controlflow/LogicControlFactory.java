@@ -7,8 +7,8 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.carriers.IEval;
-import org.rascalmpl.value.IBool;
-import org.rascalmpl.value.IMap;
+import io.usethesource.vallang.IBool;
+import io.usethesource.vallang.IMap;
 
 public interface LogicControlFactory extends
         NullAlg<IEval>,

@@ -2,8 +2,8 @@ package funcons.values.cl;
 
 import funcons.values.properties.ExternalRascalValue;
 import funcons.values.signals.RunTimeFunconException;
-import org.rascalmpl.value.IString;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IString;
+import io.usethesource.vallang.IValue;
 
 public class CLVariant extends RunTimeFunconException implements ExternalRascalValue {
 

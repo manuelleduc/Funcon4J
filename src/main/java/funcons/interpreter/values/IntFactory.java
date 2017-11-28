@@ -2,9 +2,9 @@ package funcons.interpreter.values;
 
 import funcons.algebras.values.IntAlg;
 import funcons.carriers.IEval;
-import org.rascalmpl.value.IInteger;
-import org.rascalmpl.value.INumber;
-import org.rascalmpl.value.impl.persistent.ValueFactory;
+import io.usethesource.vallang.IInteger;
+import io.usethesource.vallang.INumber;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface IntFactory extends IntAlg<IEval> {
     ValueFactory vf = ValueFactory.getInstance();

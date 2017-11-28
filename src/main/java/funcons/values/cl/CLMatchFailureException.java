@@ -1,6 +1,6 @@
 package funcons.values.cl;
 
-import org.rascalmpl.value.IValueFactory;
+import io.usethesource.vallang.IValueFactory;
 
 public class CLMatchFailureException extends CLVariant {
     public CLMatchFailureException(IValueFactory vf) {

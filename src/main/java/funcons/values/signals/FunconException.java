@@ -1,7 +1,7 @@
 package funcons.values.signals;
 
 import funcons.values.properties.ExternalRascalValue;
-import org.rascalmpl.value.IValue;
+import io.usethesource.vallang.IValue;
 
 public abstract class FunconException extends Exception implements ExternalRascalValue {
     private java.lang.String message;
