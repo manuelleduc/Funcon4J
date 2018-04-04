@@ -171,10 +171,12 @@ public class CamlLight {
 
     public static void main(String[] args) throws FunconException, IOException {
         // interpret a FunCaml program given as String
-        //interpret("1 + if true then 2 else 2 + 3;;");
+        interpret("1 + if true then 2 else 2 + 3;;");
 
+
+//        interpret("1 + \"a\"");
         // run examples found in the examples folder
-        //runExamples();
+     //   runExamples();
 
         // run tests as provided by Mosses
         //runGivenTests();
