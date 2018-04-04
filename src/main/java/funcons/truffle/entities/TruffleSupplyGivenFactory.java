@@ -1,18 +1,18 @@
 package funcons.truffle.entities;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.entities.SupplyGivenAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
-public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<CLStatementNode> {
+public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<CLExecuteNode> {
 
     @Override
-    default CLStatementNode given() {
+    default CLExecuteNode given() {
 //        return (env, given) -> given;
-        return null; // TODO
+        return new SupplyGivenGivenNode(); // TODO
     }
 
     @Override
-    default CLStatementNode supply(CLStatementNode exp, CLStatementNode x) {
+    default CLExecuteNode supply(CLExecuteNode exp, CLExecuteNode x) {
 //        return (env, given) -> x.eval(env, exp.eval(env, given));
         return null; // TODO
     }

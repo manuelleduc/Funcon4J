@@ -1,34 +1,30 @@
 package funcons.truffle.values;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.values.IntAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
-public interface TruffleIntFactory extends IntAlg<CLStatementNode> {
+public interface TruffleIntFactory extends IntAlg<CLExecuteNode> {
 
 
     @Override
-    default CLStatementNode lit(Integer i) {
-//        return (env, given) -> vf.integer(i);
-        return null; // TODO
+    default CLExecuteNode lit(Integer i) {
+        return new IntLitNode(i);
     }
 
     @Override
-    default CLStatementNode intAdd(CLStatementNode a, CLStatementNode b) {
-//        return (env, given) ->
-//                ((INumber) a.eval(env, given)).toInteger()
-//                        .add(((INumber) b.eval(env, given)).toInteger());
-        return null; // TODO
+    default CLExecuteNode intAdd(CLExecuteNode a, CLExecuteNode b) {
+        return new IntIntAddNode(a, b);
     }
 
     @Override
-    default CLStatementNode intNegate(CLStatementNode x) {
+    default CLExecuteNode intNegate(CLExecuteNode x) {
 //        return (env, given) ->
 //                ((INumber) x.eval(env, given)).toInteger().negate();
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode intSubtract(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode intSubtract(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .subtract(((INumber) b.eval(env, given)).toInteger());
@@ -36,7 +32,7 @@ public interface TruffleIntFactory extends IntAlg<CLStatementNode> {
     }
 
     @Override
-    default CLStatementNode intMultiply(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode intMultiply(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .multiply(((INumber) b.eval(env, given)).toInteger());
@@ -44,7 +40,7 @@ public interface TruffleIntFactory extends IntAlg<CLStatementNode> {
     }
 
     @Override
-    default CLStatementNode intDivide(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode intDivide(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .divide(((INumber) b.eval(env, given)).toInteger());
@@ -52,7 +48,7 @@ public interface TruffleIntFactory extends IntAlg<CLStatementNode> {
     }
 
     @Override
-    default CLStatementNode intModulo(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode intModulo(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) -> {
 //            IInteger aNumber = ((INumber) a.eval(env, given)).toInteger();
 //            IInteger bNumber = ((INumber) b.eval(env, given)).toInteger();

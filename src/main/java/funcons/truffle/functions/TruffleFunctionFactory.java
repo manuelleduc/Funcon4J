@@ -1,5 +1,6 @@
 package funcons.truffle.functions;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
@@ -8,29 +9,28 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
 public interface TruffleFunctionFactory extends
-        IntAlg<CLStatementNode>,
-        SupplyGivenAlg<CLStatementNode>,
-        BindingAlg<CLStatementNode>,
-        LogicControlAlg<CLStatementNode>,
-        ListAlg<CLStatementNode>,
-        BoolAlg<CLStatementNode>,
-        NullAlg<CLStatementNode>,
-        FunctionAlg<CLStatementNode> {
+        IntAlg<CLExecuteNode>,
+        SupplyGivenAlg<CLExecuteNode>,
+        BindingAlg<CLExecuteNode>,
+        LogicControlAlg<CLExecuteNode>,
+        ListAlg<CLExecuteNode>,
+        BoolAlg<CLExecuteNode>,
+        NullAlg<CLExecuteNode>,
+        FunctionAlg<CLExecuteNode> {
 
     @Override
-    default CLStatementNode abs(CLStatementNode exp) {
+    default CLExecuteNode abs(CLExecuteNode exp) {
 //        return (env, given) -> new Abs<>(exp);
-        return null; // TODO
+        return new FunctionAbsNode(exp); // TODO
     }
 
     @Override
-    default CLStatementNode abs(CLStatementNode patt, CLStatementNode exp) {
-//        return (env, given) -> new Abs<CLStatementNode>((e, g) -> {
+    default CLExecuteNode abs(CLExecuteNode patt, CLExecuteNode exp) {
+//        return (env, given) -> new Abs<CLExecuteNode>((e, g) -> {
 //            @SuppressWarnings("unchecked")
-//            CLStatementNode environment = ((Abs<CLStatementNode>) patt.eval(e, g)).body();
+//            CLExecuteNode environment = ((Abs<CLExecuteNode>) patt.eval(e, g)).body();
 //            return scope(environment, exp).eval(e, g);
 //        });
         return null; // TODO
@@ -38,17 +38,15 @@ public interface TruffleFunctionFactory extends
 
     @Override
     @SuppressWarnings("unchecked")
-    default CLStatementNode apply(CLStatementNode abs, CLStatementNode arg) {
-//        return (env, given) -> supply(arg,
-//                ((Abs<CLStatementNode>) abs.eval(env, given)).body()).eval(env, given);
-        return null; // TODO
+    default CLExecuteNode apply(CLExecuteNode abs, CLExecuteNode arg) {
+        return new FunctionApplyNode(abs, arg, this);
     }
 
     @Override
-    default CLStatementNode applyToEach(CLStatementNode a, CLStatementNode l) {
+    default CLExecuteNode applyToEach(CLExecuteNode a, CLExecuteNode l) {
 //        return (env, given) -> {
 //            IValue listVal = l.eval(env, given);
-//            CLStatementNode cachedListEval = (e, g) -> listVal;
+//            CLExecuteNode cachedListEval = (e, g) -> listVal;
 //            return ifTrue(
 //                    equal(listLength(cachedListEval), lit(0)),
 //                    null_(),
@@ -60,23 +58,23 @@ public interface TruffleFunctionFactory extends
     }
 
     @Override
-    default CLStatementNode compose(CLStatementNode f, CLStatementNode g) {
+    default CLExecuteNode compose(CLExecuteNode f, CLExecuteNode g) {
 //        return abs(apply(f, apply(g, given())));
         return null; // TODO
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    default CLStatementNode close(CLStatementNode abs) {
+    default CLExecuteNode close(CLExecuteNode abs) {
 //        return (env, given) ->
 //                abs(closure(
-//                        ((Abs<CLStatementNode>) abs.eval(env, given)).body(),
+//                        ((Abs<CLExecuteNode>) abs.eval(env, given)).body(),
 //                        (e, g) -> env)).eval(env, given);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode bind(CLStatementNode id) {
+    default CLExecuteNode bind(CLExecuteNode id) {
 //        return abs(bindValue(id, given()));
         return null; // TODO
     }

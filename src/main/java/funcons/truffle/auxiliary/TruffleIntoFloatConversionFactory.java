@@ -1,18 +1,16 @@
 package funcons.truffle.auxiliary;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.auxiliary.IntFloatConversionAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
-public interface TruffleIntoFloatConversionFactory extends IntFloatConversionAlg<CLStatementNode> {
+public interface TruffleIntoFloatConversionFactory extends IntFloatConversionAlg<CLExecuteNode> {
     @Override
-    default CLStatementNode intToFloat(CLStatementNode i) {
-//        return (env, given) -> ((IInteger) i.eval(env, given)).toReal(5);
-        return null; // TODO
+    default CLExecuteNode intToFloat(CLExecuteNode i) {
+        return new IntoFloatConversionIntToFloatNode(i);
     }
 
     @Override
-    default CLStatementNode floatToInt(CLStatementNode f) {
-//        return (env, given) -> ((IReal) f.eval(env, given)).toInteger();
-        return null; // TODO
+    default CLExecuteNode floatToInt(CLExecuteNode f) {
+        return new IntoFloatConversionFloatToIntoNode(f);
     }
 }

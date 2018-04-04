@@ -1,37 +1,37 @@
 package funcons.truffle.values;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.values.StringAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
-public interface TruffleStringFactory extends StringAlg<CLStatementNode> {
+public interface TruffleStringFactory extends StringAlg<CLExecuteNode> {
 
     @Override
-    default CLStatementNode string(String s) {
+    default CLExecuteNode string(String s) {
 //        return (env, given) -> vf.string(s);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode char_(Character c) {
+    default CLExecuteNode char_(Character c) {
 //        return (env, given) -> vf.string(c);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode camlLightString(String s) {
+    default CLExecuteNode camlLightString(String s) {
 //        return (env, given) -> funcons.helper.RascalCLStringFactory.clString(vf, s);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode camlLightChar(String s) {
+    default CLExecuteNode camlLightChar(String s) {
 //        return (env, given) -> funcons.helper.RascalCLStringFactory.clChar(vf, s);
         return null; // TODO
 
     }
 
     @Override
-    default CLStatementNode stringAppend(CLStatementNode str1, CLStatementNode str2) {
+    default CLExecuteNode stringAppend(CLExecuteNode str1, CLExecuteNode str2) {
 //        return (env, given) ->
 //                ((IString) str1.eval(env, given))
 //                        .concat((IString) str2.eval(env, given));

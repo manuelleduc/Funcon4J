@@ -1,24 +1,24 @@
 package funcons.truffle.collections;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.collections.RecordAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.values.IntAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
 public interface TruffleRecordFactory extends
-        PatternAlg<CLStatementNode>,
-        BindingAlg<CLStatementNode>,
-        MapAlg<CLStatementNode>,
-        ListAlg<CLStatementNode>,
-        IntAlg<CLStatementNode>,
-        RecordAlg<CLStatementNode> {
+        PatternAlg<CLExecuteNode>,
+        BindingAlg<CLExecuteNode>,
+        MapAlg<CLExecuteNode>,
+        ListAlg<CLExecuteNode>,
+        IntAlg<CLExecuteNode>,
+        RecordAlg<CLExecuteNode> {
 
 
     @Override
-    default CLStatementNode record(CLStatementNode field, CLStatementNode val) {
+    default CLExecuteNode record(CLExecuteNode field, CLExecuteNode val) {
 //        return (env, given) -> {
 //            IMapWriter mw = vf.mapWriter();
 //            mw.put(field.eval(env, given),
@@ -29,13 +29,13 @@ public interface TruffleRecordFactory extends
     }
 
     @Override
-    default CLStatementNode field(java.lang.String name) {
+    default CLExecuteNode field(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode recordSelect(CLStatementNode record, CLStatementNode field) {
+    default CLExecuteNode recordSelect(CLExecuteNode record, CLExecuteNode field) {
 //        return (env, given) ->
 //                ((IMap) record.eval(env, given))
 //                        .get(field.eval(env, given));
@@ -43,13 +43,13 @@ public interface TruffleRecordFactory extends
     }
 
     @Override
-    default CLStatementNode recordOver(CLStatementNode rec1, CLStatementNode rec2) {
+    default CLExecuteNode recordOver(CLExecuteNode rec1, CLExecuteNode rec2) {
 //        return recordUnion(rec2, rec1);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode recordUnion(CLStatementNode rec1, CLStatementNode rec2) {
+    default CLExecuteNode recordUnion(CLExecuteNode rec1, CLExecuteNode rec2) {
 //        return (env, given) ->
 //                ((IMap) rec1.eval(env, given))
 //                        .join(((IMap) rec2.eval(env, given)));
@@ -57,7 +57,7 @@ public interface TruffleRecordFactory extends
     }
 
     @Override
-    default CLStatementNode recordMatch(CLStatementNode rec, CLStatementNode pattMap) {
+    default CLExecuteNode recordMatch(CLExecuteNode rec, CLExecuteNode pattMap) {
 //        return (env, given) -> {
 //            IMap recVal = (IMap) rec.eval(env, given);
 //            IValue pattMapVal = pattMap.eval(env, given);

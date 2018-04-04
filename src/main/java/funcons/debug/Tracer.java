@@ -1,9 +1,5 @@
 package funcons.debug;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-
 import camllight.CamlLight;
 import camllight.algebras.AllAlg;
 import funcons.carriers.IEval;
@@ -11,6 +7,10 @@ import funcons.interpreter.AllFactory;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 public class Tracer<A> implements InvocationHandler{
 

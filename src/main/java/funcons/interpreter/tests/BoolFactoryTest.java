@@ -1,15 +1,14 @@
 package funcons.interpreter.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
-import java.util.function.BiFunction;
-
-import org.junit.Test;
-
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
 import io.usethesource.vallang.IValue;
+import org.junit.Test;
+
+import java.util.function.BiFunction;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class BoolFactoryTest implements AllFactory {
     @Test

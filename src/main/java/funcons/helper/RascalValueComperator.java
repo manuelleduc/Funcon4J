@@ -1,12 +1,7 @@
 package funcons.helper;
 
 import funcons.values.Variable;
-import io.usethesource.vallang.IBool;
-import io.usethesource.vallang.IList;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.INumber;
-import io.usethesource.vallang.IString;
-import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.*;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class RascalValueComperator {

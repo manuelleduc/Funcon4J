@@ -1,5 +1,6 @@
 package funcons.truffle.functions;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
@@ -7,37 +8,34 @@ import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
 public interface TruffleCurryFactory extends
-        FunctionAlg<CLStatementNode>,
-        TupleAlg<CLStatementNode>,
-        IntAlg<CLStatementNode>,
-        SupplyGivenAlg<CLStatementNode>,
-        BoolAlg<CLStatementNode>,
-        LogicControlAlg<CLStatementNode>,
-        CurryAlg<CLStatementNode> {
+        FunctionAlg<CLExecuteNode>,
+        TupleAlg<CLExecuteNode>,
+        IntAlg<CLExecuteNode>,
+        SupplyGivenAlg<CLExecuteNode>,
+        BoolAlg<CLExecuteNode>,
+        LogicControlAlg<CLExecuteNode>,
+        CurryAlg<CLExecuteNode> {
 
     @Override
-    default CLStatementNode partialApp(CLStatementNode f, CLStatementNode x) {
-//        return abs(apply(f, tuple(x, given())));
-        return null; // TODO
+    default CLExecuteNode partialApp(CLExecuteNode f, CLExecuteNode x) {
+        return abs(apply(f, tuple(x, given())));
     }
 
     @Override
-    default CLStatementNode partialAppN(CLStatementNode f, CLStatementNode x) {
+    default CLExecuteNode partialAppN(CLExecuteNode f, CLExecuteNode x) {
 //        return abs(apply(f, tuplePrefix(x, given())));
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode curry(CLStatementNode a) {
-//        return abs((env, given) -> partialApp(a, (e,g) -> given).eval(env, given));
-        return null; // TODO
+    default CLExecuteNode curry(CLExecuteNode a) {
+        return new CurryCurryNode(a, this);
     }
 
     @Override
-    default CLStatementNode curryN(CLStatementNode n, CLStatementNode a) {
+    default CLExecuteNode curryN(CLExecuteNode n, CLExecuteNode a) {
 //        return (env, given) -> {
 //            IValue index = n.eval(env, given);
 //            return ifTrue(
@@ -54,7 +52,7 @@ public interface TruffleCurryFactory extends
     }
 
     @Override
-    default CLStatementNode uncurry(CLStatementNode f) {
+    default CLExecuteNode uncurry(CLExecuteNode f) {
         return abs(apply(apply(f, project(lit(0), given())), project(lit(1), given())));
     }
 }

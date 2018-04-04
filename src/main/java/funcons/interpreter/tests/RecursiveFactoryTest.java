@@ -1,13 +1,12 @@
 package funcons.interpreter.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
-import org.junit.Test;
-
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
 import io.usethesource.vallang.IValue;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class RecursiveFactoryTest implements AllFactory {
 

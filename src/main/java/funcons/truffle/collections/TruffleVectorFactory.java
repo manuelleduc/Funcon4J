@@ -1,25 +1,25 @@
 package funcons.truffle.collections;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.collections.VectorAlg;
 import funcons.algebras.entities.AssignAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
-public interface TruffleVectorFactory  extends AssignAlg<CLStatementNode>, VectorAlg<CLStatementNode> {
+public interface TruffleVectorFactory  extends AssignAlg<CLExecuteNode>, VectorAlg<CLExecuteNode> {
 
     @Override
-    default CLStatementNode vector() {
+    default CLExecuteNode vector() {
 //        return (env, given) -> vf.list();
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode vector(CLStatementNode val) {
+    default CLExecuteNode vector(CLExecuteNode val) {
 //        return (env, given) -> vf.list((IValue)alloc(val).eval(env, given));
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode vectorSelect(CLStatementNode vector, CLStatementNode index) {
+    default CLExecuteNode vectorSelect(CLExecuteNode vector, CLExecuteNode index) {
 //        return (env, given) -> {
 //            IList vectorVal = (IList)vector.eval(env, given);
 //            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
@@ -29,24 +29,17 @@ public interface TruffleVectorFactory  extends AssignAlg<CLStatementNode>, Vecto
     }
 
     @Override
-    default CLStatementNode vectorAppend(CLStatementNode vector1, CLStatementNode vector2) {
-//        return (env, given) -> {
-//            IList vector1Val = (IList)vector1.eval(env, given);
-//            IList vector2Val = (IList)vector2.eval(env, given);
-//            return vector1Val.concat(vector2Val);
-//        };
-        return null; // TODO
+    default CLExecuteNode vectorAppend(CLExecuteNode vector1, CLExecuteNode vector2) {
+        return new VectorVectorAppendNode(vector1, vector2);
     }
 
     @Override
-    default CLStatementNode vectorLength(CLStatementNode vector) {
-//        return (env, given) ->
-//                vf.integer(((IList)vector.eval(env, given)).length());
-        return null; // TODO
+    default CLExecuteNode vectorLength(CLExecuteNode vector) {
+        return new VectorVectorLengthNode(vector);
     }
 
     @Override
-    default CLStatementNode vectorAssign(CLStatementNode vector, CLStatementNode index, CLStatementNode val) {
+    default CLExecuteNode vectorAssign(CLExecuteNode vector, CLExecuteNode index, CLExecuteNode val) {
 //        return (env, given) -> {
 //            IList vectorVal = (IList)vector.eval(env, given);
 //            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());

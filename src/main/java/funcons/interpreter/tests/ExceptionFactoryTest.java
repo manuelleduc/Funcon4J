@@ -1,18 +1,14 @@
 package funcons.interpreter.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
 import funcons.carriers.IEval;
 import funcons.interpreter.AllFactory;
 import funcons.values.cl.CLMatchFailureException;
 import funcons.values.signals.FailureTrue;
 import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class ExceptionFactoryTest implements AllFactory {
 

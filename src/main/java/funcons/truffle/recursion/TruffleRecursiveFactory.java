@@ -1,5 +1,6 @@
 package funcons.truffle.recursion;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
@@ -7,27 +8,26 @@ import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.recursion.RecursiveAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
 public interface TruffleRecursiveFactory extends
-        NullAlg<CLStatementNode>,
-        LogicControlAlg<CLStatementNode>,
-        BindingAlg<CLStatementNode>,
-        MapAlg<CLStatementNode>,
-        ListAlg<CLStatementNode>,
-        IntAlg<CLStatementNode>,
-        RecursiveAlg<CLStatementNode> {
+        NullAlg<CLExecuteNode>,
+        LogicControlAlg<CLExecuteNode>,
+        BindingAlg<CLExecuteNode>,
+        MapAlg<CLExecuteNode>,
+        ListAlg<CLExecuteNode>,
+        IntAlg<CLExecuteNode>,
+        RecursiveAlg<CLExecuteNode> {
 
     @Override
-    default CLStatementNode freshFwd() {
+    default CLExecuteNode freshFwd() {
 //        return (env, given) -> new Fwd();
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode freshFwds(CLStatementNode idList) {
+    default CLExecuteNode freshFwds(CLExecuteNode idList) {
 //        return (env, given) -> {
-//            CLStatementNode envEval = environment();
+//            CLExecuteNode envEval = environment();
 //            IValue idListVal = idList.eval(env, given);
 //            int length = ((IInteger)listLength((e, g)->idListVal).eval(env, given)).intValue();
 //            IValue undefined = undefined().eval(env, given);
@@ -46,7 +46,7 @@ public interface TruffleRecursiveFactory extends
     }
 
     @Override
-    default CLStatementNode setForwards(CLStatementNode idFwdMap) {
+    default CLExecuteNode setForwards(CLExecuteNode idFwdMap) {
 //        return (env, given) -> {
 //            IValue mapVal = idFwdMap.eval(env, given);
 //            IValue mapKeys = mapDomain((e,g)->mapVal).eval(env, given);
@@ -68,7 +68,7 @@ public interface TruffleRecursiveFactory extends
     }
 
     @Override
-    default CLStatementNode reclose(CLStatementNode map, CLStatementNode decl) {
+    default CLExecuteNode reclose(CLExecuteNode map, CLExecuteNode decl) {
 //        return (env, given) -> {
 //            IValue m = map.eval(env, given);
 //            return accum(scope((e,g) -> m, decl), seq(setForwards((e,g) -> m), environment())).eval(env, given);
@@ -77,25 +77,25 @@ public interface TruffleRecursiveFactory extends
     }
 
     @Override
-    default CLStatementNode recursive(CLStatementNode idList, CLStatementNode decl) {
+    default CLExecuteNode recursive(CLExecuteNode idList, CLExecuteNode decl) {
 //        return reclose(freshFwds(idList), decl);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode recursiveTyped(CLStatementNode idTypeMap, CLStatementNode decl) {
+    default CLExecuteNode recursiveTyped(CLExecuteNode idTypeMap, CLExecuteNode decl) {
 //        return recursive(mapDomain(idTypeMap), decl);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode followFwd(CLStatementNode fwd) {
+    default CLExecuteNode followFwd(CLExecuteNode fwd) {
 //        return (env, given) -> ((Fwd)fwd.eval(env, given)).follow();
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode followIfFwd(CLStatementNode fwd) {
+    default CLExecuteNode followIfFwd(CLExecuteNode fwd) {
 //        return (env, given) -> {
 //            IValue v = fwd.eval(env, given);
 //            if (v instanceof Fwd) {

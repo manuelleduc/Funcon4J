@@ -1,10 +1,6 @@
 package funcons.values.properties;
 
-import io.usethesource.vallang.IAnnotatable;
-import io.usethesource.vallang.IConstructor;
-import io.usethesource.vallang.IExternalValue;
-import io.usethesource.vallang.IValue;
-import io.usethesource.vallang.IWithKeywordParameters;
+import io.usethesource.vallang.*;
 import io.usethesource.vallang.type.Type;
 import io.usethesource.vallang.type.TypeFactory;
 import io.usethesource.vallang.visitors.IValueVisitor;

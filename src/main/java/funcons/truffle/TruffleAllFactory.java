@@ -1,5 +1,6 @@
 package funcons.truffle;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.truffle.auxiliary.TruffleIntoFloatConversionFactory;
 import funcons.truffle.auxiliary.TrufflePrintFactory;
 import funcons.truffle.collections.*;
@@ -11,14 +12,13 @@ import funcons.truffle.entities.TruffleSupplyGivenFactory;
 import funcons.truffle.functions.TruffleCurryFactory;
 import funcons.truffle.functions.TruffleFunctionFactory;
 import funcons.truffle.functions.TrufflePatternFactory;
-import funcons.truffle.nodes.CLStatementNode;
 import funcons.truffle.recursion.TruffleRecursiveFactory;
 import funcons.truffle.types.TrufflePolyTypeFactory;
 import funcons.truffle.types.TruffleTupleTypeFactory;
 import funcons.truffle.types.TruffleTypeFactory;
 import funcons.truffle.values.*;
 
-public interface TruffleAllFactory extends funcons.algebras.AllAlg<CLStatementNode>,
+public interface TruffleAllFactory extends funcons.algebras.AllAlg<CLExecuteNode>,
         TruffleAssignFactory,
         TruffleBindingFactory,
         TruffleSupplyGivenFactory,

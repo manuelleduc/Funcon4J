@@ -1,11 +1,10 @@
 package funcons.interpreter.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
+import funcons.interpreter.AllFactory;
 import org.junit.Test;
 
-import funcons.interpreter.AllFactory;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class TupleTypeFactoryTest implements AllFactory {
 

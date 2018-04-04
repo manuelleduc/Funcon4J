@@ -1,24 +1,24 @@
 package funcons.truffle.collections;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
 public interface TruffleListFactory extends
-        PatternAlg<CLStatementNode>,
-        MapAlg<CLStatementNode>,
-        FunctionAlg<CLStatementNode>,
-        SupplyGivenAlg<CLStatementNode>,
-        ListAlg<CLStatementNode>,
-        ExceptionAlg<CLStatementNode> {
+        PatternAlg<CLExecuteNode>,
+        MapAlg<CLExecuteNode>,
+        FunctionAlg<CLExecuteNode>,
+        SupplyGivenAlg<CLExecuteNode>,
+        ListAlg<CLExecuteNode>,
+        ExceptionAlg<CLExecuteNode> {
 
 
     @Override
-    default CLStatementNode projectList(CLStatementNode index, CLStatementNode list) {
+    default CLExecuteNode projectList(CLExecuteNode index, CLExecuteNode list) {
 //        return (env, given) -> {
 //            IInteger i = (IInteger) index.eval(env, given);
 //            IList l = (IList) list.eval(env, given);
@@ -29,19 +29,19 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLStatementNode list() {
+    default CLExecuteNode list() {
 //        return (env, given) -> vf.list();
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode list(CLStatementNode x) {
+    default CLExecuteNode list(CLExecuteNode x) {
 //        return (env, given) -> vf.list((IValue) x.eval(env, given));
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode list(CLStatementNode x1, CLStatementNode x2) {
+    default CLExecuteNode list(CLExecuteNode x1, CLExecuteNode x2) {
 //        return (env, given) -> vf.list(
 //                x1.eval(env, given),
 //                x2.eval(env, given));
@@ -49,7 +49,7 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLStatementNode listPrefix(CLStatementNode x, CLStatementNode l) {
+    default CLExecuteNode listPrefix(CLExecuteNode x, CLExecuteNode l) {
 //        return (env, given) -> {
 //            IList list = (IList) l.eval(env, given);
 //            return list.insert(x.eval(env, given));
@@ -58,7 +58,7 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLStatementNode listPrefixMatch(CLStatementNode l, CLStatementNode p1, CLStatementNode p2) {
+    default CLExecuteNode listPrefixMatch(CLExecuteNode l, CLExecuteNode p1, CLExecuteNode p2) {
 //        return (env, given) -> {
 //            IList list = (IList) l.eval(env, given);
 //            if (list.length() == 0) {
@@ -72,13 +72,13 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLStatementNode listPrefixPatt(CLStatementNode p1, CLStatementNode p2) {
+    default CLExecuteNode listPrefixPatt(CLExecuteNode p1, CLExecuteNode p2) {
 //        return abs(listPrefixMatch(given(), p1, p2));
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode intClosedInterval(CLStatementNode m, CLStatementNode n) {
+    default CLExecuteNode intClosedInterval(CLExecuteNode m, CLExecuteNode n) {
 //        return (env, given) -> {
 //            int start = ((IInteger) m.eval(env, given)).intValue();
 //            int finish = ((IInteger) n.eval(env, given)).intValue();
@@ -92,13 +92,13 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLStatementNode listReverse(CLStatementNode l) {
+    default CLExecuteNode listReverse(CLExecuteNode l) {
 //        return (env, given) -> ((IList) l.eval(env, given)).reverse();
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode listAppend(CLStatementNode list1, CLStatementNode list2) {
+    default CLExecuteNode listAppend(CLExecuteNode list1, CLExecuteNode list2) {
 //        return (env, given) -> {
 //            IList l1 = (IList) list1.eval(env, given);
 //            IList l2 = (IList) list2.eval(env, given);
@@ -108,13 +108,13 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLStatementNode listHead(CLStatementNode list) {
+    default CLExecuteNode listHead(CLExecuteNode list) {
 //        return (env, given) -> ((IList) list.eval(env, given)).get(0);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode listTail(CLStatementNode list) {
+    default CLExecuteNode listTail(CLExecuteNode list) {
 //        return (env, given) -> {
 //            IList listVal = ((IList) list.eval(env, given));
 //            if (listVal.length() <= 1) {
@@ -126,7 +126,7 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLStatementNode listLength(CLStatementNode list) {
+    default CLExecuteNode listLength(CLExecuteNode list) {
 //        return (env, given) ->
 //                vf.integer(((IList) list.eval(env, given)).length());
         return null; // TODO

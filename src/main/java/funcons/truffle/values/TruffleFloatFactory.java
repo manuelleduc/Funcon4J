@@ -1,18 +1,18 @@
 package funcons.truffle.values;
 
+import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.values.FloatAlg;
-import funcons.truffle.nodes.CLStatementNode;
 
-public interface TruffleFloatFactory extends FloatAlg<CLStatementNode> {
+public interface TruffleFloatFactory extends FloatAlg<CLExecuteNode> {
 
     @Override
-    default CLStatementNode lit(Double i) {
+    default CLExecuteNode lit(Double i) {
 //        return (env, given) -> vf.real(i);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode floatAdd(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode floatAdd(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) -> {
 //            INumber aVal = (INumber) a.eval(env, given);
 //            INumber bVal = (INumber) b.eval(env, given);
@@ -22,14 +22,14 @@ public interface TruffleFloatFactory extends FloatAlg<CLStatementNode> {
     }
 
     @Override
-    default CLStatementNode floatNegate(CLStatementNode x) {
+    default CLExecuteNode floatNegate(CLExecuteNode x) {
 //        return (env, given) ->
 //                ((INumber) x.eval(env, given)).negate().toReal(5);
         return null; // TODO
     }
 
     @Override
-    default CLStatementNode floatSubtract(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode floatSubtract(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) -> {
 //            INumber aVal = (INumber) a.eval(env, given);
 //            INumber bVal = (INumber) b.eval(env, given);
@@ -39,7 +39,7 @@ public interface TruffleFloatFactory extends FloatAlg<CLStatementNode> {
     }
 
     @Override
-    default CLStatementNode floatMultiply(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode floatMultiply(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) -> {
 //            INumber aVal = (INumber) a.eval(env, given);
 //            INumber bVal = (INumber) b.eval(env, given);
@@ -49,7 +49,7 @@ public interface TruffleFloatFactory extends FloatAlg<CLStatementNode> {
     }
 
     @Override
-    default CLStatementNode floatDivide(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode floatDivide(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) -> {
 //            INumber aVal = (INumber) a.eval(env, given);
 //            INumber bVal = (INumber) b.eval(env, given);
@@ -59,7 +59,7 @@ public interface TruffleFloatFactory extends FloatAlg<CLStatementNode> {
     }
 
     @Override
-    default CLStatementNode floatModulo(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode floatModulo(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) -> {
 //            INumber aVal = (INumber) a.eval(env, given);
 //            INumber bVal = (INumber) b.eval(env, given);
@@ -69,7 +69,7 @@ public interface TruffleFloatFactory extends FloatAlg<CLStatementNode> {
     }
 
     @Override
-    default CLStatementNode floatPowerOf(CLStatementNode a, CLStatementNode b) {
+    default CLExecuteNode floatPowerOf(CLExecuteNode a, CLExecuteNode b) {
 //        return (env, given) -> {
 //            INumber aVal = (INumber) a.eval(env, given);
 //            INumber bVal = (INumber) b.eval(env, given);
