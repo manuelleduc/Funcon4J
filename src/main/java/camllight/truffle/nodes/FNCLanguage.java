@@ -196,7 +196,24 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     @Override
     protected CallTarget parse(ParsingRequest request) throws Exception {
 
-        interpret("1 + if true then 2 else 2 + 3;;");
+       // interpret("1 + if true then 2 else 2 + 3;;");
+
+        // interpret a FunCaml program given as String
+
+
+
+//        interpret("1 + \"a\"");
+        // run examples found in the examples folder
+           runExamples();
+
+        // run tests as provided by Mosses
+        //runGivenTests();
+
+        // run several performance tests
+        //runPerformanceTests();
+
+
+        // useless so far, just to avoir an ugly runtime exception when the execution ends.
         return Truffle.getRuntime().createCallTarget(new CLRootNode(this, null));
     }
 
