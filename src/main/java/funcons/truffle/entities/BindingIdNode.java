@@ -1,13 +1,12 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Binding Id Node")
-public class BindingIdNode extends Node implements CLExecuteNode {
+public class BindingIdNode extends Node implements FNCExecuteNode {
     private final String s;
 
     private final ValueFactory vf = ValueFactory.getInstance();

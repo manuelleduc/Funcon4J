@@ -1,22 +1,20 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
 
 
 @NodeInfo(description = "Binding Scope Node")
-public class BindingScopeNode extends Node implements CLExecuteNode {
+public class BindingScopeNode extends Node implements FNCExecuteNode {
 
     @Node.Child
-    private CLExecuteNode localBindings;
+    private FNCExecuteNode localBindings;
 
     @Node.Child
-    private CLExecuteNode exp;
+    private FNCExecuteNode exp;
 
-    public BindingScopeNode(CLExecuteNode localBindings, CLExecuteNode exp) {
+    public BindingScopeNode(FNCExecuteNode localBindings, FNCExecuteNode exp) {
         this.localBindings = localBindings;
         this.exp = exp;
     }

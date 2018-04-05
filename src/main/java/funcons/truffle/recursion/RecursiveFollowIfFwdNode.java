@@ -1,18 +1,15 @@
 package funcons.truffle.recursion;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.recursion.Fwd;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Recursive FollowIfFwd Node")
-public class RecursiveFollowIfFwdNode extends Node implements CLExecuteNode {
+public class RecursiveFollowIfFwdNode extends Node implements FNCExecuteNode {
     @Child
-    private CLExecuteNode fwd;
+    private FNCExecuteNode fwd;
 
-    public RecursiveFollowIfFwdNode(CLExecuteNode fwd) {
+    public RecursiveFollowIfFwdNode(FNCExecuteNode fwd) {
         this.fwd = fwd;
     }
 //

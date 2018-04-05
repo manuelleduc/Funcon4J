@@ -1,25 +1,22 @@
 package funcons.truffle.values;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.helper.RascalValueComperator;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Bool Greater Node ")
-public class BoolGreaterNode extends Node implements CLExecuteNode {
+public class BoolGreaterNode extends Node implements FNCExecuteNode {
 
     ValueFactory vf = ValueFactory.getInstance();
 
     @Node.Child
-    private CLExecuteNode a;
+    private FNCExecuteNode a;
 
     @Node.Child
-    private CLExecuteNode b;
+    private FNCExecuteNode b;
 
-    public BoolGreaterNode(CLExecuteNode a, CLExecuteNode b) {
+    public BoolGreaterNode(FNCExecuteNode a, FNCExecuteNode b) {
         this.a = a;
         this.b = b;
     }

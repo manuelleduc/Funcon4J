@@ -1,25 +1,23 @@
 package funcons.truffle.functions;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.entities.BindingAlg;
-import funcons.values.Abs;
-import funcons.values.signals.FunconException;
 
 
 @NodeInfo(description = "Function Abs Node 2")
-public class FunctionAbsNode2 extends Node implements CLExecuteNode {
+public class FunctionAbsNode2 extends Node implements FNCExecuteNode {
 
-    private final BindingAlg<CLExecuteNode> alg;
-
-    @Child
-    private CLExecuteNode patt;
+    private final BindingAlg<FNCExecuteNode> alg;
 
     @Child
-    private CLExecuteNode exp;
+    private FNCExecuteNode patt;
 
-    public FunctionAbsNode2(CLExecuteNode patt, CLExecuteNode exp, BindingAlg<CLExecuteNode> alg) {
+    @Child
+    private FNCExecuteNode exp;
+
+    public FunctionAbsNode2(FNCExecuteNode patt, FNCExecuteNode exp, BindingAlg<FNCExecuteNode> alg) {
         this.patt = patt;
         this.exp = exp;
         this.alg = alg;

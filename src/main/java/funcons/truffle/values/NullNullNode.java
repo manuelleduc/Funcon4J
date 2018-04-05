@@ -1,13 +1,19 @@
 package funcons.truffle.values;
 
-import camllight.truffle.nodes.CLExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.values.Null;
-import funcons.values.signals.FunconException;
 
 @NodeInfo(description = "Null Null Node")
-public class NullNullNode extends Node implements CLExecuteNode {
+public class NullNullNode extends FNCExpressionNode implements FNCExecuteNode {
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        return new Null();
+    }
+
+
 //
 //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {

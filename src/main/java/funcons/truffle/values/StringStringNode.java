@@ -1,15 +1,14 @@
 package funcons.truffle.values;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "String String Node")
 public class StringStringNode extends Node
-        implements CLExecuteNode {
+        implements FNCExecuteNode {
 
     IValueFactory vf = ValueFactory.getInstance();
     private final String s;

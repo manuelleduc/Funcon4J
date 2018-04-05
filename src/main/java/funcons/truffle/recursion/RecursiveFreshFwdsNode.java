@@ -1,6 +1,6 @@
 package funcons.truffle.recursion;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.collections.ListAlg;
@@ -9,27 +9,23 @@ import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.recursion.RecursiveAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.values.recursion.Fwd;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IInteger;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Recursive FreshFwds Node")
-public class RecursiveFreshFwdsNode extends Node implements CLExecuteNode {
+public class RecursiveFreshFwdsNode extends Node implements FNCExecuteNode {
 
 
-    private final BindingAlg<CLExecuteNode> balg;
-    private final ListAlg<CLExecuteNode> lalg;
-    private final NullAlg<CLExecuteNode> nalg;
-    private final IntAlg<CLExecuteNode> ialg;
-    private final RecursiveAlg<CLExecuteNode> ralg;
-    private final MapAlg<CLExecuteNode> malg;
+    private final BindingAlg<FNCExecuteNode> balg;
+    private final ListAlg<FNCExecuteNode> lalg;
+    private final NullAlg<FNCExecuteNode> nalg;
+    private final IntAlg<FNCExecuteNode> ialg;
+    private final RecursiveAlg<FNCExecuteNode> ralg;
+    private final MapAlg<FNCExecuteNode> malg;
 
     @Child
-    private CLExecuteNode idList;
+    private FNCExecuteNode idList;
 
-    public RecursiveFreshFwdsNode(CLExecuteNode idList, BindingAlg<CLExecuteNode> balg, ListAlg<CLExecuteNode> lalg,
-                                  NullAlg<CLExecuteNode> nalg, IntAlg<CLExecuteNode> ialg, RecursiveAlg<CLExecuteNode> ralg, MapAlg<CLExecuteNode> malg) {
+    public RecursiveFreshFwdsNode(FNCExecuteNode idList, BindingAlg<FNCExecuteNode> balg, ListAlg<FNCExecuteNode> lalg,
+                                  NullAlg<FNCExecuteNode> nalg, IntAlg<FNCExecuteNode> ialg, RecursiveAlg<FNCExecuteNode> ralg, MapAlg<FNCExecuteNode> malg) {
         this.idList = idList;
         this.balg = balg;
         this.lalg = lalg;

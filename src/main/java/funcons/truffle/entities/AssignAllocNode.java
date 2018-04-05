@@ -1,19 +1,17 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.Variable;
-import funcons.values.signals.FunconException;
 
 
 @NodeInfo(description = "Assign Alloc Node")
-public class AssignAllocNode extends Node implements CLExecuteNode {
+public class AssignAllocNode extends Node implements FNCExecuteNode {
 
     @Child
-    private CLExecuteNode x;
+    private FNCExecuteNode x;
 
-    public AssignAllocNode(CLExecuteNode x) {
+    public AssignAllocNode(FNCExecuteNode x) {
         this.x = x;
     }
 

@@ -1,4 +1,4 @@
-package camllight.truffle.nodes;
+package funcons.truffle.nodes;
 
 import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
@@ -50,20 +50,17 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
     @Override
     protected CallTarget parse(ParsingRequest request) throws Exception {
-
-
         final String program = IOUtils.toString(request.getSource().getInputStream(), Charset.defaultCharset());
-
         final Recorder builder = parse(program, Recorder.create(camllight.algebras.AllAlg.class));
-
-        final funcons.algebras.AllAlg<CLExecuteNode> evalAlg = new funcons.truffle.TruffleAllFactory() {
+        final funcons.algebras.AllAlg<FNCExecuteNode> evalAlg = new funcons.truffle.TruffleAllFactory() {
         };
-        final CLExecuteNode eval = builder.build(evalAlg);
+        final camllight.algebras.AllAlg alg = () -> evalAlg;
+        final FNCExecuteNode eval = builder.build(alg);
 //        final IValue env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
-        final CLExecuteNode clExecuteNode = eval.buildAST();
+        final FNCExpressionNode clExecuteNode = (FNCExpressionNode) eval.buildAST();
 
         // useless so far, just to avoir an ugly runtime exception when the execution ends.
-        return Truffle.getRuntime().createCallTarget(new CLRootNode(this, clExecuteNode));
+        return Truffle.getRuntime().createCallTarget(new FNCRootNode(this, clExecuteNode));
     }
 
     public IValue importStandardLibrary(IValue env) throws FunconException {
@@ -71,9 +68,9 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     }
 
     public IValue importStandardLibrary(IValue env, Set<String> excludes) throws FunconException {
-        funcons.algebras.AllAlg<CLExecuteNode> alg = new funcons.truffle.TruffleAllFactory() {
+        funcons.algebras.AllAlg<FNCExecuteNode> alg = new funcons.truffle.TruffleAllFactory() {
         };
-        StandardLibrary<CLExecuteNode> lib = () -> alg;
+        StandardLibrary<FNCExecuteNode> lib = () -> alg;
 
         for (Method m : lib.getClass().getMethods()) {
             String methodName = m.getName();

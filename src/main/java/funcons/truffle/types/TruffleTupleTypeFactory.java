@@ -1,24 +1,24 @@
 package funcons.truffle.types;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.types.TupleTypeAlg;
 
-public interface TruffleTupleTypeFactory extends TupleTypeAlg<CLExecuteNode> {
+public interface TruffleTupleTypeFactory extends TupleTypeAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode tupleType() {
+    default FNCExecuteNode tupleType() {
 //        return (env, given) -> vf.list();
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode tupleType(CLExecuteNode x) {
+    default FNCExecuteNode tupleType(FNCExecuteNode x) {
 //        return (env, given) -> vf.list((IValue) x.eval(env, given));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode tupleType(CLExecuteNode x1, CLExecuteNode x2) {
+    default FNCExecuteNode tupleType(FNCExecuteNode x1, FNCExecuteNode x2) {
 //        return (env, given) -> vf.list(
 //                (IValue) x1.eval(env, given),
 //                (IValue) x2.eval(env, given));
@@ -26,7 +26,7 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode tupleType(CLExecuteNode x1, CLExecuteNode x2, CLExecuteNode x3) {
+    default FNCExecuteNode tupleType(FNCExecuteNode x1, FNCExecuteNode x2, FNCExecuteNode x3) {
 //        return (env, given) -> vf.list(
 //                (IValue) x1.eval(env, given),
 //                (IValue) x2.eval(env, given),
@@ -35,7 +35,7 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode tupleTypePrefix(CLExecuteNode x, CLExecuteNode tup) {
+    default FNCExecuteNode tupleTypePrefix(FNCExecuteNode x, FNCExecuteNode tup) {
 //        return (env, given) ->
 //                ((IList) tup.eval(env, given))
 //                        .insert((IValue) x.eval(env, given));
@@ -43,7 +43,7 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode projectType(CLExecuteNode index, CLExecuteNode tup) {
+    default FNCExecuteNode projectType(FNCExecuteNode index, FNCExecuteNode tup) {
 //        return (env, given) ->
 //                ((IList) tup.eval(env, given))
 //                        .get(((IInteger) index.eval(env, given)).intValue());

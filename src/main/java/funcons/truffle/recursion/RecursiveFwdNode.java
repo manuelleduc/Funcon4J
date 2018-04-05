@@ -1,13 +1,11 @@
 package funcons.truffle.recursion;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.recursion.Fwd;
-import funcons.values.signals.FunconException;
 
 @NodeInfo(description = "Recursive Fwd Node")
-public class RecursiveFwdNode extends Node implements CLExecuteNode {
+public class RecursiveFwdNode extends Node implements FNCExecuteNode {
 //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {
 //        return new Fwd();

@@ -1,14 +1,13 @@
 package funcons.truffle.types;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 
 @NodeInfo(description = "Type UnknowType Node")
-public class TypeUnknowTypeNode extends Node implements CLExecuteNode {
+public class TypeUnknowTypeNode extends Node implements FNCExecuteNode {
 
     ValueFactory vf = ValueFactory.getInstance();
 

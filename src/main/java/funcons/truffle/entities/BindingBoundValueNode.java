@@ -1,16 +1,15 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
 
 @NodeInfo(description = "Binding BoundValue Node")
-public class BindingBoundValueNode extends Node implements CLExecuteNode {
+public class BindingBoundValueNode extends Node implements FNCExecuteNode {
     @Child
-    private CLExecuteNode id;
+    private FNCExecuteNode id;
 
-    public BindingBoundValueNode(CLExecuteNode id) {
+    public BindingBoundValueNode(FNCExecuteNode id) {
         this.id = id;
     }
 

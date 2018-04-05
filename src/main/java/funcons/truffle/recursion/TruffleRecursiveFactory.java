@@ -1,6 +1,6 @@
 package funcons.truffle.recursion;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
@@ -10,27 +10,27 @@ import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
 
 public interface TruffleRecursiveFactory extends
-        NullAlg<CLExecuteNode>,
-        LogicControlAlg<CLExecuteNode>,
-        BindingAlg<CLExecuteNode>,
-        MapAlg<CLExecuteNode>,
-        ListAlg<CLExecuteNode>,
-        IntAlg<CLExecuteNode>,
-        RecursiveAlg<CLExecuteNode> {
+        NullAlg<FNCExecuteNode>,
+        LogicControlAlg<FNCExecuteNode>,
+        BindingAlg<FNCExecuteNode>,
+        MapAlg<FNCExecuteNode>,
+        ListAlg<FNCExecuteNode>,
+        IntAlg<FNCExecuteNode>,
+        RecursiveAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode freshFwd() {
+    default FNCExecuteNode freshFwd() {
 //        return (env, given) -> new Fwd();
         return new RecursiveFwdNode();
     }
 
     @Override
-    default CLExecuteNode freshFwds(CLExecuteNode idList) {
+    default FNCExecuteNode freshFwds(FNCExecuteNode idList) {
         return new RecursiveFreshFwdsNode(idList, this, this, this, this, this, this);
     }
 
     @Override
-    default CLExecuteNode setForwards(CLExecuteNode idFwdMap) {
+    default FNCExecuteNode setForwards(FNCExecuteNode idFwdMap) {
 //        return (env, given) -> {
 //            IValue mapVal = idFwdMap.eval(env, given);
 //            IValue mapKeys = mapDomain((e,g)->mapVal).eval(env, given);
@@ -52,28 +52,28 @@ public interface TruffleRecursiveFactory extends
     }
 
     @Override
-    default CLExecuteNode reclose(CLExecuteNode map, CLExecuteNode decl) {
+    default FNCExecuteNode reclose(FNCExecuteNode map, FNCExecuteNode decl) {
         return new RecursiveRecloseNode(map, decl, this, this, this);
     }
 
     @Override
-    default CLExecuteNode recursive(CLExecuteNode idList, CLExecuteNode decl) {
+    default FNCExecuteNode recursive(FNCExecuteNode idList, FNCExecuteNode decl) {
         return reclose(freshFwds(idList), decl);
     }
 
     @Override
-    default CLExecuteNode recursiveTyped(CLExecuteNode idTypeMap, CLExecuteNode decl) {
+    default FNCExecuteNode recursiveTyped(FNCExecuteNode idTypeMap, FNCExecuteNode decl) {
         return recursive(mapDomain(idTypeMap), decl);
     }
 
     @Override
-    default CLExecuteNode followFwd(CLExecuteNode fwd) {
+    default FNCExecuteNode followFwd(FNCExecuteNode fwd) {
 //        return (env, given) -> ((Fwd)fwd.eval(env, given)).follow();
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode followIfFwd(CLExecuteNode fwd) {
+    default FNCExecuteNode followIfFwd(FNCExecuteNode fwd) {
 //        return (env, given) -> {
 //            IValue v = fwd.eval(env, given);
 //            if (v instanceof Fwd) {

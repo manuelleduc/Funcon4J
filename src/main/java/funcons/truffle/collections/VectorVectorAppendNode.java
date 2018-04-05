@@ -1,22 +1,20 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IList;
 
 
 @NodeInfo(description = "Vectore VectorAppend Node")
-public class VectorVectorAppendNode extends Node implements CLExecuteNode {
+public class VectorVectorAppendNode extends Node implements FNCExecuteNode {
 
     @Child
-    private CLExecuteNode vector1;
+    private FNCExecuteNode vector1;
 
     @Child
-    private CLExecuteNode vector2;
+    private FNCExecuteNode vector2;
 
-    public VectorVectorAppendNode(CLExecuteNode vector1, CLExecuteNode vector2) {
+    public VectorVectorAppendNode(FNCExecuteNode vector1, FNCExecuteNode vector2) {
         this.vector1 = vector1;
         this.vector2 = vector2;
     }

@@ -1,21 +1,19 @@
 package funcons.truffle.controlflow;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FailureTrue;
-import funcons.values.signals.FunconException;
 
 @NodeInfo(description = "Exception Else Node")
-public class ExceptionElseNode extends Node implements CLExecuteNode {
+public class ExceptionElseNode extends Node implements FNCExecuteNode {
 
     @Node.Child
-    private CLExecuteNode x2;
+    private FNCExecuteNode x2;
 
     @Node.Child
-    private CLExecuteNode x1;
+    private FNCExecuteNode x1;
 
-    public ExceptionElseNode(CLExecuteNode x1, CLExecuteNode x2) {
+    public ExceptionElseNode(FNCExecuteNode x1, FNCExecuteNode x2) {
         this.x1 = x1;
         this.x2 = x2;
     }

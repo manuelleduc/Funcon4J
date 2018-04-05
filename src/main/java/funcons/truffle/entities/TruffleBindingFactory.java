@@ -1,38 +1,39 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
 
 public interface TruffleBindingFactory extends
-        MapAlg<CLExecuteNode>,
-        BindingAlg<CLExecuteNode> {
+        MapAlg<FNCExecuteNode>,
+        BindingAlg<FNCExecuteNode> {
 
 
     @Override
-    default CLExecuteNode id(java.lang.String s) {
+    default FNCExecuteNode id(java.lang.String s) {
         return new BindingIdNode(s);
     }
 
     @Override
-    default CLExecuteNode nameId(java.lang.String namespace, java.lang.String id) {
+    default FNCExecuteNode nameId(java.lang.String namespace, java.lang.String id) {
 //        return (env, given) -> vf.tuple(vf.string(namespace), vf.string(id));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode bindValue(CLExecuteNode id, CLExecuteNode exp) {
+    default FNCExecuteNode bindValue(FNCExecuteNode id, FNCExecuteNode exp) {
         return new BindingBindValueNode(id, exp); // TODO
     }
 
     @Override
-    default CLExecuteNode boundValue(CLExecuteNode id) {
+    default FNCExecuteNode boundValue(FNCExecuteNode id) {
 //        return (env, given) -> env.get((IValue) id.eval(env, given));
         return new BindingBoundValueNode(id);
     }
 
     @Override
-    default CLExecuteNode scope(CLExecuteNode localBindings, CLExecuteNode exp) {
+    default FNCExecuteNode scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
 //        return (env, given) -> {
 //            IMap local = (IMap) localBindings.eval(env, given);
 //            return exp.eval(env.join(local), given);
@@ -41,19 +42,19 @@ public interface TruffleBindingFactory extends
     }
 
     @Override
-    default CLExecuteNode closure(CLExecuteNode x, CLExecuteNode environment) {
+    default FNCExecuteNode closure(FNCExecuteNode x, FNCExecuteNode environment) {
 //        return (env, given) ->
 //                x.eval((IMap) environment.eval(env, given), given);
         return new BindingClosureNode(x,environment);
     }
 
     @Override
-    default CLExecuteNode environment() {
+    default FNCExecuteNode environment() {
         return new BindingEnvironmentNode();
     }
 
     @Override
-    default CLExecuteNode accum(CLExecuteNode environment, CLExecuteNode decl) {
-        return new BindingAccumNode(environment, decl, this, this);
+    default FNCExecuteNode accum(FNCExecuteNode environment, FNCExecuteNode decl) {
+        return new BindingAccumNode(environment, (FNCExpressionNode) decl, this, this);
     }
 }

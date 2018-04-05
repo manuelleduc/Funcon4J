@@ -1,17 +1,15 @@
 package funcons.truffle.values;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IBool;
 
 @NodeInfo(description = "Bool Not Node")
-public class BoolNotNode extends Node implements CLExecuteNode {
+public class BoolNotNode extends Node implements FNCExecuteNode {
     @Node.Child
-    private CLExecuteNode b;
+    private FNCExecuteNode b;
 
-    public BoolNotNode(CLExecuteNode b) {
+    public BoolNotNode(FNCExecuteNode b) {
         this.b = b;
     }
 

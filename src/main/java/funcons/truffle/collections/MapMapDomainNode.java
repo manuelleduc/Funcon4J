@@ -1,23 +1,20 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IListWriter;
-import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Map MapDomain Node")
-public class MapMapDomainNode extends Node implements CLExecuteNode {
+public class MapMapDomainNode extends Node implements FNCExecuteNode {
 
     ValueFactory vf = ValueFactory.getInstance();
 
 
     @Node.Child
-    private CLExecuteNode map;
+    private FNCExecuteNode map;
 
-    public MapMapDomainNode(CLExecuteNode map) {
+    public MapMapDomainNode(FNCExecuteNode map) {
         this.map = map;
     }
 

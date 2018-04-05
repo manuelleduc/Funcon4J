@@ -1,19 +1,18 @@
 package funcons.truffle.functions;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.functions.CurryAlg;
-import funcons.values.signals.FunconException;
 
 @NodeInfo(description = "Curry Curry Node")
-public class CurryCurryNode extends Node implements CLExecuteNode {
+public class CurryCurryNode extends Node implements FNCExecuteNode {
     @Child
-    private CLExecuteNode a;
+    private FNCExecuteNode a;
 
-    private CurryAlg<CLExecuteNode> alg;
+    private CurryAlg<FNCExecuteNode> alg;
 
-    public CurryCurryNode(CLExecuteNode a, CurryAlg<CLExecuteNode> alg) {
+    public CurryCurryNode(FNCExecuteNode a, CurryAlg<FNCExecuteNode> alg) {
         this.a = a;
         this.alg = alg;
     }

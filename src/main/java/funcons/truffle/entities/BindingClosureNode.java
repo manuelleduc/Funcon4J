@@ -1,21 +1,20 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
 
 @NodeInfo(description = "Binding Closure Node")
 public class BindingClosureNode extends Node
-        implements CLExecuteNode {
+        implements FNCExecuteNode {
 
     @Node.Child
-    private CLExecuteNode x;
+    private FNCExecuteNode x;
 
     @Node.Child
-    private CLExecuteNode environment;
+    private FNCExecuteNode environment;
 
-    public BindingClosureNode(CLExecuteNode x, CLExecuteNode environment) {
+    public BindingClosureNode(FNCExecuteNode x, FNCExecuteNode environment) {
         this.x = x;
         this.environment = environment;
     }

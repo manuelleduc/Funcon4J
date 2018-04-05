@@ -1,6 +1,7 @@
 package funcons.truffle.controlflow;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
@@ -9,15 +10,15 @@ import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
 
 public interface TruffleLogicControlFactory extends
-        NullAlg<CLExecuteNode>,
-        FunctionAlg<CLExecuteNode>,
-        BindingAlg<CLExecuteNode>,
-        MapAlg<CLExecuteNode>,
-        BoolAlg<CLExecuteNode>,
-        LogicControlAlg<CLExecuteNode> {
+        NullAlg<FNCExecuteNode>,
+        FunctionAlg<FNCExecuteNode>,
+        BindingAlg<FNCExecuteNode>,
+        MapAlg<FNCExecuteNode>,
+        BoolAlg<FNCExecuteNode>,
+        LogicControlAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode effect(CLExecuteNode e) {
+    default FNCExecuteNode effect(FNCExecuteNode e) {
 //        return (env, given) -> {
 //            e.eval(env, given);
 //            return null_().eval(env, given);
@@ -26,22 +27,22 @@ public interface TruffleLogicControlFactory extends
     }
 
     @Override
-    default CLExecuteNode seq(CLExecuteNode c, CLExecuteNode t) {
-        return new LogicControlSeqNode(c, t);
+    default FNCExecuteNode seq(FNCExecuteNode c, FNCExecuteNode t) {
+        return new LogicControlSeqNode((FNCExpressionNode) c, (FNCExpressionNode) t);
     }
 
     @Override
-    default CLExecuteNode ifTrue(CLExecuteNode e, CLExecuteNode c1, CLExecuteNode c2) {
+    default FNCExecuteNode ifTrue(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
         return new LogicControlIfTrueNode(e, c1, c2);
     }
 
     @Override
-    default CLExecuteNode whileTrue(CLExecuteNode e, CLExecuteNode c) {
+    default FNCExecuteNode whileTrue(FNCExecuteNode e, FNCExecuteNode c) {
         return new LogicControlWhileTrueNode(e, c, this);
     }
 
     @Override
-    default CLExecuteNode for_(CLExecuteNode cond, CLExecuteNode incr, CLExecuteNode exp) {
+    default FNCExecuteNode for_(FNCExecuteNode cond, FNCExecuteNode incr, FNCExecuteNode exp) {
 //        return (env, given) -> {
 //            for (; (((IBool) cond.eval(env, given)).getValue()); env = env.join((IMap) incr.eval(env, given))) {
 //                exp.eval(env, given);

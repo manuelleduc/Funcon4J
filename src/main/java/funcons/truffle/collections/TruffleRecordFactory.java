@@ -1,6 +1,6 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.collections.RecordAlg;
@@ -9,16 +9,16 @@ import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.values.IntAlg;
 
 public interface TruffleRecordFactory extends
-        PatternAlg<CLExecuteNode>,
-        BindingAlg<CLExecuteNode>,
-        MapAlg<CLExecuteNode>,
-        ListAlg<CLExecuteNode>,
-        IntAlg<CLExecuteNode>,
-        RecordAlg<CLExecuteNode> {
+        PatternAlg<FNCExecuteNode>,
+        BindingAlg<FNCExecuteNode>,
+        MapAlg<FNCExecuteNode>,
+        ListAlg<FNCExecuteNode>,
+        IntAlg<FNCExecuteNode>,
+        RecordAlg<FNCExecuteNode> {
 
 
     @Override
-    default CLExecuteNode record(CLExecuteNode field, CLExecuteNode val) {
+    default FNCExecuteNode record(FNCExecuteNode field, FNCExecuteNode val) {
 //        return (env, given) -> {
 //            IMapWriter mw = vf.mapWriter();
 //            mw.put(field.eval(env, given),
@@ -29,13 +29,13 @@ public interface TruffleRecordFactory extends
     }
 
     @Override
-    default CLExecuteNode field(java.lang.String name) {
+    default FNCExecuteNode field(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode recordSelect(CLExecuteNode record, CLExecuteNode field) {
+    default FNCExecuteNode recordSelect(FNCExecuteNode record, FNCExecuteNode field) {
 //        return (env, given) ->
 //                ((IMap) record.eval(env, given))
 //                        .get(field.eval(env, given));
@@ -43,13 +43,13 @@ public interface TruffleRecordFactory extends
     }
 
     @Override
-    default CLExecuteNode recordOver(CLExecuteNode rec1, CLExecuteNode rec2) {
+    default FNCExecuteNode recordOver(FNCExecuteNode rec1, FNCExecuteNode rec2) {
 //        return recordUnion(rec2, rec1);
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode recordUnion(CLExecuteNode rec1, CLExecuteNode rec2) {
+    default FNCExecuteNode recordUnion(FNCExecuteNode rec1, FNCExecuteNode rec2) {
 //        return (env, given) ->
 //                ((IMap) rec1.eval(env, given))
 //                        .join(((IMap) rec2.eval(env, given)));
@@ -57,7 +57,7 @@ public interface TruffleRecordFactory extends
     }
 
     @Override
-    default CLExecuteNode recordMatch(CLExecuteNode rec, CLExecuteNode pattMap) {
+    default FNCExecuteNode recordMatch(FNCExecuteNode rec, FNCExecuteNode pattMap) {
 //        return (env, given) -> {
 //            IMap recVal = (IMap) rec.eval(env, given);
 //            IValue pattMapVal = pattMap.eval(env, given);

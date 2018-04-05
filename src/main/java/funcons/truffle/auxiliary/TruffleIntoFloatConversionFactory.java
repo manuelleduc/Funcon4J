@@ -1,16 +1,16 @@
 package funcons.truffle.auxiliary;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.auxiliary.IntFloatConversionAlg;
 
-public interface TruffleIntoFloatConversionFactory extends IntFloatConversionAlg<CLExecuteNode> {
+public interface TruffleIntoFloatConversionFactory extends IntFloatConversionAlg<FNCExecuteNode> {
     @Override
-    default CLExecuteNode intToFloat(CLExecuteNode i) {
+    default FNCExecuteNode intToFloat(FNCExecuteNode i) {
         return new IntoFloatConversionIntToFloatNode(i);
     }
 
     @Override
-    default CLExecuteNode floatToInt(CLExecuteNode f) {
+    default FNCExecuteNode floatToInt(FNCExecuteNode f) {
         return new IntoFloatConversionFloatToIntoNode(f);
     }
 }

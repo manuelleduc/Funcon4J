@@ -1,17 +1,17 @@
 package funcons.truffle.values;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.values.NullAlg;
 
-public interface TruffleNullFactory extends NullAlg<CLExecuteNode> {
+public interface TruffleNullFactory extends NullAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode null_() {
+    default FNCExecuteNode null_() {
         return new NullNullNode();
     }
 
     @Override
-    default CLExecuteNode undefined() {
+    default FNCExecuteNode undefined() {
 
         // return (env, given) -> new Undefined();
         return new NullUndefinedNode();

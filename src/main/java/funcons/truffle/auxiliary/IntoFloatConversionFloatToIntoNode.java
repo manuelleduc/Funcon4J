@@ -1,18 +1,16 @@
 package funcons.truffle.auxiliary;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IReal;
 
 @NodeInfo(description = "IntoFloatConversion FloatToInto Node")
-public class IntoFloatConversionFloatToIntoNode extends Node implements CLExecuteNode {
+public class IntoFloatConversionFloatToIntoNode extends Node implements FNCExecuteNode {
 
     @Child
-    private CLExecuteNode f;
+    private FNCExecuteNode f;
 
-    public IntoFloatConversionFloatToIntoNode(CLExecuteNode f) {
+    public IntoFloatConversionFloatToIntoNode(FNCExecuteNode f) {
         this.f = f;
     }
 

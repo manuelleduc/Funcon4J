@@ -1,12 +1,12 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.MapAlg;
 
-public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
+public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode map(CLExecuteNode key, CLExecuteNode val) {
+    default FNCExecuteNode map(FNCExecuteNode key, FNCExecuteNode val) {
 //        return (env, given) -> {
 //            IValue k = (IValue) key.eval(env, given);
 //            IValue v = (IValue) val.eval(env, given);
@@ -18,7 +18,7 @@ public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode mapUpdate(CLExecuteNode map, CLExecuteNode key, CLExecuteNode val) {
+    default FNCExecuteNode mapUpdate(FNCExecuteNode map, FNCExecuteNode key, FNCExecuteNode val) {
 //        return (env, given) -> {
 //            IValue k = (IValue) key.eval(env, given);
 //            IValue v = (IValue) val.eval(env, given);
@@ -29,7 +29,7 @@ public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode mapDomain(CLExecuteNode map) {
+    default FNCExecuteNode mapDomain(FNCExecuteNode map) {
 //        return (env, given) -> {
 //            IMap m = (IMap) map.eval(env, given);
 //            IListWriter lw = vf.listWriter();
@@ -40,12 +40,12 @@ public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode mapUnion(CLExecuteNode map1, CLExecuteNode map2) {
+    default FNCExecuteNode mapUnion(FNCExecuteNode map1, FNCExecuteNode map2) {
         return new MapUnionNode(map1, map2);
     }
 
     @Override
-    default CLExecuteNode mapOver(CLExecuteNode map1, CLExecuteNode map2) {
+    default FNCExecuteNode mapOver(FNCExecuteNode map1, FNCExecuteNode map2) {
 //        return (env, given) -> {
 //            IMap m1 = (IMap) map1.eval(env, given);
 //            IMap m2 = (IMap) map2.eval(env, given);
@@ -55,7 +55,7 @@ public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode mapGet(CLExecuteNode map, CLExecuteNode key) {
+    default FNCExecuteNode mapGet(FNCExecuteNode map, FNCExecuteNode key) {
 //        return (env, given) -> {
 //            IMap m = (IMap) map.eval(env, given);
 //            return m.get((IValue) key.eval(env, given));

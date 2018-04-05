@@ -1,12 +1,11 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
 
 @NodeInfo(description = "Supply Given Given Node")
-public class SupplyGivenGivenNode extends Node implements CLExecuteNode {
+public class SupplyGivenGivenNode extends Node implements FNCExecuteNode {
 //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {
 //        return given;

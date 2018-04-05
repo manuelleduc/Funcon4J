@@ -1,21 +1,19 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
 
 @NodeInfo(description = "Map MapOver Node")
-public class MapMapOverNode extends Node implements CLExecuteNode {
+public class MapMapOverNode extends Node implements FNCExecuteNode {
 
     @Node.Child
-    private CLExecuteNode map1;
+    private FNCExecuteNode map1;
 
     @Node.Child
-    private CLExecuteNode map2;
+    private FNCExecuteNode map2;
 
-    public MapMapOverNode(CLExecuteNode map1, CLExecuteNode map2) {
+    public MapMapOverNode(FNCExecuteNode map1, FNCExecuteNode map2) {
         this.map1 = map1;
         this.map2 = map2;
     }

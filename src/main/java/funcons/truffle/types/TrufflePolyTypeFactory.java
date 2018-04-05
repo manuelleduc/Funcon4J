@@ -1,37 +1,37 @@
 package funcons.truffle.types;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.types.PolyTypeAlg;
 
-public interface TrufflePolyTypeFactory extends PolyTypeAlg<CLExecuteNode> {
+public interface TrufflePolyTypeFactory extends PolyTypeAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode instantiatePoly(CLExecuteNode x) {
+    default FNCExecuteNode instantiatePoly(FNCExecuteNode x) {
         return x;
     }
 
     @Override
-    default CLExecuteNode instantiateIfPoly(CLExecuteNode x) {
+    default FNCExecuteNode instantiateIfPoly(FNCExecuteNode x) {
         return x;
     }
 
     @Override
-    default CLExecuteNode generalise(CLExecuteNode x) {
+    default FNCExecuteNode generalise(FNCExecuteNode x) {
         return x;
     }
 
     @Override
-    default CLExecuteNode generaliseIfPoly(CLExecuteNode x) {
+    default FNCExecuteNode generaliseIfPoly(FNCExecuteNode x) {
         return x;
     }
 
     @Override
-    default CLExecuteNode generaliseDecl(CLExecuteNode x) {
+    default FNCExecuteNode generaliseDecl(FNCExecuteNode x) {
         return x;
     }
 
     @Override
-    default CLExecuteNode generaliseMap(CLExecuteNode x) {
+    default FNCExecuteNode generaliseMap(FNCExecuteNode x) {
         return x;
     }
 }

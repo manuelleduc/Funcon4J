@@ -1,21 +1,19 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Map Union Node")
-public class MapUnionNode extends Node implements CLExecuteNode {
+public class MapUnionNode extends Node implements FNCExecuteNode {
     public static final ValueFactory vf = ValueFactory.getInstance();
 
 
-    private final CLExecuteNode map1;
-    private final CLExecuteNode map2;
+    private final FNCExecuteNode map1;
+    private final FNCExecuteNode map2;
 
-    public MapUnionNode(CLExecuteNode map1, CLExecuteNode map2) {
+    public MapUnionNode(FNCExecuteNode map1, FNCExecuteNode map2) {
         this.map1 = map1;
         this.map2 = map2;
     }

@@ -26,11 +26,12 @@ public final class Recorder {
 	@SuppressWarnings("unchecked")
 	public <T> T build(Object algebra) {
 		try {
-			Object[] builtArgs = new Object[args.length];
+			final Object[] builtArgs = new Object[args.length];
 			for (int i = 0; i < args.length; i++) {
 				builtArgs[i] = buildArgument(args[i], algebra);
 			}
-			return (T)method.invoke(algebra, builtArgs);
+            final Object invoke = method.invoke(algebra, builtArgs);
+            return (T) invoke;
 		}
 		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new RuntimeException(e);

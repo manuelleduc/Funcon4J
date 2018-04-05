@@ -1,23 +1,23 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.entities.AssignAlg;
 import funcons.algebras.values.NullAlg;
 
-public interface TruffleAssignFactory extends NullAlg<CLExecuteNode>, AssignAlg<CLExecuteNode> {
+public interface TruffleAssignFactory extends NullAlg<FNCExecuteNode>, AssignAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode assign(CLExecuteNode var, CLExecuteNode x) {
+    default FNCExecuteNode assign(FNCExecuteNode var, FNCExecuteNode x) {
         return new AssignAssignNode(var, x, this);
     }
 
     @Override
-    default CLExecuteNode assignedValue(CLExecuteNode var) {
+    default FNCExecuteNode assignedValue(FNCExecuteNode var) {
         return new AssignAssignedValueNode(var);
     }
 
     @Override
-    default CLExecuteNode assignedValueIfVar(CLExecuteNode v) {
+    default FNCExecuteNode assignedValueIfVar(FNCExecuteNode v) {
 //        return (env, given) -> {
 //            IValue val = v.eval(env, given);
 //            if (val instanceof Variable) {
@@ -30,7 +30,7 @@ public interface TruffleAssignFactory extends NullAlg<CLExecuteNode>, AssignAlg<
     }
 
     @Override
-    default CLExecuteNode alloc(CLExecuteNode x) {
+    default FNCExecuteNode alloc(FNCExecuteNode x) {
         return new AssignAllocNode(x);
     }
 }

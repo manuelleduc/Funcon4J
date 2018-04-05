@@ -1,6 +1,6 @@
 package funcons.truffle.functions;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
@@ -10,32 +10,32 @@ import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 
 public interface TruffleCurryFactory extends
-        FunctionAlg<CLExecuteNode>,
-        TupleAlg<CLExecuteNode>,
-        IntAlg<CLExecuteNode>,
-        SupplyGivenAlg<CLExecuteNode>,
-        BoolAlg<CLExecuteNode>,
-        LogicControlAlg<CLExecuteNode>,
-        CurryAlg<CLExecuteNode> {
+        FunctionAlg<FNCExecuteNode>,
+        TupleAlg<FNCExecuteNode>,
+        IntAlg<FNCExecuteNode>,
+        SupplyGivenAlg<FNCExecuteNode>,
+        BoolAlg<FNCExecuteNode>,
+        LogicControlAlg<FNCExecuteNode>,
+        CurryAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode partialApp(CLExecuteNode f, CLExecuteNode x) {
+    default FNCExecuteNode partialApp(FNCExecuteNode f, FNCExecuteNode x) {
         return abs(apply(f, tuple(x, given())));
     }
 
     @Override
-    default CLExecuteNode partialAppN(CLExecuteNode f, CLExecuteNode x) {
+    default FNCExecuteNode partialAppN(FNCExecuteNode f, FNCExecuteNode x) {
 //        return abs(apply(f, tuplePrefix(x, given())));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode curry(CLExecuteNode a) {
+    default FNCExecuteNode curry(FNCExecuteNode a) {
         return new CurryCurryNode(a, this);
     }
 
     @Override
-    default CLExecuteNode curryN(CLExecuteNode n, CLExecuteNode a) {
+    default FNCExecuteNode curryN(FNCExecuteNode n, FNCExecuteNode a) {
 //        return (env, given) -> {
 //            IValue index = n.eval(env, given);
 //            return ifTrue(
@@ -52,7 +52,7 @@ public interface TruffleCurryFactory extends
     }
 
     @Override
-    default CLExecuteNode uncurry(CLExecuteNode f) {
+    default FNCExecuteNode uncurry(FNCExecuteNode f) {
         return abs(apply(apply(f, project(lit(0), given())), project(lit(1), given())));
     }
 }

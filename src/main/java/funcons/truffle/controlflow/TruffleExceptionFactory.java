@@ -1,20 +1,20 @@
 package funcons.truffle.controlflow;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 
 public interface TruffleExceptionFactory extends
-        LogicControlAlg<CLExecuteNode>,
-        FunctionAlg<CLExecuteNode>,
-        SupplyGivenAlg<CLExecuteNode>,
-        ExceptionAlg<CLExecuteNode> {
+        LogicControlAlg<FNCExecuteNode>,
+        FunctionAlg<FNCExecuteNode>,
+        SupplyGivenAlg<FNCExecuteNode>,
+        ExceptionAlg<FNCExecuteNode> {
 
 
     @Override
-    default CLExecuteNode fail() {
+    default FNCExecuteNode fail() {
 //        return (env, given) -> {
 //            throw new FailureTrue();
 //        };
@@ -22,25 +22,25 @@ public interface TruffleExceptionFactory extends
     }
 
     @Override
-    default CLExecuteNode matchFailure() {
+    default FNCExecuteNode matchFailure() {
 //        return (env, given) -> new CLMatchFailureException(vf);
         return new ExceptionMatchFailureNode();
     }
 
     @Override
-    default CLExecuteNode exception(java.lang.String message) {
+    default FNCExecuteNode exception(java.lang.String message) {
 //        return (env, given) -> new RunTimeFunconException(message);
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode exception(java.lang.String message, CLExecuteNode val) {
+    default FNCExecuteNode exception(java.lang.String message, FNCExecuteNode val) {
 //        return (env, given) -> new RunTimeFunconException(message, val.eval(env, given));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode throw_(CLExecuteNode s) {
+    default FNCExecuteNode throw_(FNCExecuteNode s) {
 //        return (env, given) -> {
 //            throw (RunTimeFunconException) s.eval(env, given);
 //        };
@@ -48,7 +48,7 @@ public interface TruffleExceptionFactory extends
     }
 
     @Override
-    default CLExecuteNode catch_(CLExecuteNode x, CLExecuteNode abs) {
+    default FNCExecuteNode catch_(FNCExecuteNode x, FNCExecuteNode abs) {
 //        return (env, given) -> {
 //            try {
 //                return x.eval(env, given);
@@ -60,13 +60,13 @@ public interface TruffleExceptionFactory extends
     }
 
     @Override
-    default CLExecuteNode catchElseRethrow(CLExecuteNode x, CLExecuteNode abs) {
+    default FNCExecuteNode catchElseRethrow(FNCExecuteNode x, FNCExecuteNode abs) {
 //        return catch_(x, preferOver(abs, abs(throw_(given()))));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode else_(CLExecuteNode x1, CLExecuteNode x2) {
+    default FNCExecuteNode else_(FNCExecuteNode x1, FNCExecuteNode x2) {
 //        return (env, given) -> {
 //            try {
 //                return x1.eval(env, given);
@@ -79,13 +79,13 @@ public interface TruffleExceptionFactory extends
 
     @Override
     @SuppressWarnings("unchecked")
-    default CLExecuteNode preferOver(CLExecuteNode a1, CLExecuteNode a2) {
+    default FNCExecuteNode preferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
         return new ExceptionPrefereOverNode(a1, a2, this, this);
     }
 
 
     @Override
-    default CLExecuteNode whenTrue(CLExecuteNode exp, CLExecuteNode x) {
+    default FNCExecuteNode whenTrue(FNCExecuteNode exp, FNCExecuteNode x) {
 //        return ifTrue(exp, x, fail());
         throw new RuntimeException("Not implemented");
     }

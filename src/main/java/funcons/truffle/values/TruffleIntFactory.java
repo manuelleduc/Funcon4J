@@ -1,30 +1,30 @@
 package funcons.truffle.values;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.values.IntAlg;
 
-public interface TruffleIntFactory extends IntAlg<CLExecuteNode> {
+public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 
 
     @Override
-    default CLExecuteNode lit(Integer i) {
+    default FNCExecuteNode lit(Integer i) {
         return new IntLitNode(i);
     }
 
     @Override
-    default CLExecuteNode intAdd(CLExecuteNode a, CLExecuteNode b) {
+    default FNCExecuteNode intAdd(FNCExecuteNode a, FNCExecuteNode b) {
         return new IntIntAddNode(a, b);
     }
 
     @Override
-    default CLExecuteNode intNegate(CLExecuteNode x) {
+    default FNCExecuteNode intNegate(FNCExecuteNode x) {
 //        return (env, given) ->
 //                ((INumber) x.eval(env, given)).toInteger().negate();
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode intSubtract(CLExecuteNode a, CLExecuteNode b) {
+    default FNCExecuteNode intSubtract(FNCExecuteNode a, FNCExecuteNode b) {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .subtract(((INumber) b.eval(env, given)).toInteger());
@@ -32,7 +32,7 @@ public interface TruffleIntFactory extends IntAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode intMultiply(CLExecuteNode a, CLExecuteNode b) {
+    default FNCExecuteNode intMultiply(FNCExecuteNode a, FNCExecuteNode b) {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .multiply(((INumber) b.eval(env, given)).toInteger());
@@ -40,7 +40,7 @@ public interface TruffleIntFactory extends IntAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode intDivide(CLExecuteNode a, CLExecuteNode b) {
+    default FNCExecuteNode intDivide(FNCExecuteNode a, FNCExecuteNode b) {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .divide(((INumber) b.eval(env, given)).toInteger());
@@ -48,7 +48,7 @@ public interface TruffleIntFactory extends IntAlg<CLExecuteNode> {
     }
 
     @Override
-    default CLExecuteNode intModulo(CLExecuteNode a, CLExecuteNode b) {
+    default FNCExecuteNode intModulo(FNCExecuteNode a, FNCExecuteNode b) {
 //        return (env, given) -> {
 //            IInteger aNumber = ((INumber) a.eval(env, given)).toInteger();
 //            IInteger bNumber = ((INumber) b.eval(env, given)).toInteger();

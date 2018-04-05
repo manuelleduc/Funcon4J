@@ -1,23 +1,29 @@
 package funcons.truffle.controlflow;
 
-import camllight.truffle.nodes.CLExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
 
 @NodeInfo(description = "LogicControl Seq Node")
-public class LogicControlSeqNode extends Node implements CLExecuteNode {
-    @Node.Child
-    private CLExecuteNode c;
-    @Node.Child
-    private CLExecuteNode t;
+public class LogicControlSeqNode extends FNCExpressionNode implements FNCExecuteNode {
+    @Child
+    private FNCExpressionNode c;
+    @Child
+    private FNCExpressionNode t;
 
-    public LogicControlSeqNode(CLExecuteNode c, CLExecuteNode t) {
+    public LogicControlSeqNode(FNCExpressionNode c, FNCExpressionNode t) {
         this.c = c;
         this.t = t;
     }
 
-//    @Override
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        this.c.executeGeneric(frame);
+        return this.t.executeGeneric(frame);
+    }
+
+    //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {
 //        c.buildAST();
 //        return t.buildAST();

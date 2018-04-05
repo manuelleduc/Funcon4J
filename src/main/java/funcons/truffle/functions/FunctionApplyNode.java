@@ -1,31 +1,40 @@
 package funcons.truffle.functions;
 
-import camllight.truffle.nodes.CLExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.values.Abs;
-import funcons.values.signals.FunconException;
 
 @NodeInfo(description = "Function Apply Node")
-public class FunctionApplyNode extends Node implements CLExecuteNode {
-    private final SupplyGivenAlg<CLExecuteNode> salg;
+public class FunctionApplyNode extends FNCExpressionNode implements FNCExecuteNode {
+    private final SupplyGivenAlg<FNCExecuteNode> salg;
 
     @Child
-    private CLExecuteNode abs;
+    private FNCExecuteNode functionNode;
 
     @Child
-    private CLExecuteNode arg;
+    private FNCExecuteNode argumentNode;
 
-    public FunctionApplyNode(CLExecuteNode abs, CLExecuteNode arg, SupplyGivenAlg<CLExecuteNode> salg) {
-        this.abs = abs;
-        this.arg = arg;
+    @Child
+    private FNCDispatchNode dispatchNode;
+
+    public FunctionApplyNode(FNCExecuteNode functionNode, FNCExecuteNode argumentNode, SupplyGivenAlg<FNCExecuteNode> salg) {
+        this.functionNode = functionNode;
+        this.argumentNode = argumentNode;
         this.salg = salg;
+    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        return salg.supply(argumentNode,
+                ((Abs<FNCExecuteNode>) functionNode.buildAST()).body()).buildAST();
     }
 
 //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {
-//        return salg.supply(arg,
-//                ((Abs<CLExecuteNode>) abs.buildAST()).body()).buildAST();
+//        return salg.supply(argumentNode,
+//                ((Abs<CLExecuteNode>) functionNode.buildAST()).body()).buildAST();
 //    }
 }

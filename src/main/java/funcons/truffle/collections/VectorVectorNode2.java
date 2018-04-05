@@ -1,23 +1,21 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.entities.AssignAlg;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Vector vectore Node 2")
-public class VectorVectorNode2 extends Node implements CLExecuteNode {
+public class VectorVectorNode2 extends Node implements FNCExecuteNode {
 
-    private final AssignAlg<CLExecuteNode> aalg;
+    private final AssignAlg<FNCExecuteNode> aalg;
     ValueFactory vf = ValueFactory.getInstance();
 
     @Node.Child
-    private CLExecuteNode val;
+    private FNCExecuteNode val;
 
-    public VectorVectorNode2(CLExecuteNode val, AssignAlg<CLExecuteNode> aalg) {
+    public VectorVectorNode2(FNCExecuteNode val, AssignAlg<FNCExecuteNode> aalg) {
         this.val = val;
         this.aalg = aalg;
     }

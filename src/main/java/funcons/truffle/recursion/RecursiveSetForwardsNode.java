@@ -1,6 +1,6 @@
 package funcons.truffle.recursion;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.collections.ListAlg;
@@ -8,27 +8,23 @@ import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.values.recursion.Fwd;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IInteger;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Recursive SetForwards Node")
-public class RecursiveSetForwardsNode extends Node implements CLExecuteNode {
+public class RecursiveSetForwardsNode extends Node implements FNCExecuteNode {
 
-    private final MapAlg<CLExecuteNode> malg;
-    private final ListAlg<CLExecuteNode> lalg;
-    private final IntAlg<CLExecuteNode> ialg;
-    private final BindingAlg<CLExecuteNode> balg;
-    private final NullAlg<CLExecuteNode> nalg;
+    private final MapAlg<FNCExecuteNode> malg;
+    private final ListAlg<FNCExecuteNode> lalg;
+    private final IntAlg<FNCExecuteNode> ialg;
+    private final BindingAlg<FNCExecuteNode> balg;
+    private final NullAlg<FNCExecuteNode> nalg;
     @Node.Child
-    private CLExecuteNode idFwdMap;
+    private FNCExecuteNode idFwdMap;
 
-    public RecursiveSetForwardsNode(CLExecuteNode idFwdMap, MapAlg<CLExecuteNode> malg,
-                                    ListAlg<CLExecuteNode> lalg, IntAlg<CLExecuteNode> ialg,
-                                    BindingAlg<CLExecuteNode> balg,
+    public RecursiveSetForwardsNode(FNCExecuteNode idFwdMap, MapAlg<FNCExecuteNode> malg,
+                                    ListAlg<FNCExecuteNode> lalg, IntAlg<FNCExecuteNode> ialg,
+                                    BindingAlg<FNCExecuteNode> balg,
 
-                                    NullAlg<CLExecuteNode> nalg) {
+                                    NullAlg<FNCExecuteNode> nalg) {
         this.idFwdMap = idFwdMap;
         this.malg = malg;
         this.lalg = lalg;

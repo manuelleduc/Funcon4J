@@ -1,17 +1,15 @@
 package funcons.truffle.controlflow;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "Exception Thrown Node")
-public class ExceptionThrowNode extends Node implements CLExecuteNode {
+public class ExceptionThrowNode extends Node implements FNCExecuteNode {
     @Child
-    private CLExecuteNode s;
+    private FNCExecuteNode s;
 
-    public ExceptionThrowNode(CLExecuteNode s) {
+    public ExceptionThrowNode(FNCExecuteNode s) {
         this.s = s;
     }
 

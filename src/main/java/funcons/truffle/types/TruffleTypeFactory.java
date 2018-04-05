@@ -1,6 +1,6 @@
 package funcons.truffle.types;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
@@ -10,65 +10,65 @@ import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
 
 public interface TruffleTypeFactory extends
-        BoolAlg<CLExecuteNode>,
-        FunctionAlg<CLExecuteNode>,
-        PatternAlg<CLExecuteNode>,
-        ExceptionAlg<CLExecuteNode>,
-        NullAlg<CLExecuteNode>,
-        BindingAlg<CLExecuteNode>,
-        TypeAlg<CLExecuteNode> {
+        BoolAlg<FNCExecuteNode>,
+        FunctionAlg<FNCExecuteNode>,
+        PatternAlg<FNCExecuteNode>,
+        ExceptionAlg<FNCExecuteNode>,
+        NullAlg<FNCExecuteNode>,
+        BindingAlg<FNCExecuteNode>,
+        TypeAlg<FNCExecuteNode> {
 
 
     @Override
-    default CLExecuteNode type(java.lang.String name) {
+    default FNCExecuteNode type(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
         throw new RuntimeException("Not implemented");
 
     }
 
     @Override
-    default CLExecuteNode unknownType() {
+    default FNCExecuteNode unknownType() {
 //        return (env, given) -> vf.string("UnknownType");
         return new TypeUnknowTypeNode();
     }
 
     @Override
-    default CLExecuteNode tag(java.lang.String name) {
+    default FNCExecuteNode tag(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode typeVar(java.lang.String name) {
+    default FNCExecuteNode typeVar(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode clVariant(java.lang.String tagName, CLExecuteNode exp) {
+    default FNCExecuteNode clVariant(java.lang.String tagName, FNCExecuteNode exp) {
 //        return (env, given) -> new CLVariant(vf.string(tagName), exp.eval(env, given));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode meta(java.lang.String name) {
+    default FNCExecuteNode meta(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode nomVal(CLExecuteNode nomTag, CLExecuteNode val) {
+    default FNCExecuteNode nomVal(FNCExecuteNode nomTag, FNCExecuteNode val) {
 //        return (env, given) -> vf.tuple(nomTag.eval(env, given), val.eval(env, given));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode nomTag(CLExecuteNode token) {
+    default FNCExecuteNode nomTag(FNCExecuteNode token) {
         return token;
     }
 
     @Override
-    default CLExecuteNode nomValSelect(CLExecuteNode nomTag, CLExecuteNode nomVal) {
+    default FNCExecuteNode nomValSelect(FNCExecuteNode nomTag, FNCExecuteNode nomVal) {
 //        return (env, given) -> {
 //            ITuple nVal = (ITuple) nomVal.eval(env, given);
 //            return whenTrue(equal(nomTag, (e, g) -> nVal.get(0)), (e, g) -> nVal.get(1)).eval(env, given);
@@ -77,13 +77,13 @@ public interface TruffleTypeFactory extends
     }
 
     @Override
-    default CLExecuteNode scopeNominalCoercion(CLExecuteNode type1, CLExecuteNode type2, CLExecuteNode abs) {
+    default FNCExecuteNode scopeNominalCoercion(FNCExecuteNode type1, FNCExecuteNode type2, FNCExecuteNode abs) {
 //        return apply(abs, nomTag(freshToken()));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode depends(CLExecuteNode type1, CLExecuteNode type2) {
+    default FNCExecuteNode depends(FNCExecuteNode type1, FNCExecuteNode type2) {
 //        return (env, given) ->
 //                vf.tuple(
 //                        type1.eval(env, given),
@@ -92,23 +92,23 @@ public interface TruffleTypeFactory extends
     }
 
     @Override
-    default CLExecuteNode typed(CLExecuteNode exp, CLExecuteNode type) {
+    default FNCExecuteNode typed(FNCExecuteNode exp, FNCExecuteNode type) {
         return exp;
     }
 
     @Override
-    default CLExecuteNode boundType(CLExecuteNode id) {
+    default FNCExecuteNode boundType(FNCExecuteNode id) {
         return null_(); // TODO evaluated statically?
     }
 
     @Override
-    default CLExecuteNode freshToken() {
+    default FNCExecuteNode freshToken() {
 //        return (env, given) -> new Token();
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode newType(CLExecuteNode name) {
+    default FNCExecuteNode newType(FNCExecuteNode name) {
 //        return (env, given) ->
 //                vf.tuple(
 //                        name.eval(env, given),
@@ -117,22 +117,22 @@ public interface TruffleTypeFactory extends
     }
 
     @Override
-    default CLExecuteNode typeDef(CLExecuteNode id, CLExecuteNode type) {
+    default FNCExecuteNode typeDef(FNCExecuteNode id, FNCExecuteNode type) {
         return environment();
     }
 
     @Override
-    default CLExecuteNode restrictDomain(CLExecuteNode abs, CLExecuteNode type) {
+    default FNCExecuteNode restrictDomain(FNCExecuteNode abs, FNCExecuteNode type) {
         return abs;
     }
 
     @Override
-    default CLExecuteNode pattAtType(CLExecuteNode patt, CLExecuteNode type) {
+    default FNCExecuteNode pattAtType(FNCExecuteNode patt, FNCExecuteNode type) {
         return restrictDomain(patt, type);
     }
 
     @Override
-    default CLExecuteNode variantMatch(CLExecuteNode tag, CLExecuteNode variant, CLExecuteNode patt) {
+    default FNCExecuteNode variantMatch(FNCExecuteNode tag, FNCExecuteNode variant, FNCExecuteNode patt) {
 //        return (env, given) -> {
 //            IValue v = variant.eval(env, given);
 //            if (v instanceof CLVariant) {

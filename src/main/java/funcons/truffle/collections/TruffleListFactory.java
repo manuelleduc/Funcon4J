@@ -1,6 +1,6 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
@@ -9,16 +9,16 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 
 public interface TruffleListFactory extends
-        PatternAlg<CLExecuteNode>,
-        MapAlg<CLExecuteNode>,
-        FunctionAlg<CLExecuteNode>,
-        SupplyGivenAlg<CLExecuteNode>,
-        ListAlg<CLExecuteNode>,
-        ExceptionAlg<CLExecuteNode> {
+        PatternAlg<FNCExecuteNode>,
+        MapAlg<FNCExecuteNode>,
+        FunctionAlg<FNCExecuteNode>,
+        SupplyGivenAlg<FNCExecuteNode>,
+        ListAlg<FNCExecuteNode>,
+        ExceptionAlg<FNCExecuteNode> {
 
 
     @Override
-    default CLExecuteNode projectList(CLExecuteNode index, CLExecuteNode list) {
+    default FNCExecuteNode projectList(FNCExecuteNode index, FNCExecuteNode list) {
 //        return (env, given) -> {
 //            IInteger i = (IInteger) index.eval(env, given);
 //            IList l = (IList) list.eval(env, given);
@@ -29,19 +29,19 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLExecuteNode list() {
+    default FNCExecuteNode list() {
 //        return (env, given) -> vf.list();
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode list(CLExecuteNode x) {
+    default FNCExecuteNode list(FNCExecuteNode x) {
 //        return (env, given) -> vf.list((IValue) x.eval(env, given));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode list(CLExecuteNode x1, CLExecuteNode x2) {
+    default FNCExecuteNode list(FNCExecuteNode x1, FNCExecuteNode x2) {
 //        return (env, given) -> vf.list(
 //                x1.eval(env, given),
 //                x2.eval(env, given));
@@ -49,7 +49,7 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLExecuteNode listPrefix(CLExecuteNode x, CLExecuteNode l) {
+    default FNCExecuteNode listPrefix(FNCExecuteNode x, FNCExecuteNode l) {
 //        return (env, given) -> {
 //            IList list = (IList) l.eval(env, given);
 //            return list.insert(x.eval(env, given));
@@ -58,7 +58,7 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLExecuteNode listPrefixMatch(CLExecuteNode l, CLExecuteNode p1, CLExecuteNode p2) {
+    default FNCExecuteNode listPrefixMatch(FNCExecuteNode l, FNCExecuteNode p1, FNCExecuteNode p2) {
 //        return (env, given) -> {
 //            IList list = (IList) l.eval(env, given);
 //            if (list.length() == 0) {
@@ -72,13 +72,13 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLExecuteNode listPrefixPatt(CLExecuteNode p1, CLExecuteNode p2) {
+    default FNCExecuteNode listPrefixPatt(FNCExecuteNode p1, FNCExecuteNode p2) {
 //        return abs(listPrefixMatch(given(), p1, p2));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode intClosedInterval(CLExecuteNode m, CLExecuteNode n) {
+    default FNCExecuteNode intClosedInterval(FNCExecuteNode m, FNCExecuteNode n) {
 //        return (env, given) -> {
 //            int start = ((IInteger) m.eval(env, given)).intValue();
 //            int finish = ((IInteger) n.eval(env, given)).intValue();
@@ -92,13 +92,13 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLExecuteNode listReverse(CLExecuteNode l) {
+    default FNCExecuteNode listReverse(FNCExecuteNode l) {
 //        return (env, given) -> ((IList) l.eval(env, given)).reverse();
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode listAppend(CLExecuteNode list1, CLExecuteNode list2) {
+    default FNCExecuteNode listAppend(FNCExecuteNode list1, FNCExecuteNode list2) {
 //        return (env, given) -> {
 //            IList l1 = (IList) list1.eval(env, given);
 //            IList l2 = (IList) list2.eval(env, given);
@@ -108,13 +108,13 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLExecuteNode listHead(CLExecuteNode list) {
+    default FNCExecuteNode listHead(FNCExecuteNode list) {
 //        return (env, given) -> ((IList) list.eval(env, given)).get(0);
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default CLExecuteNode listTail(CLExecuteNode list) {
+    default FNCExecuteNode listTail(FNCExecuteNode list) {
 //        return (env, given) -> {
 //            IList listVal = ((IList) list.eval(env, given));
 //            if (listVal.length() <= 1) {
@@ -126,7 +126,7 @@ public interface TruffleListFactory extends
     }
 
     @Override
-    default CLExecuteNode listLength(CLExecuteNode list) {
+    default FNCExecuteNode listLength(FNCExecuteNode list) {
 //        return (env, given) ->
 //                vf.integer(((IList) list.eval(env, given)).length());
         return new ListListLengthNode(list);

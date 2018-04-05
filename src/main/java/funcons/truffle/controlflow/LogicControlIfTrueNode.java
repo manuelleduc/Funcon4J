@@ -1,22 +1,20 @@
 package funcons.truffle.controlflow;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IBool;
 
 
 @NodeInfo(description = "LogicControl IfTrue Node")
-public class LogicControlIfTrueNode extends Node implements CLExecuteNode {
+public class LogicControlIfTrueNode extends Node implements FNCExecuteNode {
     @Child
-    private CLExecuteNode e;
+    private FNCExecuteNode e;
     @Child
-    private CLExecuteNode c1;
+    private FNCExecuteNode c1;
     @Child
-    private CLExecuteNode c2;
+    private FNCExecuteNode c2;
 
-    public LogicControlIfTrueNode(CLExecuteNode e, CLExecuteNode c1, CLExecuteNode c2) {
+    public LogicControlIfTrueNode(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
         this.e = e;
         this.c1 = c1;
         this.c2 = c2;

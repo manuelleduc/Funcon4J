@@ -1,25 +1,32 @@
 package funcons.truffle.auxiliary;
 
-import camllight.truffle.nodes.CLExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.values.NullAlg;
-import funcons.values.signals.FunconException;
 
 
 @NodeInfo(description = "Print Print Node")
-public class PrintPrintNode extends Node implements CLExecuteNode {
+public class PrintPrintNode extends FNCExpressionNode implements FNCExecuteNode {
 
     @Child
-    private CLExecuteNode x;
+    private FNCExpressionNode x;
 
-    private NullAlg<CLExecuteNode> alg;
+    private NullAlg<FNCExecuteNode> alg;
 
-    public PrintPrintNode(CLExecuteNode x, NullAlg<CLExecuteNode> alg) {
+    public PrintPrintNode(FNCExpressionNode x, NullAlg<FNCExecuteNode> alg) {
         this.x = x;
         this.alg = alg;
     }
-//
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        System.out.println(x.executeGeneric(frame));
+        return ((FNCExpressionNode) alg.null_().buildAST()).executeGeneric(frame);
+    }
+
+    //
 //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {
 //        System.out.println(x.buildAST());

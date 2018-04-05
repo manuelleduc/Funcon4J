@@ -1,25 +1,25 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Binding Accum Node")
-public class BindingAccumNode extends Node implements CLExecuteNode {
+public class BindingAccumNode extends FNCExpressionNode implements FNCExecuteNode {
 
-    private final BindingAlg<CLExecuteNode> balg;
-    private final MapAlg<CLExecuteNode> malg;
-    @Node.Child
-    private CLExecuteNode environment;
+    private final BindingAlg<FNCExecuteNode> balg;
+    private final MapAlg<FNCExecuteNode> malg;
 
-    @Node.Child
-    private CLExecuteNode decl;
+    @Child
+    private FNCExecuteNode environment;
 
-    public BindingAccumNode(CLExecuteNode environment, CLExecuteNode decl, BindingAlg<CLExecuteNode> balg, MapAlg<CLExecuteNode> malg) {
+    @Child
+    private FNCExpressionNode decl;
+
+    public BindingAccumNode(FNCExecuteNode environment, FNCExpressionNode decl, BindingAlg<FNCExecuteNode> balg, MapAlg<FNCExecuteNode> malg) {
         this.environment = environment;
         this.decl = decl;
         this.balg = balg;
@@ -32,4 +32,10 @@ public class BindingAccumNode extends Node implements CLExecuteNode {
 //        return balg.scope(() -> currentEnv, malg.mapOver(decl, () -> currentEnv)).buildAST();
 //
 //    }
+
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        return this.decl.executeGeneric(frame);
+    }
 }

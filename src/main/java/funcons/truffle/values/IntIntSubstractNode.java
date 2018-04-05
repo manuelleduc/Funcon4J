@@ -1,21 +1,19 @@
 package funcons.truffle.values;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.INumber;
 
 @NodeInfo(description = "Int IntSubstract Node")
-public class IntIntSubstractNode extends Node implements CLExecuteNode {
+public class IntIntSubstractNode extends Node implements FNCExecuteNode {
 
     @Child
-    private CLExecuteNode a;
+    private FNCExecuteNode a;
 
     @Child
-    private CLExecuteNode b;
+    private FNCExecuteNode b;
 
-    public IntIntSubstractNode(CLExecuteNode a, CLExecuteNode b) {
+    public IntIntSubstractNode(FNCExecuteNode a, FNCExecuteNode b) {
         this.a = a;
         this.b = b;
     }

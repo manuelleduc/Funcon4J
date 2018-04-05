@@ -1,23 +1,23 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.VectorAlg;
 import funcons.algebras.entities.AssignAlg;
 
-public interface TruffleVectorFactory extends AssignAlg<CLExecuteNode>, VectorAlg<CLExecuteNode> {
+public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode vector() {
+    default FNCExecuteNode vector() {
         return new VectorVectorNode();
     }
 
     @Override
-    default CLExecuteNode vector(CLExecuteNode val) {
+    default FNCExecuteNode vector(FNCExecuteNode val) {
         return new VectorVectorNode2(val, this);
     }
 
     @Override
-    default CLExecuteNode vectorSelect(CLExecuteNode vector, CLExecuteNode index) {
+    default FNCExecuteNode vectorSelect(FNCExecuteNode vector, FNCExecuteNode index) {
 //        return (env, given) -> {
 //            IList vectorVal = (IList)vector.eval(env, given);
 //            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
@@ -27,17 +27,17 @@ public interface TruffleVectorFactory extends AssignAlg<CLExecuteNode>, VectorAl
     }
 
     @Override
-    default CLExecuteNode vectorAppend(CLExecuteNode vector1, CLExecuteNode vector2) {
+    default FNCExecuteNode vectorAppend(FNCExecuteNode vector1, FNCExecuteNode vector2) {
         return new VectorVectorAppendNode(vector1, vector2);
     }
 
     @Override
-    default CLExecuteNode vectorLength(CLExecuteNode vector) {
+    default FNCExecuteNode vectorLength(FNCExecuteNode vector) {
         return new VectorVectorLengthNode(vector);
     }
 
     @Override
-    default CLExecuteNode vectorAssign(CLExecuteNode vector, CLExecuteNode index, CLExecuteNode val) {
+    default FNCExecuteNode vectorAssign(FNCExecuteNode vector, FNCExecuteNode index, FNCExecuteNode val) {
 //        return (env, given) -> {
 //            IList vectorVal = (IList)vector.eval(env, given);
 //            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());

@@ -1,16 +1,22 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Binding Environment Node")
-public class BindingEnvironmentNode extends Node implements CLExecuteNode {
+public class BindingEnvironmentNode extends FNCExpressionNode implements FNCExecuteNode {
     ValueFactory vf = ValueFactory.getInstance();
 
-//    @Override
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        return vf.mapWriter().done();
+    }
+
+
+    //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {
 //        return vf.mapWriter().done();
 //    }

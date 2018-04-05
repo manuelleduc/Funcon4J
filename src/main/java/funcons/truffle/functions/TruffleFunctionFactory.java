@@ -1,6 +1,6 @@
 package funcons.truffle.functions;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
@@ -11,34 +11,34 @@ import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
 
 public interface TruffleFunctionFactory extends
-        IntAlg<CLExecuteNode>,
-        SupplyGivenAlg<CLExecuteNode>,
-        BindingAlg<CLExecuteNode>,
-        LogicControlAlg<CLExecuteNode>,
-        ListAlg<CLExecuteNode>,
-        BoolAlg<CLExecuteNode>,
-        NullAlg<CLExecuteNode>,
-        FunctionAlg<CLExecuteNode> {
+        IntAlg<FNCExecuteNode>,
+        SupplyGivenAlg<FNCExecuteNode>,
+        BindingAlg<FNCExecuteNode>,
+        LogicControlAlg<FNCExecuteNode>,
+        ListAlg<FNCExecuteNode>,
+        BoolAlg<FNCExecuteNode>,
+        NullAlg<FNCExecuteNode>,
+        FunctionAlg<FNCExecuteNode> {
 
     @Override
-    default CLExecuteNode abs(CLExecuteNode exp) {
+    default FNCExecuteNode abs(FNCExecuteNode exp) {
 //        return (env, given) -> new Abs<>(exp);
-        return new FunctionAbsNode(exp); // TODO
+        return new FunctionAbs(exp); // TODO
     }
 
     @Override
-    default CLExecuteNode abs(CLExecuteNode patt, CLExecuteNode exp) {
+    default FNCExecuteNode abs(FNCExecuteNode patt, FNCExecuteNode exp) {
         return new FunctionAbsNode2(patt, exp, this);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    default CLExecuteNode apply(CLExecuteNode abs, CLExecuteNode arg) {
+    default FNCExecuteNode apply(FNCExecuteNode abs, FNCExecuteNode arg) {
         return new FunctionApplyNode(abs, arg, this);
     }
 
     @Override
-    default CLExecuteNode applyToEach(CLExecuteNode a, CLExecuteNode l) {
+    default FNCExecuteNode applyToEach(FNCExecuteNode a, FNCExecuteNode l) {
 //        return (env, given) -> {
 //            IValue listVal = l.eval(env, given);
 //            CLExecuteNode cachedListEval = (e, g) -> listVal;
@@ -53,19 +53,19 @@ public interface TruffleFunctionFactory extends
     }
 
     @Override
-    default CLExecuteNode compose(CLExecuteNode f, CLExecuteNode g) {
+    default FNCExecuteNode compose(FNCExecuteNode f, FNCExecuteNode g) {
 //        return abs(apply(f, apply(g, given())));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    default CLExecuteNode close(CLExecuteNode abs) {
+    default FNCExecuteNode close(FNCExecuteNode abs) {
         return new FunctionCloseNode(abs, this, this);
     }
 
     @Override
-    default CLExecuteNode bind(CLExecuteNode id) {
+    default FNCExecuteNode bind(FNCExecuteNode id) {
         return abs(bindValue(id, given()));
     }
 }

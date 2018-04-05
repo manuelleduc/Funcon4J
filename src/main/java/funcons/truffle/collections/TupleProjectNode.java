@@ -1,22 +1,19 @@
 package funcons.truffle.collections;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IInteger;
-import io.usethesource.vallang.IList;
 
 
 @NodeInfo(description = "Tuple Project Node")
-public class TupleProjectNode extends Node implements CLExecuteNode {
+public class TupleProjectNode extends Node implements FNCExecuteNode {
     @Child
-    private CLExecuteNode index;
+    private FNCExecuteNode index;
 
     @Child
-    private CLExecuteNode tup;
+    private FNCExecuteNode tup;
 
-    public TupleProjectNode(CLExecuteNode index, CLExecuteNode tup) {
+    public TupleProjectNode(FNCExecuteNode index, FNCExecuteNode tup) {
         this.index = index;
         this.tup = tup;
     }

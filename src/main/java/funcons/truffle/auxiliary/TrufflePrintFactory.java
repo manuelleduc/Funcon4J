@@ -1,12 +1,13 @@
 package funcons.truffle.auxiliary;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.algebras.auxiliary.PrintAlg;
 import funcons.algebras.values.NullAlg;
 
-public interface TrufflePrintFactory extends NullAlg<CLExecuteNode>, PrintAlg<CLExecuteNode> {
+public interface TrufflePrintFactory extends NullAlg<FNCExecuteNode>, PrintAlg<FNCExecuteNode> {
     @Override
-    default CLExecuteNode print(CLExecuteNode x) {
-        return new PrintPrintNode(x, this);
+    default FNCExecuteNode print(FNCExecuteNode x) {
+        return new PrintPrintNode((FNCExpressionNode) x, this);
     }
 }

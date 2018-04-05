@@ -1,25 +1,22 @@
 package funcons.truffle.entities;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMapWriter;
-import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Binding Bind Value Node")
-public class BindingBindValueNode extends Node implements CLExecuteNode {
+public class BindingBindValueNode extends Node implements FNCExecuteNode {
 
     @Child
-    private CLExecuteNode id;
+    private FNCExecuteNode id;
 
     @Child
-    private CLExecuteNode exp;
+    private FNCExecuteNode exp;
 
     private final ValueFactory vf = ValueFactory.getInstance();
 
-    public BindingBindValueNode(CLExecuteNode id, CLExecuteNode exp) {
+    public BindingBindValueNode(FNCExecuteNode id, FNCExecuteNode exp) {
         this.id = id;
         this.exp = exp;
     }

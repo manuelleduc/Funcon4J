@@ -1,26 +1,24 @@
 package funcons.truffle.controlflow;
 
-import camllight.truffle.nodes.CLExecuteNode;
+import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.functions.FunctionAlg;
-import funcons.values.Abs;
-import funcons.values.signals.FunconException;
 
 
 @NodeInfo(description = "Exception PrefereOver Node")
-public class ExceptionPrefereOverNode extends Node implements CLExecuteNode {
+public class ExceptionPrefereOverNode extends Node implements FNCExecuteNode {
 
-    private final FunctionAlg<CLExecuteNode> falg;
-    private final ExceptionAlg<CLExecuteNode> ealg;
+    private final FunctionAlg<FNCExecuteNode> falg;
+    private final ExceptionAlg<FNCExecuteNode> ealg;
     @Node.Child
-    private CLExecuteNode a1;
+    private FNCExecuteNode a1;
 
     @Node.Child
-    private CLExecuteNode a2;
+    private FNCExecuteNode a2;
 
-    public ExceptionPrefereOverNode(CLExecuteNode a1, CLExecuteNode a2, FunctionAlg<CLExecuteNode> falg, ExceptionAlg<CLExecuteNode> ealg) {
+    public ExceptionPrefereOverNode(FNCExecuteNode a1, FNCExecuteNode a2, FunctionAlg<FNCExecuteNode> falg, ExceptionAlg<FNCExecuteNode> ealg) {
         this.a1 = a1;
         this.a2 = a2;
         this.falg = falg;

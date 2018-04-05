@@ -1,6 +1,6 @@
 package camllight;
 
-import camllight.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCLanguage;
 import com.oracle.truffle.api.source.Source;
 import com.oracle.truffle.api.vm.PolyglotEngine;
 import funcons.values.signals.FunconException;
