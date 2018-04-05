@@ -5,7 +5,6 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Map Union Node")
@@ -21,11 +20,11 @@ public class MapUnionNode extends Node implements CLExecuteNode {
         this.map2 = map2;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        final IMap m1 = (IMap) map1.buildAST(env, given);
-        final IMap m2 = (IMap) map2.buildAST(env, given);
-        return m1.join(m2);
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        final IMap m1 = (IMap) map1.buildAST();
+//        final IMap m2 = (IMap) map2.buildAST();
+//        return m1.join(m2);
+//    }
 
 }

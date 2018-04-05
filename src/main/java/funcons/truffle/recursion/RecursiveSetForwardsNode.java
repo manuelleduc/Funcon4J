@@ -11,7 +11,6 @@ import funcons.algebras.values.NullAlg;
 import funcons.values.recursion.Fwd;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IInteger;
-import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Recursive SetForwards Node")
@@ -38,22 +37,22 @@ public class RecursiveSetForwardsNode extends Node implements CLExecuteNode {
         this.nalg = nalg;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        IValue mapVal = idFwdMap.buildAST(env, given);
-        IValue mapKeys = malg.mapDomain((e, g) -> mapVal).buildAST(env, given);
-        int length = ((IInteger) lalg.listLength((e, g) -> mapKeys).buildAST(env, given)).intValue();
-
-        for (int i = 0; i < length; i++) {
-            IValue id = lalg.projectList(ialg.lit(i), (e, g) -> mapKeys).buildAST(env, given);
-            IValue v = balg.boundValue((e, g) -> id).buildAST(env, given);
-            if (v == null) {
-                v = nalg.undefined().buildAST(env, given);
-            }
-            Fwd fwd = (Fwd) malg.mapGet((e, g) -> mapVal, (e, g) -> id).buildAST(env, given);
-            fwd.add(v);
-        }
-
-        return nalg.null_().buildAST(env, given);
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        IValue mapVal = idFwdMap.buildAST();
+//        IValue mapKeys = malg.mapDomain(() -> mapVal).buildAST();
+//        int length = ((IInteger) lalg.listLength(() -> mapKeys).buildAST()).intValue();
+//
+//        for (int i = 0; i < length; i++) {
+//            IValue id = lalg.projectList(ialg.lit(i), () -> mapKeys).buildAST();
+//            IValue v = balg.boundValue(() -> id).buildAST();
+//            if (v == null) {
+//                v = nalg.undefined().buildAST();
+//            }
+//            Fwd fwd = (Fwd) malg.mapGet(() -> mapVal, () -> id).buildAST();
+//            fwd.add(v);
+//        }
+//
+//        return nalg.null_().buildAST();
+//    }
 }

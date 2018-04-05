@@ -6,8 +6,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IInteger;
 import io.usethesource.vallang.IList;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 
 @NodeInfo(description = "Tuple Project Node")
@@ -23,9 +21,9 @@ public class TupleProjectNode extends Node implements CLExecuteNode {
         this.tup = tup;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        return ((IList) tup.buildAST(env, given))
-                .get(((IInteger) index.buildAST(env, given)).intValue());
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        return ((IList) tup.buildAST())
+//                .get(((IInteger) index.buildAST()).intValue());
+//    }
 }

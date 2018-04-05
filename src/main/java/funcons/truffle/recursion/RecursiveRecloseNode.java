@@ -7,7 +7,6 @@ import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.recursion.RecursiveAlg;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Recursive Reclose Node")
@@ -30,9 +29,9 @@ public class RecursiveRecloseNode extends Node implements CLExecuteNode {
         this.ralg = ralg;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        final IValue m = map.buildAST(env, given);
-        return balg.accum(balg.scope((e, g) -> m, decl), lalg.seq(ralg.setForwards((e, g) -> m), balg.environment())).buildAST(env, given);
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        final IValue m = map.buildAST();
+//        return balg.accum(balg.scope(() -> m, decl), lalg.seq(ralg.setForwards(() -> m), balg.environment())).buildAST();
+//    }
 }

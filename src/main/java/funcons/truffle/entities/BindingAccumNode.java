@@ -6,7 +6,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Binding Accum Node")
@@ -27,10 +26,10 @@ public class BindingAccumNode extends Node implements CLExecuteNode {
         this.malg = malg;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        final IValue currentEnv = environment.buildAST(env, given);
-        return balg.scope((e, g) -> currentEnv, malg.mapOver(decl, (e, g) -> currentEnv)).buildAST(env, given);
-
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        final IValue currentEnv = environment.buildAST();
+//        return balg.scope(() -> currentEnv, malg.mapOver(decl, () -> currentEnv)).buildAST();
+//
+//    }
 }

@@ -5,7 +5,6 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.entities.AssignAlg;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
@@ -22,9 +21,9 @@ public class VectorVectorNode2 extends Node implements CLExecuteNode {
         this.val = val;
         this.aalg = aalg;
     }
-
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        return vf.list((IValue) aalg.alloc(val).buildAST(env, given));
-    }
+//
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        return vf.list((IValue) aalg.alloc(val).buildAST());
+//    }
 }

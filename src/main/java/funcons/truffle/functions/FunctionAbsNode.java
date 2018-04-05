@@ -4,10 +4,7 @@ import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.values.Abs;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 
 @NodeInfo(description = "Function Abs Node")
@@ -20,8 +17,8 @@ public class FunctionAbsNode extends Node implements CLExecuteNode {
         this.exp = exp;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        return new Abs<>(exp);
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        return new Abs<>(exp);
+//    }
 }

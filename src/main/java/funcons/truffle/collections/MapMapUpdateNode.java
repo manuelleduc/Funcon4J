@@ -26,12 +26,13 @@ public class MapMapUpdateNode extends Node implements CLExecuteNode {
         this.val = val;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        final IValue k = key.buildAST(env, given);
-        final IValue v = val.buildAST(env, given);
-        final IMap m = (IMap) map.buildAST(env, given);
-        return m.put(k, v);
-
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+////        final IValue k = key.buildAST();
+////        final IValue v = val.buildAST();
+////        final IMap m = (IMap) map.buildAST();
+////        return m.put(k, v);
+//        return this;
+//
+//    }
 }

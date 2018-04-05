@@ -6,8 +6,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.entities.BindingAlg;
 import funcons.values.Abs;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 
 @NodeInfo(description = "Function Abs Node 2")
@@ -27,12 +25,12 @@ public class FunctionAbsNode2 extends Node implements CLExecuteNode {
         this.alg = alg;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        return new Abs<CLExecuteNode>((e, g) -> {
-            @SuppressWarnings("unchecked")
-            CLExecuteNode environment = ((Abs<CLExecuteNode>) patt.buildAST(e, g)).body();
-            return alg.scope(environment, exp).buildAST(e, g);
-        });
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        return new Abs<CLExecuteNode>(() -> {
+//            @SuppressWarnings("unchecked")
+//            CLExecuteNode environment = ((Abs<CLExecuteNode>) patt.buildAST()).body();
+//            return alg.scope(environment, exp).buildAST();
+//        });
+//    }
 }

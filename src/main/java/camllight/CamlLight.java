@@ -44,11 +44,11 @@ public class CamlLight {
     }
 
     public static IValue eval(String src, camllight.algebras.AllAlg alg) throws FunconException {
-        Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-        IEval eval = builder.build(alg);
-        IValue env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
+        final Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
+        final IEval eval = builder.build(alg);
+        final IValue env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
 
-        System.out.println(eval.print());
+//        System.out.println(eval.print());
         return eval.eval((IMap)env, new Null());
     }
 

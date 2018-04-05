@@ -5,8 +5,6 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.values.NullAlg;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 
 @NodeInfo(description = "Print Print Node")
@@ -21,10 +19,10 @@ public class PrintPrintNode extends Node implements CLExecuteNode {
         this.x = x;
         this.alg = alg;
     }
-
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        System.out.println(x.buildAST(env, given));
-        return alg.null_().buildAST(env, given);
-    }
+//
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        System.out.println(x.buildAST());
+//        return alg.null_().buildAST();
+//    }
 }

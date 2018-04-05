@@ -5,9 +5,6 @@ import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.RootNode;
-import funcons.values.Null;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(language = "CL", description = "CamlLight Root Node")
 public class CLRootNode extends RootNode implements CLExecuteNode {
@@ -31,9 +28,9 @@ public class CLRootNode extends RootNode implements CLExecuteNode {
         return null; //child.executeGeneric(frame);
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue aNull) {
-        // TODO ?
-        return null;
-    }
+//    @Override
+//    public CLExecuteNode buildAST() {
+//        // TODO ?
+//        return null;
+//    }
 }

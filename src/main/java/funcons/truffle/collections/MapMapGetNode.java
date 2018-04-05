@@ -21,9 +21,10 @@ public class MapMapGetNode extends Node implements CLExecuteNode {
         this.key = key;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        final IMap m = (IMap) map.buildAST(env, given);
-        return m.get((IValue) key.buildAST(env, given));
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+////        final IMap m = (IMap) map.buildAST();
+////        return m.get((IValue) key.buildAST());
+//        return this;
+//    }
 }

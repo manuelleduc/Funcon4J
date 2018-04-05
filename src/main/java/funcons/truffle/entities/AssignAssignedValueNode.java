@@ -5,8 +5,6 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.values.Variable;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 
 @NodeInfo(description = "Assign AssignedValue Node")
@@ -19,8 +17,8 @@ public class AssignAssignedValueNode extends Node implements CLExecuteNode {
         this.var = var;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        return ((Variable) var.buildAST(env, given)).value();
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        return ((Variable) var.buildAST()).value();
+//    }
 }

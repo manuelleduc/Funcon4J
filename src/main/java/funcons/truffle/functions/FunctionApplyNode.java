@@ -6,8 +6,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.values.Abs;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Function Apply Node")
 public class FunctionApplyNode extends Node implements CLExecuteNode {
@@ -25,9 +23,9 @@ public class FunctionApplyNode extends Node implements CLExecuteNode {
         this.salg = salg;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        return salg.supply(arg,
-                ((Abs<CLExecuteNode>) abs.buildAST(env, given)).body()).buildAST(env, given);
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        return salg.supply(arg,
+//                ((Abs<CLExecuteNode>) abs.buildAST()).body()).buildAST();
+//    }
 }

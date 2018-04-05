@@ -5,8 +5,6 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IBool;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 
 @NodeInfo(description = "LogicControl IfTrue Node")
@@ -24,8 +22,8 @@ public class LogicControlIfTrueNode extends Node implements CLExecuteNode {
         this.c2 = c2;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        return (((IBool) e.buildAST(env, given)).getValue() ? c1 : c2).buildAST(env, given);
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        return (((IBool) e.buildAST()).getValue() ? c1 : c2).buildAST();
+//    }
 }

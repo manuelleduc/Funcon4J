@@ -7,8 +7,6 @@ import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.values.Abs;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 
 @NodeInfo(description = "Function Close Node")
@@ -25,10 +23,10 @@ public class FunctionCloseNode extends Node implements CLExecuteNode {
         this.falg = falg;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        return falg.abs(alg.closure(
-                ((Abs<CLExecuteNode>) abs.buildAST(env, given)).body(),
-                (e, g) -> env)).buildAST(env, given);
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        return falg.abs(alg.closure(
+//                ((Abs<CLExecuteNode>) abs.buildAST()).body(),
+//                () -> env)).buildAST();
+//    }
 }

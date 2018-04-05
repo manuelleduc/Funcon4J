@@ -7,8 +7,6 @@ import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.values.Abs;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 
 @NodeInfo(description = "Exception PrefereOver Node")
@@ -29,11 +27,11 @@ public class ExceptionPrefereOverNode extends Node implements CLExecuteNode {
         this.ealg = ealg;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        return falg.abs(ealg.else_(
-                ((Abs<CLExecuteNode>) a1.buildAST(env, given)).body(),
-                ((Abs<CLExecuteNode>) a2.buildAST(env, given)).body()
-        )).buildAST(env, given);
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        return falg.abs(ealg.else_(
+//                ((Abs<CLExecuteNode>) a1.buildAST()).body(),
+//                ((Abs<CLExecuteNode>) a2.buildAST()).body()
+//        )).buildAST();
+//    }
 }

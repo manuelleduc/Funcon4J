@@ -5,8 +5,6 @@ import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.functions.CurryAlg;
 import funcons.values.signals.FunconException;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Curry Curry Node")
 public class CurryCurryNode extends Node implements CLExecuteNode {
@@ -20,9 +18,9 @@ public class CurryCurryNode extends Node implements CLExecuteNode {
         this.alg = alg;
     }
 
-    @Override
-    public IValue buildAST(IMap env, IValue given) throws FunconException {
-        final CLExecuteNode clExecuteNode = alg.partialApp(a, (e, g) -> given);
-        return clExecuteNode.buildAST(env, given);
-    }
+//    @Override
+//    public CLExecuteNode buildAST() throws FunconException {
+//        final CLExecuteNode clExecuteNode = alg.partialApp(a, () -> given);
+//        return clExecuteNode.buildAST();
+//    }
 }
