@@ -3,7 +3,6 @@ package funcons.truffle.entities;
 import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IMapWriter;
@@ -12,8 +11,12 @@ import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Binding Bind Value Node")
 public class BindingBindValueNode extends Node implements CLExecuteNode {
-    private final CLExecuteNode id;
-    private final CLExecuteNode exp;
+
+    @Child
+    private CLExecuteNode id;
+
+    @Child
+    private CLExecuteNode exp;
 
     private final ValueFactory vf = ValueFactory.getInstance();
 
@@ -23,10 +26,10 @@ public class BindingBindValueNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
         final IMapWriter mw = vf.mapWriter();
-        final IValue eval = id.eval(env, given);
-        final IValue eval1 = exp.eval(env, given);
+        final IValue eval = id.buildAST(env, given);
+        final IValue eval1 = exp.buildAST(env, given);
         mw.put(eval, eval1);
         return mw.done();
     }

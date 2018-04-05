@@ -4,18 +4,16 @@ import camllight.truffle.nodes.CLExecuteNode;
 import funcons.algebras.collections.VectorAlg;
 import funcons.algebras.entities.AssignAlg;
 
-public interface TruffleVectorFactory  extends AssignAlg<CLExecuteNode>, VectorAlg<CLExecuteNode> {
+public interface TruffleVectorFactory extends AssignAlg<CLExecuteNode>, VectorAlg<CLExecuteNode> {
 
     @Override
     default CLExecuteNode vector() {
-//        return (env, given) -> vf.list();
-        return null; // TODO
+        return new VectorVectorNode();
     }
 
     @Override
     default CLExecuteNode vector(CLExecuteNode val) {
-//        return (env, given) -> vf.list((IValue)alloc(val).eval(env, given));
-        return null; // TODO
+        return new VectorVectorNode2(val, this);
     }
 
     @Override
@@ -25,7 +23,7 @@ public interface TruffleVectorFactory  extends AssignAlg<CLExecuteNode>, VectorA
 //            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
 //            return assignedValue((e,g)->var).eval(env, given);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -45,6 +43,6 @@ public interface TruffleVectorFactory  extends AssignAlg<CLExecuteNode>, VectorA
 //            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
 //            return assign((e,g)->var, val).eval(env, given);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }

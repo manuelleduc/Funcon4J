@@ -30,7 +30,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     public static final String MIME_TYPE = "application/x-fnc";
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public static <X> X parse(String s, camllight.algebras.AllAlg alg) {
+    public <X> X parse(String s, camllight.algebras.AllAlg alg) {
         CLLexer lexer = new CLLexer(new ANTLRInputStream(s));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CLParser parser = new CLParser(tokens);
@@ -38,20 +38,20 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         return (X) parser.prog()._prog;
     }
 
-    public static IValue eval(String src) throws FunconException {
+    public IValue eval(String src) throws FunconException {
         final funcons.algebras.AllAlg<CLExecuteNode> evalAlg = new funcons.truffle.TruffleAllFactory() {
         };
 
         return eval(src, () -> evalAlg);
     }
 
-    public static IValue eval(String src, AllAlg alg) throws FunconException {
+    public IValue eval(String src, AllAlg alg) throws FunconException {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         CLExecuteNode eval = builder.build(alg);
         IValue env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
 
-
-        return eval.eval((IMap) env, new Null());
+        System.out.println(eval);
+        return eval.buildAST((IMap) env, new Null());
     }
 
     private IValue interpret(String src) throws FunconException {
@@ -87,7 +87,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
             //IValue env = importStandardLibrary(funconFactory.environment().eval());
             IValue env = null;
             long start = System.currentTimeMillis();
-            eval.eval((IMap) env, new Null());
+            eval.buildAST((IMap) env, new Null());
             long end = System.currentTimeMillis();
             timings.add(end - start);
             System.out.println("time taken: " + (end - start));
@@ -116,11 +116,11 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         }
     }
 
-    public static IValue importStandardLibrary(IValue env) throws FunconException {
+    public IValue importStandardLibrary(IValue env) throws FunconException {
         return importStandardLibrary(env, new HashSet<>());
     }
 
-    public static IValue importStandardLibrary(IValue env, Set<String> excludes) throws FunconException {
+    public IValue importStandardLibrary(IValue env, Set<String> excludes) throws FunconException {
         funcons.algebras.AllAlg<CLExecuteNode> alg = new funcons.truffle.TruffleAllFactory() {
         };
         StandardLibrary<CLExecuteNode> lib = () -> alg;
@@ -138,11 +138,10 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
             try {
                 final IValue env2 = env;
-                final CLExecuteNode invoke = (CLExecuteNode) m.invoke(lib);
                 env = alg.mapUnion(
                         (e, g) -> env2,
-                        alg.bindValue(alg.id(methodName), invoke)
-                ).eval((IMap) env, new Null());
+                        alg.bindValue(alg.id(methodName), (CLExecuteNode) m.invoke(lib))
+                ).buildAST((IMap) env, new Null());
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -153,7 +152,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
     private void runExamples() throws IOException, FunconException {
         run("examples/fib.ml");
-        run("examples/sieve.ml");
+//        run("examples/sieve.ml");
     }
 
     private void runGivenTests() throws IOException, FunconException {
@@ -196,21 +195,21 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     @Override
     protected CallTarget parse(ParsingRequest request) throws Exception {
 
-       // interpret("1 + if true then 2 else 2 + 3;;");
+//        for (int i = 0; i < 1000000; i++)
+//            interpret("1 + if true then 2 else 2 + 3;;");
 
         // interpret a FunCaml program given as String
 
 
-
 //        interpret("1 + \"a\"");
         // run examples found in the examples folder
-           runExamples();
+        runExamples();
 
         // run tests as provided by Mosses
         //runGivenTests();
 
         // run several performance tests
-        //runPerformanceTests();
+//        runPerformanceTests();
 
 
         // useless so far, just to avoir an ugly runtime exception when the execution ends.

@@ -21,28 +21,12 @@ public interface TruffleRecursiveFactory extends
     @Override
     default CLExecuteNode freshFwd() {
 //        return (env, given) -> new Fwd();
-        return null; // TODO
+        return new RecursiveFwdNode();
     }
 
     @Override
     default CLExecuteNode freshFwds(CLExecuteNode idList) {
-//        return (env, given) -> {
-//            CLExecuteNode envEval = environment();
-//            IValue idListVal = idList.eval(env, given);
-//            int length = ((IInteger)listLength((e, g)->idListVal).eval(env, given)).intValue();
-//            IValue undefined = undefined().eval(env, given);
-//
-//            for (int i = 0; i < length; i++) {
-//                IValue id = projectList(lit(i), (e,g)->idListVal).eval(env, given);
-//                Fwd fwd = (Fwd)freshFwd().eval(env, given);
-//                fwd.add(undefined);
-//
-//                envEval = mapUpdate(envEval, (e,g) -> id, (e,g) -> fwd);
-//            }
-//
-//            return envEval.eval(env, given);
-//        };
-        return null; // TODO
+        return new RecursiveFreshFwdsNode(idList, this, this, this, this, this, this);
     }
 
     @Override
@@ -64,34 +48,28 @@ public interface TruffleRecursiveFactory extends
 //
 //            return null_().eval(env, given);
 //        };
-        return null; // TODO
+        return new RecursiveSetForwardsNode(idFwdMap, this, this, this, this, this);
     }
 
     @Override
     default CLExecuteNode reclose(CLExecuteNode map, CLExecuteNode decl) {
-//        return (env, given) -> {
-//            IValue m = map.eval(env, given);
-//            return accum(scope((e,g) -> m, decl), seq(setForwards((e,g) -> m), environment())).eval(env, given);
-//        };
-        return null; // TODO
+        return new RecursiveRecloseNode(map, decl, this, this, this);
     }
 
     @Override
     default CLExecuteNode recursive(CLExecuteNode idList, CLExecuteNode decl) {
-//        return reclose(freshFwds(idList), decl);
-        return null; // TODO
+        return reclose(freshFwds(idList), decl);
     }
 
     @Override
     default CLExecuteNode recursiveTyped(CLExecuteNode idTypeMap, CLExecuteNode decl) {
-//        return recursive(mapDomain(idTypeMap), decl);
-        return null; // TODO
+        return recursive(mapDomain(idTypeMap), decl);
     }
 
     @Override
     default CLExecuteNode followFwd(CLExecuteNode fwd) {
 //        return (env, given) -> ((Fwd)fwd.eval(env, given)).follow();
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -103,6 +81,6 @@ public interface TruffleRecursiveFactory extends
 //            }
 //            return v;
 //        };
-        return null; // TODO
+        return new RecursiveFollowIfFwdNode(fwd);
     }
 }

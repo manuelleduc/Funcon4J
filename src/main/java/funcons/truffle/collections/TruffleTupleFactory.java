@@ -17,13 +17,13 @@ public interface TruffleTupleFactory extends
     @Override
     default CLExecuteNode tuple() {
 //        return (env, given) -> vf.list();
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode tuple(CLExecuteNode x) {
 //        return (env, given) -> vf.list((IValue) x.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -32,7 +32,7 @@ public interface TruffleTupleFactory extends
 //                x1.eval(env, given),
 //                x2.eval(env, given)
 //        );
-        return null; // TODO
+        return new TupleTupleNode(x1, x2);
     }
 
     @Override
@@ -42,7 +42,7 @@ public interface TruffleTupleFactory extends
 //                x2.eval(env, given),
 //                x3.eval(env, given)
 //        );
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -50,13 +50,13 @@ public interface TruffleTupleFactory extends
 //        return (env, given) ->
 //                ((IList) tup.eval(env, given))
 //                        .insert(x.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode tupleHead(CLExecuteNode tup) {
 //        return (env, given) -> ((IList) tup.eval(env, given)).get(0);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -68,7 +68,7 @@ public interface TruffleTupleFactory extends
 //            }
 //            return tupVal.sublist(1, tupVal.length() - 1);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -76,7 +76,7 @@ public interface TruffleTupleFactory extends
 //        return (env, given) ->
 //                ((IList) tup.eval(env, given))
 //                        .get(((IInteger) index.eval(env, given)).intValue());
-        return null; // TODO
+        return new TupleProjectNode(index, tup);
     }
 
     @Override
@@ -88,13 +88,13 @@ public interface TruffleTupleFactory extends
 //                    match(tupleTail((e, g) -> tupVal), p2)
 //            ).eval(env, given);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode tuplePrefixPatt(CLExecuteNode p1, CLExecuteNode p2) {
 //        return abs(tuplePrefixMatch(given(), p1, p2));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }
 

@@ -3,7 +3,6 @@ package funcons.truffle.controlflow;
 import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IBool;
 import io.usethesource.vallang.IMap;
@@ -26,7 +25,7 @@ public class LogicControlIfTrueNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
-        return (((IBool) e.eval(env, given)).getValue() ? c1 : c2).eval(env, given);
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
+        return (((IBool) e.buildAST(env, given)).getValue() ? c1 : c2).buildAST(env, given);
     }
 }

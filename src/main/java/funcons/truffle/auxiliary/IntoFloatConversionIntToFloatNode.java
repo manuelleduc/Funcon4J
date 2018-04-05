@@ -3,7 +3,6 @@ package funcons.truffle.auxiliary;
 import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IInteger;
 import io.usethesource.vallang.IMap;
@@ -20,7 +19,7 @@ public class IntoFloatConversionIntToFloatNode extends Node implements CLExecute
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
-        return ((IInteger) i.eval(env, given)).toReal(5);
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
+        return ((IInteger) i.buildAST(env, given)).toReal(5);
     }
 }

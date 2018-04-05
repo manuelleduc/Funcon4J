@@ -14,4 +14,8 @@ public interface IEval {
     default IValue eval() throws FunconException {
         return eval(vf.mapWriter().done(), new Null());
     }
+
+    default String print() {
+        return toString();
+    }
 }

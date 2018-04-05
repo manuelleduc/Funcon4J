@@ -23,25 +23,25 @@ public interface TrufflePatternFactory extends
     @Override
     default CLExecuteNode only(CLExecuteNode v) {
 //        return abs(ifTrue(equal(given(), v), environment(), fail()));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode any() {
 //        return abs(environment());
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode match(CLExecuteNode exp, CLExecuteNode pat) {
 //        return apply(pat, exp);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode pattAbs(CLExecuteNode pat, CLExecuteNode x) {
 //        return abs(scope(match(given(), pat), x));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -52,7 +52,7 @@ public interface TrufflePatternFactory extends
 //            CLExecuteNode env2 = ((Abs<CLExecuteNode>) pat2.eval(env, given)).body();
 //            return mapUnion(env1, env2).eval(env, given);
 //        });
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -62,6 +62,6 @@ public interface TrufflePatternFactory extends
 //            ((Abs<CLExecuteNode>) patt.eval(env, given)).body().eval(env, given);
 //            return environment().eval(env, given);
 //        });
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }

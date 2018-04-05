@@ -8,13 +8,13 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<CLExecuteNode> {
     @Override
     default CLExecuteNode tupleType() {
 //        return (env, given) -> vf.list();
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode tupleType(CLExecuteNode x) {
 //        return (env, given) -> vf.list((IValue) x.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -22,7 +22,7 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<CLExecuteNode> {
 //        return (env, given) -> vf.list(
 //                (IValue) x1.eval(env, given),
 //                (IValue) x2.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -31,7 +31,7 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<CLExecuteNode> {
 //                (IValue) x1.eval(env, given),
 //                (IValue) x2.eval(env, given),
 //                (IValue) x3.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -39,7 +39,7 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<CLExecuteNode> {
 //        return (env, given) ->
 //                ((IList) tup.eval(env, given))
 //                        .insert((IValue) x.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -47,7 +47,7 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<CLExecuteNode> {
 //        return (env, given) ->
 //                ((IList) tup.eval(env, given))
 //                        .get(((IInteger) index.eval(env, given)).intValue());
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }
 

@@ -14,7 +14,7 @@ public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
 //            mw.put(k, v);
 //            return mw.done();
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -25,7 +25,7 @@ public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
 //            IMap m = (IMap) map.eval(env, given);
 //            return m.put(k, v);
 //        };
-        return null; // TODO
+        return new MapMapUpdateNode(map, key, val);
     }
 
     @Override
@@ -36,7 +36,7 @@ public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
 //            m.forEach(lw::append);
 //            return lw.done();
 //        };
-        return null; // TODO
+        return new MapMapDomainNode(map);
     }
 
     @Override
@@ -51,7 +51,7 @@ public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
 //            IMap m2 = (IMap) map2.eval(env, given);
 //            return m2.join(m1);
 //        };
-        return null; // TODO
+        return new MapMapOverNode(map1, map2);
     }
 
     @Override
@@ -60,7 +60,7 @@ public interface TruffleMapFactory extends MapAlg<CLExecuteNode> {
 //            IMap m = (IMap) map.eval(env, given);
 //            return m.get((IValue) key.eval(env, given));
 //        };
-        return null; // TODO
+        return new MapMapGetNode(map, key);
     }
 
 }

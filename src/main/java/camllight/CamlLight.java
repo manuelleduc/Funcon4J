@@ -47,6 +47,8 @@ public class CamlLight {
         Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
         IEval eval = builder.build(alg);
         IValue env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
+
+        System.out.println(eval.print());
         return eval.eval((IMap)env, new Null());
     }
 
@@ -145,7 +147,7 @@ public class CamlLight {
 
     private static void runExamples() throws IOException, FunconException {
         run("examples/fib.ml");
-        run("examples/sieve.ml");
+//        run("examples/sieve.ml");
     }
 
     private static void runGivenTests() throws IOException, FunconException {
@@ -171,12 +173,12 @@ public class CamlLight {
 
     public static void main(String[] args) throws FunconException, IOException {
         // interpret a FunCaml program given as String
-        interpret("1 + if true then 2 else 2 + 3;;");
+        //interpret("1 + if true then 2 else 2 + 3;;");
 
 
 //        interpret("1 + \"a\"");
         // run examples found in the examples folder
-     //   runExamples();
+        runExamples();
 
         // run tests as provided by Mosses
         //runGivenTests();

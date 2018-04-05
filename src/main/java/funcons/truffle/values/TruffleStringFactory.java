@@ -7,26 +7,25 @@ public interface TruffleStringFactory extends StringAlg<CLExecuteNode> {
 
     @Override
     default CLExecuteNode string(String s) {
-//        return (env, given) -> vf.string(s);
-        return null; // TODO
+        return new StringStringNode(s);
     }
 
     @Override
     default CLExecuteNode char_(Character c) {
 //        return (env, given) -> vf.string(c);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode camlLightString(String s) {
 //        return (env, given) -> funcons.helper.RascalCLStringFactory.clString(vf, s);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode camlLightChar(String s) {
 //        return (env, given) -> funcons.helper.RascalCLStringFactory.clChar(vf, s);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
 
     }
 
@@ -35,7 +34,7 @@ public interface TruffleStringFactory extends StringAlg<CLExecuteNode> {
 //        return (env, given) ->
 //                ((IString) str1.eval(env, given))
 //                        .concat((IString) str2.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }
 

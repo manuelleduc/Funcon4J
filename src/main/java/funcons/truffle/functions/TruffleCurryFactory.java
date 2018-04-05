@@ -26,7 +26,7 @@ public interface TruffleCurryFactory extends
     @Override
     default CLExecuteNode partialAppN(CLExecuteNode f, CLExecuteNode x) {
 //        return abs(apply(f, tuplePrefix(x, given())));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -48,7 +48,7 @@ public interface TruffleCurryFactory extends
 //                    .eval(env, given);
 //        };
 
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override

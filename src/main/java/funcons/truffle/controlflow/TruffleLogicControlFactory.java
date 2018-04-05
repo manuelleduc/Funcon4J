@@ -22,7 +22,7 @@ public interface TruffleLogicControlFactory extends
 //            e.eval(env, given);
 //            return null_().eval(env, given);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -37,13 +37,7 @@ public interface TruffleLogicControlFactory extends
 
     @Override
     default CLExecuteNode whileTrue(CLExecuteNode e, CLExecuteNode c) {
-//        return (env, given) -> {
-//            while (((IBool) e.eval(env, given)).getValue()) {
-//                c.eval(env, given);
-//            }
-//            return null_().eval(env, given);
-//        };
-        return null; // TODO
+        return new LogicControlWhileTrueNode(e, c, this);
     }
 
     @Override
@@ -54,6 +48,6 @@ public interface TruffleLogicControlFactory extends
 //            }
 //            return null_().eval(env, given);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }

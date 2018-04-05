@@ -25,13 +25,13 @@ public interface TruffleRecordFactory extends
 //                    val.eval(env, given));
 //            return mw.done();
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode field(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -39,13 +39,13 @@ public interface TruffleRecordFactory extends
 //        return (env, given) ->
 //                ((IMap) record.eval(env, given))
 //                        .get(field.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode recordOver(CLExecuteNode rec1, CLExecuteNode rec2) {
 //        return recordUnion(rec2, rec1);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -53,7 +53,7 @@ public interface TruffleRecordFactory extends
 //        return (env, given) ->
 //                ((IMap) rec1.eval(env, given))
 //                        .join(((IMap) rec2.eval(env, given)));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -80,7 +80,7 @@ public interface TruffleRecordFactory extends
 //
 //            return environment;
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }
 

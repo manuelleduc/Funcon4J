@@ -18,25 +18,25 @@ public interface TruffleExceptionFactory extends
 //        return (env, given) -> {
 //            throw new FailureTrue();
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode matchFailure() {
 //        return (env, given) -> new CLMatchFailureException(vf);
-        return null; // TODO
+        return new ExceptionMatchFailureNode();
     }
 
     @Override
     default CLExecuteNode exception(java.lang.String message) {
 //        return (env, given) -> new RunTimeFunconException(message);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode exception(java.lang.String message, CLExecuteNode val) {
 //        return (env, given) -> new RunTimeFunconException(message, val.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -56,13 +56,13 @@ public interface TruffleExceptionFactory extends
 //                return apply(abs, (env1, given1) -> e).eval(env, given);
 //            }
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode catchElseRethrow(CLExecuteNode x, CLExecuteNode abs) {
 //        return catch_(x, preferOver(abs, abs(throw_(given()))));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -74,24 +74,19 @@ public interface TruffleExceptionFactory extends
 //                return x2.eval(env, given);
 //            }
 //        };
-        return null; // TODO
+        return new ExceptionElseNode(x1, x2);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default CLExecuteNode preferOver(CLExecuteNode a1, CLExecuteNode a2) {
-//        return (env, given) ->
-//                abs(else_(
-//                        ((Abs<CLExecuteNode>) a1.eval(env, given)).body(),
-//                        ((Abs<CLExecuteNode>) a2.eval(env, given)).body()
-//                )).eval(env, given);
-        return null; // TODO
+        return new ExceptionPrefereOverNode(a1, a2, this, this);
     }
 
 
     @Override
     default CLExecuteNode whenTrue(CLExecuteNode exp, CLExecuteNode x) {
 //        return ifTrue(exp, x, fail());
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }

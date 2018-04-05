@@ -7,5 +7,5 @@ import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
 
 public interface CLExecuteNode extends NodeInterface {
-    IValue eval(IMap env, Null given) throws FunconException;
+    IValue buildAST(IMap env, IValue given) throws FunconException;
 }

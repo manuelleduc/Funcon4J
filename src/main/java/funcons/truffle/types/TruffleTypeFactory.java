@@ -22,43 +22,44 @@ public interface TruffleTypeFactory extends
     @Override
     default CLExecuteNode type(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
+
     }
 
     @Override
     default CLExecuteNode unknownType() {
 //        return (env, given) -> vf.string("UnknownType");
-        return null; // TODO
+        return new TypeUnknowTypeNode();
     }
 
     @Override
     default CLExecuteNode tag(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode typeVar(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode clVariant(java.lang.String tagName, CLExecuteNode exp) {
 //        return (env, given) -> new CLVariant(vf.string(tagName), exp.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode meta(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode nomVal(CLExecuteNode nomTag, CLExecuteNode val) {
 //        return (env, given) -> vf.tuple(nomTag.eval(env, given), val.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -72,13 +73,13 @@ public interface TruffleTypeFactory extends
 //            ITuple nVal = (ITuple) nomVal.eval(env, given);
 //            return whenTrue(equal(nomTag, (e, g) -> nVal.get(0)), (e, g) -> nVal.get(1)).eval(env, given);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode scopeNominalCoercion(CLExecuteNode type1, CLExecuteNode type2, CLExecuteNode abs) {
 //        return apply(abs, nomTag(freshToken()));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -87,7 +88,7 @@ public interface TruffleTypeFactory extends
 //                vf.tuple(
 //                        type1.eval(env, given),
 //                        type2.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -103,7 +104,7 @@ public interface TruffleTypeFactory extends
     @Override
     default CLExecuteNode freshToken() {
 //        return (env, given) -> new Token();
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -112,7 +113,7 @@ public interface TruffleTypeFactory extends
 //                vf.tuple(
 //                        name.eval(env, given),
 //                        freshToken().eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -140,7 +141,7 @@ public interface TruffleTypeFactory extends
 //            }
 //            return fail().eval(env, given);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }
 

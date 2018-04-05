@@ -3,7 +3,6 @@ package funcons.truffle.controlflow;
 import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.IMap;
@@ -19,7 +18,7 @@ public class ExceptionThrowNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
-        throw (RunTimeFunconException) s.eval(env, given);
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
+        throw (RunTimeFunconException) s.buildAST(env, given);
     }
 }

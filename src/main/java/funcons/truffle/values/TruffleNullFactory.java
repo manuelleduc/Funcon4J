@@ -14,6 +14,6 @@ public interface TruffleNullFactory extends NullAlg<CLExecuteNode> {
     default CLExecuteNode undefined() {
 
         // return (env, given) -> new Undefined();
-        return null; // TODO
+        return new NullUndefinedNode();
     }
 }

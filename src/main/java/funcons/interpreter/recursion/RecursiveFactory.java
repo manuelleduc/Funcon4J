@@ -70,7 +70,7 @@ public interface RecursiveFactory extends
     @Override
     default IEval reclose(IEval map, IEval decl) {
         return (env, given) -> {
-            IValue m = map.eval(env, given);
+            final IValue m = map.eval(env, given);
             return accum(scope((e,g) -> m, decl), seq(setForwards((e,g) -> m), environment())).eval(env, given);
         };
     }

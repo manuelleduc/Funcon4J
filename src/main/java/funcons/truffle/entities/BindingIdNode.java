@@ -20,7 +20,7 @@ public class BindingIdNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
         return vf.string(s);
     }
 }

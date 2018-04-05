@@ -32,7 +32,7 @@ public class CLRootNode extends RootNode implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null aNull) {
+    public IValue buildAST(IMap env, IValue aNull) {
         // TODO ?
         return null;
     }

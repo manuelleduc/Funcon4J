@@ -25,19 +25,19 @@ public interface TruffleListFactory extends
 //            return l.get(i.intValue());
 //        };
 
-        return null; // TODO
+        return new ListProjectListNode(index, list);
     }
 
     @Override
     default CLExecuteNode list() {
 //        return (env, given) -> vf.list();
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode list(CLExecuteNode x) {
 //        return (env, given) -> vf.list((IValue) x.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -45,7 +45,7 @@ public interface TruffleListFactory extends
 //        return (env, given) -> vf.list(
 //                x1.eval(env, given),
 //                x2.eval(env, given));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -54,7 +54,7 @@ public interface TruffleListFactory extends
 //            IList list = (IList) l.eval(env, given);
 //            return list.insert(x.eval(env, given));
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -68,13 +68,13 @@ public interface TruffleListFactory extends
 //            IList tail = list.delete(0);
 //            return mapOver(match((e, g) -> head, p1), match((e, g) -> tail, p2)).eval(env, given);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode listPrefixPatt(CLExecuteNode p1, CLExecuteNode p2) {
 //        return abs(listPrefixMatch(given(), p1, p2));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -88,13 +88,13 @@ public interface TruffleListFactory extends
 //            }
 //            return lw.done();
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode listReverse(CLExecuteNode l) {
 //        return (env, given) -> ((IList) l.eval(env, given)).reverse();
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -104,13 +104,13 @@ public interface TruffleListFactory extends
 //            IList l2 = (IList) list2.eval(env, given);
 //            return l1.concat(l2);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode listHead(CLExecuteNode list) {
 //        return (env, given) -> ((IList) list.eval(env, given)).get(0);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -122,14 +122,14 @@ public interface TruffleListFactory extends
 //            }
 //            return listVal.sublist(1, listVal.length() - 1);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode listLength(CLExecuteNode list) {
 //        return (env, given) ->
 //                vf.integer(((IList) list.eval(env, given)).length());
-        return null; // TODO
+        return new ListListLengthNode(list);
     }
 
 

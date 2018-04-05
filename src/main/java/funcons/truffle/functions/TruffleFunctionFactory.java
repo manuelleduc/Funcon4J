@@ -28,12 +28,7 @@ public interface TruffleFunctionFactory extends
 
     @Override
     default CLExecuteNode abs(CLExecuteNode patt, CLExecuteNode exp) {
-//        return (env, given) -> new Abs<CLExecuteNode>((e, g) -> {
-//            @SuppressWarnings("unchecked")
-//            CLExecuteNode environment = ((Abs<CLExecuteNode>) patt.eval(e, g)).body();
-//            return scope(environment, exp).eval(e, g);
-//        });
-        return null; // TODO
+        return new FunctionAbsNode2(patt, exp, this);
     }
 
     @Override
@@ -54,28 +49,23 @@ public interface TruffleFunctionFactory extends
 //            ).eval(env, given);
 //        };
 
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode compose(CLExecuteNode f, CLExecuteNode g) {
 //        return abs(apply(f, apply(g, given())));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default CLExecuteNode close(CLExecuteNode abs) {
-//        return (env, given) ->
-//                abs(closure(
-//                        ((Abs<CLExecuteNode>) abs.eval(env, given)).body(),
-//                        (e, g) -> env)).eval(env, given);
-        return null; // TODO
+        return new FunctionCloseNode(abs, this, this);
     }
 
     @Override
     default CLExecuteNode bind(CLExecuteNode id) {
-//        return abs(bindValue(id, given()));
-        return null; // TODO
+        return abs(bindValue(id, given()));
     }
 }

@@ -3,7 +3,6 @@ package funcons.truffle.entities;
 import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.Null;
 import funcons.values.Variable;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IMap;
@@ -21,7 +20,7 @@ public class AssignAllocNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
-        return new Variable(x.eval(env, given));
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
+        return new Variable(x.buildAST(env, given));
     }
 }

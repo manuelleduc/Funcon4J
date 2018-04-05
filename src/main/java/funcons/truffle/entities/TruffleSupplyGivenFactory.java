@@ -14,6 +14,6 @@ public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<CLExecuteNode>
     @Override
     default CLExecuteNode supply(CLExecuteNode exp, CLExecuteNode x) {
 //        return (env, given) -> x.eval(env, exp.eval(env, given));
-        return null; // TODO
+        return new SupplyGivenSupplyNode(exp, x);
     }
 }

@@ -4,7 +4,6 @@ import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.functions.CurryAlg;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
@@ -22,8 +21,8 @@ public class CurryCurryNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
         final CLExecuteNode clExecuteNode = alg.partialApp(a, (e, g) -> given);
-        return clExecuteNode.eval(env, given);
+        return clExecuteNode.buildAST(env, given);
     }
 }

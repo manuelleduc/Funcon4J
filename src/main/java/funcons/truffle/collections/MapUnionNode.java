@@ -3,7 +3,6 @@ package funcons.truffle.collections;
 import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
@@ -23,9 +22,9 @@ public class MapUnionNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
-        final IMap m1 = (IMap) map1.eval(env, given);
-        final IMap m2 = (IMap) map2.eval(env, given);
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
+        final IMap m1 = (IMap) map1.buildAST(env, given);
+        final IMap m2 = (IMap) map2.buildAST(env, given);
         return m1.join(m2);
     }
 

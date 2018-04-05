@@ -4,7 +4,6 @@ import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.values.NullAlg;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
@@ -24,8 +23,8 @@ public class PrintPrintNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
-        System.out.println(x.eval(env, given));
-        return alg.null_().eval(env, given);
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
+        System.out.println(x.buildAST(env, given));
+        return alg.null_().buildAST(env, given);
     }
 }

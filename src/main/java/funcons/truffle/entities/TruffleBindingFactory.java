@@ -17,7 +17,7 @@ public interface TruffleBindingFactory extends
     @Override
     default CLExecuteNode nameId(java.lang.String namespace, java.lang.String id) {
 //        return (env, given) -> vf.tuple(vf.string(namespace), vf.string(id));
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -28,7 +28,7 @@ public interface TruffleBindingFactory extends
     @Override
     default CLExecuteNode boundValue(CLExecuteNode id) {
 //        return (env, given) -> env.get((IValue) id.eval(env, given));
-        return null; // TODO
+        return new BindingBoundValueNode(id);
     }
 
     @Override
@@ -44,7 +44,7 @@ public interface TruffleBindingFactory extends
     default CLExecuteNode closure(CLExecuteNode x, CLExecuteNode environment) {
 //        return (env, given) ->
 //                x.eval((IMap) environment.eval(env, given), given);
-        return null; // TODO
+        return new BindingClosureNode(x,environment);
     }
 
     @Override
@@ -54,10 +54,6 @@ public interface TruffleBindingFactory extends
 
     @Override
     default CLExecuteNode accum(CLExecuteNode environment, CLExecuteNode decl) {
-//        return (env, given) -> {
-//            IValue currentEnv = environment.eval(env, given);
-//            return scope((e, g) -> currentEnv, mapOver(decl, (e, g) -> currentEnv)).eval(env, given);
-//        };
-        return null; // TODO
+        return new BindingAccumNode(environment, decl, this, this);
     }
 }

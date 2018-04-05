@@ -8,18 +8,12 @@ public interface TruffleAssignFactory extends NullAlg<CLExecuteNode>, AssignAlg<
 
     @Override
     default CLExecuteNode assign(CLExecuteNode var, CLExecuteNode x) {
-        /*return (env, given) -> {
-            ((Variable)var.eval(env, given)).store(x.eval(env, given));
-            return null_().eval(env, given);
-        };*/
-
-        return null; // TODO
+        return new AssignAssignNode(var, x, this);
     }
 
     @Override
     default CLExecuteNode assignedValue(CLExecuteNode var) {
-//        return (env, given) -> ((Variable)var.eval(env, given)).value();
-        return null; // TODO
+        return new AssignAssignedValueNode(var);
     }
 
     @Override
@@ -31,7 +25,7 @@ public interface TruffleAssignFactory extends NullAlg<CLExecuteNode>, AssignAlg<
 //            }
 //            return val;
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
 
     }
 

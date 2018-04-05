@@ -8,7 +8,7 @@ public interface TruffleFloatFactory extends FloatAlg<CLExecuteNode> {
     @Override
     default CLExecuteNode lit(Double i) {
 //        return (env, given) -> vf.real(i);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -18,14 +18,14 @@ public interface TruffleFloatFactory extends FloatAlg<CLExecuteNode> {
 //            INumber bVal = (INumber) b.eval(env, given);
 //            return aVal.add(bVal).toReal(5);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     default CLExecuteNode floatNegate(CLExecuteNode x) {
 //        return (env, given) ->
 //                ((INumber) x.eval(env, given)).negate().toReal(5);
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -35,7 +35,7 @@ public interface TruffleFloatFactory extends FloatAlg<CLExecuteNode> {
 //            INumber bVal = (INumber) b.eval(env, given);
 //            return aVal.subtract(bVal).toReal(5);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -45,7 +45,7 @@ public interface TruffleFloatFactory extends FloatAlg<CLExecuteNode> {
 //            INumber bVal = (INumber) b.eval(env, given);
 //            return aVal.multiply(bVal).toReal(5);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -55,7 +55,7 @@ public interface TruffleFloatFactory extends FloatAlg<CLExecuteNode> {
 //            INumber bVal = (INumber) b.eval(env, given);
 //            return aVal.divide(bVal, 5).toReal(5);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -65,7 +65,7 @@ public interface TruffleFloatFactory extends FloatAlg<CLExecuteNode> {
 //            INumber bVal = (INumber) b.eval(env, given);
 //            return aVal.subtract(aVal.divide(bVal, 5).toReal(5).floor().multiply(bVal)).toReal(5);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -75,6 +75,6 @@ public interface TruffleFloatFactory extends FloatAlg<CLExecuteNode> {
 //            INumber bVal = (INumber) b.eval(env, given);
 //            return aVal.toReal(5).pow(bVal.toReal(5), 5);
 //        };
-        return null; // TODO
+        throw new RuntimeException("Not implemented");
     }
 }

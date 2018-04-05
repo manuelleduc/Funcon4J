@@ -3,7 +3,6 @@ package funcons.truffle.collections;
 import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IList;
 import io.usethesource.vallang.IMap;
@@ -25,9 +24,9 @@ public class VectorVectorAppendNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
-        final IList vector1Val = (IList) vector1.eval(env, given);
-        final IList vector2Val = (IList) vector2.eval(env, given);
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
+        final IList vector1Val = (IList) vector1.buildAST(env, given);
+        final IList vector2Val = (IList) vector2.buildAST(env, given);
         return vector1Val.concat(vector2Val);
     }
 }

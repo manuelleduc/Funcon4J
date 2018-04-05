@@ -11,9 +11,9 @@ public class CamlLightTruffle {
 
     public static void main(String[] args) {
 
-        PolyglotEngine engine = PolyglotEngine.newBuilder().setIn(in).setOut(out).build();
-        Source source = Source.newBuilder("").mimeType(FNCLanguage.MIME_TYPE).name("ELT").build();
-        PolyglotEngine.Value result = engine.eval(source);
+        final PolyglotEngine engine = PolyglotEngine.newBuilder().setIn(in).setOut(out).build();
+        final Source source = Source.newBuilder("").mimeType(FNCLanguage.MIME_TYPE).name("ELT").build();
+        final PolyglotEngine.Value result = engine.eval(source);
 
         engine.dispose();
     }

@@ -3,7 +3,6 @@ package funcons.truffle.entities;
 import camllight.truffle.nodes.CLExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.values.Null;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
@@ -24,8 +23,8 @@ public class BindingScopeNode extends Node implements CLExecuteNode {
     }
 
     @Override
-    public IValue eval(IMap env, Null given) throws FunconException {
-        final IMap local = (IMap) localBindings.eval(env, given);
-        return exp.eval(env.join(local), given);
+    public IValue buildAST(IMap env, IValue given) throws FunconException {
+        final IMap local = (IMap) localBindings.buildAST(env, given);
+        return exp.buildAST(env.join(local), given);
     }
 }
