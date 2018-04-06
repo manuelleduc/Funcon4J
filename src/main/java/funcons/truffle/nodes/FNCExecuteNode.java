@@ -7,9 +7,4 @@ public interface FNCExecuteNode extends NodeInterface {
         System.out.println("BuildAST: " + toString());
         return this;
     }
-
-//    default Object executeGeneric(VirtualFrame frame) {
-//        System.out.println("executeGeneric: " + toString());
-//        throw new RuntimeException("Execute void not implemented");
-//    }
 }

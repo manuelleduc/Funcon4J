@@ -1,7 +1,8 @@
 package funcons.truffle.values;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.values.IntAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 
@@ -28,7 +29,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .subtract(((INumber) b.eval(env, given)).toInteger());
-        return new IntIntSubstractNode(a,b);
+        return new IntIntSubstractNode((FNCExpressionNode) a, (FNCExpressionNode) b);
     }
 
     @Override

@@ -1,7 +1,8 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.MapAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 
@@ -46,12 +47,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode mapOver(FNCExecuteNode map1, FNCExecuteNode map2) {
-//        return (env, given) -> {
-//            IMap m1 = (IMap) map1.eval(env, given);
-//            IMap m2 = (IMap) map2.eval(env, given);
-//            return m2.join(m1);
-//        };
-        return new MapMapOverNode(map1, map2);
+        return new MapMapOverNode((FNCExpressionNode) map1, (FNCExpressionNode) map2);
     }
 
     @Override

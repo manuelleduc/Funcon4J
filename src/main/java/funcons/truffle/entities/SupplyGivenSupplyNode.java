@@ -4,13 +4,15 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
+import static com.oracle.truffle.api.nodes.Node.*;
+
 @NodeInfo(description = "SupplyGiven Supply Node")
 public class SupplyGivenSupplyNode extends Node implements FNCExecuteNode {
 
-    @Node.Child
+    @Child
     private FNCExecuteNode exp;
 
-    @Node.Child
+    @Child
     private FNCExecuteNode x;
 
     public SupplyGivenSupplyNode(FNCExecuteNode exp, FNCExecuteNode x) {

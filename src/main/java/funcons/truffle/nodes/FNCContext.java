@@ -6,6 +6,25 @@ import com.oracle.truffle.api.interop.TruffleObject;
 import java.math.BigInteger;
 
 public class FNCContext {
+
+    private final static FNCContext instance = new FNCContext();
+
+    private FNCFunctionRegistry registry;
+    private FNCLanguage language;
+
+
+    public FNCFunctionRegistry getRegistry() {
+        return registry;
+    }
+
+    public void initRegistry(FNCLanguage language) {
+        this.language = language;
+        this.registry = new FNCFunctionRegistry(language);
+    }
+
+    private FNCContext() {
+    }
+
     public static Object fromForeignValue(Object a) {
         if (a instanceof Long || a instanceof BigInteger || a instanceof String || a instanceof Boolean) {
             return a;
@@ -27,4 +46,11 @@ public class FNCContext {
         return ((Number) a).longValue();
     }
 
+    public static FNCContext getInstance() {
+        return instance;
+    }
+
+    public FNCLanguage getLanguage() {
+        return language;
+    }
 }

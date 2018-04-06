@@ -1,29 +1,29 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import io.usethesource.vallang.IMap;
 
 @NodeInfo(description = "Map MapOver Node")
-public class MapMapOverNode extends Node implements FNCExecuteNode {
+public class MapMapOverNode extends FNCExpressionNode implements FNCExecuteNode {
 
-    @Node.Child
-    private FNCExecuteNode map1;
+    @Child
+    private FNCExpressionNode map1;
 
-    @Node.Child
-    private FNCExecuteNode map2;
+    @Child
+    private FNCExpressionNode map2;
 
-    public MapMapOverNode(FNCExecuteNode map1, FNCExecuteNode map2) {
+    public MapMapOverNode(FNCExpressionNode map1, FNCExpressionNode map2) {
         this.map1 = map1;
         this.map2 = map2;
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-////        final IMap m1 = (IMap) map1.buildAST();
-////        final IMap m2 = (IMap) map2.buildAST();
-////        return m2.join(m1);
-//
-//        return this;
-//    }
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        IMap m1 = (IMap) map1.executeGeneric(frame);
+        IMap m2 = (IMap) map2.executeGeneric(frame);
+        return m2.join(m1);
+    }
 }

@@ -1,5 +1,6 @@
 package camllight;
 
+import funcons.truffle.nodes.FNCContext;
 import funcons.truffle.nodes.FNCLanguage;
 import com.oracle.truffle.api.source.Source;
 import com.oracle.truffle.api.vm.PolyglotEngine;
@@ -99,7 +100,8 @@ public class CamlLightTruffle {
 
 
     private void runExamples() throws IOException, FunconException {
-        run("examples/fib.ml");
+//        run("examples/fib.ml");
+        run("examples/if.ml");
 //        run("examples/sieve.ml");
     }
 
@@ -139,6 +141,7 @@ public class CamlLightTruffle {
 
         final PolyglotEngine engine = PolyglotEngine.newBuilder().setIn(in).setOut(out).build();
         final Source source = Source.newBuilder(src).mimeType(FNCLanguage.MIME_TYPE).name("ELT").build();
+
         final PolyglotEngine.Value result = engine.eval(source);
 
         engine.dispose();

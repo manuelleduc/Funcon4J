@@ -1,10 +1,11 @@
 package funcons.truffle.controlflow;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TruffleExceptionFactory extends
         LogicControlAlg<FNCExecuteNode>,
@@ -41,10 +42,7 @@ public interface TruffleExceptionFactory extends
 
     @Override
     default FNCExecuteNode throw_(FNCExecuteNode s) {
-//        return (env, given) -> {
-//            throw (RunTimeFunconException) s.eval(env, given);
-//        };
-        return new ExceptionThrowNode(s); // TODO
+        return new ExceptionThrowNode((FNCExpressionNode) s);
     }
 
     @Override

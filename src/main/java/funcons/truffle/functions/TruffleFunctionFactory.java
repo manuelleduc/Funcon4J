@@ -1,6 +1,6 @@
 package funcons.truffle.functions;
 
-import funcons.truffle.nodes.FNCExecuteNode;
+import com.oracle.truffle.api.frame.FrameDescriptor;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
@@ -9,6 +9,7 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.*;
 
 public interface TruffleFunctionFactory extends
         IntAlg<FNCExecuteNode>,
@@ -20,10 +21,21 @@ public interface TruffleFunctionFactory extends
         NullAlg<FNCExecuteNode>,
         FunctionAlg<FNCExecuteNode> {
 
+    /**
+     * Anonymoust
+     *
+     * @param exp
+     * @return
+     */
     @Override
     default FNCExecuteNode abs(FNCExecuteNode exp) {
-//        return (env, given) -> new Abs<>(exp);
-        return new FunctionAbs(exp); // TODO
+        final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
+        final FNCFunctionBodyNode fct = new FNCFunctionBodyNode((FNCStatementNode) exp);
+        final FNCRootNode rootNode = new FNCRootNode(FNCContext.getInstance().getLanguage(), frameDescriptorFact, fct);
+
+        // TODO: when do we registrer a function,
+        //FNCContext.getInstance().getRegistry().register(rootNode);
+        return fct;
     }
 
     @Override
@@ -34,7 +46,7 @@ public interface TruffleFunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode apply(FNCExecuteNode abs, FNCExecuteNode arg) {
-        return new FunctionApplyNode(abs, arg, this);
+        return new FunctionApplyNode((FNCExpressionNode) abs, (FNCExpressionNode) arg, this);
     }
 
     @Override

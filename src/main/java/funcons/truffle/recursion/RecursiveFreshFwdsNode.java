@@ -1,5 +1,6 @@
 package funcons.truffle.recursion;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -9,9 +10,10 @@ import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.recursion.RecursiveAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Recursive FreshFwds Node")
-public class RecursiveFreshFwdsNode extends Node implements FNCExecuteNode {
+public class RecursiveFreshFwdsNode extends FNCExpressionNode implements FNCExecuteNode {
 
 
     private final BindingAlg<FNCExecuteNode> balg;
@@ -33,6 +35,11 @@ public class RecursiveFreshFwdsNode extends Node implements FNCExecuteNode {
         this.ialg = ialg;
         this.ralg = ralg;
         this.malg = malg;
+    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        return null;
     }
 
 //    @Override

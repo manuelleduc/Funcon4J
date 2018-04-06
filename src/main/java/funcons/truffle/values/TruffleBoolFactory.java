@@ -1,8 +1,8 @@
 package funcons.truffle.values;
 
+import funcons.algebras.values.BoolAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.algebras.values.BoolAlg;
 
 public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
     @Override
@@ -13,8 +13,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode not(FNCExecuteNode b) {
-//        return (env, given) -> ((IBool)b.eval(env, given)).not();
-        return new BoolNotNode(b);
+        return new BoolNotNode((FNCExpressionNode) b);
     }
 
     @Override
@@ -24,7 +23,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 //            IValue bVal = (IValue)b.eval(env, given);
 //            return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
 //        };
-        return new BoolGreaterNode(a, b);
+        return new BoolGreaterNode((FNCExpressionNode) a, (FNCExpressionNode) b);
     }
 
     @Override
@@ -34,7 +33,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode greaterEqual(FNCExecuteNode a, FNCExecuteNode b) {
-        return new BoolGreaterEqualNode(a, b, this);
+        return new BoolGreaterEqualNode((FNCExpressionNode) a, (FNCExpressionNode) b);
     }
 
     @Override

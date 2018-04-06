@@ -1,14 +1,16 @@
 package funcons.truffle.recursion;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.recursion.RecursiveAlg;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Recursive Reclose Node")
-public class RecursiveRecloseNode extends Node implements FNCExecuteNode {
+public class RecursiveRecloseNode extends FNCExpressionNode implements FNCExecuteNode {
 
     private final BindingAlg<FNCExecuteNode> balg;
     private final LogicControlAlg<FNCExecuteNode> lalg;
@@ -25,6 +27,11 @@ public class RecursiveRecloseNode extends Node implements FNCExecuteNode {
         this.balg = balg;
         this.lalg = lalg;
         this.ralg = ralg;
+    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        return null;
     }
 
 //    @Override

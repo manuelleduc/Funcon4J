@@ -1,9 +1,12 @@
 package funcons.truffle.entities;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import funcons.truffle.nodes.FNCExpressionNode;
+import com.oracle.truffle.api.frame.FrameDescriptor;
+import com.oracle.truffle.api.frame.FrameSlot;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLexicalScope;
 
 public interface TruffleBindingFactory extends
         MapAlg<FNCExecuteNode>,
@@ -21,31 +24,55 @@ public interface TruffleBindingFactory extends
         throw new RuntimeException("Not implemented");
     }
 
+    /**
+     * bind-value(I,E) is a declaration funcon used to compute the single-point environment
+     *
+     * @param id
+     * @param exp
+     * @return
+     */
     @Override
     default FNCExecuteNode bindValue(FNCExecuteNode id, FNCExecuteNode exp) {
-        return new BindingBindValueNode(id, exp); // TODO
+        System.out.println("BIND VALUE " + id + " " + exp);
+        final String name = "HAHA";
+        final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
+        new FNCLexicalScope(null).locals.put(name, frameSlot);
+
+        return BindingBindValueNodeGen.create((FNCExpressionNode) exp, frameSlot);// (FNCExpressionNode) localBindings, (FNCExpressionNode) exp);
     }
 
     @Override
     default FNCExecuteNode boundValue(FNCExecuteNode id) {
-//        return (env, given) -> env.get((IValue) id.eval(env, given));
-        return new BindingBoundValueNode(id);
+        return new BindingBoundValueNode((FNCExpressionNode) id);
     }
 
+    /**
+     * scope(D,X) executes the declaration D to compute an environment ρ1, then binds the identifiers in the domain of
+     * ρ1 locally in the computation X, letting these bindings override the bindings represented by the current
+     * environment ρ. This funcon is lifted in its first argument, whereas the rule for the computation of its second
+     * argument has to be explicitly specified, since the environment is not merely propagated. Rule (40) applies only
+     * when V is a value, which is independent of the current context.
+     *
+     * @param localBindings
+     * @param exp
+     * @return
+     */
     @Override
     default FNCExecuteNode scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
-//        return (env, given) -> {
-//            IMap local = (IMap) localBindings.eval(env, given);
-//            return exp.eval(env.join(local), given);
-//        };
-        return new BindingScopeNode(localBindings, exp); // TODO
+
+        System.out.println("SCOPE " + localBindings + " " + exp);
+        final String name = "HAHA";
+        final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
+        new FNCLexicalScope(null).locals.put(name, frameSlot);
+
+        return BindingScopeNodeGen.create((FNCExpressionNode) exp, frameSlot);
     }
 
     @Override
     default FNCExecuteNode closure(FNCExecuteNode x, FNCExecuteNode environment) {
 //        return (env, given) ->
 //                x.eval((IMap) environment.eval(env, given), given);
-        return new BindingClosureNode(x,environment);
+        return new BindingClosureNode(x, environment);
     }
 
     @Override
@@ -55,6 +82,8 @@ public interface TruffleBindingFactory extends
 
     @Override
     default FNCExecuteNode accum(FNCExecuteNode environment, FNCExecuteNode decl) {
-        return new BindingAccumNode(environment, (FNCExpressionNode) decl, this, this);
+//        return new BindingAccumNode(environment, (FNCExpressionNode) decl, this, this);
+        final FNCExecuteNode currentEnv = environment.buildAST();
+        return scope(currentEnv, mapOver(decl, currentEnv)).buildAST();
     }
 }

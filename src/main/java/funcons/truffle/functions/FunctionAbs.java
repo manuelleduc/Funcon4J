@@ -1,28 +1,26 @@
 package funcons.truffle.functions;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.Assumption;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.interop.ForeignAccess;
 import com.oracle.truffle.api.interop.TruffleObject;
 import com.oracle.truffle.api.utilities.CyclicAssumption;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCLanguage;
 
 
-//@NodeInfo(description = "Function Abs Node")
 public class FunctionAbs implements FNCExecuteNode, TruffleObject {
 
 
     private RootCallTarget callTarget;
     private final CyclicAssumption callTargetStable;
     private final String name;
-    //    @Child
-    private FNCExecuteNode exp;
 
-    public FunctionAbs(FNCExecuteNode exp) {
-        this.exp = exp;
-        this.name = "name";
-        this.callTarget = Truffle.getRuntime().createCallTarget(new FNCUndefinedFunctionRootNode(null, name));
+
+    public FunctionAbs(FNCLanguage language, String name) {
+        this.name = name;
+        this.callTarget = Truffle.getRuntime().createCallTarget(new FNCUndefinedFunctionRootNode(language, name));
         this.callTargetStable = new CyclicAssumption(name);
     }
 
@@ -30,7 +28,7 @@ public class FunctionAbs implements FNCExecuteNode, TruffleObject {
         return name;
     }
 
-    protected void setCallTarget(RootCallTarget callTarget) {
+    public void setCallTarget(RootCallTarget callTarget) {
         this.callTarget = callTarget;
         /*
          * We have a new call target. Invalidate all code that speculated that the old call target

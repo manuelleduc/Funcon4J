@@ -1,26 +1,25 @@
 package funcons.truffle.functions;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import funcons.truffle.nodes.FNCExpressionNode;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.entities.SupplyGivenAlg;
-import funcons.values.Abs;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Function Apply Node")
 public class FunctionApplyNode extends FNCExpressionNode implements FNCExecuteNode {
     private final SupplyGivenAlg<FNCExecuteNode> salg;
 
     @Child
-    private FNCExecuteNode functionNode;
+    private FNCExpressionNode functionNode;
 
     @Child
-    private FNCExecuteNode argumentNode;
+    private FNCExpressionNode argumentNode;
 
     @Child
     private FNCDispatchNode dispatchNode;
 
-    public FunctionApplyNode(FNCExecuteNode functionNode, FNCExecuteNode argumentNode, SupplyGivenAlg<FNCExecuteNode> salg) {
+    public FunctionApplyNode(FNCExpressionNode functionNode, FNCExpressionNode argumentNode, SupplyGivenAlg<FNCExecuteNode> salg) {
         this.functionNode = functionNode;
         this.argumentNode = argumentNode;
         this.salg = salg;
@@ -28,8 +27,9 @@ public class FunctionApplyNode extends FNCExpressionNode implements FNCExecuteNo
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return salg.supply(argumentNode,
-                ((Abs<FNCExecuteNode>) functionNode.buildAST()).body()).buildAST();
+//        return salg.supply(argumentNode,
+//                ((Abs<FNCExecuteNode>) functionNode.buildAST()).body()).buildAST();
+        return null;
     }
 
 //    @Override

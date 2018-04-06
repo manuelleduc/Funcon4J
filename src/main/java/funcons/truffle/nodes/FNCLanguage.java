@@ -57,6 +57,8 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         final camllight.algebras.AllAlg alg = () -> evalAlg;
         final FNCExecuteNode eval = builder.build(alg);
 //        final IValue env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
+        FNCContext.getInstance().initRegistry(this);
+
         final FNCExpressionNode clExecuteNode = (FNCExpressionNode) eval.buildAST();
 
         // useless so far, just to avoir an ugly runtime exception when the execution ends.

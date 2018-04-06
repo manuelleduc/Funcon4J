@@ -1,26 +1,30 @@
 package funcons.truffle.values;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import io.usethesource.vallang.INumber;
 
 @NodeInfo(description = "Int IntSubstract Node")
-public class IntIntSubstractNode extends Node implements FNCExecuteNode {
+public class IntIntSubstractNode extends FNCExpressionNode implements FNCExecuteNode {
 
     @Child
-    private FNCExecuteNode a;
+    private FNCExpressionNode a;
 
     @Child
-    private FNCExecuteNode b;
+    private FNCExpressionNode b;
 
-    public IntIntSubstractNode(FNCExecuteNode a, FNCExecuteNode b) {
+    public IntIntSubstractNode(FNCExpressionNode a, FNCExpressionNode b) {
         this.a = a;
         this.b = b;
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return ((INumber) a.buildAST()).toInteger()
-//                .subtract(((INumber) b.buildAST()).toInteger());
-//    }
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        final INumber na = (INumber) a.executeGeneric(frame);
+        final INumber nb = (INumber) b.executeGeneric(frame);
+        return na.subtract(nb);
+    }
+
 }

@@ -1,11 +1,12 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TruffleTupleFactory extends
         PatternAlg<FNCExecuteNode>,
@@ -28,11 +29,7 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode tuple(FNCExecuteNode x1, FNCExecuteNode x2) {
-//        return (env, given) -> vf.list(
-//                x1.eval(env, given),
-//                x2.eval(env, given)
-//        );
-        return new TupleTupleNode(x1, x2);
+        return new TupleTupleNode((FNCExpressionNode) x1, (FNCExpressionNode) x2);
     }
 
     @Override
@@ -73,10 +70,7 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode project(FNCExecuteNode index, FNCExecuteNode tup) {
-//        return (env, given) ->
-//                ((IList) tup.eval(env, given))
-//                        .get(((IInteger) index.eval(env, given)).intValue());
-        return new TupleProjectNode(index, tup);
+        return new TupleProjectNode((FNCExpressionNode) index, (FNCExpressionNode) tup);
     }
 
     @Override

@@ -1,20 +1,21 @@
 package funcons.truffle.controlflow;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Exception Thrown Node")
-public class ExceptionThrowNode extends Node implements FNCExecuteNode {
+public class ExceptionThrowNode extends FNCExpressionNode implements FNCExecuteNode {
     @Child
-    private FNCExecuteNode s;
+    private FNCExpressionNode s;
 
-    public ExceptionThrowNode(FNCExecuteNode s) {
+    public ExceptionThrowNode(FNCExpressionNode s) {
         this.s = s;
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        throw (RunTimeFunconException) s.buildAST();
-//    }
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        throw (RuntimeException) s.executeGeneric(frame);
+    }
 }

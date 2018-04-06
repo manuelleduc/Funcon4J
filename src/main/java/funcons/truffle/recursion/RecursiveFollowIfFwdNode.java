@@ -1,24 +1,27 @@
 package funcons.truffle.recursion;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.values.recursion.Fwd;
+import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Recursive FollowIfFwd Node")
-public class RecursiveFollowIfFwdNode extends Node implements FNCExecuteNode {
+public class RecursiveFollowIfFwdNode extends FNCExpressionNode implements FNCExecuteNode {
     @Child
-    private FNCExecuteNode fwd;
+    private FNCExpressionNode fwd;
 
-    public RecursiveFollowIfFwdNode(FNCExecuteNode fwd) {
+    public RecursiveFollowIfFwdNode(FNCExpressionNode fwd) {
         this.fwd = fwd;
     }
-//
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        final IValue v = fwd.buildAST();
-//        if (v instanceof Fwd) {
-//            return ((Fwd) v).follow();
-//        }
-//        return v;
-//    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        final IValue v = (IValue) fwd.executeGeneric(frame);
+        if (v instanceof Fwd) {
+            return ((Fwd) v).follow();
+        }
+        return v;
+    }
 }

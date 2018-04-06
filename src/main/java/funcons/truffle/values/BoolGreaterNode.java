@@ -1,24 +1,37 @@
 package funcons.truffle.values;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import com.oracle.truffle.api.nodes.UnexpectedResultException;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Bool Greater Node ")
-public class BoolGreaterNode extends Node implements FNCExecuteNode {
+public class BoolGreaterNode extends FNCExpressionNode implements FNCExecuteNode {
 
     ValueFactory vf = ValueFactory.getInstance();
 
-    @Node.Child
-    private FNCExecuteNode a;
+    @Child
+    private FNCExpressionNode a;
 
-    @Node.Child
-    private FNCExecuteNode b;
+    @Child
+    private FNCExpressionNode b;
 
-    public BoolGreaterNode(FNCExecuteNode a, FNCExecuteNode b) {
+    public BoolGreaterNode(FNCExpressionNode a, FNCExpressionNode b) {
         this.a = a;
         this.b = b;
+    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        try {
+            return a.executeIInteger(frame).greater(b.executeIInteger(frame));
+        } catch (UnexpectedResultException | RunTimeFunconException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 //    @Override

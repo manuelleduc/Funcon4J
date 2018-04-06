@@ -1,10 +1,10 @@
 package funcons.truffle.auxiliary;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import funcons.truffle.nodes.FNCExpressionNode;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 
 @NodeInfo(description = "Print Print Node")

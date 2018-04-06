@@ -1,23 +1,34 @@
 package funcons.truffle.values;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.values.BoolAlg;
+import com.oracle.truffle.api.nodes.UnexpectedResultException;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "Bool GreaterEqual Node")
-public class BoolGreaterEqualNode extends Node implements FNCExecuteNode {
+public class BoolGreaterEqualNode extends FNCExpressionNode implements FNCExecuteNode {
 
     @Child
-    private FNCExecuteNode a;
+    private FNCExpressionNode a;
     @Child
-    private FNCExecuteNode b;
-    private final BoolAlg<FNCExecuteNode> alg;
+    private FNCExpressionNode b;
 
-    public BoolGreaterEqualNode(FNCExecuteNode a, FNCExecuteNode b, BoolAlg<FNCExecuteNode> alg) {
+
+    public BoolGreaterEqualNode(FNCExpressionNode a, FNCExpressionNode b) {
         this.a = a;
         this.b = b;
-        this.alg = alg;
+    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        try {
+            return a.executeIInteger(frame).greaterEqual(b.executeIInteger(frame));
+        } catch (UnexpectedResultException | RunTimeFunconException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 //    @Override

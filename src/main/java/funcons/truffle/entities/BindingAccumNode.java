@@ -7,6 +7,9 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
 
+/**
+ * FIXME: DEADCODE
+ */
 @NodeInfo(description = "Binding Accum Node")
 public class BindingAccumNode extends FNCExpressionNode implements FNCExecuteNode {
 

@@ -1,13 +1,14 @@
 package funcons.truffle.controlflow;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCStatementNode;
 
 public interface TruffleLogicControlFactory extends
         NullAlg<FNCExecuteNode>,
@@ -33,7 +34,7 @@ public interface TruffleLogicControlFactory extends
 
     @Override
     default FNCExecuteNode ifTrue(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
-        return new LogicControlIfTrueNode(e, c1, c2);
+        return new LogicControlIfTrueNode((FNCExpressionNode) e, (FNCExpressionNode) c1, (FNCExpressionNode) c2);
     }
 
     @Override
