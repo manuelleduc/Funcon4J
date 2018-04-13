@@ -10,7 +10,7 @@ import io.usethesource.vallang.IBool;
 import static com.oracle.truffle.api.nodes.Node.*;
 
 @NodeInfo(description = "Bool Not Node")
-public class BoolNotNode extends FNCExpressionNode implements FNCExecuteNode {
+public class BoolNotNode extends FNCExpressionNode  {
     @Child
     private FNCExpressionNode b;
 

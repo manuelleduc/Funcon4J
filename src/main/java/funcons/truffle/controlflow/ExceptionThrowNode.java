@@ -6,7 +6,7 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Exception Thrown Node")
-public class ExceptionThrowNode extends FNCExpressionNode implements FNCExecuteNode {
+public class ExceptionThrowNode extends FNCExpressionNode  {
     @Child
     private FNCExpressionNode s;
 

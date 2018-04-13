@@ -7,7 +7,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Binding Id Node")
-public class BindingIdNode extends FNCExpressionNode implements FNCExecuteNode {
+public class BindingIdNode extends FNCExpressionNode  {
     private final String s;
 
     private final ValueFactory vf = ValueFactory.getInstance();

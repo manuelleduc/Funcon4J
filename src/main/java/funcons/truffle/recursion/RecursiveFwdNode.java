@@ -1,11 +1,16 @@
 package funcons.truffle.recursion;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "Recursive Fwd Node")
-public class RecursiveFwdNode extends Node implements FNCExecuteNode {
+public class RecursiveFwdNode extends FNCStatementNode {
+    @Override
+    public void executeVoid(VirtualFrame frame) throws RunTimeFunconException {
+        throw new RuntimeException("Not implemented");
+    }
 //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {
 //        return new Fwd();

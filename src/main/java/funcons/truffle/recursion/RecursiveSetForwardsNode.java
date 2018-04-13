@@ -6,7 +6,7 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Recursive SetForwards Node")
-public class RecursiveSetForwardsNode extends FNCExpressionNode implements FNCExecuteNode {
+public class RecursiveSetForwardsNode extends FNCExpressionNode  {
 
 
     @Child

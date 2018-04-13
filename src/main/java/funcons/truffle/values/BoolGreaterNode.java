@@ -9,7 +9,7 @@ import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Bool Greater Node ")
-public class BoolGreaterNode extends FNCExpressionNode implements FNCExecuteNode {
+public class BoolGreaterNode extends FNCExpressionNode  {
 
     ValueFactory vf = ValueFactory.getInstance();
 

@@ -17,7 +17,7 @@ import io.usethesource.vallang.IInteger;
 @NodeInfo(description = "Binding Scope Node")
 @NodeChild("valueNode")
 @NodeField(name = "slot", type = FrameSlot.class)
-public abstract class BindingScopeNode extends FNCExpressionNode implements FNCExecuteNode {
+public abstract class BindingScopeNode extends FNCExpressionNode  {
 
     protected abstract FrameSlot getSlot();
 

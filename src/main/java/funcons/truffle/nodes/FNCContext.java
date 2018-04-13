@@ -1,13 +1,15 @@
 package funcons.truffle.nodes;
 
 import com.oracle.truffle.api.CompilerDirectives;
+import com.oracle.truffle.api.TruffleLanguage;
 import com.oracle.truffle.api.interop.TruffleObject;
 
 import java.math.BigInteger;
 
 public class FNCContext {
 
-    private final static FNCContext instance = new FNCContext();
+    private final TruffleLanguage.Env env;
+    private final FNCFunctionRegistry functionRegistry;
 
     private FNCFunctionRegistry registry;
     private FNCLanguage language;
@@ -22,7 +24,16 @@ public class FNCContext {
         this.registry = new FNCFunctionRegistry(language);
     }
 
-    private FNCContext() {
+    public FNCContext(FNCLanguage language, TruffleLanguage.Env env) {
+        this.env = env;
+//        this.input = new BufferedReader(new InputStreamReader(env.in()));
+//        this.output = new PrintWriter(env.out(), true);
+        this.language = language;
+//        this.allocationReporter = env.lookup(AllocationReporter.class);
+        this.functionRegistry = new FNCFunctionRegistry(language);
+//        installBuiltins();
+//
+//        this.emptyShape = LAYOUT.createShape(SLObjectType.SINGLETON);
     }
 
     public static Object fromForeignValue(Object a) {
@@ -46,11 +57,15 @@ public class FNCContext {
         return ((Number) a).longValue();
     }
 
-    public static FNCContext getInstance() {
-        return instance;
-    }
+//    public static FNCContext getInstance() {
+//        return instance;
+//    }
 
     public FNCLanguage getLanguage() {
         return language;
+    }
+
+    public FNCFunctionRegistry getFunctionRegistry() {
+        return functionRegistry;
     }
 }

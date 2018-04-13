@@ -1,17 +1,18 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Vector vector Node")
-public class VectorVectorNode extends Node implements FNCExecuteNode {
+public class VectorVectorNode extends FNCExpressionNode {
 
     ValueFactory vf = ValueFactory.getInstance();
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return vf.list();
-//    }
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        return vf.list();
+    }
 }
+

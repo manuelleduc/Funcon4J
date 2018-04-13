@@ -7,7 +7,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 
 
 @NodeInfo(description = "Function Close Node")
-public class FunctionCloseNode extends FNCExpressionNode implements FNCExecuteNode {
+public class FunctionCloseNode extends FNCExpressionNode  {
     @Child
     FNCExpressionNode abs;
 

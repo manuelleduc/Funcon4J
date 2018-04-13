@@ -6,11 +6,13 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Recursive FreshFwds Node")
-public class RecursiveFreshFwdsNode extends FNCExpressionNode implements FNCExecuteNode {
+public class RecursiveFreshFwdsNode extends FNCExpressionNode  {
 
 
     @Child
     FNCExpressionNode idList;
+
+    private long freshCptr = 0;
 
     public RecursiveFreshFwdsNode(FNCExpressionNode idList) {
         this.idList = idList;
@@ -18,7 +20,9 @@ public class RecursiveFreshFwdsNode extends FNCExpressionNode implements FNCExec
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return null;
+        final long current = freshCptr;
+        freshCptr = freshCptr + 1;
+        return "v" + current;
     }
 
 //    @Override

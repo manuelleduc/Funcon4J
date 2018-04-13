@@ -62,7 +62,8 @@ public interface BindingFactory extends
     default IEval accum(IEval environment, IEval decl) {
         return (env, given) -> {
             IValue currentEnv = environment.eval(env, given);
-            return scope((e,g) -> currentEnv, mapOver(decl, (e,g) -> currentEnv)).eval(env, given);
+            IEval scope = scope((e, g) -> currentEnv, mapOver(decl, (e, g) -> currentEnv));
+            return scope.eval(env, given);
         };
     }
 }

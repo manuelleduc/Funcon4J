@@ -1,20 +1,20 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.VectorAlg;
 import funcons.algebras.entities.AssignAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode vector() {
-        return new VectorVectorNode();
+        return l -> new VectorVectorNode();
     }
 
     @Override
     default FNCExecuteNode vector(FNCExecuteNode val) {
-        return new VectorVectorNode2((FNCExpressionNode) val);
+        return l-> new VectorVectorNode2((FNCExpressionNode) val);
     }
 
     @Override
@@ -29,12 +29,12 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
 
     @Override
     default FNCExecuteNode vectorAppend(FNCExecuteNode vector1, FNCExecuteNode vector2) {
-        return new VectorVectorAppendNode((FNCExpressionNode) vector1, (FNCExpressionNode) vector2);
+        return l -> new VectorVectorAppendNode((FNCExpressionNode) vector1, (FNCExpressionNode) vector2);
     }
 
     @Override
     default FNCExecuteNode vectorLength(FNCExecuteNode vector) {
-        return new VectorVectorLengthNode((FNCExpressionNode) vector);
+        return l -> new VectorVectorLengthNode((FNCExpressionNode) vector);
     }
 
     @Override

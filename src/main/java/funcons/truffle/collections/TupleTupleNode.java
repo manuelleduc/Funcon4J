@@ -8,7 +8,7 @@ import io.usethesource.vallang.IList;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Tuple Tuple Node")
-public class TupleTupleNode extends FNCExpressionNode implements FNCExecuteNode {
+public class TupleTupleNode extends FNCExpressionNode  {
 
     ValueFactory vf = ValueFactory.getInstance();
 

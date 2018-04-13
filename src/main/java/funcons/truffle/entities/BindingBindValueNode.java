@@ -8,7 +8,6 @@ import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameSlotKind;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.IBool;
 import io.usethesource.vallang.IInteger;
@@ -20,48 +19,13 @@ import io.usethesource.vallang.IInteger;
 @NodeInfo(description = "Binding Bind Value Node")
 @NodeChild("valueNode")
 @NodeField(name = "slot", type = FrameSlot.class)
-public abstract class BindingBindValueNode extends FNCExpressionNode implements FNCExecuteNode {
-
-//    protected abstract FrameSlot getSlot();
-//
-//    @Specialization
-//    public IInteger writeIInteger(VirtualFrame frame, IInteger value) {
-//        getSlot().setKind(FrameSlotKind.Int);
-//        frame.setInt(getSlot(), value.intValue());
-//        return value;
-//    }
-//
-//    @Specialization
-//    public IBool writeIBool(VirtualFrame frame, IBool value) {
-//        getSlot().setKind(FrameSlotKind.Boolean);
-//        frame.setBoolean(getSlot(), value.getValue());
-//        return value;
-//    }
-//
-//    @Specialization(replaces = {"writeIInteger", "writeIBool"})
-//    protected Object write(VirtualFrame frame, Object value) {
-//        /*
-//         * Regardless of the type before, the new and final type of the local variable is Object.
-//         * Changing the slot kind also discards compiled code, because the variable type is
-//         * important when the compiler optimizes a method.
-//         *
-//         * No-op if kind is already Object.
-//         */
-//        final FrameSlot slot = getSlot();
-//        slot.setKind(FrameSlotKind.Object);
-//        frame.setObject(slot, value);
-//        return value;
-//    }
+public abstract class BindingBindValueNode extends FNCExpressionNode {
 
     protected abstract FrameSlot getSlot();
 
-    /**
-     * Specialized method to write a primitive {@code long} value. This is only possible if the
-     * local variable also has currently the type {@code long} or was never written before,
-     * therefore a Truffle DSL {@link #isLongOrIllegal(VirtualFrame) custom guard} is specified.
-     */
     @Specialization(guards = "isIntOrIllegal(frame)")
     protected IInteger writeIInteger(VirtualFrame frame, IInteger value) {
+        System.out.println("call writeIInteger");
         /* Initialize type on first write of the local variable. No-op if kind is already Long. */
         getSlot().setKind(FrameSlotKind.Int);
 
@@ -72,6 +36,7 @@ public abstract class BindingBindValueNode extends FNCExpressionNode implements 
 
     @Specialization(guards = "isBooleanOrIllegal(frame)")
     protected IBool writeIBool(VirtualFrame frame, IBool value) {
+        System.out.println("call writeIIBool");
         /* Initialize type on first write of the local variable. No-op if kind is already Long. */
         getSlot().setKind(FrameSlotKind.Boolean);
 
@@ -91,6 +56,7 @@ public abstract class BindingBindValueNode extends FNCExpressionNode implements 
      */
     @Specialization(replaces = {"writeIInteger", "writeIBool"})
     protected Object write(VirtualFrame frame, Object value) {
+        System.out.println("call write");
         /*
          * Regardless of the type before, the new and final type of the local variable is Object.
          * Changing the slot kind also discards compiled code, because the variable type is

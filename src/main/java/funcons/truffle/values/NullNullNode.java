@@ -7,7 +7,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.values.Null;
 
 @NodeInfo(description = "Null Null Node")
-public class NullNullNode extends FNCExpressionNode implements FNCExecuteNode {
+public class NullNullNode extends FNCExpressionNode  {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
         return new Null();

@@ -1,19 +1,19 @@
 package funcons.truffle.values;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
 
 public interface TruffleNullFactory extends NullAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode null_() {
-        return new NullNullNode();
+        return l -> new NullNullNode();
     }
 
     @Override
     default FNCExecuteNode undefined() {
 
         // return (env, given) -> new Undefined();
-        return new NullUndefinedNode();
+        return l -> new NullUndefinedNode();
     }
 }

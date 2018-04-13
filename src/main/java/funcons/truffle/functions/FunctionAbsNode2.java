@@ -8,7 +8,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 
 
 @NodeInfo(description = "Function Abs Node 2")
-public class FunctionAbsNode2 extends FNCExpressionNode implements FNCExecuteNode {
+public class FunctionAbsNode2 extends FNCExpressionNode  {
 
     @Child
     FNCExpressionNode patt;

@@ -7,7 +7,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.INumber;
 
 @NodeInfo(description = "Int IntSubstract Node")
-public class IntIntSubstractNode extends FNCExpressionNode implements FNCExecuteNode {
+public class IntIntSubstractNode extends FNCExpressionNode  {
 
     @Child
     private FNCExpressionNode a;

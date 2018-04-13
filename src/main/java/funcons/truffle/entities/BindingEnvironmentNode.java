@@ -7,7 +7,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Binding Environment Node")
-public class BindingEnvironmentNode extends FNCExpressionNode implements FNCExecuteNode {
+public class BindingEnvironmentNode extends FNCExpressionNode  {
     ValueFactory vf = ValueFactory.getInstance();
 
     @Override

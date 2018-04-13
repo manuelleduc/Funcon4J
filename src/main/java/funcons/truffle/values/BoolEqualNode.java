@@ -17,7 +17,7 @@ import java.util.Objects;
         @NodeChild("e1"),
         @NodeChild("e2")
 })
-public abstract class BoolEqualNode extends FNCExpressionNode implements FNCExecuteNode {
+public abstract class BoolEqualNode extends FNCExpressionNode  {
     ValueFactory vf = ValueFactory.getInstance();
 
 //    @Child

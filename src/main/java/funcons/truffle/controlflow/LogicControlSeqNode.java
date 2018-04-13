@@ -6,7 +6,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 
 @NodeInfo(description = "LogicControl Seq Node")
-public class LogicControlSeqNode extends FNCExpressionNode implements FNCExecuteNode {
+public class LogicControlSeqNode extends FNCExpressionNode  {
     @Child
     private FNCExpressionNode c;
     @Child

@@ -8,7 +8,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "Bool GreaterEqual Node")
-public class BoolGreaterEqualNode extends FNCExpressionNode implements FNCExecuteNode {
+public class BoolGreaterEqualNode extends FNCExpressionNode  {
 
     @Child
     private FNCExpressionNode a;

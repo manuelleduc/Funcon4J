@@ -12,7 +12,7 @@ import funcons.values.signals.RunTimeFunconException;
 import static com.oracle.truffle.api.nodes.Node.*;
 
 @NodeInfo(shortName = "body")
-public class FNCFunctionBodyNode extends FNCExpressionNode implements FNCExecuteNode {
+public class FNCFunctionBodyNode extends FNCExpressionNode  {
 
     @Child
     private FNCStatementNode bodyNode;

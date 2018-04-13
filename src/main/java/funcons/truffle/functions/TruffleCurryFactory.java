@@ -32,7 +32,7 @@ public interface TruffleCurryFactory extends
 
     @Override
     default FNCExecuteNode curry(FNCExecuteNode a) {
-        return new CurryCurryNode((FNCExpressionNode) a);
+        return l -> new CurryCurryNode((FNCExpressionNode) a);
     }
 
     @Override

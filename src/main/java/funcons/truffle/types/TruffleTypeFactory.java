@@ -29,7 +29,7 @@ public interface TruffleTypeFactory extends
     @Override
     default FNCExecuteNode unknownType() {
 //        return (env, given) -> vf.string("UnknownType");
-        return new TypeUnknowTypeNode();
+        return l -> new TypeUnknowTypeNode();
     }
 
     @Override

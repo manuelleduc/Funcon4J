@@ -7,7 +7,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.IMap;
 
 @NodeInfo(description = "Map MapOver Node")
-public class MapMapOverNode extends FNCExpressionNode implements FNCExecuteNode {
+public class MapMapOverNode extends FNCExpressionNode  {
 
     @Child
     private FNCExpressionNode map1;

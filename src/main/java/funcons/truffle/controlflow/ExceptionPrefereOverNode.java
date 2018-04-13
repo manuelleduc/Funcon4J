@@ -7,7 +7,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 
 
 @NodeInfo(description = "Exception PrefereOver Node")
-public class ExceptionPrefereOverNode extends FNCExpressionNode implements FNCExecuteNode {
+public class ExceptionPrefereOverNode extends FNCExpressionNode  {
 
 
     @Child

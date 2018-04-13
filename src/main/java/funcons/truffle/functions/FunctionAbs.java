@@ -10,7 +10,7 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCLanguage;
 
 
-public class FunctionAbs implements FNCExecuteNode, TruffleObject {
+public class FunctionAbs implements TruffleObject {
 
 
     private RootCallTarget callTarget;

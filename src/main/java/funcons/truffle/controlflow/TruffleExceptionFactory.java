@@ -25,7 +25,7 @@ public interface TruffleExceptionFactory extends
     @Override
     default FNCExecuteNode matchFailure() {
 //        return (env, given) -> new CLMatchFailureException(vf);
-        return new ExceptionMatchFailureNode();
+        return l -> new ExceptionMatchFailureNode();
     }
 
     @Override
@@ -42,7 +42,7 @@ public interface TruffleExceptionFactory extends
 
     @Override
     default FNCExecuteNode throw_(FNCExecuteNode s) {
-        return new ExceptionThrowNode((FNCExpressionNode) s);
+        return l -> new ExceptionThrowNode((FNCExpressionNode) s.buildAST(l));
     }
 
     @Override
@@ -72,13 +72,13 @@ public interface TruffleExceptionFactory extends
 //                return x2.eval(env, given);
 //            }
 //        };
-        return new ExceptionElseNode((FNCExpressionNode) x1, (FNCExpressionNode) x2);
+        return l -> new ExceptionElseNode((FNCExpressionNode) x1, (FNCExpressionNode) x2);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode preferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
-        return new ExceptionPrefereOverNode((FNCExpressionNode) a1, (FNCExpressionNode) a2);
+        return language -> new ExceptionPrefereOverNode((FNCExpressionNode) a1.buildAST(language), (FNCExpressionNode) a2.buildAST(language));
     }
 
 

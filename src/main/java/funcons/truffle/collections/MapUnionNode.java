@@ -1,28 +1,31 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExpressionNode;
+import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Map Union Node")
-public class MapUnionNode extends Node implements FNCExecuteNode {
+public class MapUnionNode extends FNCExpressionNode {
     public static final ValueFactory vf = ValueFactory.getInstance();
 
 
-    private final FNCExecuteNode map1;
-    private final FNCExecuteNode map2;
+    private final FNCExpressionNode map1;
+    private final FNCExpressionNode map2;
 
-    public MapUnionNode(FNCExecuteNode map1, FNCExecuteNode map2) {
+    public MapUnionNode(FNCExpressionNode map1, FNCExpressionNode map2) {
         this.map1 = map1;
         this.map2 = map2;
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        final IMap m1 = (IMap) map1.buildAST();
-//        final IMap m2 = (IMap) map2.buildAST();
-//        return m1.join(m2);
-//    }
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+
+        final IMap m1 = (IMap) map1.executeGeneric(frame);
+        final IMap m2 = (IMap) map2.executeGeneric(frame);
+        return m1.join(m2);
+    }
+
 
 }

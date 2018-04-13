@@ -26,7 +26,7 @@ public interface TruffleListFactory extends
 //            return l.get(i.intValue());
 //        };
 
-        return new ListProjectListNode((FNCExpressionNode) index, (FNCExpressionNode) list);
+        return l -> new ListProjectListNode((FNCExpressionNode) index, (FNCExpressionNode) list);
     }
 
     @Override
@@ -130,7 +130,7 @@ public interface TruffleListFactory extends
     default FNCExecuteNode listLength(FNCExecuteNode list) {
 //        return (env, given) ->
 //                vf.integer(((IList) list.eval(env, given)).length());
-        return new ListListLengthNode((FNCExpressionNode) list);
+        return l-> new ListListLengthNode((FNCExpressionNode) list);
     }
 
 

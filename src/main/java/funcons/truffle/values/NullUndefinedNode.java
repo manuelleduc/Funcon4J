@@ -1,14 +1,15 @@
 package funcons.truffle.values;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.values.Undefined;
 
 
 @NodeInfo(description = "Null Undefined Node")
-public class NullUndefinedNode extends Node implements FNCExecuteNode {
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return new Undefined();
-//    }
+public class NullUndefinedNode extends FNCExpressionNode {
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        return new Undefined();
+    }
 }

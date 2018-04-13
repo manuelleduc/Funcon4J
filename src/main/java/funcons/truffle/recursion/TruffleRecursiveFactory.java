@@ -22,23 +22,22 @@ public interface TruffleRecursiveFactory extends
     @Override
     default FNCExecuteNode freshFwd() {
 //        return (env, given) -> new Fwd();
-        return new RecursiveFwdNode();
+        return l -> new RecursiveFwdNode();
     }
 
     @Override
     default FNCExecuteNode freshFwds(FNCExecuteNode idList) {
-        return new RecursiveFreshFwdsNode((FNCExpressionNode) idList);
+        return language -> new RecursiveFreshFwdsNode((FNCExpressionNode) idList);
     }
 
     @Override
     default FNCExecuteNode setForwards(FNCExecuteNode idFwdMap) {
-        return new RecursiveSetForwardsNode((FNCExpressionNode) idFwdMap);
+        return l -> new RecursiveSetForwardsNode((FNCExpressionNode) idFwdMap);
     }
 
     @Override
     default FNCExecuteNode reclose(FNCExecuteNode map, FNCExecuteNode decl) {
-        final FNCExecuteNode m = map.buildAST();
-        return accum(scope(m, decl), seq(setForwards(m), environment())).buildAST();
+        return language -> accum(scope(map, decl), seq(setForwards(map), environment())).buildAST(language);
     }
 
     @Override
@@ -66,6 +65,6 @@ public interface TruffleRecursiveFactory extends
 //            }
 //            return v;
 //        };
-        return new RecursiveFollowIfFwdNode((FNCExpressionNode) fwd);
+        return l -> new RecursiveFollowIfFwdNode((FNCExpressionNode) fwd.buildAST(l));
     }
 }

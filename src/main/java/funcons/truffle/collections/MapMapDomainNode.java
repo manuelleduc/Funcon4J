@@ -8,7 +8,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Map MapDomain Node")
-public class MapMapDomainNode extends FNCExpressionNode implements FNCExecuteNode {
+public class MapMapDomainNode extends FNCExpressionNode  {
 
     ValueFactory vf = ValueFactory.getInstance();
 

@@ -1,12 +1,11 @@
 package funcons.truffle.collections;
 
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Map MapGet Node")
-public class MapMapGetNode extends Node implements FNCExecuteNode {
+public class MapMapGetNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode map;
@@ -17,6 +16,11 @@ public class MapMapGetNode extends Node implements FNCExecuteNode {
     public MapMapGetNode(FNCExpressionNode map, FNCExpressionNode key) {
         this.map = map;
         this.key = key;
+    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        throw new RuntimeException("Not implemented");
     }
 
 //    @Override

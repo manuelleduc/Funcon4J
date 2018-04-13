@@ -1,13 +1,12 @@
 package funcons.truffle.collections;
 
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Vector VectoreLength Node")
-public class VectorVectorLengthNode extends Node implements FNCExecuteNode {
+public class VectorVectorLengthNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode vector;
@@ -16,6 +15,11 @@ public class VectorVectorLengthNode extends Node implements FNCExecuteNode {
 
     public VectorVectorLengthNode(FNCExpressionNode vector) {
         this.vector = vector;
+    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        throw new RuntimeException("Not implemented");
     }
 
 //    @Override

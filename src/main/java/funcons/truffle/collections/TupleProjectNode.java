@@ -9,7 +9,7 @@ import io.usethesource.vallang.IList;
 
 
 @NodeInfo(description = "Tuple Project Node")
-public class TupleProjectNode extends FNCExpressionNode implements FNCExecuteNode {
+public class TupleProjectNode extends FNCExpressionNode  {
     @Child
     private FNCExpressionNode index;
 

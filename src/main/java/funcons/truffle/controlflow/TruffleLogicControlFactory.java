@@ -28,17 +28,17 @@ public interface TruffleLogicControlFactory extends
 
     @Override
     default FNCExecuteNode seq(FNCExecuteNode c, FNCExecuteNode t) {
-        return new LogicControlSeqNode((FNCExpressionNode) c, (FNCExpressionNode) t);
+        return l -> new LogicControlSeqNode((FNCExpressionNode) c.buildAST(l), (FNCExpressionNode) t.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode ifTrue(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
-        return new LogicControlIfTrueNode((FNCExpressionNode) e, (FNCExpressionNode) c1, (FNCExpressionNode) c2);
+        return l -> new LogicControlIfTrueNode((FNCExpressionNode) e.buildAST(l), (FNCExpressionNode) c1.buildAST(l), (FNCExpressionNode) c2.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode whileTrue(FNCExecuteNode e, FNCExecuteNode c) {
-        return new LogicControlWhileTrueNode((FNCExpressionNode) e, (FNCExpressionNode) c);
+        return l -> new LogicControlWhileTrueNode((FNCExpressionNode) e, (FNCExpressionNode) c);
     }
 
     @Override

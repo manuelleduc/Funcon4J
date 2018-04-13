@@ -9,7 +9,7 @@ import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Exception MatchFailure Node")
-public class ExceptionMatchFailureNode extends FNCExpressionNode implements FNCExecuteNode {
+public class ExceptionMatchFailureNode extends FNCExpressionNode  {
 
     IValueFactory vf = ValueFactory.getInstance();
 

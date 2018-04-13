@@ -9,12 +9,12 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode lit(Integer i) {
-        return new IntLitNode(i);
+        return l -> new IntLitNode(i);
     }
 
     @Override
     default FNCExecuteNode intAdd(FNCExecuteNode a, FNCExecuteNode b) {
-        return IntIntAddNodeGen.create((FNCExpressionNode) a, (FNCExpressionNode) b);
+        return l -> IntIntAddNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
     }
 
     @Override
@@ -29,7 +29,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .subtract(((INumber) b.eval(env, given)).toInteger());
-        return new IntIntSubstractNode((FNCExpressionNode) a, (FNCExpressionNode) b);
+        return l -> new IntIntSubstractNode((FNCExpressionNode) a, (FNCExpressionNode) b);
     }
 
     @Override

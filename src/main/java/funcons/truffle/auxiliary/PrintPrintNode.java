@@ -7,7 +7,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 
 
 @NodeInfo(description = "Print Print Node")
-public class PrintPrintNode extends FNCExpressionNode implements FNCExecuteNode {
+public class PrintPrintNode extends FNCExpressionNode  {
 
     @Child
     private FNCExpressionNode x;

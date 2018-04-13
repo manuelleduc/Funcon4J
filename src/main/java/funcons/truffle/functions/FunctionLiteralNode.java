@@ -1,36 +1,28 @@
-package funcons.truffle.entities;
+package funcons.truffle.functions;
 
 import com.oracle.truffle.api.TruffleLanguage;
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCContext;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import io.usethesource.vallang.IString;
 
 import static com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import static com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate;
 
-@NodeInfo(description = "Binding BoundValue Node")
-public class BindingBoundValueNode extends FNCExpressionNode {
-    @Child
-    private FNCExpressionNode id;
+public class FunctionLiteralNode extends FNCExpressionNode {
+    private final String functionName;
+    private final TruffleLanguage.ContextReference<FNCContext> reference;
 
-    private TruffleLanguage.ContextReference<FNCContext> reference;
+    public FunctionLiteralNode(FNCLanguage language, String functionName) {
+        this.reference = language.getContextReference();
+        this.functionName = functionName;
+    }
 
     @CompilationFinal
-    private Object cachedFunction;
-
-    public BindingBoundValueNode(FNCLanguage l, FNCExpressionNode id) {
-        this.id = id;
-        this.reference = l.getContextReference();
-    }
+    private FunctionAbs cachedFunction;
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-
-        final String functionName = ((IString) id.executeGeneric(frame)).getValue();
-
         if (cachedFunction == null) {
             transferToInterpreterAndInvalidate();
             /* We are about to change a @CompilationFinal field. */
@@ -40,9 +32,4 @@ public class BindingBoundValueNode extends FNCExpressionNode {
         }
         return cachedFunction;
     }
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return env.get(id.buildAST());
-//    }
 }

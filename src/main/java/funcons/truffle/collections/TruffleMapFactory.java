@@ -26,7 +26,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 //            IMap m = (IMap) map.eval(env, given);
 //            return m.put(k, v);
 //        };
-        return new MapMapUpdateNode((FNCExpressionNode) map, (FNCExpressionNode) key, (FNCExpressionNode) val);
+        return l -> new MapMapUpdateNode((FNCExpressionNode) map, (FNCExpressionNode) key, (FNCExpressionNode) val);
     }
 
     @Override
@@ -37,17 +37,17 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 //            m.forEach(lw::append);
 //            return lw.done();
 //        };
-        return new MapMapDomainNode((FNCExpressionNode) map);
+        return language -> new MapMapDomainNode((FNCExpressionNode) map);
     }
 
     @Override
     default FNCExecuteNode mapUnion(FNCExecuteNode map1, FNCExecuteNode map2) {
-        return new MapUnionNode(map1, map2);
+        return l -> new MapUnionNode((FNCExpressionNode) map1.buildAST(l), (FNCExpressionNode) map2.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode mapOver(FNCExecuteNode map1, FNCExecuteNode map2) {
-        return new MapMapOverNode((FNCExpressionNode) map1, (FNCExpressionNode) map2);
+        return l -> new MapMapOverNode((FNCExpressionNode) map1.buildAST(l), (FNCExpressionNode) map2.buildAST(l));
     }
 
     @Override
@@ -56,7 +56,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 //            IMap m = (IMap) map.eval(env, given);
 //            return m.get((IValue) key.eval(env, given));
 //        };
-        return new MapMapGetNode((FNCExpressionNode) map, (FNCExpressionNode) key);
+        return l -> new MapMapGetNode((FNCExpressionNode) map, (FNCExpressionNode) key);
     }
 
 }

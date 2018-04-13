@@ -1,14 +1,12 @@
 package funcons.truffle.entities;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-
-import static com.oracle.truffle.api.nodes.Node.*;
+import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "SupplyGiven Supply Node")
-public class SupplyGivenSupplyNode extends Node implements FNCExecuteNode {
+public class SupplyGivenSupplyNode extends funcons.truffle.nodes.FNCStatementNode {
 
     @Child
     FNCExpressionNode exp;
@@ -19,6 +17,11 @@ public class SupplyGivenSupplyNode extends Node implements FNCExecuteNode {
     public SupplyGivenSupplyNode(FNCExpressionNode exp, FNCExpressionNode x) {
         this.exp = exp;
         this.x = x;
+    }
+
+    @Override
+    public void executeVoid(VirtualFrame frame) throws RunTimeFunconException {
+        throw new RuntimeException("Not implemented");
     }
 
 //    @Override

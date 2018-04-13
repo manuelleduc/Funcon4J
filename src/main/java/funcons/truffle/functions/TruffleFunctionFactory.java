@@ -9,7 +9,9 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.nodes.*;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCRootNode;
 
 public interface TruffleFunctionFactory extends
         IntAlg<FNCExecuteNode>,
@@ -29,24 +31,26 @@ public interface TruffleFunctionFactory extends
      */
     @Override
     default FNCExecuteNode abs(FNCExecuteNode exp) {
-        final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
-        final FNCFunctionBodyNode fct = new FNCFunctionBodyNode((FNCStatementNode) exp);
-        final FNCRootNode rootNode = new FNCRootNode(FNCContext.getInstance().getLanguage(), frameDescriptorFact, fct);
+        return l -> {
+            final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
+            final FNCFunctionBodyNode fct = new FNCFunctionBodyNode(exp.buildAST(l));
+            final FNCRootNode rootNode = new FNCRootNode(l, frameDescriptorFact, fct);
 
-        // TODO: when do we registrer a function,
-        //FNCContext.getInstance().getRegistry().register(rootNode);
-        return fct;
+            // TODO: when do we registrer a function,
+            //FNCContext.getInstance().getRegistry().register(rootNode);
+            return fct;
+        };
     }
 
     @Override
     default FNCExecuteNode abs(FNCExecuteNode patt, FNCExecuteNode exp) {
-        return new FunctionAbsNode2((FNCExpressionNode) patt, (FNCExpressionNode) exp);
+        return language -> new FunctionAbsNode2((FNCExpressionNode) patt.buildAST(language), (FNCExpressionNode) exp.buildAST(language));
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode apply(FNCExecuteNode abs, FNCExecuteNode arg) {
-        return new FunctionApplyNode((FNCExpressionNode) abs, (FNCExpressionNode) arg);
+        return l -> new FunctionApplyNode(l, (FNCExpressionNode) abs.buildAST(l), (FNCExpressionNode) arg.buildAST(l));
     }
 
     @Override
@@ -73,7 +77,7 @@ public interface TruffleFunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode close(FNCExecuteNode abs) {
-        return new FunctionCloseNode((FNCExpressionNode) abs);
+        return language -> new FunctionCloseNode((FNCExpressionNode) abs.buildAST(language));
     }
 
     @Override

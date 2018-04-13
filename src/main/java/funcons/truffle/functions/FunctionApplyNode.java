@@ -2,12 +2,13 @@ package funcons.truffle.functions;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLanguage;
 
 @NodeInfo(description = "Function Apply Node")
-public class FunctionApplyNode extends FNCExpressionNode implements FNCExecuteNode {
+public class FunctionApplyNode extends FNCExpressionNode {
 
+    private final FNCLanguage language;
     @Child
     private FNCExpressionNode functionNode;
 
@@ -17,21 +18,18 @@ public class FunctionApplyNode extends FNCExpressionNode implements FNCExecuteNo
     @Child
     private FNCDispatchNode dispatchNode;
 
-    public FunctionApplyNode(FNCExpressionNode functionNode, FNCExpressionNode argumentNode) {
+    public FunctionApplyNode(FNCLanguage language, FNCExpressionNode functionNode, FNCExpressionNode argumentNode) {
         this.functionNode = functionNode;
         this.argumentNode = argumentNode;
+        this.dispatchNode = FNCDispatchNodeGen.create();
+        this.language = language;
     }
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-//        return salg.supply(argumentNode,
-//                ((Abs<FNCExecuteNode>) functionNode.buildAST()).body()).buildAST();
-        return null;
+        final String functionName = (String) functionNode.executeGeneric(frame);
+        final Object[] argumentValues = new Object[]{argumentNode.executeGeneric(frame)};
+        final FunctionLiteralNode function = new FunctionLiteralNode(this.language, functionName);
+        return dispatchNode.executeDispatch(function.executeGeneric(frame), argumentValues);
     }
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return salg.supply(argumentNode,
-//                ((Abs<CLExecuteNode>) functionNode.buildAST()).body()).buildAST();
-//    }
 }

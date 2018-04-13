@@ -9,12 +9,12 @@ public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<FNCExecuteNode
     @Override
     default FNCExecuteNode given() {
 //        return (env, given) -> given;
-        return new SupplyGivenGivenNode(); // TODO
+        return l ->  new SupplyGivenGivenNode(); // TODO
     }
 
     @Override
     default FNCExecuteNode supply(FNCExecuteNode exp, FNCExecuteNode x) {
 //        return (env, given) -> x.eval(env, exp.eval(env, given));
-        return new SupplyGivenSupplyNode((FNCExpressionNode) exp, (FNCExpressionNode) x);
+        return l -> new SupplyGivenSupplyNode((FNCExpressionNode) exp, (FNCExpressionNode) x);
     }
 }

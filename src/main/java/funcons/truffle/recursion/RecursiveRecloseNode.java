@@ -9,7 +9,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import static com.oracle.truffle.api.nodes.Node.*;
 
 @NodeInfo(description = "Recursive Reclose Node")
-public class RecursiveRecloseNode extends FNCExpressionNode implements FNCExecuteNode {
+public class RecursiveRecloseNode extends FNCExpressionNode  {
 
 
     @Child

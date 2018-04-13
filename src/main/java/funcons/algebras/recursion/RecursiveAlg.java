@@ -4,6 +4,8 @@ public interface RecursiveAlg<E> {
     E freshFwd();
     E freshFwds(E idList);
     E setForwards(E idFwdMap);
+
+    /* $reclose(Map,Decl)$ evaluates $Decl$ recursively based on the forward bindings in $Map$. */
     E reclose(E idFwdsMap, E decl);
     E recursive(E idList,E decl);
     E recursiveTyped(E idTypeMap, E decl);

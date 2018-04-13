@@ -14,7 +14,7 @@ import static com.oracle.truffle.api.nodes.Node.*;
 
 
 @NodeInfo(description = "LogicControl IfTrue Node")
-public class LogicControlIfTrueNode extends FNCExpressionNode implements FNCExecuteNode {
+public class LogicControlIfTrueNode extends FNCExpressionNode  {
     @Child
     private FNCExpressionNode e;
     @Child

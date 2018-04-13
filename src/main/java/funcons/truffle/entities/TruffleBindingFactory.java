@@ -15,7 +15,7 @@ public interface TruffleBindingFactory extends
 
     @Override
     default FNCExecuteNode id(java.lang.String s) {
-        return new BindingIdNode(s);
+        return l -> new BindingIdNode(s);
     }
 
     @Override
@@ -25,7 +25,7 @@ public interface TruffleBindingFactory extends
     }
 
     /**
-     * bind-value(I,E) is a declaration funcon used to compute the single-point environment
+     * Bind Value associate the exp value to the id
      *
      * @param id
      * @param exp
@@ -33,17 +33,19 @@ public interface TruffleBindingFactory extends
      */
     @Override
     default FNCExecuteNode bindValue(FNCExecuteNode id, FNCExecuteNode exp) {
-        System.out.println("BIND VALUE " + id + " " + exp);
-        final String name = "HAHA";
-        final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
-        new FNCLexicalScope(null).locals.put(name, frameSlot);
+        return l -> {
+            final FNCExpressionNode idn = (FNCExpressionNode) id.buildAST(l);
+            final String name = idn.executeGeneric(null).toString();
+            final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
+            new FNCLexicalScope(null).locals.put(name, frameSlot);
 
-        return BindingBindValueNodeGen.create((FNCExpressionNode) exp, frameSlot);// (FNCExpressionNode) localBindings, (FNCExpressionNode) exp);
+            return BindingBindValueNodeGen.create((FNCExpressionNode) exp.buildAST(l), frameSlot);
+        };
     }
 
     @Override
     default FNCExecuteNode boundValue(FNCExecuteNode id) {
-        return new BindingBoundValueNode((FNCExpressionNode) id);
+        return l -> new BindingBoundValueNode(l, (FNCExpressionNode) id.buildAST(l));
     }
 
     /**
@@ -59,31 +61,35 @@ public interface TruffleBindingFactory extends
      */
     @Override
     default FNCExecuteNode scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
-
-        System.out.println("SCOPE " + localBindings + " " + exp);
-        final String name = "HAHA";
-        final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
-        new FNCLexicalScope(null).locals.put(name, frameSlot);
-
-        return BindingScopeNodeGen.create((FNCExpressionNode) exp, frameSlot);
+        return l -> {
+            final FNCExpressionNode idn = (FNCExpressionNode) localBindings.buildAST(l);
+            final String name = "NAME_VAR";
+            final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
+//        new FNCLexicalScope(null).locals.put(name, frameSlot);
+            return BindingScopeNodeGen.create((FNCExpressionNode) exp.buildAST(l), frameSlot);
+        };
     }
 
     @Override
     default FNCExecuteNode closure(FNCExecuteNode x, FNCExecuteNode environment) {
 //        return (env, given) ->
 //                x.eval((IMap) environment.eval(env, given), given);
-        return new BindingClosureNode((FNCExpressionNode) x, (FNCExpressionNode) environment);
+        return l -> new BindingClosureNode((FNCExpressionNode) x, (FNCExpressionNode) environment);
     }
 
     @Override
     default FNCExecuteNode environment() {
-        return new BindingEnvironmentNode();
+        return l -> new BindingEnvironmentNode();
     }
 
     @Override
     default FNCExecuteNode accum(FNCExecuteNode environment, FNCExecuteNode decl) {
 //        return new BindingAccumNode(environment, (FNCExpressionNode) decl, this, this);
-        final FNCExecuteNode currentEnv = environment.buildAST();
-        return scope(currentEnv, mapOver(decl, currentEnv)).buildAST();
+        return language -> {
+
+            final FNCExecuteNode currentEnv = l -> environment.buildAST(language);
+            return scope(currentEnv, mapOver(decl, currentEnv)).buildAST(language);
+
+        };
     }
 }

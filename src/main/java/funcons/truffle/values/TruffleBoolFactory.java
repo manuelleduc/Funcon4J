@@ -8,12 +8,12 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
     @Override
     default FNCExecuteNode bool(Boolean b) {
 //        return (env, given) -> vf.bool(b);
-        return new BoolBoolNode(b); // TODO
+        return l -> new BoolBoolNode(b); // TODO
     }
 
     @Override
     default FNCExecuteNode not(FNCExecuteNode b) {
-        return new BoolNotNode((FNCExpressionNode) b);
+        return l -> new BoolNotNode((FNCExpressionNode) b);
     }
 
     @Override
@@ -23,7 +23,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 //            IValue bVal = (IValue)b.eval(env, given);
 //            return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
 //        };
-        return new BoolGreaterNode((FNCExpressionNode) a, (FNCExpressionNode) b);
+        return l -> new BoolGreaterNode((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
     }
 
     @Override
@@ -33,7 +33,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode greaterEqual(FNCExecuteNode a, FNCExecuteNode b) {
-        return new BoolGreaterEqualNode((FNCExpressionNode) a, (FNCExpressionNode) b);
+        return l -> new BoolGreaterEqualNode((FNCExpressionNode) a, (FNCExpressionNode) b);
     }
 
     @Override
@@ -44,7 +44,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode equal(FNCExecuteNode e1, FNCExecuteNode e2) {
-        return BoolEqualNodeGen.create((FNCExpressionNode) e1, (FNCExpressionNode) e2);
+        return l -> BoolEqualNodeGen.create((FNCExpressionNode) e1, (FNCExpressionNode) e2);
     }
 
     @Override

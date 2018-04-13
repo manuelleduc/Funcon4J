@@ -29,7 +29,7 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode tuple(FNCExecuteNode x1, FNCExecuteNode x2) {
-        return new TupleTupleNode((FNCExpressionNode) x1, (FNCExpressionNode) x2);
+        return language -> new TupleTupleNode((FNCExpressionNode) x1.buildAST(language), (FNCExpressionNode) x2.buildAST(language));
     }
 
     @Override
@@ -70,7 +70,7 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode project(FNCExecuteNode index, FNCExecuteNode tup) {
-        return new TupleProjectNode((FNCExpressionNode) index, (FNCExpressionNode) tup);
+        return language -> new TupleProjectNode((FNCExpressionNode) index.buildAST(language), (FNCExpressionNode) tup.buildAST(language));
     }
 
     @Override

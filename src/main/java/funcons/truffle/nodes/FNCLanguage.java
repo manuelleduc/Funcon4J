@@ -35,7 +35,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
     @Override
     protected FNCContext createContext(Env env) {
-        return null;
+        return new FNCContext(this, env);
     }
 
     @Override
@@ -57,12 +57,14 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         final camllight.algebras.AllAlg alg = () -> evalAlg;
         final FNCExecuteNode eval = builder.build(alg);
 //        final IValue env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
-        FNCContext.getInstance().initRegistry(this);
+//        this.getContextReference().initRegistry(this);
 
-        final FNCExpressionNode clExecuteNode = (FNCExpressionNode) eval.buildAST();
+        final FNCExpressionNode clExecuteNode = (FNCExpressionNode) eval.buildAST(this);
 
         // useless so far, just to avoir an ugly runtime exception when the execution ends.
-        return Truffle.getRuntime().createCallTarget(new FNCRootNode(this, clExecuteNode));
+        final FNCRootNode rootNode = new FNCRootNode(this, clExecuteNode);
+        System.out.println(rootNode);
+        return Truffle.getRuntime().createCallTarget(rootNode);
     }
 
     public IValue importStandardLibrary(IValue env) throws FunconException {

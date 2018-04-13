@@ -1,13 +1,14 @@
 package funcons.truffle.entities;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 
 @NodeInfo(description = "Assign Alloc Node")
-public class AssignAllocNode extends Node implements FNCExecuteNode {
+public class AssignAllocNode extends FNCStatementNode {
 
     @Child
     FNCExpressionNode x;
@@ -16,6 +17,10 @@ public class AssignAllocNode extends Node implements FNCExecuteNode {
         this.x = x;
     }
 
+    @Override
+    public void executeVoid(VirtualFrame frame) throws RunTimeFunconException {
+        throw new RuntimeException("Not Implemented ");
+    }
 //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {
 //        return new Variable(x.buildAST());

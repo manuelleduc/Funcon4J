@@ -6,7 +6,7 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Supply Given Given Node")
-public class SupplyGivenGivenNode extends FNCExpressionNode implements FNCExecuteNode {
+public class SupplyGivenGivenNode extends FNCExpressionNode  {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
         return null;

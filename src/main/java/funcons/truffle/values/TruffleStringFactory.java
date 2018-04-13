@@ -1,13 +1,13 @@
 package funcons.truffle.values;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.values.StringAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
 
 public interface TruffleStringFactory extends StringAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode string(String s) {
-        return new StringStringNode(s);
+        return l -> new StringStringNode(s);
     }
 
     @Override

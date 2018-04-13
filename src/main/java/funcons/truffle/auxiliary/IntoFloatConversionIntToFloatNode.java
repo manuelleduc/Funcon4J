@@ -1,12 +1,12 @@
 package funcons.truffle.auxiliary;
 
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import io.usethesource.vallang.IInteger;
 
 @NodeInfo(description = "IntoFloatConversion IntToFloat Node")
-public class IntoFloatConversionIntToFloatNode extends Node implements FNCExecuteNode {
+public class IntoFloatConversionIntToFloatNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode i;
@@ -15,9 +15,9 @@ public class IntoFloatConversionIntToFloatNode extends Node implements FNCExecut
         this.i = i;
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-////        return ((IInteger) i.buildAST()).toReal(5);
-//        return this;
-//    }
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        return ((IInteger) i.executeGeneric(frame)).toReal(5);
+    }
+
 }

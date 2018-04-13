@@ -13,7 +13,7 @@ import io.usethesource.vallang.IInteger;
 @NodeChildren({
         @NodeChild("a"), @NodeChild("b")
 })
-public abstract class IntIntAddNode extends FNCExpressionNode implements FNCExecuteNode {
+public abstract class IntIntAddNode extends FNCExpressionNode  {
 
     @Specialization
     public IInteger addIInteger(IInteger a, IInteger b) {

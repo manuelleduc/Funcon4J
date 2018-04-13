@@ -8,7 +8,7 @@ import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 
 @NodeInfo(description = "Type UnknowType Node")
-public class TypeUnknowTypeNode extends FNCExpressionNode implements FNCExecuteNode {
+public class TypeUnknowTypeNode extends FNCExpressionNode  {
 
     ValueFactory vf = ValueFactory.getInstance();
 

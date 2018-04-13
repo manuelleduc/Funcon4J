@@ -1,12 +1,13 @@
 package funcons.truffle.controlflow;
 
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "LogicControl WhileTrue Node")
-public class LogicControlWhileTrueNode extends Node implements FNCExecuteNode {
+public class LogicControlWhileTrueNode extends FNCStatementNode {
 
     @Child
     FNCExpressionNode e;
@@ -17,6 +18,11 @@ public class LogicControlWhileTrueNode extends Node implements FNCExecuteNode {
     public LogicControlWhileTrueNode(FNCExpressionNode e, FNCExpressionNode c) {
         this.e = e;
         this.c = c;
+    }
+
+    @Override
+    public void executeVoid(VirtualFrame frame) throws RunTimeFunconException {
+        throw new RuntimeException("Not implemented");
     }
 
 //    @Override

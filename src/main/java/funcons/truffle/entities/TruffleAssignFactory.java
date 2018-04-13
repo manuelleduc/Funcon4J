@@ -8,13 +8,13 @@ import funcons.truffle.nodes.FNCExpressionNode;
 public interface TruffleAssignFactory extends NullAlg<FNCExecuteNode>, AssignAlg<FNCExecuteNode> {
 
     @Override
-    default FNCExecuteNode assign(FNCExecuteNode var, FNCExecuteNode x) {
-        return new AssignAssignNode((FNCExpressionNode) var, (FNCExpressionNode) x);
+    default FNCExecuteNode assign(final FNCExecuteNode var, final FNCExecuteNode x) {
+        return l -> new AssignAssignNode((FNCExpressionNode) var.buildAST(l), (FNCExpressionNode) x.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode assignedValue(FNCExecuteNode var) {
-        return new AssignAssignedValueNode((FNCExpressionNode) var);
+        return l -> new AssignAssignedValueNode((FNCExpressionNode) var.buildAST(l));
     }
 
     @Override
@@ -32,6 +32,6 @@ public interface TruffleAssignFactory extends NullAlg<FNCExecuteNode>, AssignAlg
 
     @Override
     default FNCExecuteNode alloc(FNCExecuteNode x) {
-        return new AssignAllocNode((FNCExpressionNode) x);
+        return (l) -> new AssignAllocNode((FNCExpressionNode) x.buildAST(l));
     }
 }

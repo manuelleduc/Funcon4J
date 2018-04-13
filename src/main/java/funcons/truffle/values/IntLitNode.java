@@ -7,7 +7,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Int Lit Node")
-public class IntLitNode extends FNCExpressionNode implements FNCExecuteNode {
+public class IntLitNode extends FNCExpressionNode  {
     private final Integer i;
     ValueFactory vf = ValueFactory.getInstance();
 
