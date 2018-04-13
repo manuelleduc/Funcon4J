@@ -26,7 +26,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 //            IMap m = (IMap) map.eval(env, given);
 //            return m.put(k, v);
 //        };
-        return new MapMapUpdateNode(map, key, val);
+        return new MapMapUpdateNode((FNCExpressionNode) map, (FNCExpressionNode) key, (FNCExpressionNode) val);
     }
 
     @Override
@@ -37,7 +37,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 //            m.forEach(lw::append);
 //            return lw.done();
 //        };
-        return new MapMapDomainNode(map);
+        return new MapMapDomainNode((FNCExpressionNode) map);
     }
 
     @Override
@@ -56,7 +56,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 //            IMap m = (IMap) map.eval(env, given);
 //            return m.get((IValue) key.eval(env, given));
 //        };
-        return new MapMapGetNode(map, key);
+        return new MapMapGetNode((FNCExpressionNode) map, (FNCExpressionNode) key);
     }
 
 }

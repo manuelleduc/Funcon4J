@@ -8,7 +8,6 @@ import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
 
 public interface TruffleLogicControlFactory extends
         NullAlg<FNCExecuteNode>,
@@ -39,7 +38,7 @@ public interface TruffleLogicControlFactory extends
 
     @Override
     default FNCExecuteNode whileTrue(FNCExecuteNode e, FNCExecuteNode c) {
-        return new LogicControlWhileTrueNode(e, c, this);
+        return new LogicControlWhileTrueNode((FNCExpressionNode) e, (FNCExpressionNode) c);
     }
 
     @Override

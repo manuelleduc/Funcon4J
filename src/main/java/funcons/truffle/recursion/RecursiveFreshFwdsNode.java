@@ -1,40 +1,19 @@
 package funcons.truffle.recursion;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.collections.ListAlg;
-import funcons.algebras.collections.MapAlg;
-import funcons.algebras.entities.BindingAlg;
-import funcons.algebras.recursion.RecursiveAlg;
-import funcons.algebras.values.IntAlg;
-import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Recursive FreshFwds Node")
 public class RecursiveFreshFwdsNode extends FNCExpressionNode implements FNCExecuteNode {
 
 
-    private final BindingAlg<FNCExecuteNode> balg;
-    private final ListAlg<FNCExecuteNode> lalg;
-    private final NullAlg<FNCExecuteNode> nalg;
-    private final IntAlg<FNCExecuteNode> ialg;
-    private final RecursiveAlg<FNCExecuteNode> ralg;
-    private final MapAlg<FNCExecuteNode> malg;
-
     @Child
-    private FNCExecuteNode idList;
+    FNCExpressionNode idList;
 
-    public RecursiveFreshFwdsNode(FNCExecuteNode idList, BindingAlg<FNCExecuteNode> balg, ListAlg<FNCExecuteNode> lalg,
-                                  NullAlg<FNCExecuteNode> nalg, IntAlg<FNCExecuteNode> ialg, RecursiveAlg<FNCExecuteNode> ralg, MapAlg<FNCExecuteNode> malg) {
+    public RecursiveFreshFwdsNode(FNCExpressionNode idList) {
         this.idList = idList;
-        this.balg = balg;
-        this.lalg = lalg;
-        this.nalg = nalg;
-        this.ialg = ialg;
-        this.ralg = ralg;
-        this.malg = malg;
     }
 
     @Override

@@ -1,25 +1,24 @@
 package funcons.truffle.entities;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 
 @NodeInfo(description = "Assign Assign Node")
 public class AssignAssignNode extends Node implements FNCExecuteNode {
 
-    private final NullAlg<FNCExecuteNode> nalg;
-    @Node.Child
-    private FNCExecuteNode var;
 
-    @Node.Child
-    private FNCExecuteNode x;
+    @Child
+    FNCExpressionNode var;
 
-    public AssignAssignNode(FNCExecuteNode var, FNCExecuteNode x, NullAlg<FNCExecuteNode> nalg) {
+    @Child
+    FNCExpressionNode x;
+
+    public AssignAssignNode(FNCExpressionNode var, FNCExpressionNode x) {
         this.var = var;
         this.x = x;
-        this.nalg = nalg;
     }
 
 //    @Override

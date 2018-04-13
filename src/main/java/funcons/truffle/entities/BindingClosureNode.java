@@ -3,19 +3,18 @@ package funcons.truffle.entities;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExecuteNode;
-
-import static com.oracle.truffle.api.nodes.Node.*;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Binding Closure Node")
 public class BindingClosureNode extends Node implements FNCExecuteNode {
 
     @Child
-    private FNCExecuteNode x;
+    FNCExpressionNode x;
 
     @Child
-    private FNCExecuteNode environment;
+    FNCExpressionNode environment;
 
-    public BindingClosureNode(FNCExecuteNode x, FNCExecuteNode environment) {
+    public BindingClosureNode(FNCExpressionNode x, FNCExpressionNode environment) {
         this.x = x;
         this.environment = environment;
     }

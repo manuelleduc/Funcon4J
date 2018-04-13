@@ -1,19 +1,20 @@
 package funcons.truffle.entities;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.entities.AssignAlg;
 import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TruffleAssignFactory extends NullAlg<FNCExecuteNode>, AssignAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode assign(FNCExecuteNode var, FNCExecuteNode x) {
-        return new AssignAssignNode(var, x, this);
+        return new AssignAssignNode((FNCExpressionNode) var, (FNCExpressionNode) x);
     }
 
     @Override
     default FNCExecuteNode assignedValue(FNCExecuteNode var) {
-        return new AssignAssignedValueNode(var);
+        return new AssignAssignedValueNode((FNCExpressionNode) var);
     }
 
     @Override
@@ -31,6 +32,6 @@ public interface TruffleAssignFactory extends NullAlg<FNCExecuteNode>, AssignAlg
 
     @Override
     default FNCExecuteNode alloc(FNCExecuteNode x) {
-        return new AssignAllocNode(x);
+        return new AssignAllocNode((FNCExpressionNode) x);
     }
 }

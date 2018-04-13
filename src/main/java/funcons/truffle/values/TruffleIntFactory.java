@@ -14,7 +14,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode intAdd(FNCExecuteNode a, FNCExecuteNode b) {
-        return new IntIntAddNode(a, b);
+        return IntIntAddNodeGen.create((FNCExpressionNode) a, (FNCExpressionNode) b);
     }
 
     @Override

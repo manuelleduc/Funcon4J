@@ -1,20 +1,17 @@
 package funcons.truffle.functions;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.functions.CurryAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Curry Curry Node")
 public class CurryCurryNode extends Node implements FNCExecuteNode {
     @Child
-    private FNCExecuteNode a;
+    FNCExpressionNode a;
 
-    private CurryAlg<FNCExecuteNode> alg;
-
-    public CurryCurryNode(FNCExecuteNode a, CurryAlg<FNCExecuteNode> alg) {
+    public CurryCurryNode(FNCExpressionNode a) {
         this.a = a;
-        this.alg = alg;
     }
 
 //    @Override

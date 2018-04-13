@@ -1,32 +1,25 @@
 package funcons.truffle.recursion;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
-import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.controlflow.LogicControlAlg;
-import funcons.algebras.entities.BindingAlg;
-import funcons.algebras.recursion.RecursiveAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+
+import static com.oracle.truffle.api.nodes.Node.*;
 
 @NodeInfo(description = "Recursive Reclose Node")
 public class RecursiveRecloseNode extends FNCExpressionNode implements FNCExecuteNode {
 
-    private final BindingAlg<FNCExecuteNode> balg;
-    private final LogicControlAlg<FNCExecuteNode> lalg;
-    private final RecursiveAlg<FNCExecuteNode> ralg;
-    @Node.Child
-    private FNCExecuteNode map;
-    @Node.Child
-    private FNCExecuteNode decl;
 
-    public RecursiveRecloseNode(FNCExecuteNode map, FNCExecuteNode decl, BindingAlg<FNCExecuteNode> balg, LogicControlAlg<FNCExecuteNode> lalg,
-                                RecursiveAlg<FNCExecuteNode> ralg) {
+    @Child
+    FNCExpressionNode map;
+    @Child
+    FNCExpressionNode decl;
+
+    public RecursiveRecloseNode(FNCExpressionNode map, FNCExpressionNode decl) {
         this.map = map;
         this.decl = decl;
-        this.balg = balg;
-        this.lalg = lalg;
-        this.ralg = ralg;
     }
 
     @Override

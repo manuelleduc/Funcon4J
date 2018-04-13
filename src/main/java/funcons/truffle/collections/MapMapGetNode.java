@@ -1,19 +1,20 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Map MapGet Node")
 public class MapMapGetNode extends Node implements FNCExecuteNode {
 
-    @Node.Child
-    private FNCExecuteNode map;
+    @Child
+    FNCExpressionNode map;
 
-    @Node.Child
-    private FNCExecuteNode key;
+    @Child
+    FNCExpressionNode key;
 
-    public MapMapGetNode(FNCExecuteNode map, FNCExecuteNode key) {
+    public MapMapGetNode(FNCExpressionNode map, FNCExpressionNode key) {
         this.map = map;
         this.key = key;
     }

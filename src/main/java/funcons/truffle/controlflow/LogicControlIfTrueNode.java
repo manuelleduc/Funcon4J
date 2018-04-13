@@ -10,14 +10,16 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
+import static com.oracle.truffle.api.nodes.Node.*;
+
 
 @NodeInfo(description = "LogicControl IfTrue Node")
 public class LogicControlIfTrueNode extends FNCExpressionNode implements FNCExecuteNode {
-    @Node.Child
+    @Child
     private FNCExpressionNode e;
-    @Node.Child
+    @Child
     private FNCExpressionNode c1;
-    @Node.Child
+    @Child
     private FNCExpressionNode c2;
 
     private final ConditionProfile conditionProfile = ConditionProfile.createBinaryProfile();

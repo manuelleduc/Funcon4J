@@ -1,12 +1,13 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TruffleListFactory extends
         PatternAlg<FNCExecuteNode>,
@@ -25,7 +26,7 @@ public interface TruffleListFactory extends
 //            return l.get(i.intValue());
 //        };
 
-        return new ListProjectListNode(index, list);
+        return new ListProjectListNode((FNCExpressionNode) index, (FNCExpressionNode) list);
     }
 
     @Override
@@ -129,7 +130,7 @@ public interface TruffleListFactory extends
     default FNCExecuteNode listLength(FNCExecuteNode list) {
 //        return (env, given) ->
 //                vf.integer(((IList) list.eval(env, given)).length());
-        return new ListListLengthNode(list);
+        return new ListListLengthNode((FNCExpressionNode) list);
     }
 
 

@@ -72,13 +72,13 @@ public interface TruffleExceptionFactory extends
 //                return x2.eval(env, given);
 //            }
 //        };
-        return new ExceptionElseNode(x1, x2);
+        return new ExceptionElseNode((FNCExpressionNode) x1, (FNCExpressionNode) x2);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode preferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
-        return new ExceptionPrefereOverNode(a1, a2, this, this);
+        return new ExceptionPrefereOverNode((FNCExpressionNode) a1, (FNCExpressionNode) a2);
     }
 
 

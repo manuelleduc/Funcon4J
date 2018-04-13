@@ -2,6 +2,7 @@ package funcons.truffle.entities;
 
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.entities.SupplyGivenAlg;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<FNCExecuteNode> {
 
@@ -14,6 +15,6 @@ public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<FNCExecuteNode
     @Override
     default FNCExecuteNode supply(FNCExecuteNode exp, FNCExecuteNode x) {
 //        return (env, given) -> x.eval(env, exp.eval(env, given));
-        return new SupplyGivenSupplyNode(exp, x);
+        return new SupplyGivenSupplyNode((FNCExpressionNode) exp, (FNCExpressionNode) x);
     }
 }

@@ -1,28 +1,29 @@
 package funcons.truffle.controlflow;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.controlflow.ExceptionAlg;
-import funcons.algebras.functions.FunctionAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 
 @NodeInfo(description = "Exception PrefereOver Node")
-public class ExceptionPrefereOverNode extends Node implements FNCExecuteNode {
+public class ExceptionPrefereOverNode extends FNCExpressionNode implements FNCExecuteNode {
 
-    private final FunctionAlg<FNCExecuteNode> falg;
-    private final ExceptionAlg<FNCExecuteNode> ealg;
-    @Node.Child
-    private FNCExecuteNode a1;
 
-    @Node.Child
-    private FNCExecuteNode a2;
+    @Child
+    FNCExpressionNode a1;
 
-    public ExceptionPrefereOverNode(FNCExecuteNode a1, FNCExecuteNode a2, FunctionAlg<FNCExecuteNode> falg, ExceptionAlg<FNCExecuteNode> ealg) {
+    @Child
+    FNCExpressionNode a2;
+
+    public ExceptionPrefereOverNode(FNCExpressionNode a1, FNCExpressionNode a2) {
         this.a1 = a1;
         this.a2 = a2;
-        this.falg = falg;
-        this.ealg = ealg;
+    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        throw new RuntimeException("executeGeneric not implemented");
     }
 
 //    @Override

@@ -2,13 +2,11 @@ package funcons.truffle.functions;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "Function Apply Node")
 public class FunctionApplyNode extends FNCExpressionNode implements FNCExecuteNode {
-    private final SupplyGivenAlg<FNCExecuteNode> salg;
 
     @Child
     private FNCExpressionNode functionNode;
@@ -19,10 +17,9 @@ public class FunctionApplyNode extends FNCExpressionNode implements FNCExecuteNo
     @Child
     private FNCDispatchNode dispatchNode;
 
-    public FunctionApplyNode(FNCExpressionNode functionNode, FNCExpressionNode argumentNode, SupplyGivenAlg<FNCExecuteNode> salg) {
+    public FunctionApplyNode(FNCExpressionNode functionNode, FNCExpressionNode argumentNode) {
         this.functionNode = functionNode;
         this.argumentNode = argumentNode;
-        this.salg = salg;
     }
 
     @Override

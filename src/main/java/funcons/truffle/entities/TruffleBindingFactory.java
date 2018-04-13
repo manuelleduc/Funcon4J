@@ -72,7 +72,7 @@ public interface TruffleBindingFactory extends
     default FNCExecuteNode closure(FNCExecuteNode x, FNCExecuteNode environment) {
 //        return (env, given) ->
 //                x.eval((IMap) environment.eval(env, given), given);
-        return new BindingClosureNode(x, environment);
+        return new BindingClosureNode((FNCExpressionNode) x, (FNCExpressionNode) environment);
     }
 
     @Override

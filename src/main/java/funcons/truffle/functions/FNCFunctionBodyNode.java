@@ -9,10 +9,12 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
+import static com.oracle.truffle.api.nodes.Node.*;
+
 @NodeInfo(shortName = "body")
 public class FNCFunctionBodyNode extends FNCExpressionNode implements FNCExecuteNode {
 
-    @Node.Child
+    @Child
     private FNCStatementNode bodyNode;
 
     private final BranchProfile exceptionTaken = BranchProfile.create();

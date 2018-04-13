@@ -2,24 +2,17 @@ package funcons.truffle.functions;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.entities.BindingAlg;
-import funcons.algebras.functions.FunctionAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 
 
 @NodeInfo(description = "Function Close Node")
 public class FunctionCloseNode extends FNCExpressionNode implements FNCExecuteNode {
-    private final BindingAlg<FNCExecuteNode> alg;
-    private final FunctionAlg<FNCExecuteNode> falg;
     @Child
-    private FNCExecuteNode abs;
+    FNCExpressionNode abs;
 
-    public FunctionCloseNode(FNCExecuteNode abs, BindingAlg<FNCExecuteNode> alg, FunctionAlg<FNCExecuteNode> falg) {
+    public FunctionCloseNode(FNCExpressionNode abs) {
         this.abs = abs;
-        this.alg = alg;
-
-        this.falg = falg;
     }
 
     @Override

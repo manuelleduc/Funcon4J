@@ -1,21 +1,28 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Map MapDomain Node")
-public class MapMapDomainNode extends Node implements FNCExecuteNode {
+public class MapMapDomainNode extends FNCExpressionNode implements FNCExecuteNode {
 
     ValueFactory vf = ValueFactory.getInstance();
 
 
-    @Node.Child
-    private FNCExecuteNode map;
+    @Child
+    FNCExpressionNode map;
 
-    public MapMapDomainNode(FNCExecuteNode map) {
+    public MapMapDomainNode(FNCExpressionNode map) {
         this.map = map;
+    }
+
+    @Override
+    public Object executeGeneric(VirtualFrame frame) {
+        throw new RuntimeException("executeGeneric not implemented");
     }
 
 //    @Override

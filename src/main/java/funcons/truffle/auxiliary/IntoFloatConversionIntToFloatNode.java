@@ -1,16 +1,17 @@
 package funcons.truffle.auxiliary;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "IntoFloatConversion IntToFloat Node")
 public class IntoFloatConversionIntToFloatNode extends Node implements FNCExecuteNode {
 
     @Child
-    private FNCExecuteNode i;
+    FNCExpressionNode i;
 
-    public IntoFloatConversionIntToFloatNode(FNCExecuteNode i) {
+    public IntoFloatConversionIntToFloatNode(FNCExpressionNode i) {
         this.i = i;
     }
 

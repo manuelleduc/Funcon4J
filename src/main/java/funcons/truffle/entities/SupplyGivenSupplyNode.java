@@ -3,6 +3,7 @@ package funcons.truffle.entities;
 import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 import static com.oracle.truffle.api.nodes.Node.*;
 
@@ -10,12 +11,12 @@ import static com.oracle.truffle.api.nodes.Node.*;
 public class SupplyGivenSupplyNode extends Node implements FNCExecuteNode {
 
     @Child
-    private FNCExecuteNode exp;
+    FNCExpressionNode exp;
 
     @Child
-    private FNCExecuteNode x;
+    FNCExpressionNode x;
 
-    public SupplyGivenSupplyNode(FNCExecuteNode exp, FNCExecuteNode x) {
+    public SupplyGivenSupplyNode(FNCExpressionNode exp, FNCExpressionNode x) {
         this.exp = exp;
         this.x = x;
     }

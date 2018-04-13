@@ -27,12 +27,12 @@ public interface TruffleRecursiveFactory extends
 
     @Override
     default FNCExecuteNode freshFwds(FNCExecuteNode idList) {
-        return new RecursiveFreshFwdsNode(idList, this, this, this, this, this, this);
+        return new RecursiveFreshFwdsNode((FNCExpressionNode) idList);
     }
 
     @Override
     default FNCExecuteNode setForwards(FNCExecuteNode idFwdMap) {
-        return new RecursiveSetForwardsNode((FNCExpressionNode) idFwdMap, this, this, this, this, this);
+        return new RecursiveSetForwardsNode((FNCExpressionNode) idFwdMap);
     }
 
     @Override

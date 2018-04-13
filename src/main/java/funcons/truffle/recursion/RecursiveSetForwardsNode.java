@@ -2,38 +2,19 @@ package funcons.truffle.recursion;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.collections.ListAlg;
-import funcons.algebras.collections.MapAlg;
-import funcons.algebras.entities.BindingAlg;
-import funcons.algebras.values.IntAlg;
-import funcons.algebras.values.NullAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import io.usethesource.vallang.IInteger;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Recursive SetForwards Node")
 public class RecursiveSetForwardsNode extends FNCExpressionNode implements FNCExecuteNode {
 
-    private final MapAlg<FNCExecuteNode> malg;
-    private final ListAlg<FNCExecuteNode> lalg;
-    private final IntAlg<FNCExecuteNode> ialg;
-    private final BindingAlg<FNCExecuteNode> balg;
-    private final NullAlg<FNCExecuteNode> nalg;
+
     @Child
     private FNCExpressionNode idFwdMap;
 
-    public RecursiveSetForwardsNode(FNCExpressionNode idFwdMap, MapAlg<FNCExecuteNode> malg,
-                                    ListAlg<FNCExecuteNode> lalg, IntAlg<FNCExecuteNode> ialg,
-                                    BindingAlg<FNCExecuteNode> balg,
-
-                                    NullAlg<FNCExecuteNode> nalg) {
+    public RecursiveSetForwardsNode(FNCExpressionNode idFwdMap) {
         this.idFwdMap = idFwdMap;
-        this.malg = malg;
-        this.lalg = lalg;
-        this.ialg = ialg;
-        this.balg = balg;
-        this.nalg = nalg;
+
     }
 
     @Override

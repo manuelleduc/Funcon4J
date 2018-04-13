@@ -1,21 +1,23 @@
 package funcons.truffle.values;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.dsl.NodeChild;
+import com.oracle.truffle.api.dsl.NodeChildren;
+import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
+import io.usethesource.vallang.IInteger;
 
 
 @NodeInfo(description = "Int IntAdd Node")
-public class IntIntAddNode extends Node implements FNCExecuteNode {
-    @Node.Child
-    private FNCExecuteNode a;
+@NodeChildren({
+        @NodeChild("a"), @NodeChild("b")
+})
+public abstract class IntIntAddNode extends FNCExpressionNode implements FNCExecuteNode {
 
-    @Node.Child
-    private FNCExecuteNode b;
-
-    public IntIntAddNode(FNCExecuteNode a, FNCExecuteNode b) {
-        this.a = a;
-        this.b = b;
+    @Specialization
+    public IInteger addIInteger(IInteger a, IInteger b) {
+        return a.add(b);
     }
 
 //    @Override

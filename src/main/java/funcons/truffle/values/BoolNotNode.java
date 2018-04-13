@@ -7,9 +7,11 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.IBool;
 
+import static com.oracle.truffle.api.nodes.Node.*;
+
 @NodeInfo(description = "Bool Not Node")
 public class BoolNotNode extends FNCExpressionNode implements FNCExecuteNode {
-    @Node.Child
+    @Child
     private FNCExpressionNode b;
 
     public BoolNotNode(FNCExpressionNode b) {

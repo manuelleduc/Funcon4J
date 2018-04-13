@@ -19,24 +19,6 @@ import io.usethesource.vallang.IInteger;
 @NodeField(name = "slot", type = FrameSlot.class)
 public abstract class BindingScopeNode extends FNCExpressionNode implements FNCExecuteNode {
 
-//    @Node.Child
-//    private FNCExpressionNode localBindings;
-//
-//    @Node.Child
-//    private FNCExpressionNode exp;
-//
-//    public BindingScopeNode(FNCExpressionNode localBindings, FNCExpressionNode exp) {
-//        this.localBindings = localBindings;
-//        this.exp = exp;
-//    }
-//
-//    @Override
-//    public Object executeGeneric(VirtualFrame frame) {
-//        // TODO what do we do with the execute generic?
-//        return exp.executeGeneric(frame);
-//    }
-
-
     protected abstract FrameSlot getSlot();
 
     /**

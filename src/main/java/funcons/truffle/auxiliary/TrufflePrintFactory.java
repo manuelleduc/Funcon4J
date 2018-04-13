@@ -8,6 +8,6 @@ import funcons.algebras.values.NullAlg;
 public interface TrufflePrintFactory extends NullAlg<FNCExecuteNode>, PrintAlg<FNCExecuteNode> {
     @Override
     default FNCExecuteNode print(FNCExecuteNode x) {
-        return new PrintPrintNode((FNCExpressionNode) x, this);
+        return new PrintPrintNode((FNCExpressionNode) x);
     }
 }

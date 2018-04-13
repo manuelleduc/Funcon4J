@@ -40,13 +40,13 @@ public interface TruffleFunctionFactory extends
 
     @Override
     default FNCExecuteNode abs(FNCExecuteNode patt, FNCExecuteNode exp) {
-        return new FunctionAbsNode2(patt, exp, this);
+        return new FunctionAbsNode2((FNCExpressionNode) patt, (FNCExpressionNode) exp);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode apply(FNCExecuteNode abs, FNCExecuteNode arg) {
-        return new FunctionApplyNode((FNCExpressionNode) abs, (FNCExpressionNode) arg, this);
+        return new FunctionApplyNode((FNCExpressionNode) abs, (FNCExpressionNode) arg);
     }
 
     @Override
@@ -73,7 +73,7 @@ public interface TruffleFunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode close(FNCExecuteNode abs) {
-        return new FunctionCloseNode(abs, this, this);
+        return new FunctionCloseNode((FNCExpressionNode) abs);
     }
 
     @Override

@@ -1,19 +1,20 @@
 package funcons.truffle.collections;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "List ProjectList Node")
 public class ListProjectListNode extends Node implements FNCExecuteNode {
 
-    @Node.Child
-    private FNCExecuteNode index;
+    @Child
+    FNCExpressionNode index;
 
-    @Node.Child
-    private FNCExecuteNode list;
+    @Child
+    FNCExpressionNode list;
 
-    public ListProjectListNode(FNCExecuteNode index, FNCExecuteNode list) {
+    public ListProjectListNode(FNCExpressionNode index, FNCExpressionNode list) {
         this.index = index;
         this.list = list;
     }

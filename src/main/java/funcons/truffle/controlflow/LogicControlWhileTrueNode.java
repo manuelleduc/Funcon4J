@@ -1,24 +1,22 @@
 package funcons.truffle.controlflow;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 @NodeInfo(description = "LogicControl WhileTrue Node")
 public class LogicControlWhileTrueNode extends Node implements FNCExecuteNode {
 
-    private final NullAlg<FNCExecuteNode> nalg;
-    @Node.Child
-    private FNCExecuteNode e;
+    @Child
+    FNCExpressionNode e;
 
-    @Node.Child
-    private FNCExecuteNode c;
+    @Child
+    FNCExpressionNode c;
 
-    public LogicControlWhileTrueNode(FNCExecuteNode e, FNCExecuteNode c, NullAlg<FNCExecuteNode> nalg) {
+    public LogicControlWhileTrueNode(FNCExpressionNode e, FNCExpressionNode c) {
         this.e = e;
         this.c = c;
-        this.nalg = nalg;
     }
 
 //    @Override

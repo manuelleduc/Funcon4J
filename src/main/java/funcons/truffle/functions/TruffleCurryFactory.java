@@ -1,6 +1,5 @@
 package funcons.truffle.functions;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
@@ -8,6 +7,8 @@ import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TruffleCurryFactory extends
         FunctionAlg<FNCExecuteNode>,
@@ -31,7 +32,7 @@ public interface TruffleCurryFactory extends
 
     @Override
     default FNCExecuteNode curry(FNCExecuteNode a) {
-        return new CurryCurryNode(a, this);
+        return new CurryCurryNode((FNCExpressionNode) a);
     }
 
     @Override
