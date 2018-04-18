@@ -88,9 +88,4 @@ public abstract class BindingScopeNode extends FNCExpressionNode  {
     }
 
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        final IMap local = (IMap) localBindings.buildAST();
-//        return exp.buildAST();
-//    }
 }

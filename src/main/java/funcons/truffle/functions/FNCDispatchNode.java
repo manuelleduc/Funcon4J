@@ -25,4 +25,9 @@ public abstract class FNCDispatchNode extends Node {
         /* Inline cache hit, we are safe to execute the cached call target. */
         return callNode.call(arguments);
     }
+
+    @Override
+    public String toString() {
+        return "FNCDispatchNode{}";
+    }
 }

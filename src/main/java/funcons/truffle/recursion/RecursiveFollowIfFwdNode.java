@@ -25,4 +25,11 @@ public class RecursiveFollowIfFwdNode extends FNCExpressionNode {
         }
         return v;
     }
+
+    @Override
+    public String toString() {
+        return "RecursiveFollowIfFwdNode{" +
+                "fwd=" + fwd +
+                '}';
+    }
 }

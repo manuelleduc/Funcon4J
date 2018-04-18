@@ -26,4 +26,6 @@ public abstract class FNCExpressionNode extends FNCStatementNode {
         return FNCTypesGen.expectIBool(executeGeneric(frame));
     }
 
+
+
 }

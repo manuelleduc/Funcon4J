@@ -21,8 +21,10 @@ public class BindingIdNode extends FNCExpressionNode  {
         return vf.string(s);
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return vf.string(s);
-//    }
+    @Override
+    public String toString() {
+        return "BindingIdNode{" +
+                "s='" + s + '\'' +
+                '}';
+    }
 }

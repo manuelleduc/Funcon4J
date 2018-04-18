@@ -16,8 +16,8 @@ public class BindingEnvironmentNode extends FNCExpressionNode  {
     }
 
 
-    //    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return vf.mapWriter().done();
-//    }
+    @Override
+    public String toString() {
+        return "BindingEnvironmentNode{}";
+    }
 }

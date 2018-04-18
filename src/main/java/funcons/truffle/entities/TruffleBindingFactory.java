@@ -4,9 +4,12 @@ import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.FrameSlot;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
+import funcons.truffle.functions.FunctionAbs;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLexicalScope;
+import funcons.truffle.nodes.FNCRootNode;
+import io.usethesource.vallang.IString;
 
 public interface TruffleBindingFactory extends
         MapAlg<FNCExecuteNode>,
@@ -35,7 +38,7 @@ public interface TruffleBindingFactory extends
     default FNCExecuteNode bindValue(FNCExecuteNode id, FNCExecuteNode exp) {
         return l -> {
             final FNCExpressionNode idn = (FNCExpressionNode) id.buildAST(l);
-            final String name = idn.executeGeneric(null).toString();
+            final String name = ((IString) idn.executeGeneric(null)).getValue();
             final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
             new FNCLexicalScope(null).locals.put(name, frameSlot);
 
@@ -62,11 +65,20 @@ public interface TruffleBindingFactory extends
     @Override
     default FNCExecuteNode scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
         return l -> {
-            final FNCExpressionNode idn = (FNCExpressionNode) localBindings.buildAST(l);
-            final String name = "NAME_VAR";
+            final BindingBindValueNode idn = (BindingBindValueNode) localBindings.buildAST(l);
+            final String name = ((String) idn.getSlot().getIdentifier());
             final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
-//        new FNCLexicalScope(null).locals.put(name, frameSlot);
-            return BindingScopeNodeGen.create((FNCExpressionNode) exp.buildAST(l), frameSlot);
+            final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
+            final FNCRootNode rootNode = new FNCRootNode(l, frameDescriptorFact, (FNCExpressionNode) exp.buildAST(l));
+
+            // TODO: when do we registrer a function,
+            FunctionAbs lookup = l.getContextReference().get().getFunctionRegistry().lookup(name, false);
+            if (lookup == null) {
+                l.getContextReference().get().getFunctionRegistry().register(name, rootNode);
+                return BindingScopeNodeGen.create((FNCExpressionNode) exp.buildAST(l), frameSlot);
+            } else {
+                throw new RuntimeException("TOLOOOO");
+            }
         };
     }
 

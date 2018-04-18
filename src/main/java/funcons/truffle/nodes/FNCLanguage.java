@@ -63,7 +63,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
         // useless so far, just to avoir an ugly runtime exception when the execution ends.
         final FNCRootNode rootNode = new FNCRootNode(this, clExecuteNode);
-        System.out.println(rootNode);
+        System.out.println(clExecuteNode);
         return Truffle.getRuntime().createCallTarget(rootNode);
     }
 

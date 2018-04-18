@@ -30,6 +30,8 @@ public abstract class BindingBindValueNode extends FNCExpressionNode {
         getSlot().setKind(FrameSlotKind.Int);
 
         frame.setInt(getSlot(), value.intValue());
+
+
         return value;
     }
 
@@ -85,5 +87,10 @@ public abstract class BindingBindValueNode extends FNCExpressionNode {
 
     protected boolean isBooleanOrIllegal(@SuppressWarnings("unused") VirtualFrame frame) {
         return getSlot().getKind() == FrameSlotKind.Boolean || getSlot().getKind() == FrameSlotKind.Illegal;
+    }
+
+    @Override
+    public String toString() {
+        return "BindingBindValueNode{}";
     }
 }

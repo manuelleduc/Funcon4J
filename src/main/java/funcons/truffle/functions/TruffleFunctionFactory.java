@@ -9,6 +9,7 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCContext;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCRootNode;
@@ -32,12 +33,7 @@ public interface TruffleFunctionFactory extends
     @Override
     default FNCExecuteNode abs(FNCExecuteNode exp) {
         return l -> {
-            final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
             final FNCFunctionBodyNode fct = new FNCFunctionBodyNode(exp.buildAST(l));
-            final FNCRootNode rootNode = new FNCRootNode(l, frameDescriptorFact, fct);
-
-            // TODO: when do we registrer a function,
-            //FNCContext.getInstance().getRegistry().register(rootNode);
             return fct;
         };
     }

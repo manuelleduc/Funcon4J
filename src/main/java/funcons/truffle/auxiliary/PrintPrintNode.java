@@ -19,10 +19,17 @@ public class PrintPrintNode extends FNCExpressionNode  {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        System.out.println(x.executeGeneric(frame));
+//        System.out.println(x.executeGeneric(frame));
 //        return ((FNCExpressionNode) alg.null_().buildAST()).executeGeneric(frame);
         // FIXME: probably wrong!
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "PrintPrintNode{" +
+                "x=" + x +
+                '}';
     }
 
     //

@@ -32,4 +32,13 @@ public class FunctionApplyNode extends FNCExpressionNode {
         final FunctionLiteralNode function = new FunctionLiteralNode(this.language, functionName);
         return dispatchNode.executeDispatch(function.executeGeneric(frame), argumentValues);
     }
+
+    @Override
+    public String toString() {
+        return "FunctionApplyNode{" +
+                ", functionNode=" + functionNode +
+                ", argumentNode=" + argumentNode +
+                ", dispatchNode=" + dispatchNode +
+                '}';
+    }
 }

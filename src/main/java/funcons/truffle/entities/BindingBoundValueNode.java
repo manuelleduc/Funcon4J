@@ -41,8 +41,12 @@ public class BindingBoundValueNode extends FNCExpressionNode {
         return cachedFunction;
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return env.get(id.buildAST());
-//    }
+    @Override
+    public String toString() {
+        return "BindingBoundValueNode{" +
+                "id=" + id +
+                ", reference=" + reference +
+                ", cachedFunction=" + cachedFunction +
+                '}';
+    }
 }

@@ -23,6 +23,15 @@ public class LogicControlSeqNode extends FNCExpressionNode  {
         return this.t.executeGeneric(frame);
     }
 
+    @Override
+    public String toString() {
+        return "LogicControlSeqNode{" +
+                "c=" + c +
+                ", t=" + t +
+                '}';
+    }
+
+
     //    @Override
 //    public CLExecuteNode buildAST() throws FunconException {
 //        c.buildAST();
