@@ -3,12 +3,10 @@ package funcons.truffle.values;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "Bool GreaterEqual Node")
-public class BoolGreaterEqualNode extends FNCExpressionNode  {
+public class BoolGreaterEqualNode extends FNCExpressionNode {
 
     @Child
     private FNCExpressionNode a;
@@ -25,7 +23,7 @@ public class BoolGreaterEqualNode extends FNCExpressionNode  {
     public Object executeGeneric(VirtualFrame frame) {
         try {
             return a.executeIInteger(frame).greaterEqual(b.executeIInteger(frame));
-        } catch (UnexpectedResultException | RunTimeFunconException e) {
+        } catch (UnexpectedResultException e) {
             e.printStackTrace();
         }
         return null;

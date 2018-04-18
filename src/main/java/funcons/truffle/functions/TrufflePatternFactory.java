@@ -9,6 +9,7 @@ import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.values.BoolAlg;
+import funcons.truffle.nodes.FNCExpressionNode;
 
 public interface TrufflePatternFactory extends
         BoolAlg<FNCExecuteNode>,
@@ -22,26 +23,22 @@ public interface TrufflePatternFactory extends
 
     @Override
     default FNCExecuteNode only(FNCExecuteNode v) {
-//        return abs(ifTrue(equal(given(), v), environment(), fail()));
-        throw new RuntimeException("Not implemented");
+        return abs(ifTrue(equal(given(), v), environment(), fail()));
     }
 
     @Override
     default FNCExecuteNode any() {
-//        return abs(environment());
-        throw new RuntimeException("Not implemented");
+        return abs(environment());
     }
 
     @Override
     default FNCExecuteNode match(FNCExecuteNode exp, FNCExecuteNode pat) {
-//        return apply(pat, exp);
-        throw new RuntimeException("Not implemented");
+        return apply(pat, exp);
     }
 
     @Override
     default FNCExecuteNode pattAbs(FNCExecuteNode pat, FNCExecuteNode x) {
-//        return abs(scope(match(given(), pat), x));
-        throw new RuntimeException("Not implemented");
+        return abs(scope(match(given(), pat), x));
     }
 
     @Override

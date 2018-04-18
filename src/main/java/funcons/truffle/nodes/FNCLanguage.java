@@ -61,6 +61,9 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
         final FNCExpressionNode clExecuteNode = (FNCExpressionNode) eval.buildAST(this);
 
+
+        // TODO: write a visitor that register callables with name?
+
         // useless so far, just to avoir an ugly runtime exception when the execution ends.
         final FNCRootNode rootNode = new FNCRootNode(this, clExecuteNode);
         System.out.println(clExecuteNode);

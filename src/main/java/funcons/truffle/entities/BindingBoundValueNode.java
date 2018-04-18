@@ -6,6 +6,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCContext;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
+import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.IString;
 
 import static com.oracle.truffle.api.CompilerDirectives.CompilationFinal;

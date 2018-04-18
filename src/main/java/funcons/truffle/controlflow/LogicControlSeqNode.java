@@ -1,12 +1,12 @@
 package funcons.truffle.controlflow;
 
-import funcons.truffle.nodes.FNCExecuteNode;
-import funcons.truffle.nodes.FNCExpressionNode;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "LogicControl Seq Node")
-public class LogicControlSeqNode extends FNCExpressionNode  {
+public class LogicControlSeqNode extends FNCExpressionNode {
     @Child
     private FNCExpressionNode c;
     @Child
@@ -19,6 +19,9 @@ public class LogicControlSeqNode extends FNCExpressionNode  {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
+
+        System.out.println("executeGeneric[LogicControlSeqNode] " + this);
+
         this.c.executeGeneric(frame);
         return this.t.executeGeneric(frame);
     }

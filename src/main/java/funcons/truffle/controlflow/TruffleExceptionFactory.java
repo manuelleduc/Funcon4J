@@ -6,6 +6,8 @@ import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
 
 public interface TruffleExceptionFactory extends
         LogicControlAlg<FNCExecuteNode>,
@@ -19,13 +21,13 @@ public interface TruffleExceptionFactory extends
 //        return (env, given) -> {
 //            throw new FailureTrue();
 //        };
-        throw new RuntimeException("Not implemented");
+        return new Fail();
     }
 
     @Override
     default FNCExecuteNode matchFailure() {
 //        return (env, given) -> new CLMatchFailureException(vf);
-        return l -> new ExceptionMatchFailureNode();
+        return new MatchFailure();
     }
 
     @Override
@@ -42,7 +44,7 @@ public interface TruffleExceptionFactory extends
 
     @Override
     default FNCExecuteNode throw_(FNCExecuteNode s) {
-        return l -> new ExceptionThrowNode((FNCExpressionNode) s.buildAST(l));
+        return new Throw_(s);
     }
 
     @Override
@@ -72,13 +74,13 @@ public interface TruffleExceptionFactory extends
 //                return x2.eval(env, given);
 //            }
 //        };
-        return l -> new ExceptionElseNode((FNCExpressionNode) x1, (FNCExpressionNode) x2);
+        return new Else_(x1, x2);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode preferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
-        return language -> new ExceptionPrefereOverNode((FNCExpressionNode) a1.buildAST(language), (FNCExpressionNode) a2.buildAST(language));
+        return new PreferOver(a1, a2);
     }
 
 
@@ -86,5 +88,62 @@ public interface TruffleExceptionFactory extends
     default FNCExecuteNode whenTrue(FNCExecuteNode exp, FNCExecuteNode x) {
 //        return ifTrue(exp, x, fail());
         throw new RuntimeException("Not implemented");
+    }
+
+    class MatchFailure implements FNCExecuteNode {
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new ExceptionMatchFailureNode();
+        }
+    }
+
+    class Throw_ implements FNCExecuteNode {
+        private final FNCExecuteNode s;
+
+        public Throw_(FNCExecuteNode s) {
+            this.s = s;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new ExceptionThrowNode((FNCExpressionNode) s.buildAST(l));
+        }
+    }
+
+    class Else_ implements FNCExecuteNode {
+        private final FNCExecuteNode x1;
+        private final FNCExecuteNode x2;
+
+        public Else_(FNCExecuteNode x1, FNCExecuteNode x2) {
+            this.x1 = x1;
+            this.x2 = x2;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new ExceptionElseNode((FNCExpressionNode) x1, (FNCExpressionNode) x2);
+        }
+    }
+
+    class PreferOver implements FNCExecuteNode {
+        private final FNCExecuteNode a1;
+        private final FNCExecuteNode a2;
+
+        public PreferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
+            this.a1 = a1;
+            this.a2 = a2;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new ExceptionPrefereOverNode((FNCExpressionNode) a1.buildAST(l), (FNCExpressionNode) a2.buildAST(l));
+        }
+    }
+
+    class Fail implements FNCExecuteNode {
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new ExceptionFailNode();
+        }
     }
 }

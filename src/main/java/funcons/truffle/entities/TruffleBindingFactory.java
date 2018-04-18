@@ -1,15 +1,12 @@
 package funcons.truffle.entities;
 
-import com.oracle.truffle.api.frame.FrameDescriptor;
-import com.oracle.truffle.api.frame.FrameSlot;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
-import funcons.truffle.functions.FunctionAbs;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCLexicalScope;
-import funcons.truffle.nodes.FNCRootNode;
-import io.usethesource.vallang.IString;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleBindingFactory extends
         MapAlg<FNCExecuteNode>,
@@ -18,12 +15,11 @@ public interface TruffleBindingFactory extends
 
     @Override
     default FNCExecuteNode id(java.lang.String s) {
-        return l -> new BindingIdNode(s);
+        return new Id(s);
     }
 
     @Override
     default FNCExecuteNode nameId(java.lang.String namespace, java.lang.String id) {
-//        return (env, given) -> vf.tuple(vf.string(namespace), vf.string(id));
         throw new RuntimeException("Not implemented");
     }
 
@@ -36,19 +32,12 @@ public interface TruffleBindingFactory extends
      */
     @Override
     default FNCExecuteNode bindValue(FNCExecuteNode id, FNCExecuteNode exp) {
-        return l -> {
-            final FNCExpressionNode idn = (FNCExpressionNode) id.buildAST(l);
-            final String name = ((IString) idn.executeGeneric(null)).getValue();
-            final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
-            new FNCLexicalScope(null).locals.put(name, frameSlot);
-
-            return BindingBindValueNodeGen.create((FNCExpressionNode) exp.buildAST(l), frameSlot);
-        };
+        return new BindValue(id, exp);
     }
 
     @Override
     default FNCExecuteNode boundValue(FNCExecuteNode id) {
-        return l -> new BindingBoundValueNode(l, (FNCExpressionNode) id.buildAST(l));
+        return new BoundValue(id);
     }
 
     /**
@@ -64,44 +53,162 @@ public interface TruffleBindingFactory extends
      */
     @Override
     default FNCExecuteNode scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
-        return l -> {
-            final BindingBindValueNode idn = (BindingBindValueNode) localBindings.buildAST(l);
-            final String name = ((String) idn.getSlot().getIdentifier());
-            final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
-            final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
-            final FNCRootNode rootNode = new FNCRootNode(l, frameDescriptorFact, (FNCExpressionNode) exp.buildAST(l));
-
-            // TODO: when do we registrer a function,
-            FunctionAbs lookup = l.getContextReference().get().getFunctionRegistry().lookup(name, false);
-            if (lookup == null) {
-                l.getContextReference().get().getFunctionRegistry().register(name, rootNode);
-                return BindingScopeNodeGen.create((FNCExpressionNode) exp.buildAST(l), frameSlot);
-            } else {
-                throw new RuntimeException("TOLOOOO");
-            }
-        };
+        return new Scope(localBindings, exp);
     }
 
     @Override
     default FNCExecuteNode closure(FNCExecuteNode x, FNCExecuteNode environment) {
-//        return (env, given) ->
-//                x.eval((IMap) environment.eval(env, given), given);
-        return l -> new BindingClosureNode((FNCExpressionNode) x, (FNCExpressionNode) environment);
+        return new Closure(x, environment);
     }
 
     @Override
     default FNCExecuteNode environment() {
-        return l -> new BindingEnvironmentNode();
+        return new Environment();
     }
 
     @Override
     default FNCExecuteNode accum(FNCExecuteNode environment, FNCExecuteNode decl) {
-//        return new BindingAccumNode(environment, (FNCExpressionNode) decl, this, this);
-        return language -> {
+        return new Accum(environment, decl, this);
+    }
 
-            final FNCExecuteNode currentEnv = l -> environment.buildAST(language);
-            return scope(currentEnv, mapOver(decl, currentEnv)).buildAST(language);
+    class Accum implements FNCExecuteNode {
+        private final FNCExecuteNode environment;
+        private final FNCExecuteNode decl;
+        private final TruffleBindingFactory alg;
 
-        };
+        public Accum(FNCExecuteNode environment, FNCExecuteNode decl, TruffleBindingFactory truffleBindingFactory) {
+            this.environment = environment;
+            this.decl = decl;
+            this.alg = truffleBindingFactory;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage language) throws funcons.values.signals.RunTimeFunconException {
+
+            final FNCExecuteNode currentEnv = new BuildAstCurrentEnv(language);
+            return alg.scope(currentEnv, alg.mapOver(decl, currentEnv)).buildAST(language);
+
+        }
+
+        private class BuildAstCurrentEnv implements FNCExecuteNode {
+            private final FNCLanguage language;
+
+            public BuildAstCurrentEnv(FNCLanguage language) {
+                this.language = language;
+            }
+
+            @Override
+            public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+                return environment.buildAST(language);
+            }
+        }
+    }
+
+    class Environment implements FNCExecuteNode {
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new BindingEnvironmentNode();
+        }
+    }
+
+    class Closure implements FNCExecuteNode {
+        private final FNCExecuteNode x;
+        private final FNCExecuteNode environment;
+
+        public Closure(FNCExecuteNode x, FNCExecuteNode environment) {
+            this.x = x;
+            this.environment = environment;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new BindingClosureNode((FNCExpressionNode) x, (FNCExpressionNode) environment);
+        }
+    }
+
+    class Scope implements FNCExecuteNode {
+        private final FNCExecuteNode localBindings;
+        private final FNCExecuteNode exp;
+
+        public Scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
+            this.localBindings = localBindings;
+            this.exp = exp;
+        }
+
+        @Override
+        public BindingBindValueNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+//            final BindingBindValueNode idn = (BindingBindValueNode) localBindings.buildAST(l);
+//            final String name = ((String) idn.getSlot().getIdentifier());
+//            final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
+//            final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
+//            final FNCExpressionNode child = (FNCExpressionNode) exp.buildAST(l);
+//            final FNCRootNode rootNode = new FNCRootNode(l, frameDescriptorFact, child);
+//
+//            // TODO: when do we registrer a function,
+//            FNCFunction lookup = l.getContextReference().get().getFunctionRegistry().lookup(name, false);
+//            if (lookup == null) {
+//                l.getContextReference().get().getFunctionRegistry().register(name, rootNode);
+//                return BindingScopeNodeGen.create(child, frameSlot);
+//            } else {
+//                throw new RuntimeException("TOLOOOO");
+//            }
+            throw new RuntimeException("Not implemented");
+        }
+    }
+
+    class BoundValue implements FNCExecuteNode {
+        private final FNCExecuteNode id;
+
+        public BoundValue(FNCExecuteNode id) {
+            this.id = id;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+//            l.getContextReference().get().getFunctionRegistry().register()
+            FNCExpressionNode id1 = (FNCExpressionNode) id.buildAST(l);
+            return new BindingBoundValueNode(l, id1);
+        }
+    }
+
+    class BindValue implements FNCExecuteNode {
+        private final FNCExecuteNode id;
+        private final FNCExecuteNode exp;
+
+        public BindValue(FNCExecuteNode id, FNCExecuteNode exp) {
+            this.id = id;
+            this.exp = exp;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+
+            // TODO do the registrer HERE
+//
+//            final FNCExpressionNode idn = (FNCExpressionNode) id.buildAST(l);
+//            final String name = ((IString) idn.executeGeneric(null)).getValue();
+//            final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
+//            new FNCLexicalScope(null).locals.put(name, frameSlot);
+//
+//            return BindingBindValueNodeGen.create((FNCExpressionNode) exp.buildAST(l), frameSlot);
+
+//            l.getContextReference().get().getFunctionRegistry().register(id.);
+
+
+            return new BindingBindValueNode(l, (FNCExpressionNode) id.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
+        }
+    }
+
+    class Id implements FNCExecuteNode {
+        private final String s;
+
+        public Id(String s) {
+            this.s = s;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new BindingIdNode(s);
+        }
     }
 }

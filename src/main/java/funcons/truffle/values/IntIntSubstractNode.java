@@ -2,12 +2,12 @@ package funcons.truffle.values;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.INumber;
 
 @NodeInfo(description = "Int IntSubstract Node")
-public class IntIntSubstractNode extends FNCExpressionNode  {
+public class IntIntSubstractNode extends FNCExpressionNode {
 
     @Child
     private FNCExpressionNode a;

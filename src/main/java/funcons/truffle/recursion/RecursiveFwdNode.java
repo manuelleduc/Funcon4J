@@ -8,7 +8,7 @@ import funcons.values.signals.RunTimeFunconException;
 @NodeInfo(description = "Recursive Fwd Node")
 public class RecursiveFwdNode extends FNCStatementNode {
     @Override
-    public void executeVoid(VirtualFrame frame) throws RunTimeFunconException {
+    public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
         throw new RuntimeException("Not implemented");
     }
 //    @Override

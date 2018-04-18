@@ -3,13 +3,11 @@ package funcons.truffle.values;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Bool Greater Node ")
-public class BoolGreaterNode extends FNCExpressionNode  {
+public class BoolGreaterNode extends FNCExpressionNode {
 
     ValueFactory vf = ValueFactory.getInstance();
 
@@ -28,7 +26,7 @@ public class BoolGreaterNode extends FNCExpressionNode  {
     public Object executeGeneric(VirtualFrame frame) {
         try {
             return a.executeIInteger(frame).greater(b.executeIInteger(frame));
-        } catch (UnexpectedResultException | RunTimeFunconException e) {
+        } catch (UnexpectedResultException e) {
             e.printStackTrace();
         }
         return null;

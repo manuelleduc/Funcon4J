@@ -17,7 +17,7 @@ public abstract class FNCDispatchNode extends Node {
             guards = "function.getCallTarget() == cachedTarget", //
             assumptions = "callTargetStable")
     @SuppressWarnings("unused")
-    protected static Object doDirect(FunctionAbs function, Object[] arguments,
+    protected static Object doDirect(FunctionLiteralNode function, Object[] arguments,
                                      @Cached("function.getCallTargetStable()") Assumption callTargetStable,
                                      @Cached("function.getCallTarget()") RootCallTarget cachedTarget,
                                      @Cached("create(cachedTarget)") DirectCallNode callNode) {
@@ -30,4 +30,6 @@ public abstract class FNCDispatchNode extends Node {
     public String toString() {
         return "FNCDispatchNode{}";
     }
+
+
 }

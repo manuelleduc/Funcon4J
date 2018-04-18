@@ -1,4 +1,4 @@
-package funcons.truffle.functions;
+package funcons.truffle.nodes;
 
 import com.oracle.truffle.api.Assumption;
 import com.oracle.truffle.api.RootCallTarget;
@@ -6,19 +6,15 @@ import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.interop.ForeignAccess;
 import com.oracle.truffle.api.interop.TruffleObject;
 import com.oracle.truffle.api.utilities.CyclicAssumption;
-import funcons.truffle.nodes.FNCExecuteNode;
-import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.functions.FNCUndefinedFunctionRootNode;
 
-
-public class FunctionAbs implements TruffleObject {
-
-
+public class FNCFunction  implements TruffleObject {
     private RootCallTarget callTarget;
     private final CyclicAssumption callTargetStable;
     private final String name;
 
 
-    public FunctionAbs(FNCLanguage language, String name) {
+    public FNCFunction(FNCLanguage language, String name) {
         this.name = name;
         this.callTarget = Truffle.getRuntime().createCallTarget(new FNCUndefinedFunctionRootNode(language, name));
         this.callTargetStable = new CyclicAssumption(name);

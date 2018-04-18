@@ -1,20 +1,23 @@
 package funcons.truffle.values;
 
 import funcons.algebras.values.IntAlg;
+import funcons.truffle.entities.BindingBindValueNode;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
 
 public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 
 
     @Override
     default FNCExecuteNode lit(Integer i) {
-        return l -> new IntLitNode(i);
+        return new Lit(i);
     }
 
     @Override
     default FNCExecuteNode intAdd(FNCExecuteNode a, FNCExecuteNode b) {
-        return l -> IntIntAddNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        return new IntAdd(a, b);
     }
 
     @Override
@@ -29,7 +32,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .subtract(((INumber) b.eval(env, given)).toInteger());
-        return l -> new IntIntSubstractNode((FNCExpressionNode) a, (FNCExpressionNode) b);
+        return new IntSubstract(a, b);
     }
 
     @Override
@@ -56,5 +59,50 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 //            return aNumber.subtract(aNumber.divide(bNumber).multiply(bNumber));
 //        };
         throw new RuntimeException("Not implemented");
+    }
+
+    class IntAdd implements FNCExecuteNode {
+        private final FNCExecuteNode a;
+        private final FNCExecuteNode b;
+
+        public IntAdd(FNCExecuteNode a, FNCExecuteNode b) {
+            this.a = a;
+            this.b = b;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            FNCExpressionNode a1 = (FNCExpressionNode) a.buildAST(l);
+            FNCExpressionNode b1 = (FNCExpressionNode) b.buildAST(l);
+            return IntIntAddNodeGen.create(a1, b1);
+        }
+    }
+
+    class Lit implements FNCExecuteNode {
+        private final Integer i;
+
+        public Lit(Integer i) {
+            this.i = i;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new IntLitNode(i);
+        }
+    }
+
+    class IntSubstract implements FNCExecuteNode {
+        private final FNCExecuteNode a;
+        private final FNCExecuteNode b;
+
+        public IntSubstract(FNCExecuteNode a, FNCExecuteNode b) {
+            this.a = a;
+            this.b = b;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new IntIntSubstractNode((FNCExpressionNode) a, (FNCExpressionNode) b);
+        }
     }
 }

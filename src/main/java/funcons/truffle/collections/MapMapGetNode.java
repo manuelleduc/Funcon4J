@@ -3,6 +3,7 @@ package funcons.truffle.collections;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "Map MapGet Node")
 public class MapMapGetNode extends FNCExpressionNode {

@@ -4,17 +4,20 @@ import funcons.algebras.entities.AssignAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleAssignFactory extends NullAlg<FNCExecuteNode>, AssignAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode assign(final FNCExecuteNode var, final FNCExecuteNode x) {
-        return l -> new AssignAssignNode((FNCExpressionNode) var.buildAST(l), (FNCExpressionNode) x.buildAST(l));
+        return new Assign(var, x);
     }
 
     @Override
     default FNCExecuteNode assignedValue(FNCExecuteNode var) {
-        return l -> new AssignAssignedValueNode((FNCExpressionNode) var.buildAST(l));
+        return new AssignedValue(var);
     }
 
     @Override
@@ -33,5 +36,33 @@ public interface TruffleAssignFactory extends NullAlg<FNCExecuteNode>, AssignAlg
     @Override
     default FNCExecuteNode alloc(FNCExecuteNode x) {
         return (l) -> new AssignAllocNode((FNCExpressionNode) x.buildAST(l));
+    }
+
+    class Assign implements FNCExecuteNode {
+        private final FNCExecuteNode var;
+        private final FNCExecuteNode x;
+
+        public Assign(FNCExecuteNode var, FNCExecuteNode x) {
+            this.var = var;
+            this.x = x;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new AssignAssignNode((FNCExpressionNode) var.buildAST(l), (FNCExpressionNode) x.buildAST(l));
+        }
+    }
+
+    class AssignedValue implements FNCExecuteNode {
+        private final FNCExecuteNode var;
+
+        public AssignedValue(FNCExecuteNode var) {
+            this.var = var;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new AssignAssignedValueNode((FNCExpressionNode) var.buildAST(l));
+        }
     }
 }

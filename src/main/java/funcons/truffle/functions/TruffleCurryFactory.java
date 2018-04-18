@@ -7,8 +7,12 @@ import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
+import funcons.truffle.entities.BindingBindValueNode;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleCurryFactory extends
         FunctionAlg<FNCExecuteNode>,
@@ -32,7 +36,7 @@ public interface TruffleCurryFactory extends
 
     @Override
     default FNCExecuteNode curry(FNCExecuteNode a) {
-        return l -> new CurryCurryNode((FNCExpressionNode) a);
+        return new Curry(a);
     }
 
     @Override
@@ -49,11 +53,39 @@ public interface TruffleCurryFactory extends
 //                    .eval(env, given);
 //        };
 
-        throw new RuntimeException("Not implemented");
+        return new CurryN(n, a);
     }
 
     @Override
     default FNCExecuteNode uncurry(FNCExecuteNode f) {
         return abs(apply(apply(f, project(lit(0), given())), project(lit(1), given())));
+    }
+
+    class CurryN implements FNCExecuteNode {
+        private final FNCExecuteNode n;
+        private final FNCExecuteNode a;
+
+        public CurryN(FNCExecuteNode n, FNCExecuteNode a) {
+            this.n = n;
+            this.a = a;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new CurryCurryNNode((FNCExpressionNode) n.buildAST(l), (FNCExpressionNode) a.buildAST(l));
+        }
+    }
+
+    class Curry implements FNCExecuteNode {
+        private final FNCExecuteNode a;
+
+        public Curry(FNCExecuteNode a) {
+            this.a = a;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new CurryCurryNode((FNCExpressionNode) a);
+        }
     }
 }

@@ -5,11 +5,12 @@ import com.oracle.truffle.api.interop.MessageResolution;
 import com.oracle.truffle.api.interop.Resolve;
 import com.oracle.truffle.api.interop.TruffleObject;
 import com.oracle.truffle.api.nodes.Node;
+import funcons.truffle.nodes.FNCFunction;
 
 import static funcons.truffle.nodes.FNCContext.fromForeignValue;
 
 
-@MessageResolution(receiverType = FunctionAbs.class)
+@MessageResolution(receiverType = FNCFunction.class)
 public class FNCFunctionMessageResolution {
     @Resolve(message = "EXECUTE")
     public abstract static class SLForeignFunctionExecuteNode extends Node {
@@ -19,7 +20,7 @@ public class FNCFunctionMessageResolution {
         @Child
         private FNCTypeToForeignNode toForeign = FNCTypeToForeignNodeGen.create();
 
-        public Object access(FunctionAbs receiver, Object[] arguments) {
+        public Object access(FNCFunction receiver, Object[] arguments) {
             Object[] arr = new Object[arguments.length];
             // Before the arguments can be used by the SLFunction, they need to be converted to SL
             // values.
@@ -37,7 +38,7 @@ public class FNCFunctionMessageResolution {
     @Resolve(message = "IS_EXECUTABLE")
     public abstract static class SLForeignIsExecutableNode extends Node {
         public Object access(Object receiver) {
-            return receiver instanceof FunctionAbs;
+            return receiver instanceof FNCFunction;
         }
     }
 
@@ -45,7 +46,7 @@ public class FNCFunctionMessageResolution {
     public abstract static class CheckFunction extends Node {
 
         protected static boolean test(TruffleObject receiver) {
-            return receiver instanceof FunctionAbs;
+            return receiver instanceof FNCFunction;
         }
     }
 }

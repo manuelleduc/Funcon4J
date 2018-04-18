@@ -6,8 +6,12 @@ import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
+import funcons.truffle.entities.BindingBindValueNode;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleLogicControlFactory extends
         NullAlg<FNCExecuteNode>,
@@ -28,17 +32,17 @@ public interface TruffleLogicControlFactory extends
 
     @Override
     default FNCExecuteNode seq(FNCExecuteNode c, FNCExecuteNode t) {
-        return l -> new LogicControlSeqNode((FNCExpressionNode) c.buildAST(l), (FNCExpressionNode) t.buildAST(l));
+        return new Seq(c, t);
     }
 
     @Override
     default FNCExecuteNode ifTrue(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
-        return l -> new LogicControlIfTrueNode((FNCExpressionNode) e.buildAST(l), (FNCExpressionNode) c1.buildAST(l), (FNCExpressionNode) c2.buildAST(l));
+        return new IfTrue(e, c1, c2);
     }
 
     @Override
     default FNCExecuteNode whileTrue(FNCExecuteNode e, FNCExecuteNode c) {
-        return l -> new LogicControlWhileTrueNode((FNCExpressionNode) e, (FNCExpressionNode) c);
+        return new WhileTrue(e, c);
     }
 
     @Override
@@ -50,5 +54,55 @@ public interface TruffleLogicControlFactory extends
 //            return null_().eval(env, given);
 //        };
         throw new RuntimeException("Not implemented");
+    }
+
+    class IfTrue implements FNCExecuteNode {
+        private final FNCExecuteNode e;
+        private final FNCExecuteNode c1;
+        private final FNCExecuteNode c2;
+
+        public IfTrue(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
+            this.e = e;
+            this.c1 = c1;
+            this.c2 = c2;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            final FNCExpressionNode e1 = (FNCExpressionNode) e.buildAST(l);
+            final FNCExpressionNode c11 = (FNCExpressionNode) c1.buildAST(l);
+            final FNCExpressionNode c21 = (FNCExpressionNode) c2.buildAST(l);
+            return new LogicControlIfTrueNode(e1, c11, c21);
+        }
+    }
+
+    class Seq implements FNCExecuteNode {
+        private final FNCExecuteNode c;
+        private final FNCExecuteNode t;
+
+        public Seq(FNCExecuteNode c, FNCExecuteNode t) {
+            this.c = c;
+            this.t = t;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new LogicControlSeqNode((FNCExpressionNode) c.buildAST(l), (FNCExpressionNode) t.buildAST(l));
+        }
+    }
+
+    class WhileTrue implements FNCExecuteNode {
+        private final FNCExecuteNode e;
+        private final FNCExecuteNode c;
+
+        public WhileTrue(FNCExecuteNode e, FNCExecuteNode c) {
+            this.e = e;
+            this.c = c;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new LogicControlWhileTrueNode((FNCExpressionNode) e, (FNCExpressionNode) c);
+        }
     }
 }

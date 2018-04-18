@@ -7,7 +7,7 @@ import io.usethesource.vallang.IInteger;
 
 // TODO function
 // TODO null values
-@TypeSystem({IInteger.class, IBool.class})
+@TypeSystem({IInteger.class, IBool.class, FNCFunction.class})
 public abstract class FNCTypes {
 
 }

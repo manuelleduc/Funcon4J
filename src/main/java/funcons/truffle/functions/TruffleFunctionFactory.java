@@ -1,6 +1,5 @@
 package funcons.truffle.functions;
 
-import com.oracle.truffle.api.frame.FrameDescriptor;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
@@ -9,10 +8,11 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.nodes.FNCContext;
+import funcons.truffle.entities.BindingBindValueNode;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCRootNode;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
 
 public interface TruffleFunctionFactory extends
         IntAlg<FNCExecuteNode>,
@@ -32,21 +32,18 @@ public interface TruffleFunctionFactory extends
      */
     @Override
     default FNCExecuteNode abs(FNCExecuteNode exp) {
-        return l -> {
-            final FNCFunctionBodyNode fct = new FNCFunctionBodyNode(exp.buildAST(l));
-            return fct;
-        };
+        return new Abs(exp);
     }
 
     @Override
     default FNCExecuteNode abs(FNCExecuteNode patt, FNCExecuteNode exp) {
-        return language -> new FunctionAbsNode2((FNCExpressionNode) patt.buildAST(language), (FNCExpressionNode) exp.buildAST(language));
+        return new Abs2(patt, exp);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode apply(FNCExecuteNode abs, FNCExecuteNode arg) {
-        return l -> new FunctionApplyNode(l, (FNCExpressionNode) abs.buildAST(l), (FNCExpressionNode) arg.buildAST(l));
+        return new Apply(abs, arg);
     }
 
     @Override
@@ -73,11 +70,72 @@ public interface TruffleFunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode close(FNCExecuteNode abs) {
-        return language -> new FunctionCloseNode((FNCExpressionNode) abs.buildAST(language));
+        return new Close(abs);
     }
 
     @Override
     default FNCExecuteNode bind(FNCExecuteNode id) {
         return abs(bindValue(id, given()));
+    }
+
+    class Abs implements FNCExecuteNode {
+        private final FNCExecuteNode exp;
+
+        public Abs(FNCExecuteNode exp) {
+            this.exp = exp;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new FNCFunctionBodyNode(exp.buildAST(l));
+        }
+    }
+
+    class Abs2 implements FNCExecuteNode {
+        private final FNCExecuteNode patt;
+        private final FNCExecuteNode exp;
+
+        public Abs2(FNCExecuteNode patt, FNCExecuteNode exp) {
+            this.patt = patt;
+            this.exp = exp;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new FunctionAbsNode2((FNCExpressionNode) patt.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
+        }
+    }
+
+    class Apply implements FNCExecuteNode {
+        private final FNCExecuteNode abs;
+        private final FNCExecuteNode arg;
+
+        public Apply(FNCExecuteNode abs, FNCExecuteNode arg) {
+            this.abs = abs;
+            this.arg = arg;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+//            final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
+            FNCExpressionNode functionNode = (FNCExpressionNode) abs.buildAST(l);
+//            final FNCRootNode rootNode = new FNCRootNode(l, frameDescriptorFact, functionNode);
+            //l.getContextReference().get().getFunctionRegistry().register(functionApplyNode.getName(), functionApplyNode, rootNode);
+
+            return new FunctionApplyNode(l, functionNode, (FNCExpressionNode) arg.buildAST(l));
+        }
+    }
+
+    class Close implements FNCExecuteNode {
+        private final FNCExecuteNode abs;
+
+        public Close(FNCExecuteNode abs) {
+            this.abs = abs;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new FunctionCloseNode((FNCExpressionNode) abs.buildAST(l));
+        }
     }
 }

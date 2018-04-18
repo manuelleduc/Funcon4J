@@ -7,6 +7,10 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleTupleFactory extends
         PatternAlg<FNCExecuteNode>,
@@ -15,10 +19,12 @@ public interface TruffleTupleFactory extends
         FunctionAlg<FNCExecuteNode>,
         TupleAlg<FNCExecuteNode> {
 
+    final ValueFactory vf = ValueFactory.getInstance();
+
     @Override
     default FNCExecuteNode tuple() {
 //        return (env, given) -> vf.list();
-        throw new RuntimeException("Not implemented");
+        return new Tuple0();
     }
 
     @Override
@@ -75,20 +81,43 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode tuplePrefixMatch(FNCExecuteNode tup, FNCExecuteNode p1, FNCExecuteNode p2) {
-//        return (env, given) -> {
+//         l -> {
 //            IValue tupVal = tup.eval(env, given);
 //            return mapUnion(
 //                    match(tupleHead((e, g) -> tupVal), p1),
 //                    match(tupleTail((e, g) -> tupVal), p2)
 //            ).eval(env, given);
 //        };
-        throw new RuntimeException("Not implemented");
+
+        return new TuplePrefixMatch(p1, p2);
+
     }
 
     @Override
     default FNCExecuteNode tuplePrefixPatt(FNCExecuteNode p1, FNCExecuteNode p2) {
-//        return abs(tuplePrefixMatch(given(), p1, p2));
-        throw new RuntimeException("Not implemented");
+        return abs(tuplePrefixMatch(given(), p1, p2));
+    }
+
+    class Tuple0 implements FNCExecuteNode {
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage language) {
+            return new TupleTupleNode0();
+        }
+    }
+
+    class TuplePrefixMatch implements FNCExecuteNode {
+        private final FNCExecuteNode p1;
+        private final FNCExecuteNode p2;
+
+        public TuplePrefixMatch(FNCExecuteNode p1, FNCExecuteNode p2) {
+            this.p1 = p1;
+            this.p2 = p2;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TupleTuplePrefixMatchNode((FNCExpressionNode) p1.buildAST(l), (FNCExpressionNode) p2.buildAST(l));
+        }
     }
 }
 

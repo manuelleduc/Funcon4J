@@ -8,6 +8,9 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleListFactory extends
         PatternAlg<FNCExecuteNode>,
@@ -26,7 +29,7 @@ public interface TruffleListFactory extends
 //            return l.get(i.intValue());
 //        };
 
-        return l -> new ListProjectListNode((FNCExpressionNode) index, (FNCExpressionNode) list);
+        return new ProjectList(index, list);
     }
 
     @Override
@@ -130,8 +133,35 @@ public interface TruffleListFactory extends
     default FNCExecuteNode listLength(FNCExecuteNode list) {
 //        return (env, given) ->
 //                vf.integer(((IList) list.eval(env, given)).length());
-        return l-> new ListListLengthNode((FNCExpressionNode) list);
+        return new ListLength(list);
     }
 
 
+    class ProjectList implements FNCExecuteNode {
+        private final FNCExecuteNode index;
+        private final FNCExecuteNode list;
+
+        public ProjectList(FNCExecuteNode index, FNCExecuteNode list) {
+            this.index = index;
+            this.list = list;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new ListProjectListNode((FNCExpressionNode) index, (FNCExpressionNode) list);
+        }
+    }
+
+    class ListLength implements FNCExecuteNode {
+        private final FNCExecuteNode list;
+
+        public ListLength(FNCExecuteNode list) {
+            this.list = list;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new ListListLengthNode((FNCExpressionNode) list);
+        }
+    }
 }

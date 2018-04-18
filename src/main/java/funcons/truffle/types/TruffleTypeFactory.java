@@ -1,6 +1,5 @@
 package funcons.truffle.types;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
@@ -8,6 +7,10 @@ import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleTypeFactory extends
         BoolAlg<FNCExecuteNode>,
@@ -29,7 +32,7 @@ public interface TruffleTypeFactory extends
     @Override
     default FNCExecuteNode unknownType() {
 //        return (env, given) -> vf.string("UnknownType");
-        return l -> new TypeUnknowTypeNode();
+        return new UnknownType();
     }
 
     @Override
@@ -142,6 +145,13 @@ public interface TruffleTypeFactory extends
 //            return fail().eval(env, given);
 //        };
         throw new RuntimeException("Not implemented");
+    }
+
+    class UnknownType implements FNCExecuteNode {
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TypeUnknowTypeNode();
+        }
     }
 }
 

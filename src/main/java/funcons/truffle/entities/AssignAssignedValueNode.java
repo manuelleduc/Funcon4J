@@ -18,7 +18,7 @@ public class AssignAssignedValueNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) throws RunTimeFunconException {
+    public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
         throw new RuntimeException("Not Implemented ");
     }
 
