@@ -2,13 +2,24 @@ package funcons.truffle.values;
 
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.values.FloatAlg;
+import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
 
+
+    public static final ValueFactory vf = ValueFactory.getInstance();
     @Override
     default FNCExecuteNode lit(Double i) {
 //        return (env, given) -> vf.real(i);
-        throw new RuntimeException("Not implemented");
+        return new FNCExecuteNode() {
+            @Override
+            public FNCStatementNode buildAST(FNCLanguage language) throws RunTimeFunconException {
+                return new FloatLitNode(i);
+            }
+        };
     }
 
     @Override

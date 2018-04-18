@@ -9,9 +9,6 @@ import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Map Union Node")
 public class MapUnionNode extends FNCExpressionNode {
-    public static final ValueFactory vf = ValueFactory.getInstance();
-
-
     private final FNCExpressionNode map1;
     private final FNCExpressionNode map2;
 

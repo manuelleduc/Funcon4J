@@ -2,19 +2,19 @@ package funcons.interpreter.tests.truffle;
 
 import com.oracle.truffle.api.source.Source;
 import com.oracle.truffle.api.vm.PolyglotEngine;
-import funcons.truffle.TruffleAllFactory;
 import funcons.truffle.nodes.FNCLanguage;
 import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 
 import static org.junit.Assert.assertEquals;
 
-public class BoolFactoryTest implements TruffleAllFactory {
+public class BoolFactoryTest {
 
     private PolyglotEngine engine;
     private WriterOutputStream os;
@@ -37,16 +37,13 @@ public class BoolFactoryTest implements TruffleAllFactory {
     @Test
     public void testBool() throws Exception {
         engine.eval(Source.newBuilder("true;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
-        this.os.flush();
-        final String valTrue = getAndFlush();
-        assertEquals("true", valTrue);
+        assertEquals("true", getAndFlush());
         engine.eval(Source.newBuilder("false;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
-        this.os.flush();
-        final String valFalse = getAndFlush();
-        assertEquals("false", valFalse);
+        assertEquals("false", getAndFlush());
     }
 
-    private String getAndFlush() {
+    private String getAndFlush() throws IOException {
+        this.os.flush();
         final String valTrue = this.writer.getBuffer().toString();
         this.writer.getBuffer().replace(0, this.writer.getBuffer().length(), "");
         return valTrue;
@@ -55,68 +52,94 @@ public class BoolFactoryTest implements TruffleAllFactory {
     @Test
     public void testNot() throws Exception {
         engine.eval(Source.newBuilder("not true;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
-        this.os.flush();
-        final String valTrue = getAndFlush();
-        assertEquals("false", valTrue);
+        assertEquals("false", getAndFlush());
         engine.eval(Source.newBuilder("not false;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
-        this.os.flush();
-        final String valFalse = getAndFlush();
-        assertEquals("true", valFalse);
+        assertEquals("true", getAndFlush());
     }
-//
-//    @Test
-//    public void testGreater() throws Exception {
+
+    //
+    @Test
+    public void testGreater() throws Exception {
 //        boolOpTester(this::greater, bool(true), bool(false), bool(false));
-//    }
-//
-//    @Test
-//    public void testSmaller() throws Exception {
+        boolOpTester(">", "true", "false", "false");
+    }
+
+    //
+    @Test
+    public void testSmaller() throws Exception {
 //        boolOpTester(this::smaller, bool(false), bool(true), bool(false));
-//    }
-//
-//    @Test
-//    public void testGreaterEqual() throws Exception {
+        boolOpTester("<", "false", "true", "false");
+    }
+
+    //
+    @Test
+    public void testGreaterEqual() throws Exception {
 //        boolOpTester(this::greaterEqual, bool(true), bool(false), bool(true));
-//    }
-//
-//    @Test
-//    public void testSmallerEqual() throws Exception {
+        boolOpTester(">=", "true", "false", "true");
+    }
+
+    //
+    @Test
+    public void testSmallerEqual() throws Exception {
 //        boolOpTester(this::smallerEqual, bool(false), bool(true), bool(true));
-//    }
-//
-//    private void boolOpTester(
-//            BiFunction<IEval, IEval, IEval> f,
-//            IEval greaterThan,
-//            IEval smallerThan,
-//            IEval equal) throws Exception {
-//
-//        assertEquals(greaterThan.eval(), f.apply(lit(6), lit(3)).eval());
-//        assertEquals(smallerThan.eval(), f.apply(lit(3), lit(6)).eval());
-//        assertEquals(equal.eval(), f.apply(lit(3), lit(3)).eval());
-//
-//        assertEquals(greaterThan.eval(), f.apply(lit(6.0), lit(3.0)).eval());
-//        assertEquals(smallerThan.eval(), f.apply(lit(3.0), lit(6.0)).eval());
-//        assertEquals(equal.eval(), f.apply(lit(3.0), lit(3.0)).eval());
-//
-//        assertEquals(greaterThan.eval(), f.apply(lit(6.0), lit(3)).eval());
-//        assertEquals(smallerThan.eval(), f.apply(lit(3), lit(6.0)).eval());
-//    }
-//
-//    @Test
-//    public void testEqual() throws Exception {
+        boolOpTester("<=", "false", "true", "true");
+    }
+
+    //
+    private void boolOpTester(
+            String operator,
+            String greaterThan,
+            String smallerThan,
+            String equal) throws Exception {
+
+        engine.eval(Source.newBuilder("6 " + operator + " 3;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals(greaterThan, getAndFlush());
+        engine.eval(Source.newBuilder("3 " + operator + " 6;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals(smallerThan, getAndFlush());
+        engine.eval(Source.newBuilder("3 " + operator + " 3;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals(equal, getAndFlush());
+
+        engine.eval(Source.newBuilder("6.0 " + operator + " 3.0;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals(greaterThan, getAndFlush());
+        engine.eval(Source.newBuilder("3.0 " + operator + " 6.0;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals(smallerThan, getAndFlush());
+        engine.eval(Source.newBuilder("3.0 " + operator + " 3.0;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals(equal, getAndFlush());
+
+        engine.eval(Source.newBuilder("6.0 " + operator + " 3;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals(greaterThan, getAndFlush());
+        engine.eval(Source.newBuilder("3 " + operator + " 6.0;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals(smallerThan, getAndFlush());
+    }
+
+    //
+    @Test
+    public void testEqual() throws Exception {
 //        assertEquals(bool(true).eval(), equal(lit(3), lit(3)).eval());
 //        assertEquals(bool(false).eval(), equal(bool(true), bool(false)).eval());
-//    }
-//
-//    /**
-//     * TODO: To be fixed
-//     * @throws Exception
-//     */
+
+        engine.eval(Source.newBuilder("3 = 3;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals("true", getAndFlush());
+
+        engine.eval(Source.newBuilder("true = false;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals("false", getAndFlush());
+    }
+
+//    //
+////    /**
+////     * TODO: To be fixed
+////     * @throws Exception
+////     */
 //    @Test
-//    @Ignore
+////    @Ignore
 //    public void testPhysicalEqual() throws Exception {
-//        IValue v = lit(1).eval();
-//        assertEquals(bool(true).eval(), physicalEqual((e,g) -> v, (e,g) -> v).eval());
-//        assertEquals(bool(false).eval(), physicalEqual(lit(1), lit(1)).eval());
+////        IValue v = lit(1).eval();
+////        assertEquals(bool(true).eval(), physicalEqual((e,g) -> v, (e,g) -> v).eval());
+////        assertEquals(bool(false).eval(), physicalEqual(lit(1), lit(1)).eval());
+//        engine.eval(Source.newBuilder("3 = 3;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+//        assertEquals("true", getAndFlush());
+//
+//        engine.eval(Source.newBuilder("true = false;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+//        assertEquals("false", getAndFlush());
 //    }
 }

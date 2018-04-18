@@ -29,7 +29,8 @@ public class PrintPrintNode extends FNCExpressionNode {
     public Object executeGeneric(VirtualFrame frame) {
 
 
-        String data = x.executeGeneric(frame).toString();
+        Object o = x.executeGeneric(frame);
+        String data = o.toString();
         OutputStream out = l.getContextReference().get().getEnv().out();
         try {
             IOUtils.write(data, out, Charset.defaultCharset());

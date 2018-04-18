@@ -41,8 +41,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode smallerEqual(FNCExecuteNode a, FNCExecuteNode b) {
-//        return not(greater(a, b));
-        throw new RuntimeException("Not implemented");
+        return not(greater(a, b));
     }
 
     @Override
@@ -94,7 +93,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new BoolGreaterNode((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+            return BoolGreaterNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
         }
     }
 
@@ -109,7 +108,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new BoolGreaterEqualNode((FNCExpressionNode) a, (FNCExpressionNode) b);
+            return BoolGreaterEqualNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
         }
     }
 

@@ -19,9 +19,4 @@ public class BoolBoolNode extends FNCExpressionNode {
     public Object executeGeneric(VirtualFrame frame) {
         return vf.bool(b);
     }
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return vf.bool(b);
-//    }
 }

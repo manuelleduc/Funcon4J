@@ -1,41 +1,38 @@
 package funcons.truffle.values;
 
+import com.oracle.truffle.api.dsl.NodeChild;
+import com.oracle.truffle.api.dsl.NodeChildren;
+import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import funcons.truffle.nodes.FNCExpressionNode;
+import io.usethesource.vallang.IBool;
+import io.usethesource.vallang.IInteger;
+import io.usethesource.vallang.IReal;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Bool Greater Node ")
-public class BoolGreaterNode extends FNCExpressionNode {
+@NodeChildren({@NodeChild("a"), @NodeChild("b")})
+public abstract class BoolGreaterNode extends FNCExpressionNode {
 
-    ValueFactory vf = ValueFactory.getInstance();
-
-    @Child
-    private FNCExpressionNode a;
-
-    @Child
-    private FNCExpressionNode b;
-
-    public BoolGreaterNode(FNCExpressionNode a, FNCExpressionNode b) {
-        this.a = a;
-        this.b = b;
+    @Specialization
+    public IBool greateEqual(IInteger a, IInteger b) {
+        return a.greater(b);
     }
 
-    @Override
-    public Object executeGeneric(VirtualFrame frame) {
-        try {
-            return a.executeIInteger(frame).greater(b.executeIInteger(frame));
-        } catch (UnexpectedResultException e) {
-            e.printStackTrace();
-        }
-        return null;
+    @Specialization
+    public IBool greateEqual(IReal a, IReal b) {
+        return a.greater(b);
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        final IValue aVal = a.buildAST();
-//        final IValue bVal = b.buildAST();
-//        return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
-//    }
+    @Specialization
+    public IBool greateEqual(IInteger a, IReal b) {
+        return a.greater(b);
+    }
+
+    @Specialization
+    public IBool greateEqual(IReal a, IInteger b) {
+        return a.greater(b);
+    }
 }
