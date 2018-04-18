@@ -21,7 +21,8 @@ public class BoolNotNode extends FNCExpressionNode  {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return ((IBool) b.executeGeneric(frame)).not();
+        Object o = b.executeGeneric(frame);
+        return ((IBool) o).not();
     }
 
 //    @Override

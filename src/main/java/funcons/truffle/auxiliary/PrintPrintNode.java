@@ -2,28 +2,42 @@ package funcons.truffle.auxiliary;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.values.NullNullNode;
-import funcons.values.Null;
-import funcons.values.signals.RunTimeFunconException;
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
 
 
 @NodeInfo(description = "Print Print Node")
-public class PrintPrintNode extends FNCExpressionNode  {
+public class PrintPrintNode extends FNCExpressionNode {
 
+    private final FNCLanguage l;
     @Child
     private FNCExpressionNode x;
 
 
-    public PrintPrintNode(FNCExpressionNode x) {
+    public PrintPrintNode(FNCExpressionNode x, FNCLanguage l) {
         this.x = x;
+        this.l = l;
     }
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        System.out.println(x.executeGeneric(frame));
-        return  new NullNullNode().executeGeneric(frame);
+
+
+        String data = x.executeGeneric(frame).toString();
+        OutputStream out = l.getContextReference().get().getEnv().out();
+        try {
+            IOUtils.write(data, out, Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new NullNullNode().executeGeneric(frame);
     }
 
     @Override

@@ -23,7 +23,7 @@ public interface TrufflePrintFactory extends NullAlg<FNCExecuteNode>, PrintAlg<F
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new PrintPrintNode((FNCExpressionNode) x.buildAST(l));
+            return new PrintPrintNode((FNCExpressionNode) x.buildAST(l), l);
         }
     }
 }

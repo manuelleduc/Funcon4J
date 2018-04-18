@@ -79,7 +79,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new BoolNotNode((FNCExpressionNode) b);
+            return new BoolNotNode((FNCExpressionNode) b.buildAST(l));
         }
     }
 

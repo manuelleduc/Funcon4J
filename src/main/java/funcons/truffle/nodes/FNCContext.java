@@ -68,4 +68,8 @@ public class FNCContext {
     public FNCFunctionRegistry getFunctionRegistry() {
         return functionRegistry;
     }
+
+    public TruffleLanguage.Env getEnv() {
+        return env;
+    }
 }

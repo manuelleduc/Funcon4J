@@ -3,12 +3,10 @@ package funcons.truffle.entities;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
 
 
 @NodeInfo(description = "Assign AssignedValue Node")
-public class AssignAssignedValueNode extends FNCStatementNode {
+public class AssignAssignedValueNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode var;
@@ -18,7 +16,7 @@ public class AssignAssignedValueNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
+    public Object executeGeneric(VirtualFrame frame) {
         throw new RuntimeException("Not Implemented ");
     }
 
