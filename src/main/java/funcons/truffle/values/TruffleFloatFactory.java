@@ -1,7 +1,8 @@
 package funcons.truffle.values;
 
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.algebras.values.FloatAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
@@ -11,6 +12,7 @@ public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
 
 
     public static final ValueFactory vf = ValueFactory.getInstance();
+
     @Override
     default FNCExecuteNode lit(Double i) {
 //        return (env, given) -> vf.real(i);
@@ -86,6 +88,6 @@ public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
 //            INumber bVal = (INumber) b.eval(env, given);
 //            return aVal.toReal(5).pow(bVal.toReal(5), 5);
 //        };
-        throw new RuntimeException("Not implemented");
+        return l -> FloatFloatPowerOfNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
     }
 }

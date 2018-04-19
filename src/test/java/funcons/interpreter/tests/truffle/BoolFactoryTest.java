@@ -1,38 +1,13 @@
 package funcons.interpreter.tests.truffle;
 
 import com.oracle.truffle.api.source.Source;
-import com.oracle.truffle.api.vm.PolyglotEngine;
 import funcons.truffle.nodes.FNCLanguage;
-import org.apache.commons.io.output.WriterOutputStream;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 
 import static org.junit.Assert.assertEquals;
 
-public class BoolFactoryTest {
+public class BoolFactoryTest extends TruffleTest {
 
-    private PolyglotEngine engine;
-    private WriterOutputStream os;
-    private StringWriter writer;
-
-
-    @Before
-    public void initEngine() throws Exception {
-        this.writer = new StringWriter();
-        this.os = new WriterOutputStream(writer, Charset.defaultCharset());
-        engine = PolyglotEngine.newBuilder().setOut(os).build();
-
-    }
-
-    @After
-    public void dispose() {
-        engine.dispose();
-    }
 
     @Test
     public void testBool() throws Exception {
@@ -40,13 +15,6 @@ public class BoolFactoryTest {
         assertEquals("true", getAndFlush());
         engine.eval(Source.newBuilder("false;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
         assertEquals("false", getAndFlush());
-    }
-
-    private String getAndFlush() throws IOException {
-        this.os.flush();
-        final String valTrue = this.writer.getBuffer().toString();
-        this.writer.getBuffer().replace(0, this.writer.getBuffer().length(), "");
-        return valTrue;
     }
 
     @Test
@@ -86,11 +54,7 @@ public class BoolFactoryTest {
     }
 
     //
-    private void boolOpTester(
-            String operator,
-            String greaterThan,
-            String smallerThan,
-            String equal) throws Exception {
+    private void boolOpTester(String operator, String greaterThan, String smallerThan, String equal) throws Exception {
 
         engine.eval(Source.newBuilder("6 " + operator + " 3;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
         assertEquals(greaterThan, getAndFlush());
