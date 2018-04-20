@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class FloatTruffleTest extends TruffleTest {
+public class FloatTruffleTest extends AbstractTruffleTest {
 
     @Test
     public void testLit() throws Exception {

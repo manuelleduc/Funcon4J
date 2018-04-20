@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class BoolTruffleTest extends TruffleTest {
+public class BoolTruffleTest extends AbstractTruffleTest {
 
 
     @Test

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 
-public class TruffleTest {
+public abstract class AbstractTruffleTest {
 
 
     protected PolyglotEngine engine;
