@@ -26,49 +26,27 @@ public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode floatAdd(FNCExecuteNode a, FNCExecuteNode b) {
-//        return (env, given) -> {
-//            INumber aVal = (INumber) a.eval(env, given);
-//            INumber bVal = (INumber) b.eval(env, given);
-//            return aVal.add(bVal).toReal(5);
-//        };
-        throw new RuntimeException("Not implemented");
+        return l -> FloatFloatAddNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode floatNegate(FNCExecuteNode x) {
-//        return (env, given) ->
-//                ((INumber) x.eval(env, given)).negate().toReal(5);
-        throw new RuntimeException("Not implemented");
+        return l -> FloatFloatNegateNodeGen.create((FNCExpressionNode) x.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode floatSubtract(FNCExecuteNode a, FNCExecuteNode b) {
-//        return (env, given) -> {
-//            INumber aVal = (INumber) a.eval(env, given);
-//            INumber bVal = (INumber) b.eval(env, given);
-//            return aVal.subtract(bVal).toReal(5);
-//        };
-        throw new RuntimeException("Not implemented");
+        return l -> new FloatFloatSubstractNode((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode floatMultiply(FNCExecuteNode a, FNCExecuteNode b) {
-//        return (env, given) -> {
-//            INumber aVal = (INumber) a.eval(env, given);
-//            INumber bVal = (INumber) b.eval(env, given);
-//            return aVal.multiply(bVal).toReal(5);
-//        };
-        throw new RuntimeException("Not implemented");
+        return l -> FloatFloatMultiplyNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode floatDivide(FNCExecuteNode a, FNCExecuteNode b) {
-//        return (env, given) -> {
-//            INumber aVal = (INumber) a.eval(env, given);
-//            INumber bVal = (INumber) b.eval(env, given);
-//            return aVal.divide(bVal, 5).toReal(5);
-//        };
-        throw new RuntimeException("Not implemented");
+        return l -> FloatFloatDivideNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
     }
 
     @Override

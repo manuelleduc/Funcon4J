@@ -5,6 +5,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCRootNode;
+import io.usethesource.vallang.IString;
 
 
 /**
@@ -32,7 +33,7 @@ public class BindingBindValueNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return language.getContextReference().get().getRegistry().register((String) id.executeGeneric(frame), new FNCRootNode(language, exp));
+        return language.getContextReference().get().getRegistry().register(((IString) id.executeGeneric(frame)).getValue(), new FNCRootNode(language, exp));
     }
 
 

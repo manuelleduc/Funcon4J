@@ -1,10 +1,14 @@
 package funcons.truffle.values;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.values.StringAlg;
+import funcons.helper.RascalCLStringFactory;
 import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleStringFactory extends StringAlg<FNCExecuteNode> {
 
@@ -28,7 +32,12 @@ public interface TruffleStringFactory extends StringAlg<FNCExecuteNode> {
     @Override
     default FNCExecuteNode camlLightChar(String s) {
 //        return (env, given) -> funcons.helper.RascalCLStringFactory.clChar(vf, s);
-        throw new RuntimeException("Not implemented");
+        return l -> new FNCExpressionNode() {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return RascalCLStringFactory.clChar(ValueFactory.getInstance(), s);
+            }
+        };
 
     }
 

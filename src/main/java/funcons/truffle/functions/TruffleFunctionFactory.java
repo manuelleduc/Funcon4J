@@ -118,11 +118,10 @@ public interface TruffleFunctionFactory extends
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
 //            final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
-            FNCExpressionNode functionNode = (FNCExpressionNode) abs.buildAST(l);
-//            final FNCRootNode rootNode = new FNCRootNode(l, frameDescriptorFact, functionNode);
+            //            final FNCRootNode rootNode = new FNCRootNode(l, frameDescriptorFact, functionNode);
             //l.getContextReference().get().getFunctionRegistry().register(functionApplyNode.getName(), functionApplyNode, rootNode);
 
-            return new FunctionApplyNode(l, functionNode, (FNCExpressionNode) arg.buildAST(l));
+            return new FunctionApplyNode(l, (FNCExpressionNode) abs.buildAST(l), (FNCExpressionNode) arg.buildAST(l));
         }
     }
 

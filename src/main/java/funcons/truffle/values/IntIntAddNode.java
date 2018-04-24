@@ -35,9 +35,4 @@ public abstract class IntIntAddNode extends FNCExpressionNode {
         return a.add(b.toReal(5));
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return ((INumber) a.buildAST()).toInteger()
-//                .add(((INumber) b.buildAST()).toInteger());
-//    }
 }

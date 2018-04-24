@@ -1,12 +1,12 @@
 package funcons.truffle.entities;
 
+import com.oracle.truffle.api.frame.FrameDescriptor;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleBindingFactory extends
         MapAlg<FNCExecuteNode>,
@@ -83,25 +83,11 @@ public interface TruffleBindingFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage language) throws funcons.values.signals.RunTimeFunconException {
-
-            final FNCExecuteNode currentEnv = new BuildAstCurrentEnv(language);
-            return alg.scope(currentEnv, alg.mapOver(decl, currentEnv)).buildAST(language);
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return alg.scope(environment, alg.mapOver(decl, environment)).buildAST(l);
 
         }
 
-        private class BuildAstCurrentEnv implements FNCExecuteNode {
-            private final FNCLanguage language;
-
-            public BuildAstCurrentEnv(FNCLanguage language) {
-                this.language = language;
-            }
-
-            @Override
-            public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-                return environment.buildAST(language);
-            }
-        }
     }
 
     class Environment implements FNCExecuteNode {
@@ -129,14 +115,16 @@ public interface TruffleBindingFactory extends
     class Scope implements FNCExecuteNode {
         private final FNCExecuteNode localBindings;
         private final FNCExecuteNode exp;
+        private final FrameDescriptor frameDescriptor;
 
         public Scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
             this.localBindings = localBindings;
             this.exp = exp;
+            this.frameDescriptor = new FrameDescriptor();
         }
 
         @Override
-        public BindingBindValueNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
 //            final BindingBindValueNode idn = (BindingBindValueNode) localBindings.buildAST(l);
 //            final String name = ((String) idn.getSlot().getIdentifier());
 //            final FrameSlot frameSlot = new FrameDescriptor().findOrAddFrameSlot(name);
@@ -152,7 +140,8 @@ public interface TruffleBindingFactory extends
 //            } else {
 //                throw new RuntimeException("TOLOOOO");
 //            }
-            throw new RuntimeException("Not implemented");
+//            throw new RuntimeException("Not implemented");
+            return BindingScopeNodeGen.create((FNCExpressionNode) localBindings.buildAST(l), frameDescriptor.addFrameSlot(this.localBindings.buildAST(l)));
         }
     }
 

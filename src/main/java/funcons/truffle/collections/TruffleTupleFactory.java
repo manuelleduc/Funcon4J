@@ -53,7 +53,7 @@ public interface TruffleTupleFactory extends
 //        return (env, given) ->
 //                ((IList) tup.eval(env, given))
 //                        .insert(x.eval(env, given));
-        throw new RuntimeException("Not implemented");
+        return new TuplePrefix(x, tup);
     }
 
     @Override
@@ -117,6 +117,21 @@ public interface TruffleTupleFactory extends
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new TupleTuplePrefixMatchNode((FNCExpressionNode) p1.buildAST(l), (FNCExpressionNode) p2.buildAST(l));
+        }
+    }
+
+    class TuplePrefix implements FNCExecuteNode {
+        private final FNCExecuteNode x;
+        private final FNCExecuteNode tup;
+
+        public TuplePrefix(FNCExecuteNode x, FNCExecuteNode tup) {
+            this.x = x;
+            this.tup = tup;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TupleTuplePrefixNode((FNCExpressionNode) x.buildAST(l), (FNCExpressionNode) tup.buildAST(l));
         }
     }
 }

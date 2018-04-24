@@ -1,5 +1,6 @@
 package funcons.truffle.types;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
@@ -8,9 +9,11 @@ import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleTypeFactory extends
         BoolAlg<FNCExecuteNode>,
@@ -25,7 +28,12 @@ public interface TruffleTypeFactory extends
     @Override
     default FNCExecuteNode type(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
-        throw new RuntimeException("Not implemented");
+        return l -> new FNCExpressionNode() {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return ValueFactory.getInstance().string(name);
+            }
+        };
 
     }
 

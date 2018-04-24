@@ -1,15 +1,13 @@
 package funcons.truffle.collections;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.IList;
 
 
 @NodeInfo(description = "Vectore VectorAppend Node")
-public class VectorVectorAppendNode extends FNCExpressionNode  {
+public class VectorVectorAppendNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode vector1;
@@ -24,7 +22,9 @@ public class VectorVectorAppendNode extends FNCExpressionNode  {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        throw new RuntimeException("Not implemented");
+        final IList vector1Val = (IList) vector1.executeGeneric(frame);
+        final IList vector2Val = (IList) vector2.executeGeneric(frame);
+        return vector1Val.concat(vector2Val);
     }
 
 //    @Override

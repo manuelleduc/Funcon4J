@@ -1,21 +1,5 @@
 package camllight;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-
 import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
@@ -26,10 +10,20 @@ import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 import noa.proxy.Recorder;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class CamlLight {
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static <X> X parse(String s, camllight.algebras.AllAlg alg) {
         CLLexer lexer = new CLLexer(new ANTLRInputStream(s));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -39,7 +33,8 @@ public class CamlLight {
     }
 
     public static IValue eval(String src) throws FunconException {
-        final funcons.algebras.AllAlg<IEval> evalAlg = new funcons.interpreter.AllFactory() {};
+        final funcons.algebras.AllAlg<IEval> evalAlg = new funcons.interpreter.AllFactory() {
+        };
         return eval(src, () -> evalAlg);
     }
 
@@ -49,7 +44,7 @@ public class CamlLight {
         final IValue env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
 
 //        System.out.println(eval.print());
-        return eval.eval((IMap)env, new Null());
+        return eval.eval((IMap) env, new Null());
     }
 
     private static void interpret(String src) throws FunconException {
@@ -146,8 +141,10 @@ public class CamlLight {
     }
 
     private static void runExamples() throws IOException, FunconException {
+//        run("examples/assign1.ml");
+        run("examples/ref.ml");
 //        run("examples/fib.ml");
-        run("examples/p1.ml");
+//        run("examples/p1.ml");
 //        run("examples/sieve.ml");
     }
 
@@ -182,7 +179,7 @@ public class CamlLight {
         runExamples();
 
         // run tests as provided by Mosses
-        //runGivenTests();
+//        runGivenTests();
 
         // run several performance tests
         //runPerformanceTests();

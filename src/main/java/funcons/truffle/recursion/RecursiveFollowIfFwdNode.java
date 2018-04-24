@@ -2,10 +2,10 @@ package funcons.truffle.recursion;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.functions.FNCUndefinedNameException;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCFunction;
 import funcons.values.recursion.Fwd;
-import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "Recursive FollowIfFwd Node")
 public class RecursiveFollowIfFwdNode extends FNCExpressionNode {
@@ -22,7 +22,11 @@ public class RecursiveFollowIfFwdNode extends FNCExpressionNode {
         if (v instanceof Fwd) {
             return ((Fwd) v).follow();
         } else if (v instanceof FNCFunction) {
-            return ((FNCFunction) v).getName();
+            try {
+                return ((FNCFunction) v).getCallTarget().getRootNode().execute(frame);
+            } catch (FNCUndefinedNameException e) {
+                return null;
+            }
         }
         return v;
     }

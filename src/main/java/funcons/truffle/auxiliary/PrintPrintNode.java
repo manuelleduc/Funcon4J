@@ -30,7 +30,7 @@ public class PrintPrintNode extends FNCExpressionNode {
 
 
         Object o = x.executeGeneric(frame);
-        String data = o.toString();
+        String data = String.valueOf(o);
         OutputStream out = l.getContextReference().get().getEnv().out();
         try {
             IOUtils.write(data, out, Charset.defaultCharset());

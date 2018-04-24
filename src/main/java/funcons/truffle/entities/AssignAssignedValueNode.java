@@ -17,7 +17,7 @@ public class AssignAssignedValueNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        throw new RuntimeException("Not Implemented ");
+        return var.executeGeneric(frame);
     }
 
 //    @Override

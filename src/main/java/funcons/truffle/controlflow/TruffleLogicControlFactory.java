@@ -1,17 +1,18 @@
 package funcons.truffle.controlflow;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.entities.BindingBindValueNode;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.IBool;
 
 public interface TruffleLogicControlFactory extends
         NullAlg<FNCExecuteNode>,
@@ -23,11 +24,7 @@ public interface TruffleLogicControlFactory extends
 
     @Override
     default FNCExecuteNode effect(FNCExecuteNode e) {
-//        return (env, given) -> {
-//            e.eval(env, given);
-//            return null_().eval(env, given);
-//        };
-        throw new RuntimeException("Not implemented");
+        return l -> new LogicControlEffectNode(e.buildAST(l), (FNCExpressionNode) null_().buildAST(l));
     }
 
     @Override
@@ -46,14 +43,32 @@ public interface TruffleLogicControlFactory extends
     }
 
     @Override
-    default FNCExecuteNode for_(FNCExecuteNode cond, FNCExecuteNode incr, FNCExecuteNode exp) {
+    default FNCExecuteNode for_(FNCExecuteNode condl, FNCExecuteNode incrl, FNCExecuteNode expl) {
 //        return (env, given) -> {
 //            for (; (((IBool) cond.eval(env, given)).getValue()); env = env.join((IMap) incr.eval(env, given))) {
 //                exp.eval(env, given);
 //            }
 //            return null_().eval(env, given);
 //        };
-        throw new RuntimeException("Not implemented");
+
+        FNCExecuteNode a = (z -> null_().buildAST(z));
+
+        return l -> {
+            final FNCExpressionNode ret = (FNCExpressionNode) a.buildAST(l);
+            final FNCExpressionNode cond = (FNCExpressionNode) condl.buildAST(l);
+            final FNCExpressionNode incr = (FNCExpressionNode) incrl.buildAST(l);
+            final FNCExpressionNode exp = (FNCExpressionNode) expl.buildAST(l);
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    // todo env = env.join((IMap) incr.eval(env, given))
+                    for (; (((IBool) cond.executeGeneric(frame)).getValue()); incr.executeGeneric(frame)) {
+                        exp.executeGeneric(frame);
+                    }
+                    return ret.executeGeneric(frame);
+                }
+            };
+        };
     }
 
     class IfTrue implements FNCExecuteNode {
