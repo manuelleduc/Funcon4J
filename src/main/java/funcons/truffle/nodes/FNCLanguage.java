@@ -4,8 +4,11 @@ import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
 import com.oracle.truffle.api.CallTarget;
+import com.oracle.truffle.api.Scope;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.TruffleLanguage;
+import com.oracle.truffle.api.frame.Frame;
+import com.oracle.truffle.api.nodes.Node;
 import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IValue;
 import noa.proxy.Recorder;
@@ -16,6 +19,8 @@ import org.apache.commons.io.IOUtils;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @TruffleLanguage.Registration(id = "fnc", name = "FNC",
@@ -35,7 +40,9 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
     @Override
     protected FNCContext createContext(Env env) {
-        return new FNCContext(this, env);
+        FNCContext fncContext = new FNCContext(this, env);
+        fncContext.initRegistry(this);
+        return fncContext;
     }
 
     @Override
@@ -105,5 +112,42 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         return env;
     }
 
+
+    @Override
+    protected Iterable<Scope> findLocalScopes(FNCContext context, Node node, Frame frame) {
+        final FNCLexicalScope scope = FNCLexicalScope.createScope(node);
+        return () -> new Iterator<Scope>() {
+            private FNCLexicalScope previousScope;
+            private FNCLexicalScope nextScope = scope;
+
+            @Override
+            public boolean hasNext() {
+                if (nextScope == null) {
+                    nextScope = previousScope.findParent();
+                }
+                return nextScope != null;
+            }
+
+            @Override
+            public Scope next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                Scope vscope = Scope.newBuilder(nextScope.getName(), nextScope.getVariables(frame)).node(nextScope.getNode()).arguments(nextScope.getArguments(frame)).build();
+                previousScope = nextScope;
+                nextScope = null;
+                return vscope;
+            }
+        };
+    }
+
+    @Override
+    protected Iterable<Scope> findTopScopes(FNCContext context) {
+        return context.getTopScopes();
+    }
+
+    public static FNCContext getCurrentContext() {
+        return getCurrentContext(FNCLanguage.class);
+    }
 
 }

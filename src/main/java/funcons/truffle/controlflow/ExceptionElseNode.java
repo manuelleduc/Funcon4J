@@ -1,13 +1,15 @@
 package funcons.truffle.controlflow;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
+import funcons.values.signals.FailureTrue;
+
+import static com.oracle.truffle.api.nodes.Node.*;
 
 @NodeInfo(description = "Exception Else Node")
-public class ExceptionElseNode extends FNCStatementNode {
+public class ExceptionElseNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode x2;
@@ -21,8 +23,12 @@ public class ExceptionElseNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
-        throw new RuntimeException("Not implemented");
+    public Object executeGeneric(VirtualFrame frame) {
+        try {
+            return x1.executeGeneric(frame);
+        } catch (FailureTrue f) {
+            return x2.executeGeneric(frame);
+        }
     }
 
 //    @Override

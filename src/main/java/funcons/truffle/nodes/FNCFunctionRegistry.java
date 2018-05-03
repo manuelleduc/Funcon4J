@@ -2,19 +2,24 @@ package funcons.truffle.nodes;
 
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.Truffle;
+import com.oracle.truffle.api.interop.TruffleObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FNCFunctionRegistry {
     private final Map<String, FNCFunction> functions = new HashMap<>();
 
 
     private final FNCLanguage language;
+    private final FunctionsObject functionsObject = new FunctionsObject();
+
 
     public FNCFunctionRegistry(FNCLanguage language) {
         this.language = language;
     }
+
+//    private final FunctionsObject functionsObject = new FunctionsObject();
+
 
     public FNCFunction lookup(String name, boolean createIfNotPresent) {
         final FNCFunction result1 = functions.get(name);
@@ -35,4 +40,8 @@ public class FNCFunctionRegistry {
         return function;
     }
 
+
+    public TruffleObject getFunctionsObject() {
+        return functionsObject;
+    }
 }

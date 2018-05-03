@@ -1,5 +1,7 @@
 package funcons.truffle.entities;
 
+import com.oracle.truffle.api.frame.FrameSlot;
+import com.oracle.truffle.api.frame.FrameSlotTypeException;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExecuteNode;
@@ -10,10 +12,12 @@ import funcons.values.signals.RunTimeFunconException;
 public class SupplyGivenGivenNode extends FNCExpressionNode  {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return null;
+        FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot("given");
+        try {
+            return frame.getObject(given);
+        } catch (FrameSlotTypeException e) {
+            throw new RuntimeException("Given not found", e);
+
+        }
     }
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return given;
-//    }
 }

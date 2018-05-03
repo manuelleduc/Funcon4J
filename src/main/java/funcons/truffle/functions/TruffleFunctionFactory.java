@@ -8,7 +8,6 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.entities.BindingBindValueNode;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
@@ -43,7 +42,9 @@ public interface TruffleFunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode apply(FNCExecuteNode abs, FNCExecuteNode arg) {
-        return new Apply(abs, arg);
+        return (l) -> supply(arg,
+                abs::buildAST).buildAST(l);
+//        return new Apply(abs, arg);
     }
 
     @Override
@@ -87,7 +88,7 @@ public interface TruffleFunctionFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new FNCFunctionBodyNode(exp.buildAST(l));
+            return new FunctionAbsNode((FNCExpressionNode) exp.buildAST(l));
         }
     }
 

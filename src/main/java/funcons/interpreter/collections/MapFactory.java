@@ -2,6 +2,7 @@ package funcons.interpreter.collections;
 
 import funcons.algebras.collections.MapAlg;
 import funcons.carriers.IEval;
+import funcons.values.signals.FunconException;
 import io.usethesource.vallang.IListWriter;
 import io.usethesource.vallang.IMap;
 import io.usethesource.vallang.IMapWriter;
@@ -53,10 +54,13 @@ public interface MapFactory extends MapAlg<IEval> {
 
     @Override
     default IEval mapOver(IEval map1, IEval map2) {
-        return (env, given) -> {
-            IMap m1 = (IMap)map1.eval(env, given);
-            IMap m2 = (IMap)map2.eval(env, given);
-            return m2.join(m1);
+        return new IEval() {
+            @Override
+            public IValue eval(IMap env, IValue given) throws FunconException {
+                IMap m1 = (IMap) map1.eval(env, given);
+                IMap m2 = (IMap) map2.eval(env, given);
+                return m2.join(m1);
+            }
         };
     }
 

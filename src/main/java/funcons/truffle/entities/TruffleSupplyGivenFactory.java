@@ -10,13 +10,11 @@ public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<FNCExecuteNode
 
     @Override
     default FNCExecuteNode given() {
-//        return (env, given) -> given;
-        return new Given(); // TODO
+        return new Given();
     }
 
     @Override
     default FNCExecuteNode supply(FNCExecuteNode exp, FNCExecuteNode x) {
-//        return (env, given) -> x.eval(env, exp.eval(env, given));
         return new Supply(exp, x);
     }
 
@@ -38,7 +36,7 @@ public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<FNCExecuteNode
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new SupplyGivenSupplyNode((FNCExpressionNode) exp, (FNCExpressionNode) x);
+            return new SupplyGivenSupplyNode((FNCExpressionNode) exp.buildAST(l), (FNCExpressionNode) x.buildAST(l));
         }
     }
 }

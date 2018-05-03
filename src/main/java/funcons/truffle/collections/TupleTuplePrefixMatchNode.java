@@ -1,11 +1,12 @@
 package funcons.truffle.collections;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.sun.org.apache.regexp.internal.RE;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
-public class TupleTuplePrefixMatchNode extends FNCStatementNode {
+public class TupleTuplePrefixMatchNode extends FNCExpressionNode {
     private final FNCExpressionNode p1;
     private final FNCExpressionNode p2;
 
@@ -16,7 +17,8 @@ public class TupleTuplePrefixMatchNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) {
-        throw new RuntimeException("Not implemented");
+    public Object executeGeneric(VirtualFrame frame) {
+        throw new RuntimeException("not implemented");
     }
+
 }

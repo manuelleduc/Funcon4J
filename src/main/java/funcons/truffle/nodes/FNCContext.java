@@ -1,10 +1,12 @@
 package funcons.truffle.nodes;
 
 import com.oracle.truffle.api.CompilerDirectives;
+import com.oracle.truffle.api.Scope;
 import com.oracle.truffle.api.TruffleLanguage;
 import com.oracle.truffle.api.interop.TruffleObject;
 
 import java.math.BigInteger;
+import java.util.Collections;
 
 public class FNCContext {
 
@@ -13,6 +15,8 @@ public class FNCContext {
 
     private FNCFunctionRegistry registry;
     private FNCLanguage language;
+
+    private final Iterable<Scope> topScopes;
 
 
     public FNCFunctionRegistry getRegistry() {
@@ -31,6 +35,8 @@ public class FNCContext {
         this.language = language;
 //        this.allocationReporter = env.lookup(AllocationReporter.class);
         this.functionRegistry = new FNCFunctionRegistry(language);
+        this.topScopes = Collections.singleton(Scope.newBuilder("global", functionRegistry.getFunctionsObject()).build());
+
 //        installBuiltins();
 //
 //        this.emptyShape = LAYOUT.createShape(SLObjectType.SINGLETON);
@@ -71,5 +77,9 @@ public class FNCContext {
 
     public TruffleLanguage.Env getEnv() {
         return env;
+    }
+
+    public Iterable<Scope> getTopScopes() {
+        return topScopes;
     }
 }

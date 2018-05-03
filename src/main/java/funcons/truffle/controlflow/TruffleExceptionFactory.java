@@ -8,6 +8,7 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleExceptionFactory extends
         LogicControlAlg<FNCExecuteNode>,
@@ -80,7 +81,7 @@ public interface TruffleExceptionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode preferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
-        return new PreferOver(a1, a2);
+        return new PrefereOver(a1, a2, this);
     }
 
 
@@ -121,29 +122,46 @@ public interface TruffleExceptionFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new ExceptionElseNode((FNCExpressionNode) x1, (FNCExpressionNode) x2);
+            return new ExceptionElseNode((FNCExpressionNode) x1.buildAST(l), (FNCExpressionNode) x2.buildAST(l));
         }
     }
-
-    class PreferOver implements FNCExecuteNode {
-        private final FNCExecuteNode a1;
-        private final FNCExecuteNode a2;
-
-        public PreferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
-            this.a1 = a1;
-            this.a2 = a2;
-        }
-
-        @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new ExceptionPrefereOverNode((FNCExpressionNode) a1.buildAST(l), (FNCExpressionNode) a2.buildAST(l));
-        }
-    }
+//
+//    class PreferOver implements FNCExecuteNode {
+//        private final FNCExecuteNode a1;
+//        private final FNCExecuteNode a2;
+//
+//        public PreferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
+//            this.a1 = a1;
+//            this.a2 = a2;
+//        }
+//
+//        @Override
+//        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+//            return new ExceptionPrefereOverNode((FNCExpressionNode) a1.buildAST(l), (FNCExpressionNode) a2.buildAST(l));
+//        }
+//    }
 
     class Fail implements FNCExecuteNode {
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new ExceptionFailNode();
+        }
+    }
+
+    class PrefereOver implements FNCExecuteNode {
+        private final FNCExecuteNode a1;
+        private final FNCExecuteNode a2;
+        private final TruffleExceptionFactory alg;
+
+        public PrefereOver(FNCExecuteNode a1, FNCExecuteNode a2, TruffleExceptionFactory truffleExceptionFactory) {
+            this.a1 = a1;
+            this.a2 = a2;
+            this.alg = truffleExceptionFactory;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return alg.abs(alg.else_(a1, a2)).buildAST(l);
         }
     }
 }

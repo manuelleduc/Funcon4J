@@ -1,8 +1,10 @@
 package funcons.truffle.entities;
 
+import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCFunctionRegistry;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCRootNode;
 import io.usethesource.vallang.IString;
@@ -33,7 +35,17 @@ public class BindingBindValueNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return language.getContextReference().get().getRegistry().register(((IString) id.executeGeneric(frame)).getValue(), new FNCRootNode(language, exp));
+//        final FNCFunctionRegistry registry = language.getContextReference().get().getRegistry();
+//        final Object o = id.executeGeneric(frame);
+//        final String value = ((IString) o).getValue();
+//        final FNCRootNode rootNode = new FNCRootNode(language, exp);
+//        return registry.register(value, rootNode);
+
+        Object value = this.exp.executeGeneric(frame);
+        Object name = this.id.executeGeneric(frame);
+        FrameSlot frameDescriptor = frame.getFrameDescriptor().findOrAddFrameSlot(name);
+        frame.setObject(frameDescriptor, value);
+        return value;
     }
 
 

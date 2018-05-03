@@ -29,7 +29,9 @@ public interface BindingFactory extends
         return (env, given) -> {
             IMapWriter mw = vf.mapWriter();
 
-            mw.put(id.eval(env, given), exp.eval(env, given));
+            IValue eval = id.eval(env, given);
+            IValue eval1 = exp.eval(env, given);
+            mw.put(eval, eval1);
             return mw.done();
         };
     }

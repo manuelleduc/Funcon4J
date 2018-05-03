@@ -7,6 +7,7 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleBindingFactory extends
         MapAlg<FNCExecuteNode>,
@@ -68,27 +69,30 @@ public interface TruffleBindingFactory extends
 
     @Override
     default FNCExecuteNode accum(FNCExecuteNode environment, FNCExecuteNode decl) {
+
         return new Accum(environment, decl, this);
+
+//        return new Accum(environment, decl, this);
     }
 
-    class Accum implements FNCExecuteNode {
-        private final FNCExecuteNode environment;
-        private final FNCExecuteNode decl;
-        private final TruffleBindingFactory alg;
-
-        public Accum(FNCExecuteNode environment, FNCExecuteNode decl, TruffleBindingFactory truffleBindingFactory) {
-            this.environment = environment;
-            this.decl = decl;
-            this.alg = truffleBindingFactory;
-        }
-
-        @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return alg.scope(environment, alg.mapOver(decl, environment)).buildAST(l);
-
-        }
-
-    }
+//    class Accum implements FNCExecuteNode {
+//        private final FNCExecuteNode environment;
+//        private final FNCExecuteNode decl;
+//        private final TruffleBindingFactory alg;
+//
+//        public Accum(FNCExecuteNode environment, FNCExecuteNode decl, TruffleBindingFactory truffleBindingFactory) {
+//            this.environment = environment;
+//            this.decl = decl;
+//            this.alg = truffleBindingFactory;
+//        }
+//
+//        @Override
+//        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+//            return alg.scope(environment, alg.mapOver(decl, environment)).buildAST(l);
+//
+//        }
+//
+//    }
 
     class Environment implements FNCExecuteNode {
         @Override
@@ -141,7 +145,10 @@ public interface TruffleBindingFactory extends
 //                throw new RuntimeException("TOLOOOO");
 //            }
 //            throw new RuntimeException("Not implemented");
-            return BindingScopeNodeGen.create((FNCExpressionNode) localBindings.buildAST(l), frameDescriptor.addFrameSlot(this.localBindings.buildAST(l)));
+
+//            FNCStatementNode yolo = exp.buildAST(l);
+
+            return new BindingScopeNode((FNCExpressionNode) localBindings.buildAST(l), (FNCExpressionNode) exp.buildAST(l), l);
         }
     }
 
@@ -154,9 +161,7 @@ public interface TruffleBindingFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-//            l.getContextReference().get().getFunctionRegistry().register()
-            FNCExpressionNode id1 = (FNCExpressionNode) id.buildAST(l);
-            return new BindingBoundValueNode(l, id1);
+            return new BindingBoundValueNode(l, (FNCExpressionNode) id.buildAST(l));
         }
     }
 
@@ -198,6 +203,25 @@ public interface TruffleBindingFactory extends
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new BindingIdNode(s);
+        }
+    }
+
+    class Accum implements FNCExecuteNode {
+        private final FNCExecuteNode environment;
+        private final FNCExecuteNode decl;
+        private final TruffleBindingFactory alg;
+
+        public Accum(FNCExecuteNode environment, FNCExecuteNode decl, TruffleBindingFactory alg) {
+            this.environment = environment;
+            this.decl = decl;
+            this.alg = alg;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            final FNCStatementNode currentEnv = environment.buildAST(l);
+            final FNCExecuteNode scope = alg.scope((n) -> currentEnv, alg.mapOver(decl, (m) -> currentEnv));
+            return scope.buildAST(l);
         }
     }
 }

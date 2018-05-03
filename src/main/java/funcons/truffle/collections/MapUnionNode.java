@@ -3,9 +3,6 @@ package funcons.truffle.collections;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Map Union Node")
 public class MapUnionNode extends FNCExpressionNode {
@@ -19,10 +16,9 @@ public class MapUnionNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-
-        final IMap m1 = (IMap) map1.executeGeneric(frame);
-        final IMap m2 = (IMap) map2.executeGeneric(frame);
-        return m1.join(m2);
+        Object o = map1.executeGeneric(frame);
+        Object o1 = map2.executeGeneric(frame);
+        return o1;
     }
 
 

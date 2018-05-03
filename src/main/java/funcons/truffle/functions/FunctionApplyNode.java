@@ -60,7 +60,10 @@ public class FunctionApplyNode extends FNCExpressionNode {
 //        callNode.call(this.functionNode, new Object[] {
 //
 //        });
-        return null;
+
+        Object res = functionNode.executeGeneric(frame);
+
+        return argumentNode.executeGeneric(frame);
     }
 
     @Override

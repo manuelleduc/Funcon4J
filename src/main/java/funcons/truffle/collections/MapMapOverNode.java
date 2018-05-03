@@ -3,14 +3,13 @@ package funcons.truffle.collections;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IMap;
-
-import java.util.Arrays;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Map MapOver Node")
 public class MapMapOverNode extends FNCExpressionNode {
 
+
+    public static final ValueFactory vf = ValueFactory.getInstance();
     @Child
     private FNCExpressionNode map1;
 
@@ -24,10 +23,9 @@ public class MapMapOverNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        System.out.println("executeGeneric[MapMapOverNode] " + this + " frame args : " + Arrays.toString(frame.getArguments()));
-        final IMap m1 = (IMap) map1.executeGeneric(frame);
-        final IMap m2 = (IMap) map2.executeGeneric(frame);
-        return m2.join(m1);
+        Object o = map2.executeGeneric(frame);
+        final Object o1 = map1.executeGeneric(frame);
+        return o1;
     }
 
     @Override

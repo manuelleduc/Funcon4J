@@ -1,16 +1,14 @@
 package funcons.truffle.entities;
 
 import com.oracle.truffle.api.TruffleLanguage;
+import com.oracle.truffle.api.frame.FrameSlotTypeException;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCContext;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IString;
 
 import static com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
-import static com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate;
 
 @NodeInfo(description = "Binding BoundValue Node")
 public class BindingBoundValueNode extends FNCExpressionNode {
@@ -30,16 +28,13 @@ public class BindingBoundValueNode extends FNCExpressionNode {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
 
-        final String functionName = ((IString) id.executeGeneric(frame)).getValue();
+        final Object functionName = id.executeGeneric(frame);
 
-        if (cachedFunction == null) {
-            transferToInterpreterAndInvalidate();
-            /* We are about to change a @CompilationFinal field. */
-            transferToInterpreterAndInvalidate();
-            /* First execution of the node: lookup the function in the function registry. */
-            cachedFunction = reference.get().getFunctionRegistry().lookup(functionName, true);
+        try {
+            return frame.getObject(frame.getFrameDescriptor().findFrameSlot(functionName));
+        } catch (FrameSlotTypeException e) {
+            throw new RuntimeException("Identifier " + functionName + " not found", e);
         }
-        return cachedFunction;
     }
 
     @Override
