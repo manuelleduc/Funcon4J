@@ -27,25 +27,7 @@ public class SupplyGivenSupplyNode extends funcons.truffle.nodes.FNCExpressionNo
         final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot("given");
         frame.setObject(given, res);
         final Object o = x.executeGeneric(frame);
-//        frame.setObject(this.cre);
-
-
-//        FrameSlot frames = frameDescriptor.findOrAddFrameSlot("given", FrameSlotKind.Object);
-//        FrameSlot fs = new FrameSlot(this, "given", null, FrameSlotKind.Object, slots.size());
-
-//        FrameSlot fs = frame.getFrameDescriptor().findOrAddFrameSlot("given");
-//        frame.setObject(fs, o);
-//        if(res instanceof IValue) {
-//            FrameSlot fd = frame.getFrameDescriptor().findOrAddFrameSlot(o);
-//            frame.setObject(fd, res);
-//        }
         return o;
     }
 
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return x.buildAST();
-//
-//    }
 }

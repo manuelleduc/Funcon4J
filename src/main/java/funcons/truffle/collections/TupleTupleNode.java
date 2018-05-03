@@ -26,7 +26,9 @@ public class TupleTupleNode extends FNCExpressionNode  {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return vf.list((IList) x1.executeGeneric(frame), (IList) x2.executeGeneric(frame));
+        Object o = x1.executeGeneric(frame);
+        Object o1 = x2.executeGeneric(frame);
+        return vf.list((IList) o, (IList) o1);
     }
 
 }

@@ -25,8 +25,9 @@ public class FNCFunctionRegistry {
         final FNCFunction result1 = functions.get(name);
         final FNCFunction result;
         if (result1 == null && createIfNotPresent) {
-            result = new FNCFunction(language, name);
-            functions.put(name, result);
+//            result = new FNCFunction(language, name);
+//            functions.put(name, result);
+            result = null;
         } else {
             result = result1;
         }
@@ -36,7 +37,7 @@ public class FNCFunctionRegistry {
     public FNCFunction register(final String name, final FNCRootNode rootNode) {
         final FNCFunction function = lookup(name, true);
         final RootCallTarget callTarget = Truffle.getRuntime().createCallTarget(rootNode);
-        function.setCallTarget(callTarget);
+//        function.setCallTarget(callTarget);
         return function;
     }
 

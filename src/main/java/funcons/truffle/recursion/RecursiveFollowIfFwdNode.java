@@ -19,9 +19,7 @@ public class RecursiveFollowIfFwdNode extends FNCExpressionNode {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
         final Object v = fwd.executeGeneric(frame);
-        if (v instanceof Fwd) {
-            return ((Fwd) v).follow();
-        } else if (v instanceof FNCFunction) {
+        if (v instanceof FNCFunction) {
             try {
                 return ((FNCFunction) v).getCallTarget().getRootNode().execute(frame);
             } catch (FNCUndefinedNameException e) {

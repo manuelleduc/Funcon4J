@@ -103,26 +103,7 @@ public interface TruffleFunctionFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new FunctionAbsNode2((FNCExpressionNode) patt.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
-        }
-    }
-
-    class Apply implements FNCExecuteNode {
-        private final FNCExecuteNode abs;
-        private final FNCExecuteNode arg;
-
-        public Apply(FNCExecuteNode abs, FNCExecuteNode arg) {
-            this.abs = abs;
-            this.arg = arg;
-        }
-
-        @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-//            final FrameDescriptor frameDescriptorFact = new FrameDescriptor();
-            //            final FNCRootNode rootNode = new FNCRootNode(l, frameDescriptorFact, functionNode);
-            //l.getContextReference().get().getFunctionRegistry().register(functionApplyNode.getName(), functionApplyNode, rootNode);
-
-            return new FunctionApplyNode(l, (FNCExpressionNode) abs.buildAST(l), (FNCExpressionNode) arg.buildAST(l));
+            return new FunctionAbsNode2((FNCExpressionNode) patt.buildAST(l), (FNCExpressionNode) exp.buildAST(l), l);
         }
     }
 
@@ -135,7 +116,7 @@ public interface TruffleFunctionFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new FunctionCloseNode((FNCExpressionNode) abs.buildAST(l));
+            return new FunctionCloseNode((FNCExpressionNode) abs.buildAST(l), l);
         }
     }
 }

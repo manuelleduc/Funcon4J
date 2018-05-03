@@ -15,7 +15,9 @@ public class CurryCurryNNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        throw new RuntimeException("Not implemented");
+        Object res = a.executeGeneric(frame);
+
+        return null;
     }
 
 }

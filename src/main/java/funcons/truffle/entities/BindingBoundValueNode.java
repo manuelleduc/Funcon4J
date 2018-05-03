@@ -1,6 +1,8 @@
 package funcons.truffle.entities;
 
 import com.oracle.truffle.api.TruffleLanguage;
+import com.oracle.truffle.api.frame.FrameDescriptor;
+import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameSlotTypeException;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -31,7 +33,9 @@ public class BindingBoundValueNode extends FNCExpressionNode {
         final Object functionName = id.executeGeneric(frame);
 
         try {
-            return frame.getObject(frame.getFrameDescriptor().findFrameSlot(functionName));
+            final FrameDescriptor frameDescriptor = frame.getFrameDescriptor();
+            final FrameSlot frameSlot = frameDescriptor.findFrameSlot(functionName);
+            return frame.getObject(frameSlot);
         } catch (FrameSlotTypeException e) {
             throw new RuntimeException("Identifier " + functionName + " not found", e);
         }

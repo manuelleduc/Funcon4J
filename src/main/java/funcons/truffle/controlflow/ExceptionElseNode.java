@@ -31,12 +31,4 @@ public class ExceptionElseNode extends FNCExpressionNode {
         }
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        try {
-//            return x1.buildAST();
-//        } catch (FailureTrue f) {
-//            return x2.buildAST();
-//        }
-//    }
 }

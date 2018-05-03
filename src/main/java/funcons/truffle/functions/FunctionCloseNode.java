@@ -2,8 +2,7 @@ package funcons.truffle.functions;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
-import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.*;
 
 
 @NodeInfo(description = "Function Close Node")
@@ -11,14 +10,17 @@ public class FunctionCloseNode extends FNCExpressionNode  {
     @Child
     FNCExpressionNode abs;
 
-    public FunctionCloseNode(FNCExpressionNode abs) {
+    private final FNCLanguage l;
+
+    public FunctionCloseNode(FNCExpressionNode abs, FNCLanguage l) {
         this.abs = abs;
+        this.l = l;
+
     }
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        // TODO ????
-        return null;
+        return new FNCFunction(l, new FNCRootNode(l, abs));
     }
 
 //    @Override

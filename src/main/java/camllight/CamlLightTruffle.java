@@ -100,10 +100,10 @@ public class CamlLightTruffle {
 
 
     private void runExamples() throws IOException, FunconException {
-//        run("examples/fib.ml");
+        run("examples/fib.ml");
 //        run("examples/p1.ml");
 //        run("examples/p2.ml");
-        run("examples/ref.ml");
+//        run("examples/ref.ml");
 //        run("examples/if.ml");
 //        run("examples/sieve.ml");
     }

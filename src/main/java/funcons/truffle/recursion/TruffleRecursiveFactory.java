@@ -86,7 +86,7 @@ public interface TruffleRecursiveFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new RecursiveFreshFwdsNode((FNCExpressionNode) idList);
+            return new RecursiveFreshFwdsNode((FNCExpressionNode) idList.buildAST(l));
         }
     }
 
@@ -99,7 +99,7 @@ public interface TruffleRecursiveFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new RecursiveSetForwardsNode((FNCExpressionNode) idFwdMap);
+            return new RecursiveSetForwardsNode((FNCExpressionNode) idFwdMap.buildAST(l));
         }
     }
 

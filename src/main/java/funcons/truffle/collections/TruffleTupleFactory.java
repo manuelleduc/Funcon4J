@@ -23,7 +23,6 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode tuple() {
-//        return (env, given) -> vf.list();
         return new Tuple0();
     }
 

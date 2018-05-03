@@ -17,29 +17,12 @@ public class FunctionAbsNode extends FNCExpressionNode  {
     @Child
     private FNCExpressionNode bodyNode;
 
-//    private final BranchProfile exceptionTaken = BranchProfile.create();
-//    private final BranchProfile nullTaken = BranchProfile.create();
-
     public FunctionAbsNode(FNCExpressionNode exp) {
         this.bodyNode = exp;
     }
 
-
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-//        try {
-//            bodyNode.executeVoid(frame);
-//        } catch (FNCReturnException e) {
-//            exceptionTaken.enter();
-//            return e.getResult();
-//        } catch (RunTimeFunconException e) {
-//            e.printStackTrace();
-//        }
-//
-//        nullTaken.enter();
-//
-//        return null;
-
         return bodyNode.executeGeneric(frame);
     }
 }

@@ -1,7 +1,6 @@
 package funcons.truffle.collections;
 
 import funcons.algebras.collections.MapAlg;
-import funcons.truffle.entities.BindingBindValueNode;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
@@ -41,7 +40,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 //            m.forEach(lw::append);
 //            return lw.done();
 //        };
-        return language -> new MapMapDomainNode((FNCExpressionNode) map);
+        return new MapDomain(map);
     }
 
     @Override
@@ -123,6 +122,19 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new MapMapGetNode((FNCExpressionNode) map, (FNCExpressionNode) key);
+        }
+    }
+
+    class MapDomain implements FNCExecuteNode {
+        private final FNCExecuteNode map;
+
+        public MapDomain(FNCExecuteNode map) {
+            this.map = map;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new MapMapDomainNode((FNCExpressionNode) map.buildAST(l));
         }
     }
 }

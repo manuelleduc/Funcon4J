@@ -24,13 +24,13 @@ public class LogicControlSeqNode extends FNCExpressionNode {
 
 //        System.out.println("executeGeneric[LogicControlSeqNode] " + this);
 
-        Object r1 = this.c.executeGeneric(frame);
         Object r2 = this.t.executeGeneric(frame);
+        Object r1 = this.c.executeGeneric(frame);
 
 
 
 //        reg.lookup(r2, false);
-        return r2;
+        return r1;
     }
 
     @Override

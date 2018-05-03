@@ -18,9 +18,17 @@ public class BindAlgTest extends TestStub {
     }
 
     @Test
-    public void testDeclBindMono() throws Exception {
+    public void testDeclBindMono1() throws Exception {
         test("let f = fun 3 -> true in f 3;;", "true");
+    }
+
+    @Test
+    public void testDeclBindMono2() throws Exception {
         test("let f = fun _ -> true in f 3;;", "true");
+    }
+
+    @Test
+    public void testDeclBindMono3() throws Exception {
         test("let f = fun x -> x in f 3;;", "3");
     }
 

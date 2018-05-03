@@ -189,7 +189,7 @@ public interface TruffleBindingFactory extends
 //            l.getContextReference().get().getFunctionRegistry().register(id.);
 
 
-            return new BindingBindValueNode(l, (FNCExpressionNode) id.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
+            return new BindingBindValueNode((FNCExpressionNode) id.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
         }
     }
 
