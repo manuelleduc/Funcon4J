@@ -26,8 +26,7 @@ public class SupplyGivenSupplyNode extends funcons.truffle.nodes.FNCExpressionNo
         final Object res = exp.executeGeneric(frame);
         final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot("given");
         frame.setObject(given, res);
-        final Object o = x.executeGeneric(frame);
-        return o;
+        return x.executeGeneric(frame);
     }
 
 }

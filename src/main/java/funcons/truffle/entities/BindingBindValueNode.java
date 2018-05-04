@@ -10,8 +10,6 @@ import funcons.truffle.nodes.FNCExpressionNode;
  * is a declaration funcon used to compute the single-point envi- ronment that maps I to the value of E
  */
 @NodeInfo(description = "Binding Bind Value Node")
-//@NodeChild("valueNode")
-//@NodeField(name = "slot", type = FrameSlot.class)
 public class BindingBindValueNode extends FNCExpressionNode {
 
     @Child
@@ -27,9 +25,10 @@ public class BindingBindValueNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        Object value = this.exp.executeGeneric(frame);
-        Object name = this.id.executeGeneric(frame);
-        FrameSlot frameDescriptor = frame.getFrameDescriptor().findOrAddFrameSlot(name);
+        final Object value = this.exp.executeGeneric(frame);
+        final Object name = this.id.executeGeneric(frame);
+//        System.out.println(name + " = " + value);
+        final FrameSlot frameDescriptor = frame.getFrameDescriptor().findOrAddFrameSlot(name);
         frame.setObject(frameDescriptor, value);
         return value;
     }

@@ -57,8 +57,7 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode tupleHead(FNCExecuteNode tup) {
-//        return (env, given) -> ((IList) tup.eval(env, given)).get(0);
-        throw new RuntimeException("Not implemented");
+        return new TupleHead(tup);
     }
 
     @Override
@@ -70,7 +69,7 @@ public interface TruffleTupleFactory extends
 //            }
 //            return tupVal.sublist(1, tupVal.length() - 1);
 //        };
-        throw new RuntimeException("Not implemented");
+        return new TupleTail(tup);
     }
 
     @Override
@@ -80,15 +79,13 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode tuplePrefixMatch(FNCExecuteNode tup, FNCExecuteNode p1, FNCExecuteNode p2) {
-//         l -> {
-//            IValue tupVal = tup.eval(env, given);
-//            return mapUnion(
-//                    match(tupleHead((e, g) -> tupVal), p1),
-//                    match(tupleTail((e, g) -> tupVal), p2)
-//            ).eval(env, given);
-//        };
 
-        return new TuplePrefixMatch(p1, p2);
+        return l -> {
+            return mapUnion(
+                    match(tupleHead(tup), p1),
+                    match(tupleTail(tup), p2)
+            ).buildAST(l);
+        };
 
     }
 
@@ -132,6 +129,33 @@ public interface TruffleTupleFactory extends
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new TupleTuplePrefixNode((FNCExpressionNode) x.buildAST(l), (FNCExpressionNode) tup.buildAST(l));
         }
+    }
+
+    class TupleHead implements FNCExecuteNode {
+        private final FNCExecuteNode tup;
+
+        public TupleHead(FNCExecuteNode tup) {
+            this.tup = tup;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TupleTupleHeadNode((FNCExpressionNode) tup.buildAST(l));
+        }
+    }
+
+    class TupleTail implements FNCExecuteNode {
+        private final FNCExecuteNode tup;
+
+        public TupleTail(FNCExecuteNode tup) {
+            this.tup = tup;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TupleTupleTailNode((FNCExpressionNode) tup.buildAST(l));
+        }
+
     }
 }
 

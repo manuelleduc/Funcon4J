@@ -1,9 +1,8 @@
 package camllight;
 
-import funcons.truffle.nodes.FNCContext;
-import funcons.truffle.nodes.FNCLanguage;
 import com.oracle.truffle.api.source.Source;
 import com.oracle.truffle.api.vm.PolyglotEngine;
+import funcons.truffle.nodes.FNCLanguage;
 import funcons.values.signals.FunconException;
 
 import java.io.File;
@@ -34,13 +33,13 @@ public class CamlLightTruffle {
 
 //        interpret("1 + \"a\"");
         // run examples found in the examples folder
-        runExamples();
+//        runExamples();
 
         // run tests as provided by Mosses
         //runGivenTests();
 
         // run several performance tests
-//        runPerformanceTests();
+        runPerformanceTests();
 
     }
 
@@ -54,12 +53,13 @@ public class CamlLightTruffle {
     }
 
     private void runPerformance(String fileLoc, int n) throws IOException, FunconException {
-        List<Long> timings = new ArrayList<>();
 
+        BenchTool.timings.clear();
         // TODO: how to integrate performances?
         for (int i = 0; i < n; i++) {
             String src = new String(Files.readAllBytes(Paths.get(fileLoc)));
-            this.eval(src);
+            System.out.print('.');
+            this.eval(src, true);
 //            Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
 //            funcons.truffle.TruffleAllFactory funconFactory = new funcons.truffle.TruffleAllFactory() {
 //            };
@@ -74,7 +74,7 @@ public class CamlLightTruffle {
 //            timings.add(end - start);
 //            System.out.println("time taken: " + (end - start));
         }
-        System.out.println("fastest time: " + Collections.min(timings));
+        System.out.println("fastest time: " + Collections.min(BenchTool.timings));
     }
 
     private void runAll(String folderLoc) throws IOException, FunconException {
@@ -123,7 +123,7 @@ public class CamlLightTruffle {
 
     private void runPerformanceTests() throws IOException, FunconException {
         //runPerformance("performanceTests/mandelbrot.ml", 10); // FunCaml: Xs, Ocaml: 75.5s, Py: 170.2s
-        runPerformance("performanceTests/fib.ml", 10); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s
+//        runPerformance("performanceTests/fib.ml", 10); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s
         runPerformance("performanceTests/ack.ml", 10); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
         runPerformance("performanceTests/harmonic.ml", 10); // FunCaml: 38.7s, Ocaml: 0.2s, FunCamlOnRascal: 7.2s
         runPerformance("performanceTests/tak.ml", 10); // FunCaml: 406.7s, Ocaml: 5.9s
@@ -140,23 +140,27 @@ public class CamlLightTruffle {
 
     }
 
-    public void eval(String src) throws FunconException {
+    public void eval(String src) {
+        eval(src, false);
+    }
+
+    public void eval(String src, boolean bench) {
+
 
         final PolyglotEngine engine = PolyglotEngine.newBuilder().setIn(in).setOut(out).build();
         final Source source = Source.newBuilder(src).mimeType(FNCLanguage.MIME_TYPE).name("ELT").build();
-
-        final PolyglotEngine.Value result = engine.eval(source);
-
+        long start = System.currentTimeMillis();
+        engine.eval(source);
+        long end = System.currentTimeMillis();
+        BenchTool.timings.add(end - start);
+        if (bench) System.out.println("time taken: " + (end - start));
         engine.dispose();
 
 
     }
 
-//    public void eval(String src) throws FunconException {
-//        final funcons.algebras.AllAlg<CLExecuteNode> evalAlg = new funcons.truffle.TruffleAllFactory() {
-//        };
-//
-//        return eval(src, () -> evalAlg);
-//    }
+    static class BenchTool {
+        static final List<Long> timings = new ArrayList<>();
+    }
 
 }

@@ -1,11 +1,14 @@
 package funcons.truffle.recursion;
 
+import com.oracle.truffle.api.RootCallTarget;
+import com.oracle.truffle.api.Truffle;
+import com.oracle.truffle.api.frame.FrameSlot;
+import com.oracle.truffle.api.frame.FrameSlotTypeException;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.functions.FNCUndefinedNameException;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCFunction;
-import funcons.values.recursion.Fwd;
 
 @NodeInfo(description = "Recursive FollowIfFwd Node")
 public class RecursiveFollowIfFwdNode extends FNCExpressionNode {
@@ -21,7 +24,23 @@ public class RecursiveFollowIfFwdNode extends FNCExpressionNode {
         final Object v = fwd.executeGeneric(frame);
         if (v instanceof FNCFunction) {
             try {
-                return ((FNCFunction) v).getCallTarget().getRootNode().execute(frame);
+                final RootCallTarget callTarget = ((FNCFunction) v).getCallTarget();
+
+                final VirtualFrame virtualFrame = Truffle.getRuntime().createVirtualFrame(
+                        frame.getArguments(), frame.getFrameDescriptor());
+
+                try {
+                    for (FrameSlot s : frame.getFrameDescriptor().getSlots()) {
+                        final Object val = frame.getObject(s);
+                        final FrameSlot s2 = virtualFrame.getFrameDescriptor().findOrAddFrameSlot(s.getIdentifier());
+                        virtualFrame.setObject(s2, val);
+                    }
+                } catch (FrameSlotTypeException e) {
+                    e.printStackTrace();
+                }
+
+
+                return callTarget.getRootNode().execute(virtualFrame);
             } catch (FNCUndefinedNameException e) {
                 return null;
             }
@@ -29,10 +48,4 @@ public class RecursiveFollowIfFwdNode extends FNCExpressionNode {
         return v;
     }
 
-    @Override
-    public String toString() {
-        return "RecursiveFollowIfFwdNode{" +
-                "fwd=" + fwd +
-                '}';
-    }
 }

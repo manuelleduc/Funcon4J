@@ -2,14 +2,11 @@ package funcons.truffle.collections;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IList;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Tuple Tuple Node")
-public class TupleTupleNode extends FNCExpressionNode  {
+public class TupleTupleNode extends FNCExpressionNode {
 
     ValueFactory vf = ValueFactory.getInstance();
 
@@ -26,9 +23,17 @@ public class TupleTupleNode extends FNCExpressionNode  {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        Object o = x1.executeGeneric(frame);
-        Object o1 = x2.executeGeneric(frame);
-        return vf.list((IList) o, (IList) o1);
+        final Object v1 = x1.executeGeneric(frame);
+        final Object v2 = x2.executeGeneric(frame);
+        return new Tuple(v1, v2);
     }
 
+    public class Tuple {
+
+        public final Object[] v1;
+
+        public Tuple(Object... v1) {
+            this.v1 = v1;
+        }
+    }
 }

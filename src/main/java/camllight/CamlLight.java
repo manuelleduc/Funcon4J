@@ -142,8 +142,8 @@ public class CamlLight {
 
     private static void runExamples() throws IOException, FunconException {
 //        run("examples/assign1.ml");
-        run("examples/ref.ml");
-//        run("examples/fib.ml");
+//        run("examples/ref.ml");
+        run("examples/fib.ml");
 //        run("examples/p1.ml");
 //        run("examples/sieve.ml");
     }
@@ -176,12 +176,12 @@ public class CamlLight {
 
 //        interpret("1 + \"a\"");
         // run examples found in the examples folder
-        runExamples();
+//        runExamples();
 
         // run tests as provided by Mosses
 //        runGivenTests();
 
         // run several performance tests
-        //runPerformanceTests();
+        runPerformanceTests();
     }
 }

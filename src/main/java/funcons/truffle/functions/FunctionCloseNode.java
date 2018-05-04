@@ -20,7 +20,7 @@ public class FunctionCloseNode extends FNCExpressionNode  {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return new FNCFunction(l, new FNCRootNode(l, abs));
+        return new FNCFunction(new FNCRootNode(l, abs));
     }
 
 //    @Override
