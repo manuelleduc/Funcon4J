@@ -1,24 +1,35 @@
 package funcons.truffle.collections;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.MapAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.IValue;
 
 public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode map(FNCExecuteNode key, FNCExecuteNode val) {
-//        return (env, given) -> {
-//            IValue k = (IValue) key.eval(env, given);
-//            IValue v = (IValue) val.eval(env, given);
-//            IMapWriter mw = vf.mapWriter();
-//            mw.put(k, v);
-//            return mw.done();
-//        };
-        throw new RuntimeException("Not implemented");
+        return new Map(key, val);
+    }
+
+    class Map implements FNCExecuteNode {
+
+        private final FNCExecuteNode key;
+        private final FNCExecuteNode val;
+
+        public Map(FNCExecuteNode fncExpressionNode, FNCExecuteNode fncExpressionNode1) {
+            this.key = fncExpressionNode;
+            this.val = fncExpressionNode1;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage language) throws RunTimeFunconException {
+            return new MapMapNode((FNCExpressionNode) this.key.buildAST(language), (FNCExpressionNode) this.val.buildAST(language));
+        }
     }
 
     @Override

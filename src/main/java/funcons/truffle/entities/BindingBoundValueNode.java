@@ -35,6 +35,8 @@ public class BindingBoundValueNode extends FNCExpressionNode {
         try {
             final FrameDescriptor frameDescriptor = frame.getFrameDescriptor();
             final FrameSlot frameSlot = frameDescriptor.findFrameSlot(functionName);
+            if (frameSlot == null)
+                return null;
             return frame.getObject(frameSlot);
         } catch (FrameSlotTypeException e) {
             throw new RuntimeException("Identifier " + functionName + " not found", e);
