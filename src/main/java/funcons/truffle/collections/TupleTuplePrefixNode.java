@@ -20,10 +20,10 @@ public class TupleTuplePrefixNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        final Iterable<IValue> o = (Iterable<IValue>) tup.executeGeneric(frame);
         final IListWriter lw = vf.listWriter();
-        lw.appendAll(o);
         lw.append((IValue) x.executeGeneric(frame));
+        final Iterable<IValue> o = (Iterable<IValue>) tup.executeGeneric(frame);
+        lw.appendAll(o);
         return lw.done();
     }
 }

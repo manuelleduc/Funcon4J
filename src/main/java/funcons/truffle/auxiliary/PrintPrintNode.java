@@ -27,11 +27,9 @@ public class PrintPrintNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-
-
-        Object o = x.executeGeneric(frame);
-        String data = String.valueOf(o);
-        OutputStream out = l.getContextReference().get().getEnv().out();
+        final Object o = x.executeGeneric(frame);
+        final String data = String.valueOf(o);
+        final OutputStream out = l.getContextReference().get().getEnv().out();
         try {
             IOUtils.write(data, out, Charset.defaultCharset());
         } catch (IOException e) {
@@ -40,18 +38,4 @@ public class PrintPrintNode extends FNCExpressionNode {
 
         return new NullNullNode().executeGeneric(frame);
     }
-
-    @Override
-    public String toString() {
-        return "PrintPrintNode{" +
-                "x=" + x +
-                '}';
-    }
-
-    //
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        System.out.println(x.buildAST());
-//        return alg.null_().buildAST();
-//    }
 }

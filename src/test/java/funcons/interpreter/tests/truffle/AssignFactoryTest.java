@@ -14,9 +14,8 @@ public class AssignFactoryTest extends AbstractTruffleTest {
 //        let n = 1;;
 //        n;;
 
-        PolyglotEngine.Value res = engine.eval(Source.newBuilder("let foo = 0;; foo;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
-        Object metaObject = res.get();
-        assertEquals("0", metaObject.toString());
+        engine.eval(Source.newBuilder("let foo = 0;; foo;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals("0", getAndFlush());
 
 //        assertEquals(
 //                lit(0).eval(),
@@ -28,8 +27,8 @@ public class AssignFactoryTest extends AbstractTruffleTest {
 
     @Test
     public void testAssign() throws Exception {
-        final PolyglotEngine.Value result = engine.eval(Source.newBuilder("let foo = 0;; let foo = 1;; foo;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
-        assertEquals("1", result.get().toString());
+        engine.eval(Source.newBuilder("let foo = 0;; let foo = 1;; foo;;").mimeType(FNCLanguage.MIME_TYPE).name("FNC").build());
+        assertEquals("1", getAndFlush());
     }
 
     @Test
