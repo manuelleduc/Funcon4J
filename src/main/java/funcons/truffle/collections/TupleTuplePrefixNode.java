@@ -1,18 +1,24 @@
 package funcons.truffle.collections;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import io.usethesource.vallang.IList;
 import io.usethesource.vallang.IListWriter;
 import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
+@NodeInfo(description = "Tuple Tuple Prefix Node")
 public class TupleTuplePrefixNode extends FNCExpressionNode {
-    private final FNCExpressionNode x;
-    private final FNCExpressionNode tup;
+
+    @Child
+    private FNCExpressionNode x;
+
+    @Child
+    private FNCExpressionNode tup;
 
 
     public static final ValueFactory vf = ValueFactory.getInstance();
+
     public TupleTuplePrefixNode(FNCExpressionNode x, FNCExpressionNode tup) {
         this.x = x;
         this.tup = tup;

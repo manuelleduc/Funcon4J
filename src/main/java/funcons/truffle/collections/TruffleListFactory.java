@@ -1,19 +1,16 @@
 package funcons.truffle.collections;
 
-import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
-import funcons.helper.RascalCLStringFactory;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleListFactory extends
         PatternAlg<FNCExecuteNode>,
@@ -37,13 +34,7 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCExecuteNode list() {
-//        return (env, given) -> vf.list();
-        return l-> new FNCExpressionNode() {
-            @Override
-            public Object executeGeneric(VirtualFrame frame) {
-                return ValueFactory.getInstance().list();
-            }
-        };
+        return new List();
     }
 
     @Override
@@ -170,6 +161,13 @@ public interface TruffleListFactory extends
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new ListListLengthNode((FNCExpressionNode) list);
+        }
+    }
+
+    class List implements FNCExecuteNode {
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new ListListNode();
         }
     }
 }

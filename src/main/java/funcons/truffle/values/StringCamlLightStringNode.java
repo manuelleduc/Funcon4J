@@ -2,22 +2,23 @@ package funcons.truffle.values;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.helper.RascalCLStringFactory;
 import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
-@NodeInfo(description = "String String Node")
-public class StringStringNode extends FNCExpressionNode {
-
-    private final IValueFactory vf = ValueFactory.getInstance();
+@NodeInfo(description = "String CamlLightString Node")
+public class StringCamlLightStringNode extends FNCExpressionNode {
     private final String s;
 
-    public StringStringNode(String s) {
+    private final IValueFactory vf = ValueFactory.getInstance();
+
+    public StringCamlLightStringNode(String s) {
         this.s = s;
     }
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return vf.string(s);
+        return RascalCLStringFactory.clString(vf, s);
     }
 }

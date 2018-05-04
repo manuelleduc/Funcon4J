@@ -6,22 +6,12 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
 
-
-    public static final ValueFactory vf = ValueFactory.getInstance();
-
     @Override
     default FNCExecuteNode lit(Double i) {
-//        return (env, given) -> vf.real(i);
-        return new FNCExecuteNode() {
-            @Override
-            public FNCStatementNode buildAST(FNCLanguage language) throws RunTimeFunconException {
-                return new FloatLitNode(i);
-            }
-        };
+        return new Lit(i);
     }
 
     @Override
@@ -67,5 +57,18 @@ public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
 //            return aVal.toReal(5).pow(bVal.toReal(5), 5);
 //        };
         return l -> FloatFloatPowerOfNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+    }
+
+    class Lit implements FNCExecuteNode {
+        private final Double i;
+
+        public Lit(Double i) {
+            this.i = i;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage language) throws RunTimeFunconException {
+            return new FloatLitNode(i);
+        }
     }
 }

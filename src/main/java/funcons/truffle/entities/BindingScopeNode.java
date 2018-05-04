@@ -1,9 +1,5 @@
 package funcons.truffle.entities;
 
-import com.oracle.truffle.api.dsl.NodeChild;
-import com.oracle.truffle.api.dsl.NodeChildren;
-import com.oracle.truffle.api.dsl.NodeField;
-import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.*;
@@ -12,14 +8,14 @@ import funcons.truffle.nodes.*;
 @NodeInfo(description = "Binding Scope Node")
 public class BindingScopeNode extends FNCExpressionNode {
 
-    private final FNCExpressionNode localBinding;
-    private final FNCExpressionNode exp;
-    private final FNCLanguage l;
+    @Child
+    private FNCExpressionNode localBinding;
+    @Child
+    private FNCExpressionNode exp;
 
-    public BindingScopeNode(FNCExpressionNode localBinding, FNCExpressionNode exp, FNCLanguage l) {
+    public BindingScopeNode(FNCExpressionNode localBinding, FNCExpressionNode exp) {
         this.localBinding = localBinding;
         this.exp = exp;
-        this.l = l;
     }
 
     @Override

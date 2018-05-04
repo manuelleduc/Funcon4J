@@ -1,20 +1,14 @@
 package funcons.truffle.controlflow;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import com.oracle.truffle.api.profiles.ConditionProfile;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
-
-import static com.oracle.truffle.api.nodes.Node.*;
 
 
 @NodeInfo(description = "LogicControl IfTrue Node")
-public class LogicControlIfTrueNode extends FNCExpressionNode  {
+public class LogicControlIfTrueNode extends FNCExpressionNode {
     @Child
     private FNCExpressionNode e;
     @Child
@@ -31,7 +25,7 @@ public class LogicControlIfTrueNode extends FNCExpressionNode  {
         this.c2 = c2;
     }
 
-    private boolean testResult(VirtualFrame frame) throws UnexpectedResultException, RunTimeFunconException {
+    private boolean testResult(VirtualFrame frame) throws UnexpectedResultException {
         return this.e.executeIBool(frame).getValue();
     }
 
@@ -41,9 +35,9 @@ public class LogicControlIfTrueNode extends FNCExpressionNode  {
             if (this.conditionProfile.profile(this.testResult(frame))) {
                 return this.c1.executeGeneric(frame);
             } else {
-               return  this.c2.executeGeneric(frame);
+                return this.c2.executeGeneric(frame);
             }
-        } catch (UnexpectedResultException | RunTimeFunconException e) {
+        } catch (UnexpectedResultException e) {
             e.printStackTrace();
         }
         return null;

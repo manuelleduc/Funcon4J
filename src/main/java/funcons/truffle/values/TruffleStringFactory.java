@@ -34,12 +34,7 @@ public interface TruffleStringFactory extends StringAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode camlLightChar(String s) {
-        return l -> new FNCExpressionNode() {
-            @Override
-            public Object executeGeneric(VirtualFrame frame) {
-                return RascalCLStringFactory.clChar(ValueFactory.getInstance(), s);
-            }
-        };
+        return new CamlLightChar(s);
 
     }
 
@@ -88,12 +83,20 @@ public interface TruffleStringFactory extends StringAlg<FNCExecuteNode> {
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return RascalCLStringFactory.clString(vf, s);
-                }
-            };
+            return new StringCamlLightStringNode(s);
+        }
+    }
+
+    class CamlLightChar implements FNCExecuteNode {
+        private final String s;
+
+        public CamlLightChar(String s) {
+            this.s = s;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new StringCamlLightCharNode(s);
         }
     }
 }

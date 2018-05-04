@@ -24,9 +24,4 @@ public class BindingClosureNode extends FNCStatementNode {
     public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
         throw new RuntimeException("Not Implemented ");
     }
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return x.buildAST();
-//    }
 }

@@ -9,7 +9,7 @@ import io.usethesource.vallang.impl.persistent.ValueFactory;
 public class BoolBoolNode extends FNCExpressionNode {
     private final Boolean b;
 
-    ValueFactory vf = ValueFactory.getInstance();
+    private final ValueFactory vf = ValueFactory.getInstance();
 
     public BoolBoolNode(Boolean b) {
         this.b = b;

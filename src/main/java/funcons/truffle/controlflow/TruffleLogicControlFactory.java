@@ -44,31 +44,8 @@ public interface TruffleLogicControlFactory extends
 
     @Override
     default FNCExecuteNode for_(FNCExecuteNode condl, FNCExecuteNode incrl, FNCExecuteNode expl) {
-//        return (env, given) -> {
-//            for (; (((IBool) cond.eval(env, given)).getValue()); env = env.join((IMap) incr.eval(env, given))) {
-//                exp.eval(env, given);
-//            }
-//            return null_().eval(env, given);
-//        };
 
-        FNCExecuteNode a = (z -> null_().buildAST(z));
-
-        return l -> {
-            final FNCExpressionNode ret = (FNCExpressionNode) a.buildAST(l);
-            final FNCExpressionNode cond = (FNCExpressionNode) condl.buildAST(l);
-            final FNCExpressionNode incr = (FNCExpressionNode) incrl.buildAST(l);
-            final FNCExpressionNode exp = (FNCExpressionNode) expl.buildAST(l);
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    // todo env = env.join((IMap) incr.eval(env, given))
-                    for (; (((IBool) cond.executeGeneric(frame)).getValue()); incr.executeGeneric(frame)) {
-                        exp.executeGeneric(frame);
-                    }
-                    return ret.executeGeneric(frame);
-                }
-            };
-        };
+        return new For_(z -> null_().buildAST(z), condl, incrl, expl);
     }
 
     class IfTrue implements FNCExecuteNode {
@@ -117,7 +94,30 @@ public interface TruffleLogicControlFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new LogicControlWhileTrueNode((FNCExpressionNode) e, (FNCExpressionNode) c);
+            return new LogicControlWhileTrueNode((FNCExpressionNode) e.buildAST(l), (FNCExpressionNode) c.buildAST(l));
+        }
+    }
+
+    class For_ implements FNCExecuteNode {
+        private final FNCExecuteNode a;
+        private final FNCExecuteNode condl;
+        private final FNCExecuteNode incrl;
+        private final FNCExecuteNode expl;
+
+        public For_(FNCExecuteNode a, FNCExecuteNode condl, FNCExecuteNode incrl, FNCExecuteNode expl) {
+            this.a = a;
+            this.condl = condl;
+            this.incrl = incrl;
+            this.expl = expl;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            final FNCExpressionNode ret = (FNCExpressionNode) a.buildAST(l);
+            final FNCExpressionNode cond = (FNCExpressionNode) condl.buildAST(l);
+            final FNCExpressionNode incr = (FNCExpressionNode) incrl.buildAST(l);
+            final FNCExpressionNode exp = (FNCExpressionNode) expl.buildAST(l);
+            return new LogicControlForNode(ret, cond, incr, exp);
         }
     }
 }

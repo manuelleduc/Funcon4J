@@ -1,4 +1,4 @@
-package funcons.truffle.values;
+package funcons.truffle.collections;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -6,18 +6,18 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
-@NodeInfo(description = "String String Node")
-public class StringStringNode extends FNCExpressionNode {
+@NodeInfo(description = "Record Field Node")
+public class RecordFieldNode extends FNCExpressionNode {
+    private final String name;
 
     private final IValueFactory vf = ValueFactory.getInstance();
-    private final String s;
 
-    public StringStringNode(String s) {
-        this.s = s;
+    public RecordFieldNode(String name) {
+        this.name = name;
     }
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return vf.string(s);
+        return vf.string(name);
     }
 }

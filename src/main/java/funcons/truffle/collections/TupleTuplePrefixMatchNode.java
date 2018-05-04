@@ -1,14 +1,17 @@
 package funcons.truffle.collections;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.sun.org.apache.regexp.internal.RE;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
 
+@NodeInfo(description = "Tuple Tuple Prefix Match Node")
 public class TupleTuplePrefixMatchNode extends FNCExpressionNode {
-    private final FNCExpressionNode p1;
-    private final FNCExpressionNode p2;
+
+    @Child
+    private FNCExpressionNode p1;
+
+    @Child
+    private FNCExpressionNode p2;
 
     public TupleTuplePrefixMatchNode(FNCExpressionNode p1, FNCExpressionNode p2) {
         super();

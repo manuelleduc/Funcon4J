@@ -32,12 +32,4 @@ public abstract class BoolGreaterEqualNode extends FNCExpressionNode {
     public IBool greateEqual(IReal a, IInteger b) {
         return a.greaterEqual(b);
     }
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        if (((IBool) alg.greater(a, b).buildAST()).getValue()) {
-//            return alg.bool(true).buildAST();
-//        }
-//        return alg.equal(a, b).buildAST();
-//    }
 }

@@ -1,23 +1,19 @@
 package funcons.truffle.entities;
 
+import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
+import funcons.truffle.values.NullNullNode;
 
 
 @NodeInfo(description = "Assign Assign Node")
-public class AssignAssignNode extends FNCStatementNode {
-
+public class AssignAssignNode extends FNCExpressionNode {
+    @Child
+    private FNCExpressionNode var;
 
     @Child
-    FNCExpressionNode var;
-
-    @Child
-    FNCExpressionNode x;
+    private FNCExpressionNode x;
 
     public AssignAssignNode(FNCExpressionNode var, FNCExpressionNode x) {
         this.var = var;
@@ -25,13 +21,12 @@ public class AssignAssignNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
-        throw new RuntimeException("Not implemented AssignAssignNode");
+    public Object executeGeneric(VirtualFrame frame) {
+        final Object name = var.executeGeneric(frame);
+        final Object value = x.executeGeneric(frame);
+        final FrameSlot frameDescriptor = frame.getFrameDescriptor().findOrAddFrameSlot(name);
+        frame.setObject(frameDescriptor, value);
+        return new NullNullNode().executeGeneric(frame);
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        ((Variable) var.buildAST()).store(x.buildAST());
-//        return nalg.null_().buildAST();
-//    }
 }

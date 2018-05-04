@@ -1,23 +1,21 @@
-package funcons.truffle.entities;
+package funcons.truffle.values;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.helper.RascalCLStringFactory;
 import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
-@NodeInfo(description = "Binding Id Node")
-public class BindingIdNode extends FNCExpressionNode {
+@NodeInfo(description = "String CamlLightChar Node")
+public class StringCamlLightCharNode extends FNCExpressionNode {
     private final String s;
 
-    private final ValueFactory vf = ValueFactory.getInstance();
-
-    public BindingIdNode(String s) {
+    public StringCamlLightCharNode(String s) {
         this.s = s;
     }
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return vf.string(s);
+        return RascalCLStringFactory.clChar(ValueFactory.getInstance(), s);
     }
-
 }

@@ -148,7 +148,7 @@ public interface TruffleBindingFactory extends
 
 //            FNCStatementNode yolo = exp.buildAST(l);
 
-            return new BindingScopeNode((FNCExpressionNode) localBindings.buildAST(l), (FNCExpressionNode) exp.buildAST(l), l);
+            return new BindingScopeNode((FNCExpressionNode) localBindings.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
         }
     }
 
@@ -161,7 +161,7 @@ public interface TruffleBindingFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new BindingBoundValueNode(l, (FNCExpressionNode) id.buildAST(l));
+            return new BindingBoundValueNode((FNCExpressionNode) id.buildAST(l));
         }
     }
 

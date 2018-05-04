@@ -9,7 +9,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 public class AssignAssignedValueNode extends FNCExpressionNode {
 
     @Child
-    FNCExpressionNode var;
+    private FNCExpressionNode var;
 
     public AssignAssignedValueNode(FNCExpressionNode var) {
         this.var = var;
@@ -19,9 +19,4 @@ public class AssignAssignedValueNode extends FNCExpressionNode {
     public Object executeGeneric(VirtualFrame frame) {
         return var.executeGeneric(frame);
     }
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return ((Variable) var.buildAST()).value();
-//    }
 }

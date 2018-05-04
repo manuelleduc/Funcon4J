@@ -29,14 +29,4 @@ public class MapMapUpdateNode extends FNCStatementNode {
     public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
         throw new RuntimeException("Not implemented");
     }
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-////        final IValue k = key.buildAST();
-////        final IValue v = val.buildAST();
-////        final IMap m = (IMap) map.buildAST();
-////        return m.put(k, v);
-//        return this;
-//
-//    }
 }

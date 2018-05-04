@@ -10,10 +10,10 @@ import io.usethesource.vallang.IList;
 public class VectorVectorAppendNode extends FNCExpressionNode {
 
     @Child
-    FNCExpressionNode vector1;
+    private FNCExpressionNode vector1;
 
     @Child
-    FNCExpressionNode vector2;
+    private FNCExpressionNode vector2;
 
     public VectorVectorAppendNode(FNCExpressionNode vector1, FNCExpressionNode vector2) {
         this.vector1 = vector1;
@@ -26,11 +26,4 @@ public class VectorVectorAppendNode extends FNCExpressionNode {
         final IList vector2Val = (IList) vector2.executeGeneric(frame);
         return vector1Val.concat(vector2Val);
     }
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        final IList vector1Val = (IList) vector1.buildAST();
-//        final IList vector2Val = (IList) vector2.buildAST();
-//        return vector1Val.concat(vector2Val);
-//    }
 }

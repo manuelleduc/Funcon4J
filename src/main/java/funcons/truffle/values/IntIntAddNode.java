@@ -20,19 +20,19 @@ public abstract class IntIntAddNode extends FNCExpressionNode {
         return a.add(b);
     }
 
-    @Specialization
-    public IReal addIInteger(IReal a, IReal b) {
-        return a.add(b);
-    }
-
-    @Specialization
-    public IReal addIInteger(IInteger a, IReal b) {
-        return a.add(b);
-    }
-
-    @Specialization
-    public IReal addIInteger(IReal a, IInteger b) {
-        return a.add(b.toReal(5));
-    }
+//    @Specialization
+//    public IReal addIInteger(IReal a, IReal b) {
+//        return a.add(b);
+//    }
+//
+//    @Specialization
+//    public IReal addIInteger(IInteger a, IReal b) {
+//        return a.add(b);
+//    }
+//
+//    @Specialization
+//    public IReal addIInteger(IReal a, IInteger b) {
+//        return a.add(b.toReal(5));
+//    }
 
 }

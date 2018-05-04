@@ -120,13 +120,7 @@ public interface TruffleRecordFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return vf.string(name);
-                }
-
-            };
+            return new RecordFieldNode(name);
         }
     }
 }

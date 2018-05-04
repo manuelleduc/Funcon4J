@@ -4,7 +4,6 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "LogicControl WhileTrue Node")
 public class LogicControlWhileTrueNode extends FNCStatementNode {
@@ -21,15 +20,8 @@ public class LogicControlWhileTrueNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
+    public void executeVoid(VirtualFrame frame) {
         throw new RuntimeException("Not implemented");
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        while (((IBool) e.buildAST()).getValue()) {
-//            c.buildAST();
-//        }
-//        return nalg.null_().buildAST();
-//    }
 }

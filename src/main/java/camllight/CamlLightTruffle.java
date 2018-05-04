@@ -55,24 +55,10 @@ public class CamlLightTruffle {
     private void runPerformance(String fileLoc, int n) throws IOException, FunconException {
 
         BenchTool.timings.clear();
-        // TODO: how to integrate performances?
         for (int i = 0; i < n; i++) {
-            String src = new String(Files.readAllBytes(Paths.get(fileLoc)));
+            final String src = new String(Files.readAllBytes(Paths.get(fileLoc)));
             System.out.print('.');
             this.eval(src, true);
-//            Recorder builder = parse(src, Recorder.create(camllight.algebras.AllAlg.class));
-//            funcons.truffle.TruffleAllFactory funconFactory = new funcons.truffle.TruffleAllFactory() {
-//            };
-//            camllight.algebras.AllAlg alg = () -> funconFactory;
-//            CLExecuteNode eval = builder.build(alg);
-            // TODO how to execute?
-            //IValue env = importStandardLibrary(funconFactory.environment().eval());
-//            IValue env = null;
-//            long start = System.currentTimeMillis();
-//            eval.buildAST();
-//            long end = System.currentTimeMillis();
-//            timings.add(end - start);
-//            System.out.println("time taken: " + (end - start));
         }
         System.out.println("fastest time: " + Collections.min(BenchTool.timings));
     }
@@ -124,7 +110,7 @@ public class CamlLightTruffle {
     private void runPerformanceTests() throws IOException, FunconException {
         //runPerformance("performanceTests/mandelbrot.ml", 10); // FunCaml: Xs, Ocaml: 75.5s, Py: 170.2s
 //        runPerformance("performanceTests/fib.ml", 10); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s
-        runPerformance("performanceTests/ack.ml", 10); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
+//        runPerformance("performanceTests/ack.ml", 10); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
         runPerformance("performanceTests/harmonic.ml", 10); // FunCaml: 38.7s, Ocaml: 0.2s, FunCamlOnRascal: 7.2s
         runPerformance("performanceTests/tak.ml", 10); // FunCaml: 406.7s, Ocaml: 5.9s
     }

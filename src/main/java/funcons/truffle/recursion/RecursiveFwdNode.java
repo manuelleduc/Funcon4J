@@ -11,8 +11,4 @@ public class RecursiveFwdNode extends FNCStatementNode {
     public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
         throw new RuntimeException("Not implemented");
     }
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return new Fwd();
-//    }
 }

@@ -27,7 +27,6 @@ public class BindingBindValueNode extends FNCExpressionNode {
     public Object executeGeneric(VirtualFrame frame) {
         final Object value = this.exp.executeGeneric(frame);
         final Object name = this.id.executeGeneric(frame);
-//        System.out.println(name + " = " + value);
         final FrameSlot frameDescriptor = frame.getFrameDescriptor().findOrAddFrameSlot(name);
         frame.setObject(frameDescriptor, value);
         return value;

@@ -23,16 +23,8 @@ public class MapMapOverNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        Object o = map2.executeGeneric(frame);
-        final Object o1 = map1.executeGeneric(frame);
-        return o1;
+        map2.executeGeneric(frame);
+        return map1.executeGeneric(frame);
     }
 
-    @Override
-    public String toString() {
-        return "MapMapOverNode{" +
-                "map1=" + map1 +
-                ", map2=" + map2 +
-                '}';
-    }
 }

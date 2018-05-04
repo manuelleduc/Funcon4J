@@ -9,10 +9,10 @@ import funcons.truffle.nodes.FNCExpressionNode;
 public class FunctionAbsNode2 extends FNCExpressionNode {
 
     @Child
-    FNCExpressionNode patt;
+    private FNCExpressionNode patt;
 
     @Child
-    FNCExpressionNode exp;
+    private FNCExpressionNode exp;
 
     public FunctionAbsNode2(FNCExpressionNode patt, FNCExpressionNode exp) {
         this.patt = patt;

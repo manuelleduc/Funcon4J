@@ -6,10 +6,10 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
-@NodeInfo(description = "Vector vectore Node 2")
+@NodeInfo(description = "Vector vector Node 2")
 public class VectorVectorNode2 extends FNCExpressionNode {
 
-    ValueFactory vf = ValueFactory.getInstance();
+    private final ValueFactory vf = ValueFactory.getInstance();
 
     @Child
     FNCExpressionNode alloc;
@@ -22,9 +22,5 @@ public class VectorVectorNode2 extends FNCExpressionNode {
     public Object executeGeneric(VirtualFrame frame) {
         return vf.list((IValue) alloc.executeGeneric(frame));
     }
-//
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        return vf.list((IValue) aalg.alloc(val).buildAST());
-//    }
+
 }

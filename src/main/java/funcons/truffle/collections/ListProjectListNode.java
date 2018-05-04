@@ -24,12 +24,4 @@ public class ListProjectListNode extends FNCStatementNode {
     public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
         throw new RuntimeException("Not implemented");
     }
-
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-////        final IInteger i = (IInteger) index.buildAST();
-////        final IList l = (IList) list.buildAST();
-////        return l.get(i.intValue());
-//        return this;
-//    }
 }

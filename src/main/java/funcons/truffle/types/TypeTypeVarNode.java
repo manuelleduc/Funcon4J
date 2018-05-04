@@ -1,23 +1,21 @@
-package funcons.truffle.values;
+package funcons.truffle.types;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
-@NodeInfo(description = "String String Node")
-public class StringStringNode extends FNCExpressionNode {
-
+public class TypeTypeVarNode extends FNCExpressionNode {
     private final IValueFactory vf = ValueFactory.getInstance();
-    private final String s;
 
-    public StringStringNode(String s) {
-        this.s = s;
+    private final String name;
+
+    public TypeTypeVarNode(String name) {
+        this.name = name;
     }
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return vf.string(s);
+        return vf.string(name);
     }
 }

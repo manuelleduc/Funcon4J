@@ -13,6 +13,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleTypeFactory extends
@@ -27,19 +28,12 @@ public interface TruffleTypeFactory extends
 
     @Override
     default FNCExecuteNode type(java.lang.String name) {
-//        return (env, given) -> vf.string(name);
-        return l -> new FNCExpressionNode() {
-            @Override
-            public Object executeGeneric(VirtualFrame frame) {
-                return ValueFactory.getInstance().string(name);
-            }
-        };
+        return new Type(name);
 
     }
 
     @Override
     default FNCExecuteNode unknownType() {
-//        return (env, given) -> vf.string("UnknownType");
         return new UnknownType();
     }
 
@@ -51,8 +45,7 @@ public interface TruffleTypeFactory extends
 
     @Override
     default FNCExecuteNode typeVar(java.lang.String name) {
-//        return (env, given) -> vf.string(name);
-        throw new RuntimeException("Not implemented");
+        return new TypeVar(name);
     }
 
     @Override
@@ -159,6 +152,34 @@ public interface TruffleTypeFactory extends
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new TypeUnknowTypeNode();
+        }
+    }
+
+    class TypeVar implements FNCExecuteNode {
+        private final String name;
+
+        public TypeVar(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+
+            return new TypeTypeVarNode(name);
+        }
+
+    }
+
+    class Type implements FNCExecuteNode {
+        private final String name;
+
+        public Type(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TypeTypeNode(name);
         }
     }
 }

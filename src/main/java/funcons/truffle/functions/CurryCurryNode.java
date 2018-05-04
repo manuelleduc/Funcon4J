@@ -20,9 +20,4 @@ public class CurryCurryNode extends FNCStatementNode {
         throw new RuntimeException("Not implemented");
     }
 
-//    @Override
-//    public CLExecuteNode buildAST() throws FunconException {
-//        final CLExecuteNode clExecuteNode = alg.partialApp(a, () -> given);
-//        return clExecuteNode.buildAST();
-//    }
 }

@@ -16,9 +16,9 @@ import java.nio.charset.Charset;
 public class PrintPrintNode extends FNCExpressionNode {
 
     private final FNCLanguage l;
+
     @Child
     private FNCExpressionNode x;
-
 
     public PrintPrintNode(FNCExpressionNode x, FNCLanguage l) {
         this.x = x;

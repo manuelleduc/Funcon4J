@@ -1,13 +1,19 @@
 package funcons.truffle.controlflow;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
+@NodeInfo(description = "Logic Control Effect Node")
 public class LogicControlEffectNode extends FNCExpressionNode {
-    private final FNCStatementNode e;
-    private final FNCExpressionNode n;
+
+    @Child
+    private FNCStatementNode e;
+
+    @Child
+    private FNCExpressionNode n;
 
     public LogicControlEffectNode(FNCStatementNode e, FNCExpressionNode n) {
         super();

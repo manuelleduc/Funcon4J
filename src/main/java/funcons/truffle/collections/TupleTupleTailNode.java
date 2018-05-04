@@ -18,7 +18,7 @@ public class TupleTupleTailNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        IList tupVal = ((IList) tupl.executeGeneric(frame));
+        final IList tupVal = ((IList) tupl.executeGeneric(frame));
         if (tupVal.length() <= 1) {
             return TruffleTupleFactory.vf.list();
         }

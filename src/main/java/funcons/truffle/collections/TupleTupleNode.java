@@ -8,8 +8,6 @@ import io.usethesource.vallang.impl.persistent.ValueFactory;
 @NodeInfo(description = "Tuple Tuple Node")
 public class TupleTupleNode extends FNCExpressionNode {
 
-    ValueFactory vf = ValueFactory.getInstance();
-
     @Child
     private FNCExpressionNode x1;
 

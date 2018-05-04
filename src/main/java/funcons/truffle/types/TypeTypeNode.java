@@ -5,14 +5,16 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
+@NodeInfo(description = "Type Type Node")
+public class TypeTypeNode extends FNCExpressionNode {
+    private final String name;
 
-@NodeInfo(description = "Type UnknowType Node")
-public class TypeUnknowTypeNode extends FNCExpressionNode {
-
-    private final ValueFactory vf = ValueFactory.getInstance();
+    public TypeTypeNode(String name) {
+        this.name = name;
+    }
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        return vf.string("UnknownType");
+        return ValueFactory.getInstance().string(name);
     }
 }
