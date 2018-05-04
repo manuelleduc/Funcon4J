@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>funcon4j</artifactId>
+        <groupId>com.github</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>language</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.oracle.truffle</groupId>
+            <artifactId>truffle-api</artifactId>
+            <version>1.0.0-rc1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.truffle</groupId>
+            <artifactId>truffle-dsl-processor</artifactId>
+            <version>1.0.0-rc1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.truffle</groupId>
+            <artifactId>truffle-tck</artifactId>
+            <version>1.0.0-rc1</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.usethesource</groupId>
+            <artifactId>vallang</artifactId>
+            <version>0.8.10</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>usethesource</id>
+            <url>http://nexus.usethesource.io/content/repositories/public/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
