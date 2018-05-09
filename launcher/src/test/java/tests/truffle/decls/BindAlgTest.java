@@ -1,8 +1,7 @@
 package tests.truffle.decls;
 
-import tests.truffle.TestStub;
-import funcons.values.cl.CLMatchFailureException;
 import org.junit.Test;
+import tests.truffle.TestStub;
 
 public class BindAlgTest extends TestStub {
 
@@ -41,6 +40,7 @@ public class BindAlgTest extends TestStub {
         try {
             test("let f x y 3 = x in (f 1 2 4);;");
             assert false;
-        } catch (CLMatchFailureException ignore) {}
+        } catch (Exception ignore) {
+        }
     }
 }

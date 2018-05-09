@@ -1,9 +1,7 @@
 package tests.truffle.exprs;
 
-import camllight.CamlLight;
-import tests.truffle.TestStub;
-import funcons.values.cl.CLMatchFailureException;
 import org.junit.Test;
+import tests.truffle.TestStub;
 
 import static org.junit.Assert.assertTrue;
 
@@ -40,9 +38,10 @@ public class ControlAlgTest extends TestStub {
         test("match 0 with 0 -> true;;", "true");
 
         try {
-            CamlLight.eval("match 0 with 1 -> true;;");
+            test("match 0 with 1 -> true;;");
             assertTrue(false);
-        } catch (CLMatchFailureException ignore) {}
+        } catch (Exception ignore) {
+        }
     }
 
     @Test

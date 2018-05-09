@@ -1,6 +1,5 @@
 package tests.truffle;
 
-import com.oracle.truffle.api.source.Source;
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -1,18 +1,17 @@
 package camllight;
 
+import bench.BenchTool;
+import org.graalvm.polyglot.Context;
+import org.graalvm.polyglot.Source;
+
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-
-import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.PolyglotException;
-import org.graalvm.polyglot.Source;
-import org.graalvm.polyglot.Value;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static java.lang.System.in;
 import static java.lang.System.out;
@@ -60,7 +59,7 @@ public class CamlLightTruffle {
             System.out.print('.');
             this.eval(src, true);
         }
-        System.out.println("fastest time: " + Collections.min(BenchTool.timings));
+//        System.out.println("fastest time: " + Collections.min(BenchTool.timings));
         System.out.println("Times");
         BenchTool.timings.forEach(System.out::println);
     }
@@ -134,8 +133,7 @@ public class CamlLightTruffle {
 
     public void eval(String src, boolean bench) {
 
-
-        BenchTool.bench = bench;
+        BenchTool.setBench(bench);
         Context context = Context.newBuilder().in(in).out(out).build();
 
         try {
@@ -143,20 +141,7 @@ public class CamlLightTruffle {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        context.dispose();
-
-
     }
 
-    public static class BenchTool {
-        public static final List<Long> timings = new ArrayList<>();
-
-        public static boolean bench = false;
-
-        public static void add(long l) {
-            if (bench)
-                timings.add(l);
-        }
-    }
 
 }

@@ -1,7 +1,5 @@
 package tests.truffle;
 
-import camllight.CamlLight;
-import funcons.values.signals.FunconException;
 import org.apache.commons.io.output.WriterOutputStream;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
@@ -39,7 +37,7 @@ public abstract class TestStub {
         return valTrue;
     }
 
-    public void test(String input) throws FunconException {
+    public void test(String input) {
         try {
             engine.eval(Source.newBuilder("fnc", input, "FNC").build());
         } catch (IOException e) {
@@ -48,15 +46,15 @@ public abstract class TestStub {
 
     }
 
-    public void test(String input, String expectedOutput) throws FunconException, IOException {
+    public void test(String input, String expectedOutput) throws IOException {
         engine.eval(Source.newBuilder("fnc", input, "FNC").build());
         String res = getAndFlush();
         assertEquals(expectedOutput, res);
     }
 
-    public void testFirstCharOutput(String input, String expectedOutput, int nChar) throws FunconException, IOException {
+    public void testFirstCharOutput(String input, String expectedOutput, int nChar) throws IOException {
         engine.eval(Source.newBuilder("fnc", input, "FNC").build());
-        CamlLight.eval(input);
+        test(input);
         String res = getAndFlush();
         assertEquals(expectedOutput, res.substring(0, nChar));
 

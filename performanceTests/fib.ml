@@ -12,7 +12,7 @@ loop 100;;*)
 
 let loop n = 
 	for i = 0 to n do 
-		((print_int (fib 30)); (print_newline ())) 
+		((print_int (fib 3)); (print_newline ()))
 	done;;
 
 loop 100;;
@@ -26,6 +26,6 @@ loop 100;;
 		res;;
 
 for i = 0 to 9 do
-	time loop 100
+	time loop 10
 done;;*)
 (*print_float (Sys.time ());;*)

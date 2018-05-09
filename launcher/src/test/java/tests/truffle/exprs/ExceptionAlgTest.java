@@ -1,8 +1,7 @@
 package tests.truffle.exprs;
 
-import tests.truffle.TestStub;
-import funcons.values.signals.RunTimeFunconException;
 import org.junit.Test;
+import tests.truffle.TestStub;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -16,7 +15,8 @@ public class ExceptionAlgTest extends TestStub {
         try {
             test("exception Foo and Bar;; try raise Foo with Bar -> true;;");
             assertTrue(false);
-        } catch (RunTimeFunconException ignore) {}
+        } catch (Exception ignore) {
+        }
     }
 
 
@@ -25,7 +25,7 @@ public class ExceptionAlgTest extends TestStub {
         try {
             test("exception Foo;; raise Foo;;");
             assertTrue(false);
-        } catch (RunTimeFunconException e) {
+        } catch (Exception e) {
             assertEquals("Variant(\"Foo\",NULL)", e.toString());
         }
     }
@@ -35,7 +35,7 @@ public class ExceptionAlgTest extends TestStub {
         try {
             test("exception Foo of int;; raise Foo 3;;");
             assertTrue(false);
-        } catch (RunTimeFunconException e) {
+        } catch (Exception e) {
             assertEquals("Variant(\"Foo\",3)", e.toString());
         }
     }

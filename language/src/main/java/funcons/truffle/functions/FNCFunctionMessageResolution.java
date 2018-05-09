@@ -13,7 +13,7 @@ import static funcons.truffle.nodes.FNCContext.fromForeignValue;
 @MessageResolution(receiverType = FNCFunction.class)
 public class FNCFunctionMessageResolution {
     @Resolve(message = "EXECUTE")
-    public abstract static class SLForeignFunctionExecuteNode extends Node {
+    public abstract static class FNCForeignFunctionExecuteNode extends Node {
 
         @Child
         private FNCDispatchNode dispatch = FNCDispatchNodeGen.create();
@@ -36,7 +36,7 @@ public class FNCFunctionMessageResolution {
      * An SL function should respond to an IS_EXECUTABLE message with true.
      */
     @Resolve(message = "IS_EXECUTABLE")
-    public abstract static class SLForeignIsExecutableNode extends Node {
+    public abstract static class FNCForeignIsExecutableNode extends Node {
         public Object access(Object receiver) {
             return receiver instanceof FNCFunction;
         }

@@ -13,3 +13,16 @@ Import the project through maven
 * `camllightnocollections.CamlLightNoCollections` demonstrates a language variant of Caml Light with no collections.
 * `camllightnorecursion.CamlLightNoRecursion` demonstrates a language variant of Caml Light with no recursion.
 * `camllightnosideeffects.CamlLightNoSideEffects` demonstrates a language variant of Caml Light with no side effects.
+
+## Benchs
+
+**Compilation**
+
+```bash
+mvn package -DskipTests -f pom.xml
+```
+
+**Execution**
+
+Options: 
+- `-Dtruffle.class.path.append=./language/target/language-1.0-SNAPSHOT-jar-with-dependencies.jar`
