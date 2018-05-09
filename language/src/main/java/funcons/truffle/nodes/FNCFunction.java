@@ -26,4 +26,6 @@ public class FNCFunction implements TruffleObject {
     public String toString() {
         return "ABS";
     }
+
+
 }

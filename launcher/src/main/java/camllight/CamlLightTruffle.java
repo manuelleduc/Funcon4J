@@ -23,6 +23,8 @@ public class CamlLightTruffle {
         new CamlLightTruffle().exec();
     }
 
+
+
     private void exec() throws IOException {
         //        for (int i = 0; i < 1000000; i++)
 //            interpret("1 + if true then 2 else 2 + 3;;");

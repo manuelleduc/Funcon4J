@@ -12,6 +12,7 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleFunctionFactory extends
         IntAlg<FNCExecuteNode>,
@@ -42,9 +43,7 @@ public interface TruffleFunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode apply(FNCExecuteNode abs, FNCExecuteNode arg) {
-        return (l) -> supply(arg,
-                abs::buildAST).buildAST(l);
-//        return new Apply(abs, arg);
+        return new Apply(abs, arg, this);
     }
 
     @Override
@@ -117,6 +116,23 @@ public interface TruffleFunctionFactory extends
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new FunctionCloseNode((FNCExpressionNode) abs.buildAST(l), l);
+        }
+    }
+
+    class Apply implements FNCExecuteNode {
+        private final FNCExecuteNode abs;
+        private final FNCExecuteNode arg;
+        private final TruffleFunctionFactory f;
+
+        public Apply(FNCExecuteNode abs, FNCExecuteNode arg, TruffleFunctionFactory f) {
+            this.abs = abs;
+            this.arg = arg;
+            this.f = f;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return f.supply(arg, abs).buildAST(l);
         }
     }
 }

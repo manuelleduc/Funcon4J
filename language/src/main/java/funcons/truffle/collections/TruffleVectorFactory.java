@@ -91,7 +91,7 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new VectorVectorLengthNode((FNCExpressionNode) vector);
+            return new VectorVectorLengthNode((FNCExpressionNode) vector.buildAST(l));
         }
     }
 

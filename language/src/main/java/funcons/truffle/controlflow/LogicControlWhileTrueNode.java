@@ -6,7 +6,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCStatementNode;
 
 @NodeInfo(description = "LogicControl WhileTrue Node")
-public class LogicControlWhileTrueNode extends FNCStatementNode {
+public class LogicControlWhileTrueNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode e;
@@ -20,7 +20,7 @@ public class LogicControlWhileTrueNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) {
+    public Object executeGeneric(VirtualFrame frame) {
         throw new RuntimeException("Not implemented");
     }
 

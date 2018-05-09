@@ -12,7 +12,7 @@ loop 100;;*)
 
 let loop n = 
 	for i = 0 to n do 
-		((print_int (fib 3)); (print_newline ()))
+		((print_int (fib 50)); (print_newline ()))
 	done;;
 
 loop 100;;

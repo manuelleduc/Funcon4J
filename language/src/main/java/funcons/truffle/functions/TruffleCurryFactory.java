@@ -7,7 +7,7 @@ import funcons.algebras.functions.CurryAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
-import funcons.truffle.entities.BindingBindValueNode;
+import funcons.truffle.entities.SupplyGivenGivenNode;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
@@ -36,7 +36,7 @@ public interface TruffleCurryFactory extends
 
     @Override
     default FNCExecuteNode curry(FNCExecuteNode a) {
-        return new Curry(a);
+        return l -> abs(m -> partialApp(a, n -> new SupplyGivenGivenNode()).buildAST(l)).buildAST(l);
     }
 
     @Override
@@ -85,7 +85,7 @@ public interface TruffleCurryFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new CurryCurryNode((FNCExpressionNode) a);
+            return new CurryCurryNode((FNCExpressionNode) a.buildAST(l));
         }
     }
 }

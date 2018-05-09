@@ -3,11 +3,9 @@ package funcons.truffle.functions;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "Curry Curry Node")
-public class CurryCurryNode extends FNCStatementNode {
+public class CurryCurryNode extends FNCExpressionNode {
     @Child
     FNCExpressionNode a;
 
@@ -16,8 +14,9 @@ public class CurryCurryNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
+    public Object executeGeneric(VirtualFrame frame) {
         throw new RuntimeException("Not implemented");
     }
+
 
 }

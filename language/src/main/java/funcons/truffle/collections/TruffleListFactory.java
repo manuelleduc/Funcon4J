@@ -53,11 +53,8 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCExecuteNode listPrefix(FNCExecuteNode x, FNCExecuteNode l) {
-//        return (env, given) -> {
-//            IList list = (IList) l.eval(env, given);
-//            return list.insert(x.eval(env, given));
-//        };
-        throw new RuntimeException("Not implemented");
+
+        return new ListPrefix(x, l);
     }
 
     @Override
@@ -107,7 +104,7 @@ public interface TruffleListFactory extends
 //            IList l2 = (IList) list2.eval(env, given);
 //            return l1.concat(l2);
 //        };
-        throw new RuntimeException("Not implemented");
+        return new ListAppend(list1, list2);
     }
 
     @Override
@@ -168,6 +165,37 @@ public interface TruffleListFactory extends
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new ListListNode();
+        }
+    }
+
+    class ListPrefix implements FNCExecuteNode {
+        private final FNCExecuteNode x;
+        private final FNCExecuteNode l;
+
+        public ListPrefix(FNCExecuteNode x, FNCExecuteNode l) {
+            this.x = x;
+            this.l = l;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage m) throws RunTimeFunconException {
+            return new ListListPrefixNode((FNCExpressionNode) x.buildAST(m), (FNCExpressionNode) l.buildAST(m));
+        }
+    }
+
+    class ListAppend implements FNCExecuteNode {
+        private final FNCExecuteNode list1;
+        private final FNCExecuteNode list2;
+
+        public ListAppend(FNCExecuteNode list1, FNCExecuteNode list2) {
+            this.list1 = list1;
+            this.list2 = list2;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+
+            return new ListListAppendNode((FNCExpressionNode) list1.buildAST(l), (FNCExpressionNode) list2.buildAST(l));
         }
     }
 }

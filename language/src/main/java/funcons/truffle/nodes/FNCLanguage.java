@@ -1,15 +1,23 @@
 package funcons.truffle.nodes;
 
+import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
 import com.oracle.truffle.api.CallTarget;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.TruffleLanguage;
+import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
+import funcons.truffle.TruffleAllFactory;
+import funcons.truffle.values.NullNullNode;
+import funcons.values.signals.FunconException;
 import noa.proxy.Recorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.io.IOUtils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 
 @TruffleLanguage.Registration(id = "fnc", name = "FNC", version = "0.12", mimeType = FNCLanguage.MIME_TYPE)
@@ -41,7 +49,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         };
         final camllight.algebras.AllAlg alg = () -> evalAlg;
         final FNCExecuteNode eval = builder.build(alg);
-//        final IValue env = importStandardLibrary(ValueFactory.getInstance().mapWriter().done());
+        final FNCStatementNode libs = importStandardLibrary();
 //        this.getContextReference().initRegistry(this);
 
         final FNCExpressionNode clExecuteNode = (FNCExpressionNode) eval.buildAST(this);
@@ -50,7 +58,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         // TODO: write a visitor that register callables with name?
 
         // useless so far, just to avoir an ugly runtime exception when the execution ends.
-        final FNCRootNode rootNode = new FNCMainRootNode(this, clExecuteNode);
+        final FNCRootNode rootNode = new FNCMainRootNode(this, clExecuteNode, libs);
 //        System.out.println(clExecuteNode);
         return Truffle.getRuntime().createCallTarget(rootNode);
     }
@@ -61,4 +69,53 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     }
 
 
+    public FNCStatementNode importStandardLibrary() throws FunconException {
+        funcons.algebras.AllAlg<FNCExecuteNode> alg = new TruffleAllFactory() {
+        };
+        StandardLibrary<FNCExecuteNode> lib = () -> alg;
+
+        FNCStatementNode ret = new NullNullNode();
+        for (Method m : lib.getClass().getMethods()) {
+            java.lang.String methodName = m.getName();
+            if (!methodName.endsWith("Fun")) {
+                continue;
+            }
+            methodName = methodName.substring(0, methodName.length() - 3);
+
+
+            final FNCStatementNode env2 = ret;
+            ret = alg.mapUnion(
+                    l -> env2,
+                    alg.bindValue(alg.id(methodName), language -> {
+
+                        try {
+                            FNCStatementNode abcd = ((FNCExecuteNode) m.invoke(lib)).buildAST(language);
+                            return new WrapperNode(abcd);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    })
+            ).buildAST(this);
+
+        }
+
+        return ret;
+    }
+
+
+    @NodeInfo(description = "Library Import wrapper")
+    private static class WrapperNode extends FNCExpressionNode {
+        @Child
+        private FNCStatementNode abcd;
+
+        public WrapperNode(FNCStatementNode abcd) {
+            this.abcd = abcd;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            return abcd;
+        }
+    }
 }

@@ -7,6 +7,7 @@ import com.oracle.truffle.api.frame.FrameSlotTypeException;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.functions.FNCUndefinedNameException;
+import funcons.truffle.functions.FunctionAbsNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCFunction;
 
@@ -44,6 +45,8 @@ public class RecursiveFollowIfFwdNode extends FNCExpressionNode {
             } catch (FNCUndefinedNameException e) {
                 return null;
             }
+        } else if (v instanceof FunctionAbsNode) {
+            ((FunctionAbsNode) v).executeGeneric(frame);
         }
         return v;
     }

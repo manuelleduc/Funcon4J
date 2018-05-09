@@ -4,6 +4,7 @@ import com.oracle.truffle.api.dsl.NodeChild;
 import com.oracle.truffle.api.dsl.NodeChildren;
 import com.oracle.truffle.api.dsl.Specialization;
 import funcons.truffle.nodes.FNCExpressionNode;
+import io.usethesource.vallang.IInteger;
 import io.usethesource.vallang.IReal;
 
 @NodeChildren({@NodeChild("a"), @NodeChild("b")})
@@ -19,10 +20,10 @@ public abstract class FloatFloatPowerOf extends FNCExpressionNode {
         return a.pow(b, 5);
     }
 
-//    @Specialization
-//    public IReal pow(IInteger a, IReal b) {
-//        return a.toReal(5).pow(b, 5);
-//    }
+    @Specialization
+    public IReal pow(IInteger a, IReal b) {
+        return a.toReal(5).pow(b, 5);
+    }
 //
 //    @Specialization
 //    public IReal pow(IReal a, IInteger b) {
