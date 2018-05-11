@@ -73,8 +73,7 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCExecuteNode listPrefixPatt(FNCExecuteNode p1, FNCExecuteNode p2) {
-//        return abs(listPrefixMatch(given(), p1, p2));
-        throw new RuntimeException("Not implemented");
+        return abs(listPrefixMatch(given(), p1, p2));
     }
 
     @Override

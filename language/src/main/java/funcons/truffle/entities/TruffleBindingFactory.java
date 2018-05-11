@@ -75,7 +75,7 @@ public interface TruffleBindingFactory extends
 
     class Environment implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BindingEnvironmentNode();
         }
     }
@@ -90,7 +90,7 @@ public interface TruffleBindingFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BindingClosureNode((FNCExpressionNode) x, (FNCExpressionNode) environment);
         }
     }
@@ -105,7 +105,7 @@ public interface TruffleBindingFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BindingScopeNode((FNCExpressionNode) localBindings.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
         }
     }
@@ -118,7 +118,7 @@ public interface TruffleBindingFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BindingBoundValueNode((FNCExpressionNode) id.buildAST(l));
         }
     }
@@ -133,7 +133,7 @@ public interface TruffleBindingFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
 
             return new BindingBindValueNode((FNCExpressionNode) id.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
         }
@@ -147,7 +147,7 @@ public interface TruffleBindingFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BindingIdNode(s);
         }
     }

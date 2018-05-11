@@ -3,16 +3,17 @@ package funcons.truffle.controlflow;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
+import funcons.truffle.values.NullNullNode;
+import io.usethesource.vallang.IBool;
 
 @NodeInfo(description = "LogicControl WhileTrue Node")
 public class LogicControlWhileTrueNode extends FNCExpressionNode {
 
     @Child
-    FNCExpressionNode e;
+    private FNCExpressionNode e;
 
     @Child
-    FNCExpressionNode c;
+    private FNCExpressionNode c;
 
     public LogicControlWhileTrueNode(FNCExpressionNode e, FNCExpressionNode c) {
         this.e = e;
@@ -21,7 +22,10 @@ public class LogicControlWhileTrueNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        throw new RuntimeException("Not implemented");
+        while (((IBool) e.executeGeneric(frame)).getValue()) {
+            c.executeGeneric(frame);
+        }
+        return new NullNullNode().executeGeneric(frame);
     }
 
 }

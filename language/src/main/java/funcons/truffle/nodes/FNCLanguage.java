@@ -105,7 +105,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
 
     @NodeInfo(description = "Library Import wrapper")
-    private static class WrapperNode extends FNCExpressionNode {
+    public static class WrapperNode extends FNCExpressionNode {
         @Child
         private FNCStatementNode abcd;
 

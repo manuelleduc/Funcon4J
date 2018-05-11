@@ -27,3 +27,7 @@ public class TupleProjectNode extends FNCExpressionNode {
     }
 
 }
+
+// return (env, given) ->
+//         ((IList)tup.eval(env, given))
+//         .get(((IInteger)index.eval(env, given)).intValue());

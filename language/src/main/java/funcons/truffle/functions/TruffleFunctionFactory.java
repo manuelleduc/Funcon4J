@@ -8,10 +8,12 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
+import funcons.carriers.IEval;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.Abs;
 import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleFunctionFactory extends
@@ -132,6 +134,9 @@ public interface TruffleFunctionFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+//            return (env, given) -> supply(arg,
+//                    ((funcons.values.Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);
+
             return f.supply(arg, abs).buildAST(l);
         }
     }

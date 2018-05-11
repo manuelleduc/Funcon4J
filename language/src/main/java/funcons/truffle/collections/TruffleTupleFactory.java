@@ -19,7 +19,7 @@ public interface TruffleTupleFactory extends
         FunctionAlg<FNCExecuteNode>,
         TupleAlg<FNCExecuteNode> {
 
-    final ValueFactory vf = ValueFactory.getInstance();
+    ValueFactory vf = ValueFactory.getInstance();
 
     @Override
     default FNCExecuteNode tuple() {
@@ -80,12 +80,10 @@ public interface TruffleTupleFactory extends
     @Override
     default FNCExecuteNode tuplePrefixMatch(FNCExecuteNode tup, FNCExecuteNode p1, FNCExecuteNode p2) {
 
-        return l -> {
-            return mapUnion(
-                    match(tupleHead(tup), p1),
-                    match(tupleTail(tup), p2)
-            ).buildAST(l);
-        };
+        return l -> mapUnion(
+                match(tupleHead(tup), p1),
+                match(tupleTail(tup), p2)
+        ).buildAST(l);
 
     }
 

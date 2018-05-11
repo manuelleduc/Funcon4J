@@ -40,7 +40,7 @@ public interface TruffleTypeFactory extends
     @Override
     default FNCExecuteNode tag(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
-        throw new RuntimeException("Not implemented");
+        return  l -> new TypeTagNode(name);
     }
 
     @Override
@@ -51,7 +51,7 @@ public interface TruffleTypeFactory extends
     @Override
     default FNCExecuteNode clVariant(java.lang.String tagName, FNCExecuteNode exp) {
 //        return (env, given) -> new CLVariant(vf.string(tagName), exp.eval(env, given));
-        throw new RuntimeException("Not implemented");
+        return l -> new TypeClVariantNode(tagName, (FNCExpressionNode) exp.buildAST(l));
     }
 
     @Override
