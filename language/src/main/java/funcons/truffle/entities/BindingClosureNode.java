@@ -6,7 +6,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCStatementNode;
 
 @NodeInfo(description = "Binding Closure Node")
-public class BindingClosureNode extends FNCStatementNode {
+public class BindingClosureNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode x;
@@ -20,7 +20,7 @@ public class BindingClosureNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) {
+    public Object executeGeneric(VirtualFrame frame) {
         throw new RuntimeException("Not Implemented ");
     }
 }

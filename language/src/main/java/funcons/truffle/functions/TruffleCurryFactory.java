@@ -71,8 +71,8 @@ public interface TruffleCurryFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new CurryCurryNNode((FNCExpressionNode) n.buildAST(l), (FNCExpressionNode) a.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new CurryCurryNNode(n.buildAST(l), a.buildAST(l));
         }
     }
 
@@ -84,8 +84,8 @@ public interface TruffleCurryFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new CurryCurryNode((FNCExpressionNode) a.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new CurryCurryNode(a.buildAST(l));
         }
     }
 }

@@ -59,7 +59,15 @@ public interface TruffleExceptionFactory extends
 //                return apply(abs, (env1, given1) -> e).eval(env, given);
 //            }
 //        };
-        throw new RuntimeException("Not implemented");
+        return l -> {
+
+            final FNCExpressionNode xe = x.buildAST(l);
+            final FNCExpressionNode abse = abs.buildAST(l);
+            CatchNode catchNode = new CatchNode(xe);
+            final FNCExpressionNode excpt = apply(abs, z -> catchNode.buildA()).buildAST(l);
+            catchNode.excpt = excpt;
+            return catchNode;
+        };
     }
 
     @Override
@@ -91,14 +99,14 @@ public interface TruffleExceptionFactory extends
 
 
         return l -> {
-            final FNCExpressionNode a1e = (FNCExpressionNode) a1.buildAST(l);
-            final FNCExpressionNode a2e = (FNCExpressionNode) a2.buildAST(l);
+            final FNCExpressionNode a1e = a1.buildAST(l);
+            final FNCExpressionNode a2e = a2.buildAST(l);
 
             return abs(else_(language -> new FNCExpressionNode() {
                 @Override
                 public Object executeGeneric(VirtualFrame frame) {
                     final Object o = a1e.executeGeneric(frame);
-                    if(o instanceof Abs) {
+                    if (o instanceof Abs) {
                         return ((Abs<Object>) o).body();
                     } else {
                         return o;
@@ -108,7 +116,7 @@ public interface TruffleExceptionFactory extends
                 @Override
                 public Object executeGeneric(VirtualFrame frame) {
                     final Object o = a2e.executeGeneric(frame);
-                    if(o instanceof Abs) {
+                    if (o instanceof Abs) {
                         return ((Abs<Object>) o).body();
                     } else {
                         return o;
@@ -128,7 +136,7 @@ public interface TruffleExceptionFactory extends
 
     class MatchFailure implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new ExceptionMatchFailureNode();
         }
     }
@@ -141,8 +149,8 @@ public interface TruffleExceptionFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new ExceptionThrowNode((FNCExpressionNode) s.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new ExceptionThrowNode(s.buildAST(l));
         }
     }
 
@@ -156,8 +164,8 @@ public interface TruffleExceptionFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new ExceptionElseNode((FNCExpressionNode) x1.buildAST(l), (FNCExpressionNode) x2.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new ExceptionElseNode(x1.buildAST(l), x2.buildAST(l));
         }
     }
 //
@@ -171,14 +179,14 @@ public interface TruffleExceptionFactory extends
 //        }
 //
 //        @Override
-//        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+//        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
 //            return new ExceptionPrefereOverNode((FNCExpressionNode) a1.buildAST(l), (FNCExpressionNode) a2.buildAST(l));
 //        }
 //    }
 
     class Fail implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new ExceptionFailNode();
         }
     }
@@ -195,8 +203,38 @@ public interface TruffleExceptionFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return alg.abs(alg.else_(a1, a2)).buildAST(l);
+        }
+    }
+
+    class CatchNode extends FNCExpressionNode {
+        private final FNCExpressionNode xe;
+        private FNCExpressionNode excpt;
+        private Exception e;
+
+        public CatchNode(FNCExpressionNode xe) {
+            this.xe = xe;
+
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            try {
+                return xe.executeGeneric(frame);
+            } catch (Exception e) {
+                this.e = e;
+                return excpt.executeGeneric(frame);
+            }
+        }
+
+        public FNCExpressionNode buildA() {
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return e;
+                }
+            };
         }
     }
 }

@@ -2,6 +2,7 @@ package funcons.truffle.types;
 
 import funcons.algebras.types.TupleTypeAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
@@ -54,14 +55,14 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<FNCExecuteNode> {
 
     class TupleType implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new TupleTypeTupleTypeNode();
         }
     }
 
     class TupleTypePrefix implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return null;
         }
     }

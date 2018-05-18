@@ -3,10 +3,9 @@ package funcons.truffle.collections;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
 
 @NodeInfo(description = "List ProjectList Node")
-public class ListProjectListNode extends FNCStatementNode {
+public class ListProjectListNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode index;
@@ -20,7 +19,7 @@ public class ListProjectListNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) {
+    public Object executeGeneric(VirtualFrame frame) {
         throw new RuntimeException("Not implemented");
     }
 }

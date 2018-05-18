@@ -20,7 +20,7 @@ public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<FNCExecuteNode
 
     class Given implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new SupplyGivenGivenNode();
         }
     }
@@ -35,8 +35,8 @@ public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<FNCExecuteNode
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new SupplyGivenSupplyNode((FNCExpressionNode) exp.buildAST(l), (FNCExpressionNode) x.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new SupplyGivenSupplyNode(exp.buildAST(l), x.buildAST(l));
         }
     }
 }

@@ -39,7 +39,7 @@ public class ListListPrefixMatchNode extends FNCExpressionNode {
         this.g = g;
     }
 
-    public FNCStatementNode buildE1() {
+    public FNCExpressionNode buildE1() {
         return new FNCExpressionNode() {
             @Override
             public Object executeGeneric(VirtualFrame frame) {
@@ -48,7 +48,7 @@ public class ListListPrefixMatchNode extends FNCExpressionNode {
         };
     }
 
-    public FNCStatementNode buildE2() {
+    public FNCExpressionNode buildE2() {
         return new FNCExpressionNode() {
             @Override
             public Object executeGeneric(VirtualFrame frame) {

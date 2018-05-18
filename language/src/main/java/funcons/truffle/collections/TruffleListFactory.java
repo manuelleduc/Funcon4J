@@ -74,9 +74,9 @@ public interface TruffleListFactory extends
 
 
         return m -> {
-            final FNCExpressionNode l1 = (FNCExpressionNode) l.buildAST(m);
-            final ListListPrefixMatchNode listListPrefixMatchNode = new ListListPrefixMatchNode(l1, (FNCExpressionNode) fail().buildAST(m));
-            final FNCExpressionNode g = (FNCExpressionNode) mapOver(match((z) -> listListPrefixMatchNode.buildE1(), p1), match((z) -> listListPrefixMatchNode.buildE2(), p2)).buildAST(m);
+            final FNCExpressionNode l1 = l.buildAST(m);
+            final ListListPrefixMatchNode listListPrefixMatchNode = new ListListPrefixMatchNode(l1, fail().buildAST(m));
+            final FNCExpressionNode g = mapOver(match((z) -> listListPrefixMatchNode.buildE1(), p1), match((z) -> listListPrefixMatchNode.buildE2(), p2)).buildAST(m);
             listListPrefixMatchNode.setG(g);
             return listListPrefixMatchNode;
         };
@@ -98,13 +98,13 @@ public interface TruffleListFactory extends
 //            }
 //            return lw.done();
 //        };
-        return l -> new ListIntCloseIntervalNode((FNCExpressionNode) m.buildAST(l), (FNCExpressionNode) n.buildAST(l));
+        return l -> new ListIntCloseIntervalNode(m.buildAST(l), n.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode listReverse(FNCExecuteNode l) {
 //        return (env, given) -> ((IList) l.eval(env, given)).reverse();
-        return m -> new ListListReverseNode((FNCExpressionNode) l.buildAST(m));
+        return m -> new ListListReverseNode(l.buildAST(m));
     }
 
     @Override
@@ -121,7 +121,7 @@ public interface TruffleListFactory extends
     default FNCExecuteNode listHead(FNCExecuteNode list) {
 //        return (env, given) -> ;
         return l -> {
-            FNCExpressionNode list2 = (FNCExpressionNode) list.buildAST(l);
+            FNCExpressionNode list2 = list.buildAST(l);
 
             // TODO: extract to its own class
             return new FNCExpressionNode() {
@@ -136,7 +136,7 @@ public interface TruffleListFactory extends
     @Override
     default FNCExecuteNode listTail(FNCExecuteNode list) {
         return l -> {
-            FNCExpressionNode list2 = (FNCExpressionNode) list.buildAST(l);
+            FNCExpressionNode list2 = list.buildAST(l);
 
             // TODO: extract to its own class
             return new FNCExpressionNode() {
@@ -170,7 +170,7 @@ public interface TruffleListFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new ListProjectListNode((FNCExpressionNode) index, (FNCExpressionNode) list);
         }
     }
@@ -183,14 +183,14 @@ public interface TruffleListFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new ListListLengthNode((FNCExpressionNode) list.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new ListListLengthNode(list.buildAST(l));
         }
     }
 
     class List implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new ListListNode();
         }
     }
@@ -205,8 +205,8 @@ public interface TruffleListFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage m) throws RunTimeFunconException {
-            return new ListListPrefixNode((FNCExpressionNode) x.buildAST(m), (FNCExpressionNode) l.buildAST(m));
+        public FNCExpressionNode buildAST(FNCLanguage m) throws RunTimeFunconException {
+            return new ListListPrefixNode(x.buildAST(m), l.buildAST(m));
         }
     }
 
@@ -220,9 +220,9 @@ public interface TruffleListFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
 
-            return new ListListAppendNode((FNCExpressionNode) list1.buildAST(l), (FNCExpressionNode) list2.buildAST(l));
+            return new ListListAppendNode(list1.buildAST(l), list2.buildAST(l));
         }
     }
 }

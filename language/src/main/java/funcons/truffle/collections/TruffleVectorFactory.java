@@ -1,5 +1,7 @@
 package funcons.truffle.collections;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import funcons.algebras.collections.VectorAlg;
 import funcons.algebras.entities.AssignAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
@@ -7,6 +9,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.IList;
 
 public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorAlg<FNCExecuteNode> {
 
@@ -42,12 +45,35 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
 
     @Override
     default FNCExecuteNode vectorAssign(FNCExecuteNode vector, FNCExecuteNode index, FNCExecuteNode val) {
-        return new VectorAssign(vector, index, val, this);
+//        return (env, given) -> {
+//            IList vectorVal = (IList)vector.eval(env, given);
+//            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
+//            return assign((e,g)->var, val).eval(env, given);
+//        };
+
+
+        return l -> {
+            final FNCExpressionNode ve = vector.buildAST(l);
+            final FNCExpressionNode ie = index.buildAST(l);
+            final FNCExecuteNode var = language -> new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    final IList vectorVal = (IList) ve.executeGeneric(frame);
+                    try {
+                        return vectorVal.get(ie.executeIInteger(frame).intValue());
+                    } catch (UnexpectedResultException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+            };
+            return assign(var, val).buildAST(l);
+        };
     }
 
     class Vector implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new VectorVectorNode();
         }
     }
@@ -62,8 +88,8 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new VectorVectorAppendNode((FNCExpressionNode) vector1.buildAST(l), (FNCExpressionNode) vector2.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new VectorVectorAppendNode(vector1.buildAST(l), vector2.buildAST(l));
         }
     }
 
@@ -77,8 +103,8 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new VectorVectorNode2((FNCExpressionNode) alg.alloc(val).buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new VectorVectorNode2(alg.alloc(val).buildAST(l));
         }
     }
 
@@ -90,12 +116,12 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new VectorVectorLengthNode((FNCExpressionNode) vector.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new VectorVectorLengthNode(vector.buildAST(l));
         }
     }
 
-    class VectorAssign implements FNCExecuteNode {
+  /*  class VectorAssign implements FNCExecuteNode {
         private final FNCExecuteNode vector;
         private final FNCExecuteNode index;
         private final FNCExecuteNode val;
@@ -110,7 +136,7 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
 
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
 
             //        return (env, given) -> {
 //            IList vectorVal = (IList)vector.eval(env, given);
@@ -122,7 +148,7 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
             return new VectorVectorAssignNode((FNCExpressionNode) vector.buildAST(l), (FNCExpressionNode) index.buildAST(l));
 //            return alg.assign(vectorVectorAssignNode, val).buildAST(l);
         }
-    }
+    }*/
 
     class VectorSelect implements FNCExecuteNode {
         private final FNCExecuteNode vector;
@@ -136,9 +162,9 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
 
-            return alg.assignedValue(z -> new VectorVectorSelectNode((FNCExpressionNode) vector.buildAST(z), (FNCExpressionNode) index.buildAST(z))).buildAST(l);
+            return alg.assignedValue(z -> new VectorVectorSelectNode(vector.buildAST(z), index.buildAST(z))).buildAST(l);
         }
 
         //        return (env, given) -> {

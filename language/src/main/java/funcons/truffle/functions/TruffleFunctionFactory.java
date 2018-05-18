@@ -12,8 +12,8 @@ import funcons.algebras.values.NullAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.IValue;
 
 public interface TruffleFunctionFactory extends
         IntAlg<FNCExecuteNode>,
@@ -40,7 +40,7 @@ public interface TruffleFunctionFactory extends
     default FNCExecuteNode abs(FNCExecuteNode patt, FNCExecuteNode exp) {
 
         return l -> {
-            final FNCExpressionNode patte = (FNCExpressionNode) patt.buildAST(l);
+            final FNCExpressionNode patte = patt.buildAST(l);
 
             return scope(language -> new FNCExpressionNode() {
                 @Override
@@ -54,30 +54,41 @@ public interface TruffleFunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode apply(FNCExecuteNode abs, FNCExecuteNode arg) {
-        return new Apply(abs, arg, this);
+        /*return (env, given) -> supply(arg,
+                ((funcons.values.Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);*/
+
+        return l -> {
+            FNCExpressionNode abse = abs.buildAST(l);
+            return supply(arg, z -> new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return ((funcons.values.Abs) abse.executeGeneric(frame)).body();
+                }
+            }).buildAST(l);
+        };
     }
 
     @Override
     default FNCExecuteNode applyToEach(FNCExecuteNode a, FNCExecuteNode l) {
-
-
-        return m -> {
-
-            final FNCExpressionNode l2 = (FNCExpressionNode) l.buildAST(m);
-
-            // TODO: extract to its own class
-            final FNCExecuteNode cachedListEval = n -> new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return l2.executeGeneric(frame);
-                }
-            };
-
+/*
+return (env, given) -> {
+            IValue listVal = l.eval(env, given);
+            IEval cachedListEval = (e,g) -> listVal;
             return ifTrue(
                     equal(listLength(cachedListEval), lit(0)),
                     null_(),
                     seq(apply(a, listHead(cachedListEval)), applyToEach(a, listTail(cachedListEval)))
-            ).buildAST(m);
+            ).eval(env, given);
+        };
+ */
+
+        return lo -> {
+
+            final FNCExpressionNode le = l.buildAST(lo);
+            final ApplyToEachNode applyToEachNode = new ApplyToEachNode(le);
+            final FNCExecuteNode cache = la -> applyToEachNode.getA();
+            applyToEachNode.continuation = ifTrue(equal(listLength(cache), lit(0)), null_(), seq(apply(a, listLength(cache)), applyToEach(a, listTail(cache)))).buildAST(lo);
+            return applyToEachNode;
         };
     }
 
@@ -105,8 +116,8 @@ public interface TruffleFunctionFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new FunctionAbsNode((FNCExpressionNode) exp.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new FunctionAbsNode(exp.buildAST(l));
         }
     }
 
@@ -120,8 +131,8 @@ public interface TruffleFunctionFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new FunctionAbsNode2((FNCExpressionNode) patt.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new FunctionAbsNode2(patt.buildAST(l), exp.buildAST(l));
         }
     }
 
@@ -133,8 +144,8 @@ public interface TruffleFunctionFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new FunctionCloseNode((FNCExpressionNode) abs.buildAST(l), l);
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new FunctionCloseNode(abs.buildAST(l), l);
         }
     }
 
@@ -150,11 +161,36 @@ public interface TruffleFunctionFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
 //            return (env, given) -> supply(arg,
 //                    ((funcons.values.Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);
 
-            return f.supply(arg, abs).buildAST(l);
+            return null;
+        }
+    }
+
+    class ApplyToEachNode extends FNCExpressionNode {
+        private final FNCExpressionNode le;
+        private IValue listVal;
+        private FNCExpressionNode continuation;
+
+        public ApplyToEachNode(FNCExpressionNode le) {
+            this.le = le;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            this.listVal = (IValue) le.executeGeneric(frame);
+            return continuation.executeGeneric(frame);
+        }
+
+        public FNCExpressionNode getA() {
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return listVal;
+                }
+            };
         }
     }
 }

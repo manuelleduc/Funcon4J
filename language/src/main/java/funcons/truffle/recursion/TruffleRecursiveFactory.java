@@ -171,7 +171,7 @@ public interface TruffleRecursiveFactory extends
 //        };
 //        return new FollowIfFwd(fwd);
         return language -> {
-            final FNCExpressionNode fwde = (FNCExpressionNode) fwd.buildAST(language);
+            final FNCExpressionNode fwde = fwd.buildAST(language);
             return new FNCExpressionNode() {
                 @Override
                 public Object executeGeneric(VirtualFrame frame) {
@@ -207,6 +207,8 @@ public interface TruffleRecursiveFactory extends
                     } else if(v instanceof FunctionAbsNode) {
                         // FIXME: hack
                         return ((FunctionAbsNode) v).executeGeneric(frame);
+                    } else if (v instanceof Abs) {
+                        return ((Abs)v).body();
                     }
                     return v;
                 }
@@ -216,7 +218,7 @@ public interface TruffleRecursiveFactory extends
 
     class FreshFwd implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new RecursiveFwdNode();
         }
     }
@@ -229,8 +231,8 @@ public interface TruffleRecursiveFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new RecursiveFreshFwdsNode((FNCExpressionNode) idList.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new RecursiveFreshFwdsNode(idList.buildAST(l));
         }
     }
 
@@ -242,8 +244,8 @@ public interface TruffleRecursiveFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new RecursiveSetForwardsNode((FNCExpressionNode) idFwdMap.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new RecursiveSetForwardsNode(idFwdMap.buildAST(l));
         }
     }
 
@@ -260,7 +262,7 @@ public interface TruffleRecursiveFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return alg.accum(alg.scope(map, decl), alg.seq(alg.setForwards(map), alg.environment())).buildAST(l);
         }
     }
@@ -273,8 +275,8 @@ public interface TruffleRecursiveFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new RecursiveFollowIfFwdNode((FNCExpressionNode) fwd.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new RecursiveFollowIfFwdNode(fwd.buildAST(l));
         }
     }
 

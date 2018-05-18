@@ -64,7 +64,7 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BoolBoolNode(b);
         }
     }
@@ -77,8 +77,8 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new BoolNotNode((FNCExpressionNode) b.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new BoolNotNode(b.buildAST(l));
         }
     }
 
@@ -92,8 +92,8 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return BoolGreaterNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return BoolGreaterNodeGen.create(a.buildAST(l), b.buildAST(l));
         }
     }
 
@@ -107,8 +107,8 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return BoolGreaterEqualNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return BoolGreaterEqualNodeGen.create(a.buildAST(l), b.buildAST(l));
         }
     }
 
@@ -122,8 +122,8 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return BoolEqualNodeGen.create((FNCExpressionNode) e1.buildAST(l), (FNCExpressionNode) e2.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return BoolEqualNodeGen.create(e1.buildAST(l), e2.buildAST(l));
         }
     }
 }

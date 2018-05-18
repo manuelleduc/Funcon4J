@@ -52,7 +52,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         final FNCStatementNode libs = importStandardLibrary();
 //        this.getContextReference().initRegistry(this);
 
-        final FNCExpressionNode clExecuteNode = (FNCExpressionNode) eval.buildAST(this);
+        final FNCExpressionNode clExecuteNode = eval.buildAST(this);
 
 
         // TODO: write a visitor that register callables with name?
@@ -74,7 +74,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         };
         StandardLibrary<FNCExecuteNode> lib = () -> alg;
 
-        FNCStatementNode ret = new NullNullNode();
+        FNCExpressionNode ret = new NullNullNode();
         for (Method m : lib.getClass().getMethods()) {
             java.lang.String methodName = m.getName();
             if (!methodName.endsWith("Fun")) {
@@ -83,7 +83,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
             methodName = methodName.substring(0, methodName.length() - 3);
 
 
-            final FNCStatementNode env2 = ret;
+            final FNCExpressionNode env2 = ret;
             ret = alg.mapUnion(
                     l -> env2,
                     alg.bindValue(alg.id(methodName), language -> {

@@ -26,8 +26,8 @@ public interface TruffleIntoFloatConversionFactory extends IntFloatConversionAlg
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return IntoFloatConversionIntToFloatNodeGen.create((FNCExpressionNode) i.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return IntoFloatConversionIntToFloatNodeGen.create(i.buildAST(l));
         }
     }
 
@@ -39,8 +39,8 @@ public interface TruffleIntoFloatConversionFactory extends IntFloatConversionAlg
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return IntoFloatConversionFloatToIntoNodeGen.create((FNCExpressionNode) f.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return IntoFloatConversionFloatToIntoNodeGen.create(f.buildAST(l));
         }
     }
 }

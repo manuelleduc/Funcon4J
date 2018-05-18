@@ -56,8 +56,8 @@ public interface TruffleStringFactory extends StringAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage language) throws RunTimeFunconException {
-            return new StringStringAppendNode((FNCExpressionNode) str1.buildAST(language), (FNCExpressionNode) str2.buildAST(language));
+        public FNCExpressionNode buildAST(FNCLanguage language) throws RunTimeFunconException {
+            return new StringStringAppendNode(str1.buildAST(language), str2.buildAST(language));
         }
     }
 
@@ -69,7 +69,7 @@ public interface TruffleStringFactory extends StringAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new StringStringNode(s);
         }
     }
@@ -82,7 +82,7 @@ public interface TruffleStringFactory extends StringAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new StringCamlLightStringNode(s);
         }
     }
@@ -95,7 +95,7 @@ public interface TruffleStringFactory extends StringAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new StringCamlLightCharNode(s);
         }
     }

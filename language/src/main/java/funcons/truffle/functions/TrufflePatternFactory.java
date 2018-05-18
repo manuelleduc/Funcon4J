@@ -1,6 +1,6 @@
 package funcons.truffle.functions;
 
-import funcons.truffle.nodes.FNCExecuteNode;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
@@ -9,7 +9,9 @@ import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.values.BoolAlg;
+import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.values.Abs;
 
 public interface TrufflePatternFactory extends
         BoolAlg<FNCExecuteNode>,
@@ -49,7 +51,21 @@ public interface TrufflePatternFactory extends
 //            CLExecuteNode env2 = ((Abs<CLExecuteNode>) pat2.eval(env, given)).body();
 //            return mapUnion(env1, env2).eval(env, given);
 //        });
-        throw new RuntimeException("Not implemented");
+        return l -> {
+            final FNCExpressionNode pate1 = pat1.buildAST(l);
+            final FNCExpressionNode pate2 = pat2.buildAST(l);
+            return abs(z -> mapUnion(lo -> new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return ((Abs) pate1.executeGeneric(frame)).body();
+                }
+            }, lo -> new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return ((Abs) pate2.executeGeneric(frame)).body();
+                }
+            }).buildAST(l)).buildAST(l);
+        };
     }
 
     @Override
@@ -59,6 +75,17 @@ public interface TrufflePatternFactory extends
 //            ((Abs<CLExecuteNode>) patt.eval(env, given)).body().eval(env, given);
 //            return environment().eval(env, given);
 //        });
-        throw new RuntimeException("Not implemented");
+        return l -> {
+            final FNCExpressionNode patte = patt.buildAST(l);
+            final FNCExpressionNode enve = environment().buildAST(l);
+            return abs(x -> new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    final Object body = ((Abs) patte.executeGeneric(frame)).body();
+                    System.out.println(">>>>>" + body);
+                    return enve.executeGeneric(frame);
+                }
+            }).buildAST(l);
+        };
     }
 }

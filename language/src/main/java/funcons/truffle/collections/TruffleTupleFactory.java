@@ -34,7 +34,7 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode tuple(FNCExecuteNode x1, FNCExecuteNode x2) {
-        return language -> new TupleTupleNode((FNCExpressionNode) x1.buildAST(language), (FNCExpressionNode) x2.buildAST(language));
+        return language -> new TupleTupleNode(x1.buildAST(language), x2.buildAST(language));
     }
 
     @Override
@@ -74,7 +74,7 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCExecuteNode project(FNCExecuteNode index, FNCExecuteNode tup) {
-        return language -> new TupleProjectNode((FNCExpressionNode) index.buildAST(language), (FNCExpressionNode) tup.buildAST(language));
+        return language -> new TupleProjectNode(index.buildAST(language), tup.buildAST(language));
     }
 
     @Override
@@ -94,7 +94,7 @@ public interface TruffleTupleFactory extends
 
     class Tuple0 implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage language) {
+        public FNCExpressionNode buildAST(FNCLanguage language) {
             return new TupleTupleNode0();
         }
     }
@@ -109,8 +109,8 @@ public interface TruffleTupleFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new TupleTuplePrefixMatchNode((FNCExpressionNode) p1.buildAST(l), (FNCExpressionNode) p2.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TupleTuplePrefixMatchNode(p1.buildAST(l), p2.buildAST(l));
         }
     }
 
@@ -124,8 +124,8 @@ public interface TruffleTupleFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new TupleTuplePrefixNode((FNCExpressionNode) x.buildAST(l), (FNCExpressionNode) tup.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TupleTuplePrefixNode(x.buildAST(l), tup.buildAST(l));
         }
     }
 
@@ -137,8 +137,8 @@ public interface TruffleTupleFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new TupleTupleHeadNode((FNCExpressionNode) tup.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TupleTupleHeadNode(tup.buildAST(l));
         }
     }
 
@@ -150,8 +150,8 @@ public interface TruffleTupleFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new TupleTupleTailNode((FNCExpressionNode) tup.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new TupleTupleTailNode(tup.buildAST(l));
         }
 
     }

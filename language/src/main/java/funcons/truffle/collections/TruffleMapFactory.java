@@ -27,8 +27,8 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage language) throws RunTimeFunconException {
-            return new MapMapNode((FNCExpressionNode) this.key.buildAST(language), (FNCExpressionNode) this.val.buildAST(language));
+        public FNCExpressionNode buildAST(FNCLanguage language) throws RunTimeFunconException {
+            return new MapMapNode(this.key.buildAST(language), this.val.buildAST(language));
         }
     }
 
@@ -86,7 +86,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new MapMapUpdateNode((FNCExpressionNode) map, (FNCExpressionNode) key, (FNCExpressionNode) val);
         }
     }
@@ -101,8 +101,8 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new MapUnionNode((FNCExpressionNode) map1.buildAST(l), (FNCExpressionNode) map2.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new MapUnionNode(map1.buildAST(l), map2.buildAST(l));
         }
     }
 
@@ -116,8 +116,8 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new MapMapOverNode((FNCExpressionNode) map1.buildAST(l), (FNCExpressionNode) map2.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new MapMapOverNode(map1.buildAST(l), map2.buildAST(l));
         }
     }
 
@@ -131,7 +131,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new MapMapGetNode((FNCExpressionNode) map, (FNCExpressionNode) key);
         }
     }
@@ -144,8 +144,8 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new MapMapDomainNode((FNCExpressionNode) map.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new MapMapDomainNode(map.buildAST(l));
         }
     }
 }

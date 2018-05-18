@@ -24,7 +24,7 @@ public interface TruffleLogicControlFactory extends
 
     @Override
     default FNCExecuteNode effect(FNCExecuteNode e) {
-        return l -> new LogicControlEffectNode(e.buildAST(l), (FNCExpressionNode) null_().buildAST(l));
+        return l -> new LogicControlEffectNode(e.buildAST(l), null_().buildAST(l));
     }
 
     @Override
@@ -60,10 +60,10 @@ public interface TruffleLogicControlFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            final FNCExpressionNode e1 = (FNCExpressionNode) e.buildAST(l);
-            final FNCExpressionNode c11 = (FNCExpressionNode) c1.buildAST(l);
-            final FNCExpressionNode c21 = (FNCExpressionNode) c2.buildAST(l);
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            final FNCExpressionNode e1 = e.buildAST(l);
+            final FNCExpressionNode c11 = c1.buildAST(l);
+            final FNCExpressionNode c21 = c2.buildAST(l);
             return new LogicControlIfTrueNode(e1, c11, c21);
         }
     }
@@ -78,8 +78,8 @@ public interface TruffleLogicControlFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new LogicControlSeqNode((FNCExpressionNode) c.buildAST(l), (FNCExpressionNode) t.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new LogicControlSeqNode(c.buildAST(l), t.buildAST(l));
         }
     }
 
@@ -93,8 +93,8 @@ public interface TruffleLogicControlFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new LogicControlWhileTrueNode((FNCExpressionNode) e.buildAST(l), (FNCExpressionNode) c.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new LogicControlWhileTrueNode(e.buildAST(l), c.buildAST(l));
         }
     }
 
@@ -112,11 +112,11 @@ public interface TruffleLogicControlFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            final FNCExpressionNode ret = (FNCExpressionNode) a.buildAST(l);
-            final FNCExpressionNode cond = (FNCExpressionNode) condl.buildAST(l);
-            final FNCExpressionNode incr = (FNCExpressionNode) incrl.buildAST(l);
-            final FNCExpressionNode exp = (FNCExpressionNode) expl.buildAST(l);
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            final FNCExpressionNode ret = a.buildAST(l);
+            final FNCExpressionNode cond = condl.buildAST(l);
+            final FNCExpressionNode incr = incrl.buildAST(l);
+            final FNCExpressionNode exp = expl.buildAST(l);
             return new LogicControlForNode(ret, cond, incr, exp);
         }
     }

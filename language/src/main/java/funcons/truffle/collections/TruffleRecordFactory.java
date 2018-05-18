@@ -46,7 +46,7 @@ public interface TruffleRecordFactory extends
 //        return (env, given) ->
 //                ((IMap) record.eval(env, given))
 //                        .get(field.eval(env, given));
-        return l -> new RecordRecordSelectNode((FNCExpressionNode) record.buildAST(l), (FNCExpressionNode) field.buildAST(l));
+        return l -> new RecordRecordSelectNode(record.buildAST(l), field.buildAST(l));
     }
 
     @Override
@@ -85,7 +85,10 @@ public interface TruffleRecordFactory extends
 //
 //            return environment;
 //        };
-        return new RecordMatch(rec, pattMap);
+        // TODO
+        return l -> {
+            return null;
+        };
     }
 
     class RecordMatch implements FNCExecuteNode {
@@ -100,8 +103,8 @@ public interface TruffleRecordFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new RecordRecordMatchNode((FNCExpressionNode) this.rec.buildAST(l), (FNCExpressionNode) this.pattMap.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new RecordRecordMatchNode(this.rec.buildAST(l), this.pattMap.buildAST(l));
         }
     }
 
@@ -113,7 +116,7 @@ public interface TruffleRecordFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new RecordFieldNode(name);
         }
     }
@@ -128,8 +131,8 @@ public interface TruffleRecordFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new RecordRecordNode((FNCExpressionNode) this.field.buildAST(l), (FNCExpressionNode) this.val.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new RecordRecordNode(this.field.buildAST(l), this.val.buildAST(l));
         }
     }
 
@@ -143,8 +146,8 @@ public interface TruffleRecordFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new RecordRecordUnionNode((FNCExpressionNode) this.rec1.buildAST(l), (FNCExpressionNode) this.rec2.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new RecordRecordUnionNode(this.rec1.buildAST(l), this.rec2.buildAST(l));
         }
     }
 }

@@ -3,12 +3,10 @@ package funcons.truffle.collections;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
 
 
 @NodeInfo(description = "Map MapUpdate Node")
-public class MapMapUpdateNode extends FNCStatementNode {
+public class MapMapUpdateNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode map;
@@ -26,7 +24,8 @@ public class MapMapUpdateNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) {
+    public Object executeGeneric(VirtualFrame frame) {
         throw new RuntimeException("Not implemented");
     }
+
 }

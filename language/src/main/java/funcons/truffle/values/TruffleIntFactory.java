@@ -56,7 +56,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
 //            IInteger bNumber = ((INumber) b.eval(env, given)).toInteger();
 //            return aNumber.subtract(aNumber.divide(bNumber).multiply(bNumber));
 //        };
-        return l -> IntIntModuloNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        return l -> IntIntModuloNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     class IntAdd implements FNCExecuteNode {
@@ -69,9 +69,9 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            FNCExpressionNode a1 = (FNCExpressionNode) a.buildAST(l);
-            FNCExpressionNode b1 = (FNCExpressionNode) b.buildAST(l);
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            FNCExpressionNode a1 = a.buildAST(l);
+            FNCExpressionNode b1 = b.buildAST(l);
             return IntIntAddNodeGen.create(a1, b1);
         }
     }
@@ -84,7 +84,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new IntLitNode(i);
         }
     }
@@ -99,8 +99,8 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new IntIntSubstractNode((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new IntIntSubstractNode(a.buildAST(l), b.buildAST(l));
         }
     }
 
@@ -112,8 +112,8 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return IntIntNegateNodeGen.create((FNCExpressionNode) x.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return IntIntNegateNodeGen.create(x.buildAST(l));
         }
     }
 
@@ -127,8 +127,8 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return IntIntMultiplyNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return IntIntMultiplyNodeGen.create(a.buildAST(l), b.buildAST(l));
         }
     }
 
@@ -142,8 +142,8 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return IntIntDivideNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return IntIntDivideNodeGen.create(a.buildAST(l), b.buildAST(l));
         }
     }
 }

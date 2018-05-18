@@ -16,27 +16,27 @@ public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
 
     @Override
     default FNCExecuteNode floatAdd(FNCExecuteNode a, FNCExecuteNode b) {
-        return l -> FloatFloatAddNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        return l -> FloatFloatAddNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode floatNegate(FNCExecuteNode x) {
-        return l -> FloatFloatNegateNodeGen.create((FNCExpressionNode) x.buildAST(l));
+        return l -> FloatFloatNegateNodeGen.create(x.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode floatSubtract(FNCExecuteNode a, FNCExecuteNode b) {
-        return l -> new FloatFloatSubstractNode((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        return l -> new FloatFloatSubstractNode(a.buildAST(l), b.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode floatMultiply(FNCExecuteNode a, FNCExecuteNode b) {
-        return l -> FloatFloatMultiplyNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        return l -> FloatFloatMultiplyNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode floatDivide(FNCExecuteNode a, FNCExecuteNode b) {
-        return l -> FloatFloatDivideNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        return l -> FloatFloatDivideNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     @Override
@@ -56,7 +56,7 @@ public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
 //            INumber bVal = (INumber) b.eval(env, given);
 //            return aVal.toReal(5).pow(bVal.toReal(5), 5);
 //        };
-        return l -> FloatFloatPowerOfNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        return l -> FloatFloatPowerOfNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     class Lit implements FNCExecuteNode {
@@ -67,7 +67,7 @@ public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage language) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage language) throws RunTimeFunconException {
             return new FloatLitNode(i);
         }
     }

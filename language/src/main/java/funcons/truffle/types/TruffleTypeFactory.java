@@ -11,8 +11,10 @@ import funcons.algebras.values.NullAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.cl.CLVariant;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.ITuple;
+import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
@@ -40,7 +42,7 @@ public interface TruffleTypeFactory extends
     @Override
     default FNCExecuteNode tag(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
-        return  l -> new TypeTagNode(name);
+        return l -> new TypeTagNode(name);
     }
 
     @Override
@@ -51,19 +53,34 @@ public interface TruffleTypeFactory extends
     @Override
     default FNCExecuteNode clVariant(java.lang.String tagName, FNCExecuteNode exp) {
 //        return (env, given) -> new CLVariant(vf.string(tagName), exp.eval(env, given));
-        return l -> new TypeClVariantNode(tagName, (FNCExpressionNode) exp.buildAST(l));
+        return l -> new TypeClVariantNode(tagName, exp.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode meta(java.lang.String name) {
-//        return (env, given) -> vf.string(name);
-        throw new RuntimeException("Not implemented");
+        return l -> new FNCExpressionNode() {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                final IValueFactory vf = ValueFactory.getInstance();
+                return vf.string(name);
+            }
+        };
     }
 
     @Override
     default FNCExecuteNode nomVal(FNCExecuteNode nomTag, FNCExecuteNode val) {
-//        return (env, given) -> vf.tuple(nomTag.eval(env, given), val.eval(env, given));
-        throw new RuntimeException("Not implemented");
+        return l -> {
+            final FNCExpressionNode nte = nomTag.buildAST(l);
+            final FNCExpressionNode ve = val.buildAST(l);
+
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    final IValueFactory vf = ValueFactory.getInstance();
+                    return vf.tuple((IValue) nte.executeGeneric(frame), (IValue) ve.executeGeneric(frame));
+                }
+            };
+        };
     }
 
     @Override
@@ -77,13 +94,20 @@ public interface TruffleTypeFactory extends
 //            ITuple nVal = (ITuple) nomVal.eval(env, given);
 //            return whenTrue(equal(nomTag, (e, g) -> nVal.get(0)), (e, g) -> nVal.get(1)).eval(env, given);
 //        };
-        throw new RuntimeException("Not implemented");
+//        throw new RuntimeException("Not implemented");
+        return l -> {
+            FNCExpressionNode nve = nomVal.buildAST(l);
+            TypeNomValSelectNode ret = new TypeNomValSelectNode(nve);
+
+            FNCExpressionNode subnode = whenTrue(equal(nomTag, z -> ret.buildA()), (z) -> ret.buildB()).buildAST(l);
+            ret.subnode = subnode;
+            return ret;
+        };
     }
 
     @Override
     default FNCExecuteNode scopeNominalCoercion(FNCExecuteNode type1, FNCExecuteNode type2, FNCExecuteNode abs) {
-//        return apply(abs, nomTag(freshToken()));
-        throw new RuntimeException("Not implemented");
+        return apply(abs, nomTag(freshToken()));
     }
 
     @Override
@@ -92,7 +116,19 @@ public interface TruffleTypeFactory extends
 //                vf.tuple(
 //                        type1.eval(env, given),
 //                        type2.eval(env, given));
-        throw new RuntimeException("Not implemented");
+//        throw new RuntimeException("Not implemented");
+        return l -> {
+            final FNCExpressionNode t1e = type1.buildAST(l);
+            final FNCExpressionNode t2e = type2.buildAST(l);
+            return new FNCExpressionNode() {
+
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    final IValueFactory vf = ValueFactory.getInstance();
+                    return vf.tuple((IValue) t1e.executeGeneric(frame), (IValue) t2e.executeGeneric(frame));
+                }
+            };
+        };
     }
 
     @Override
@@ -145,12 +181,24 @@ public interface TruffleTypeFactory extends
 //            }
 //            return fail().eval(env, given);
 //        };
-        throw new RuntimeException("Not implemented");
+        return l -> {
+            FNCExpressionNode z = fail().buildAST(l);
+            FNCExpressionNode ve = variant.buildAST(l);
+
+            final VariantMatch variantMatch = new VariantMatch(ve, z);
+
+
+            FNCExpressionNode alte = whenTrue(equal(tag, (lo) -> variantMatch.buildA()), match(lo -> variantMatch.buildB(), patt)).buildAST(l);
+
+            variantMatch.alte = alte;
+
+            return variantMatch;
+        };
     }
 
     class UnknownType implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new TypeUnknowTypeNode();
         }
     }
@@ -163,7 +211,7 @@ public interface TruffleTypeFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
 
             return new TypeTypeVarNode(name);
         }
@@ -178,8 +226,83 @@ public interface TruffleTypeFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new TypeTypeNode(name);
+        }
+    }
+
+    class TypeNomValSelectNode extends FNCExpressionNode {
+        private final FNCExpressionNode nve;
+        private ITuple nVal;
+
+        private FNCExpressionNode subnode;
+
+        public TypeNomValSelectNode(FNCExpressionNode nve) {
+            this.nve = nve;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            this.nVal = (ITuple) nve.executeGeneric(frame);
+            return subnode.executeGeneric(frame);
+        }
+
+        public FNCExpressionNode buildA() {
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return nVal.get(0);
+                }
+            };
+        }
+
+        public FNCExpressionNode buildB() {
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return nVal.get(1);
+                }
+            };
+        }
+    }
+
+    class VariantMatch extends FNCExpressionNode {
+        private final FNCExpressionNode ve;
+        private FNCExpressionNode alte;
+        private final FNCExpressionNode z;
+        private CLVariant vVar;
+
+        public VariantMatch(FNCExpressionNode ve, FNCExpressionNode z) {
+            this.ve = ve;
+            this.z = z;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            IValue v = (IValue) ve.executeGeneric(frame);
+            if (v instanceof CLVariant) {
+                this.vVar = (CLVariant) v;
+                return alte.executeGeneric(frame);
+            }
+            return z.executeGeneric(frame);
+        }
+
+        public FNCExpressionNode buildA() {
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return vVar.tag();
+                }
+            };
+        }
+
+        public FNCExpressionNode buildB() {
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return vVar.value();
+                }
+            };
         }
     }
 }

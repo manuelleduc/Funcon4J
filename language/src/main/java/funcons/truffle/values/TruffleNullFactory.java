@@ -3,6 +3,7 @@ package funcons.truffle.values;
 import funcons.algebras.values.NullAlg;
 import funcons.truffle.entities.BindingBindValueNode;
 import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
@@ -23,14 +24,14 @@ public interface TruffleNullFactory extends NullAlg<FNCExecuteNode> {
 
     class Null_ implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new NullNullNode();
         }
     }
 
     class Undefined implements FNCExecuteNode {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new NullUndefinedNode();
         }
     }
