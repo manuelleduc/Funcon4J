@@ -45,10 +45,10 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     protected CallTarget parse(ParsingRequest request) throws Exception {
         final String program = IOUtils.toString(request.getSource().getInputStream(), Charset.defaultCharset());
         final Recorder builder = parse(program, Recorder.create(camllight.algebras.AllAlg.class));
-        final funcons.algebras.AllAlg<FNCExecuteNode> evalAlg = new funcons.truffle.TruffleAllFactory() {
+        final funcons.algebras.AllAlg<FNCBuildAST> evalAlg = new funcons.truffle.TruffleAllFactory() {
         };
         final camllight.algebras.AllAlg alg = () -> evalAlg;
-        final FNCExecuteNode eval = builder.build(alg);
+        final FNCBuildAST eval = builder.build(alg);
         final FNCStatementNode libs = importStandardLibrary();
 //        this.getContextReference().initRegistry(this);
 
@@ -70,9 +70,9 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
 
     public FNCStatementNode importStandardLibrary() throws FunconException {
-        funcons.algebras.AllAlg<FNCExecuteNode> alg = new TruffleAllFactory() {
+        funcons.algebras.AllAlg<FNCBuildAST> alg = new TruffleAllFactory() {
         };
-        StandardLibrary<FNCExecuteNode> lib = () -> alg;
+        StandardLibrary<FNCBuildAST> lib = () -> alg;
 
         FNCExpressionNode ret = new NullNullNode();
         for (Method m : lib.getClass().getMethods()) {
@@ -89,7 +89,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
                     alg.bindValue(alg.id(methodName), language -> {
 
                         try {
-                            FNCStatementNode abcd = ((FNCExecuteNode) m.invoke(lib)).buildAST(language);
+                            FNCStatementNode abcd = ((FNCBuildAST) m.invoke(lib)).buildAST(language);
                             return new WrapperNode(abcd);
                         } catch (IllegalAccessException | InvocationTargetException e) {
                             e.printStackTrace();

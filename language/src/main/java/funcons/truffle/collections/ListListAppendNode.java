@@ -7,8 +7,12 @@ import io.usethesource.vallang.IList;
 
 @NodeInfo(description = "List List Append Node")
 public class ListListAppendNode extends FNCExpressionNode {
-    private final FNCExpressionNode list1;
-    private final FNCExpressionNode list2;
+
+    @Child
+    private FNCExpressionNode list1;
+
+    @Child
+    private FNCExpressionNode list2;
 
     public ListListAppendNode(FNCExpressionNode list1, FNCExpressionNode list2) {
         super();

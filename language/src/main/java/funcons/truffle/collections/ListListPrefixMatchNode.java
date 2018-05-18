@@ -3,7 +3,6 @@ package funcons.truffle.collections;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
 import io.usethesource.vallang.IList;
 
 @NodeInfo(description = "List ListPrefixMatch Node")
@@ -40,20 +39,26 @@ public class ListListPrefixMatchNode extends FNCExpressionNode {
     }
 
     public FNCExpressionNode buildE1() {
-        return new FNCExpressionNode() {
-            @Override
-            public Object executeGeneric(VirtualFrame frame) {
-                return list.get(0);
-            }
-        };
+        return new ListListPrefixMatchSubnode1();
     }
 
     public FNCExpressionNode buildE2() {
-        return new FNCExpressionNode() {
-            @Override
-            public Object executeGeneric(VirtualFrame frame) {
-                return list.delete(0);
-            }
-        };
+        return new ListListPrefixMatchSubnode2();
+    }
+
+    @NodeInfo(description = "ListListPrefixMatchSubnode1")
+    private class ListListPrefixMatchSubnode1 extends FNCExpressionNode {
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            return list.get(0);
+        }
+    }
+
+    @NodeInfo(description = "ListListPrefixMatchSubnode2")
+    private class ListListPrefixMatchSubnode2 extends FNCExpressionNode {
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            return list.delete(0);
+        }
     }
 }

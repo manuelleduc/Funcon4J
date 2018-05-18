@@ -2,12 +2,7 @@ package funcons.truffle.recursion;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.collections.MapMapDomainNode;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.values.NullNullNode;
-import funcons.values.recursion.Fwd;
-import io.usethesource.vallang.IInteger;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Recursive SetForwards Node")
 public class RecursiveSetForwardsNode extends FNCExpressionNode {
@@ -39,7 +34,8 @@ public class RecursiveSetForwardsNode extends FNCExpressionNode {
 //
 //        return null_().eval(env, given);
 
-        return new NullNullNode().executeGeneric(frame);
+        /*return new NullNullNode().executeGeneric(frame);*/
+        throw new RuntimeException("Not Implemented");
     }
 
 }

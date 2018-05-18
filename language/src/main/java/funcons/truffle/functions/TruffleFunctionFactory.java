@@ -1,6 +1,7 @@
 package funcons.truffle.functions;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
@@ -9,22 +10,21 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.values.NullNullNode;
-import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.IList;
 
 public interface TruffleFunctionFactory extends
-        IntAlg<FNCExecuteNode>,
-        SupplyGivenAlg<FNCExecuteNode>,
-        BindingAlg<FNCExecuteNode>,
-        LogicControlAlg<FNCExecuteNode>,
-        ListAlg<FNCExecuteNode>,
-        BoolAlg<FNCExecuteNode>,
-        NullAlg<FNCExecuteNode>,
-        FunctionAlg<FNCExecuteNode> {
+        IntAlg<FNCBuildAST>,
+        SupplyGivenAlg<FNCBuildAST>,
+        BindingAlg<FNCBuildAST>,
+        LogicControlAlg<FNCBuildAST>,
+        ListAlg<FNCBuildAST>,
+        BoolAlg<FNCBuildAST>,
+        NullAlg<FNCBuildAST>,
+        FunctionAlg<FNCBuildAST> {
 
     /**
      * Anonymoust
@@ -33,48 +33,34 @@ public interface TruffleFunctionFactory extends
      * @return
      */
     @Override
-    default FNCExecuteNode abs(FNCExecuteNode exp) {
+    default FNCBuildAST abs(FNCBuildAST exp) {
         return new Abs(exp);
     }
 
     @Override
-    default FNCExecuteNode abs(FNCExecuteNode patt, FNCExecuteNode exp) {
+    default FNCBuildAST abs(FNCBuildAST patt, FNCBuildAST exp) {
 
         return l -> {
             final FNCExpressionNode patte = patt.buildAST(l);
 
-            return scope(language -> new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return ((funcons.values.Abs<Object>) patte.executeGeneric(frame)).body();
-                }
-            }, exp).buildAST(l);
+            return scope(language -> new FunctionAbsNode(patte), exp).buildAST(l);
         };
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    default FNCExecuteNode apply(FNCExecuteNode abs, FNCExecuteNode arg) {
+    default FNCBuildAST apply(FNCBuildAST abs, FNCBuildAST arg) {
         /*return (env, given) -> supply(arg,
                 ((funcons.values.Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);*/
 
         return l -> {
             FNCExpressionNode abse = abs.buildAST(l);
-            return supply(arg, z -> new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-
-                    Object o = abse.executeGeneric(frame);
-                    if (o instanceof funcons.values.Abs)
-                        return ((funcons.values.Abs) o).body();
-                    else return o;
-                }
-            }).buildAST(l);
+            return supply(arg, z -> new FunctionApplyNode(abse)).buildAST(l);
         };
     }
 
     @Override
-    default FNCExecuteNode applyToEach(FNCExecuteNode a, FNCExecuteNode l) {
+    default FNCBuildAST applyToEach(FNCBuildAST a, FNCBuildAST l) {
 /*
 return (env, given) -> {
             IValue listVal = l.eval(env, given);
@@ -90,7 +76,7 @@ return (env, given) -> {
         return lo -> {
             FNCExpressionNode le = l.buildAST(lo);
 
-            ApplyToEachNode applyToEachNpde = new ApplyToEachNode(le);
+            FunctionApplyToEachNode applyToEachNpde = new FunctionApplyToEachNode(le);
             applyToEachNpde.e1 = apply(a, listHead(applyToEachNpde.createE1())).buildAST(lo);
             applyToEachNpde.e2 = listTail(applyToEachNpde.createE1()).buildAST(lo);
             return applyToEachNpde;
@@ -98,25 +84,25 @@ return (env, given) -> {
     }
 
     @Override
-    default FNCExecuteNode compose(FNCExecuteNode f, FNCExecuteNode g) {
+    default FNCBuildAST compose(FNCBuildAST f, FNCBuildAST g) {
         return abs(apply(f, apply(g, given())));
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    default FNCExecuteNode close(FNCExecuteNode abs) {
+    default FNCBuildAST close(FNCBuildAST abs) {
         return new Close(abs);
     }
 
     @Override
-    default FNCExecuteNode bind(FNCExecuteNode id) {
+    default FNCBuildAST bind(FNCBuildAST id) {
         return abs(bindValue(id, given()));
     }
 
-    class Abs implements FNCExecuteNode {
-        private final FNCExecuteNode exp;
+    class Abs implements FNCBuildAST {
+        private final FNCBuildAST exp;
 
-        public Abs(FNCExecuteNode exp) {
+        public Abs(FNCBuildAST exp) {
             this.exp = exp;
         }
 
@@ -126,10 +112,10 @@ return (env, given) -> {
         }
     }
 
-    class Close implements FNCExecuteNode {
-        private final FNCExecuteNode abs;
+    class Close implements FNCBuildAST {
+        private final FNCBuildAST abs;
 
-        public Close(FNCExecuteNode abs) {
+        public Close(FNCBuildAST abs) {
             this.abs = abs;
         }
 
@@ -139,14 +125,21 @@ return (env, given) -> {
         }
     }
 
-    class ApplyToEachNode extends FNCExpressionNode {
-        private final FNCExpressionNode le;
+    @NodeInfo(description = "Function ApplyToEach Node")
+    class FunctionApplyToEachNode extends FNCExpressionNode {
 
+        @Child
+        private FNCExpressionNode le;
+
+        @Child
         private FNCExpressionNode e1;
+
+        @Child
         private FNCExpressionNode e2;
+
         private IList listVal;
 
-        public ApplyToEachNode(FNCExpressionNode le) {
+        public FunctionApplyToEachNode(FNCExpressionNode le) {
             this.le = le;
         }
 
@@ -160,13 +153,52 @@ return (env, given) -> {
             return new NullNullNode().executeGeneric(frame);
         }
 
-        public FNCExecuteNode createE1() {
-            return language -> new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return listVal;
-                }
-            };
+        public FNCBuildAST createE1() {
+            return language -> new FunctionApplyToEachSubnode();
+        }
+
+        @NodeInfo(description = "Function ApplyToEach Subnode")
+        private class FunctionApplyToEachSubnode extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return listVal;
+            }
+        }
+    }
+
+    @NodeInfo(description = "Function Abs Node")
+    class FunctionAbsNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode patte;
+
+        public FunctionAbsNode(FNCExpressionNode patte) {
+            this.patte = patte;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            return ((funcons.values.Abs<Object>) patte.executeGeneric(frame)).body();
+        }
+    }
+
+    @NodeInfo(description = "Function Apply Node")
+    class FunctionApplyNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode abse;
+
+        public FunctionApplyNode(FNCExpressionNode abse) {
+            this.abse = abse;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+
+            Object o = abse.executeGeneric(frame);
+            if (o instanceof funcons.values.Abs)
+                return ((funcons.values.Abs) o).body();
+            else return o;
         }
     }
 }

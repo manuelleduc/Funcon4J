@@ -8,39 +8,38 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.truffle.entities.SupplyGivenGivenNode;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleCurryFactory extends
-        FunctionAlg<FNCExecuteNode>,
-        TupleAlg<FNCExecuteNode>,
-        IntAlg<FNCExecuteNode>,
-        SupplyGivenAlg<FNCExecuteNode>,
-        BoolAlg<FNCExecuteNode>,
-        LogicControlAlg<FNCExecuteNode>,
-        CurryAlg<FNCExecuteNode> {
+        FunctionAlg<FNCBuildAST>,
+        TupleAlg<FNCBuildAST>,
+        IntAlg<FNCBuildAST>,
+        SupplyGivenAlg<FNCBuildAST>,
+        BoolAlg<FNCBuildAST>,
+        LogicControlAlg<FNCBuildAST>,
+        CurryAlg<FNCBuildAST> {
 
     @Override
-    default FNCExecuteNode partialApp(FNCExecuteNode f, FNCExecuteNode x) {
+    default FNCBuildAST partialApp(FNCBuildAST f, FNCBuildAST x) {
         return abs(apply(f, tuple(x, given())));
     }
 
     @Override
-    default FNCExecuteNode partialAppN(FNCExecuteNode f, FNCExecuteNode x) {
+    default FNCBuildAST partialAppN(FNCBuildAST f, FNCBuildAST x) {
 //        return abs(apply(f, tuplePrefix(x, given())));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default FNCExecuteNode curry(FNCExecuteNode a) {
+    default FNCBuildAST curry(FNCBuildAST a) {
         return l -> abs(m -> partialApp(a, n -> new SupplyGivenGivenNode()).buildAST(l)).buildAST(l);
     }
 
     @Override
-    default FNCExecuteNode curryN(FNCExecuteNode n, FNCExecuteNode a) {
+    default FNCBuildAST curryN(FNCBuildAST n, FNCBuildAST a) {
 //        return (env, given) -> {
 //            IValue index = n.eval(env, given);
 //            return ifTrue(
@@ -57,15 +56,15 @@ public interface TruffleCurryFactory extends
     }
 
     @Override
-    default FNCExecuteNode uncurry(FNCExecuteNode f) {
+    default FNCBuildAST uncurry(FNCBuildAST f) {
         return abs(apply(apply(f, project(lit(0), given())), project(lit(1), given())));
     }
 
-    class CurryN implements FNCExecuteNode {
-        private final FNCExecuteNode n;
-        private final FNCExecuteNode a;
+    class CurryN implements FNCBuildAST {
+        private final FNCBuildAST n;
+        private final FNCBuildAST a;
 
-        public CurryN(FNCExecuteNode n, FNCExecuteNode a) {
+        public CurryN(FNCBuildAST n, FNCBuildAST a) {
             this.n = n;
             this.a = a;
         }

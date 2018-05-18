@@ -1,35 +1,34 @@
 package funcons.truffle.entities;
 
 import funcons.algebras.entities.SupplyGivenAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 
-public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<FNCExecuteNode> {
+public interface TruffleSupplyGivenFactory extends SupplyGivenAlg<FNCBuildAST> {
 
     @Override
-    default FNCExecuteNode given() {
+    default FNCBuildAST given() {
         return new Given();
     }
 
     @Override
-    default FNCExecuteNode supply(FNCExecuteNode exp, FNCExecuteNode x) {
+    default FNCBuildAST supply(FNCBuildAST exp, FNCBuildAST x) {
         return new Supply(exp, x);
     }
 
-    class Given implements FNCExecuteNode {
+    class Given implements FNCBuildAST {
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new SupplyGivenGivenNode();
         }
     }
 
-    class Supply implements FNCExecuteNode {
-        private final FNCExecuteNode exp;
-        private final FNCExecuteNode x;
+    class Supply implements FNCBuildAST {
+        private final FNCBuildAST exp;
+        private final FNCBuildAST x;
 
-        public Supply(FNCExecuteNode exp, FNCExecuteNode x) {
+        public Supply(FNCBuildAST exp, FNCBuildAST x) {
             this.exp = exp;
             this.x = x;
         }

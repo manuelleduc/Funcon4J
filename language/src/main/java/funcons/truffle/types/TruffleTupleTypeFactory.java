@@ -1,29 +1,27 @@
 package funcons.truffle.types;
 
 import funcons.algebras.types.TupleTypeAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IList;
 
-public interface TruffleTupleTypeFactory extends TupleTypeAlg<FNCExecuteNode> {
+public interface TruffleTupleTypeFactory extends TupleTypeAlg<FNCBuildAST> {
 
     @Override
-    default FNCExecuteNode tupleType() {
+    default FNCBuildAST tupleType() {
 //        return (env, given) -> vf.list();
         return new TupleType();
     }
 
     @Override
-    default FNCExecuteNode tupleType(FNCExecuteNode x) {
+    default FNCBuildAST tupleType(FNCBuildAST x) {
 //        return (env, given) -> vf.list((IValue) x.eval(env, given));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default FNCExecuteNode tupleType(FNCExecuteNode x1, FNCExecuteNode x2) {
+    default FNCBuildAST tupleType(FNCBuildAST x1, FNCBuildAST x2) {
 //        return (env, given) -> vf.list(
 //                (IValue) x1.eval(env, given),
 //                (IValue) x2.eval(env, given));
@@ -31,7 +29,7 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode tupleType(FNCExecuteNode x1, FNCExecuteNode x2, FNCExecuteNode x3) {
+    default FNCBuildAST tupleType(FNCBuildAST x1, FNCBuildAST x2, FNCBuildAST x3) {
 //        return (env, given) -> vf.list(
 //                (IValue) x1.eval(env, given),
 //                (IValue) x2.eval(env, given),
@@ -40,27 +38,27 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode tupleTypePrefix(FNCExecuteNode x, FNCExecuteNode tup) {
+    default FNCBuildAST tupleTypePrefix(FNCBuildAST x, FNCBuildAST tup) {
         return new TupleTypePrefix();
 
     }
 
     @Override
-    default FNCExecuteNode projectType(FNCExecuteNode index, FNCExecuteNode tup) {
+    default FNCBuildAST projectType(FNCBuildAST index, FNCBuildAST tup) {
 //        return (env, given) ->
 //                ((IList) tup.eval(env, given))
 //                        .get(((IInteger) index.eval(env, given)).intValue());
         throw new RuntimeException("Not implemented");
     }
 
-    class TupleType implements FNCExecuteNode {
+    class TupleType implements FNCBuildAST {
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new TupleTypeTupleTypeNode();
         }
     }
 
-    class TupleTypePrefix implements FNCExecuteNode {
+    class TupleTypePrefix implements FNCBuildAST {
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return null;

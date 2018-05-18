@@ -6,8 +6,6 @@ import com.oracle.truffle.api.frame.FrameSlotTypeException;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import io.usethesource.vallang.IMapWriter;
-import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Binding BoundValue Node")
 public class BindingBoundValueNode extends FNCExpressionNode {

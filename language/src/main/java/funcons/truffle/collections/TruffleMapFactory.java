@@ -1,27 +1,24 @@
 package funcons.truffle.collections;
 
-import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.MapAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IValue;
 
-public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
+public interface TruffleMapFactory extends MapAlg<FNCBuildAST> {
 
     @Override
-    default FNCExecuteNode map(FNCExecuteNode key, FNCExecuteNode val) {
+    default FNCBuildAST map(FNCBuildAST key, FNCBuildAST val) {
         return new Map(key, val);
     }
 
-    class Map implements FNCExecuteNode {
+    class Map implements FNCBuildAST {
 
-        private final FNCExecuteNode key;
-        private final FNCExecuteNode val;
+        private final FNCBuildAST key;
+        private final FNCBuildAST val;
 
-        public Map(FNCExecuteNode fncExpressionNode, FNCExecuteNode fncExpressionNode1) {
+        public Map(FNCBuildAST fncExpressionNode, FNCBuildAST fncExpressionNode1) {
             this.key = fncExpressionNode;
             this.val = fncExpressionNode1;
         }
@@ -33,7 +30,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode mapUpdate(FNCExecuteNode map, FNCExecuteNode key, FNCExecuteNode val) {
+    default FNCBuildAST mapUpdate(FNCBuildAST map, FNCBuildAST key, FNCBuildAST val) {
 //        return (env, given) -> {
 //            IValue k = (IValue) key.eval(env, given);
 //            IValue v = (IValue) val.eval(env, given);
@@ -44,7 +41,7 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode mapDomain(FNCExecuteNode map) {
+    default FNCBuildAST mapDomain(FNCBuildAST map) {
 //        return (env, given) -> {
 //            IMap m = (IMap) map.eval(env, given);
 //            IListWriter lw = vf.listWriter();
@@ -55,17 +52,17 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode mapUnion(FNCExecuteNode map1, FNCExecuteNode map2) {
+    default FNCBuildAST mapUnion(FNCBuildAST map1, FNCBuildAST map2) {
         return new MapUnion(map1, map2);
     }
 
     @Override
-    default FNCExecuteNode mapOver(FNCExecuteNode map1, FNCExecuteNode map2) {
+    default FNCBuildAST mapOver(FNCBuildAST map1, FNCBuildAST map2) {
         return new MapOver(map1, map2);
     }
 
     @Override
-    default FNCExecuteNode mapGet(FNCExecuteNode map, FNCExecuteNode key) {
+    default FNCBuildAST mapGet(FNCBuildAST map, FNCBuildAST key) {
 //        return (env, given) -> {
 //            IMap m = (IMap) map.eval(env, given);
 //            return m.get((IValue) key.eval(env, given));
@@ -74,12 +71,12 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
 
     }
 
-    class MapUpdate implements FNCExecuteNode {
-        private final FNCExecuteNode map;
-        private final FNCExecuteNode key;
-        private final FNCExecuteNode val;
+    class MapUpdate implements FNCBuildAST {
+        private final FNCBuildAST map;
+        private final FNCBuildAST key;
+        private final FNCBuildAST val;
 
-        public MapUpdate(FNCExecuteNode map, FNCExecuteNode key, FNCExecuteNode val) {
+        public MapUpdate(FNCBuildAST map, FNCBuildAST key, FNCBuildAST val) {
             this.map = map;
             this.key = key;
             this.val = val;
@@ -91,11 +88,11 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
     }
 
-    class MapUnion implements FNCExecuteNode {
-        private final FNCExecuteNode map1;
-        private final FNCExecuteNode map2;
+    class MapUnion implements FNCBuildAST {
+        private final FNCBuildAST map1;
+        private final FNCBuildAST map2;
 
-        public MapUnion(FNCExecuteNode map1, FNCExecuteNode map2) {
+        public MapUnion(FNCBuildAST map1, FNCBuildAST map2) {
             this.map1 = map1;
             this.map2 = map2;
         }
@@ -106,11 +103,11 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
     }
 
-    class MapOver implements FNCExecuteNode {
-        private final FNCExecuteNode map1;
-        private final FNCExecuteNode map2;
+    class MapOver implements FNCBuildAST {
+        private final FNCBuildAST map1;
+        private final FNCBuildAST map2;
 
-        public MapOver(FNCExecuteNode map1, FNCExecuteNode map2) {
+        public MapOver(FNCBuildAST map1, FNCBuildAST map2) {
             this.map1 = map1;
             this.map2 = map2;
         }
@@ -121,11 +118,11 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
     }
 
-    class MapGet implements FNCExecuteNode {
-        private final FNCExecuteNode map;
-        private final FNCExecuteNode key;
+    class MapGet implements FNCBuildAST {
+        private final FNCBuildAST map;
+        private final FNCBuildAST key;
 
-        public MapGet(FNCExecuteNode map, FNCExecuteNode key) {
+        public MapGet(FNCBuildAST map, FNCBuildAST key) {
             this.map = map;
             this.key = key;
         }
@@ -136,10 +133,10 @@ public interface TruffleMapFactory extends MapAlg<FNCExecuteNode> {
         }
     }
 
-    class MapDomain implements FNCExecuteNode {
-        private final FNCExecuteNode map;
+    class MapDomain implements FNCBuildAST {
+        private final FNCBuildAST map;
 
-        public MapDomain(FNCExecuteNode map) {
+        public MapDomain(FNCBuildAST map) {
             this.map = map;
         }
 

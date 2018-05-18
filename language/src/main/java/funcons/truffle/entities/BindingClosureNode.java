@@ -3,7 +3,6 @@ package funcons.truffle.entities;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
 
 @NodeInfo(description = "Binding Closure Node")
 public class BindingClosureNode extends FNCExpressionNode {

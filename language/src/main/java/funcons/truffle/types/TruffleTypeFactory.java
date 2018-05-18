@@ -1,6 +1,7 @@
 package funcons.truffle.types;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
@@ -8,7 +9,7 @@ import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.types.TypeAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.values.cl.CLVariant;
@@ -19,77 +20,65 @@ import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleTypeFactory extends
-        BoolAlg<FNCExecuteNode>,
-        FunctionAlg<FNCExecuteNode>,
-        PatternAlg<FNCExecuteNode>,
-        ExceptionAlg<FNCExecuteNode>,
-        NullAlg<FNCExecuteNode>,
-        BindingAlg<FNCExecuteNode>,
-        TypeAlg<FNCExecuteNode> {
+        BoolAlg<FNCBuildAST>,
+        FunctionAlg<FNCBuildAST>,
+        PatternAlg<FNCBuildAST>,
+        ExceptionAlg<FNCBuildAST>,
+        NullAlg<FNCBuildAST>,
+        BindingAlg<FNCBuildAST>,
+        TypeAlg<FNCBuildAST> {
 
 
     @Override
-    default FNCExecuteNode type(java.lang.String name) {
+    default FNCBuildAST type(java.lang.String name) {
         return new Type(name);
 
     }
 
     @Override
-    default FNCExecuteNode unknownType() {
+    default FNCBuildAST unknownType() {
         return new UnknownType();
     }
 
     @Override
-    default FNCExecuteNode tag(java.lang.String name) {
+    default FNCBuildAST tag(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
         return l -> new TypeTagNode(name);
     }
 
     @Override
-    default FNCExecuteNode typeVar(java.lang.String name) {
+    default FNCBuildAST typeVar(java.lang.String name) {
         return new TypeVar(name);
     }
 
     @Override
-    default FNCExecuteNode clVariant(java.lang.String tagName, FNCExecuteNode exp) {
+    default FNCBuildAST clVariant(java.lang.String tagName, FNCBuildAST exp) {
 //        return (env, given) -> new CLVariant(vf.string(tagName), exp.eval(env, given));
         return l -> new TypeClVariantNode(tagName, exp.buildAST(l));
     }
 
     @Override
-    default FNCExecuteNode meta(java.lang.String name) {
-        return l -> new FNCExpressionNode() {
-            @Override
-            public Object executeGeneric(VirtualFrame frame) {
-                final IValueFactory vf = ValueFactory.getInstance();
-                return vf.string(name);
-            }
-        };
+    default FNCBuildAST meta(java.lang.String name) {
+        return l -> new TypeMetaNode(name);
     }
 
     @Override
-    default FNCExecuteNode nomVal(FNCExecuteNode nomTag, FNCExecuteNode val) {
+    default FNCBuildAST nomVal(FNCBuildAST nomTag, FNCBuildAST val) {
         return l -> {
             final FNCExpressionNode nte = nomTag.buildAST(l);
             final FNCExpressionNode ve = val.buildAST(l);
 
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    final IValueFactory vf = ValueFactory.getInstance();
-                    return vf.tuple((IValue) nte.executeGeneric(frame), (IValue) ve.executeGeneric(frame));
-                }
-            };
+            return new TypeNomValNode(nte, ve);
         };
     }
 
     @Override
-    default FNCExecuteNode nomTag(FNCExecuteNode token) {
+    default FNCBuildAST nomTag(FNCBuildAST token) {
         return token;
     }
 
     @Override
-    default FNCExecuteNode nomValSelect(FNCExecuteNode nomTag, FNCExecuteNode nomVal) {
+    default FNCBuildAST nomValSelect(FNCBuildAST nomTag, FNCBuildAST nomVal) {
 //        return (env, given) -> {
 //            ITuple nVal = (ITuple) nomVal.eval(env, given);
 //            return whenTrue(equal(nomTag, (e, g) -> nVal.get(0)), (e, g) -> nVal.get(1)).eval(env, given);
@@ -106,49 +95,40 @@ public interface TruffleTypeFactory extends
     }
 
     @Override
-    default FNCExecuteNode scopeNominalCoercion(FNCExecuteNode type1, FNCExecuteNode type2, FNCExecuteNode abs) {
+    default FNCBuildAST scopeNominalCoercion(FNCBuildAST type1, FNCBuildAST type2, FNCBuildAST abs) {
         return apply(abs, nomTag(freshToken()));
     }
 
     @Override
-    default FNCExecuteNode depends(FNCExecuteNode type1, FNCExecuteNode type2) {
+    default FNCBuildAST depends(FNCBuildAST type1, FNCBuildAST type2) {
 //        return (env, given) ->
 //                vf.tuple(
 //                        type1.eval(env, given),
 //                        type2.eval(env, given));
 //        throw new RuntimeException("Not implemented");
         return l -> {
-            final FNCExpressionNode t1e = type1.buildAST(l);
-            final FNCExpressionNode t2e = type2.buildAST(l);
-            return new FNCExpressionNode() {
-
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    final IValueFactory vf = ValueFactory.getInstance();
-                    return vf.tuple((IValue) t1e.executeGeneric(frame), (IValue) t2e.executeGeneric(frame));
-                }
-            };
+            return new TypeDependsNode(type1.buildAST(l), type2.buildAST(l));
         };
     }
 
     @Override
-    default FNCExecuteNode typed(FNCExecuteNode exp, FNCExecuteNode type) {
+    default FNCBuildAST typed(FNCBuildAST exp, FNCBuildAST type) {
         return exp;
     }
 
     @Override
-    default FNCExecuteNode boundType(FNCExecuteNode id) {
+    default FNCBuildAST boundType(FNCBuildAST id) {
         return null_(); // TODO evaluated statically?
     }
 
     @Override
-    default FNCExecuteNode freshToken() {
+    default FNCBuildAST freshToken() {
 //        return (env, given) -> new Token();
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default FNCExecuteNode newType(FNCExecuteNode name) {
+    default FNCBuildAST newType(FNCBuildAST name) {
 //        return (env, given) ->
 //                vf.tuple(
 //                        name.eval(env, given),
@@ -157,22 +137,22 @@ public interface TruffleTypeFactory extends
     }
 
     @Override
-    default FNCExecuteNode typeDef(FNCExecuteNode id, FNCExecuteNode type) {
+    default FNCBuildAST typeDef(FNCBuildAST id, FNCBuildAST type) {
         return environment();
     }
 
     @Override
-    default FNCExecuteNode restrictDomain(FNCExecuteNode abs, FNCExecuteNode type) {
+    default FNCBuildAST restrictDomain(FNCBuildAST abs, FNCBuildAST type) {
         return abs;
     }
 
     @Override
-    default FNCExecuteNode pattAtType(FNCExecuteNode patt, FNCExecuteNode type) {
+    default FNCBuildAST pattAtType(FNCBuildAST patt, FNCBuildAST type) {
         return restrictDomain(patt, type);
     }
 
     @Override
-    default FNCExecuteNode variantMatch(FNCExecuteNode tag, FNCExecuteNode variant, FNCExecuteNode patt) {
+    default FNCBuildAST variantMatch(FNCBuildAST tag, FNCBuildAST variant, FNCBuildAST patt) {
 //        return (env, given) -> {
 //            IValue v = variant.eval(env, given);
 //            if (v instanceof CLVariant) {
@@ -185,7 +165,7 @@ public interface TruffleTypeFactory extends
             FNCExpressionNode z = fail().buildAST(l);
             FNCExpressionNode ve = variant.buildAST(l);
 
-            final VariantMatch variantMatch = new VariantMatch(ve, z);
+            final TypeVariantMatchNode variantMatch = new TypeVariantMatchNode(ve, z);
 
 
             FNCExpressionNode alte = whenTrue(equal(tag, (lo) -> variantMatch.buildA()), match(lo -> variantMatch.buildB(), patt)).buildAST(l);
@@ -196,14 +176,14 @@ public interface TruffleTypeFactory extends
         };
     }
 
-    class UnknownType implements FNCExecuteNode {
+    class UnknownType implements FNCBuildAST {
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new TypeUnknowTypeNode();
         }
     }
 
-    class TypeVar implements FNCExecuteNode {
+    class TypeVar implements FNCBuildAST {
         private final String name;
 
         public TypeVar(String name) {
@@ -218,7 +198,7 @@ public interface TruffleTypeFactory extends
 
     }
 
-    class Type implements FNCExecuteNode {
+    class Type implements FNCBuildAST {
         private final String name;
 
         public Type(String name) {
@@ -231,11 +211,15 @@ public interface TruffleTypeFactory extends
         }
     }
 
+    @NodeInfo(description = "Type NomValSelect Node")
     class TypeNomValSelectNode extends FNCExpressionNode {
-        private final FNCExpressionNode nve;
+
+        @Child
+        private FNCExpressionNode nve;
+        @Child
+        private FNCExpressionNode subnode;
         private ITuple nVal;
 
-        private FNCExpressionNode subnode;
 
         public TypeNomValSelectNode(FNCExpressionNode nve) {
             this.nve = nve;
@@ -248,31 +232,45 @@ public interface TruffleTypeFactory extends
         }
 
         public FNCExpressionNode buildA() {
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return nVal.get(0);
-                }
-            };
+            return new TypeNomValSelectSubnode1();
         }
 
         public FNCExpressionNode buildB() {
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return nVal.get(1);
-                }
-            };
+            return new TypeNomValSelectSubnode2();
+        }
+
+        @NodeInfo(description = "TypeNomValSelectSubnode1")
+        private class TypeNomValSelectSubnode1 extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return nVal.get(0);
+            }
+        }
+
+        @NodeInfo(description = "TypeNomValSelectSubnode2")
+        private class TypeNomValSelectSubnode2 extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return nVal.get(1);
+            }
         }
     }
 
-    class VariantMatch extends FNCExpressionNode {
-        private final FNCExpressionNode ve;
+    @NodeInfo(description = "Type VariantMatch Node")
+    class TypeVariantMatchNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode ve;
+
+        @Child
         private FNCExpressionNode alte;
-        private final FNCExpressionNode z;
+
+        @Child
+        private FNCExpressionNode z;
+
         private CLVariant vVar;
 
-        public VariantMatch(FNCExpressionNode ve, FNCExpressionNode z) {
+        public TypeVariantMatchNode(FNCExpressionNode ve, FNCExpressionNode z) {
             this.ve = ve;
             this.z = z;
         }
@@ -288,21 +286,84 @@ public interface TruffleTypeFactory extends
         }
 
         public FNCExpressionNode buildA() {
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return vVar.tag();
-                }
-            };
+            return new TypeVariantMatchSubnode1();
         }
 
         public FNCExpressionNode buildB() {
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return vVar.value();
-                }
-            };
+            return new TypeVariantMatchSubnode2();
+        }
+
+        @NodeInfo(description = "TypeVariantMatchSubnode1")
+        private class TypeVariantMatchSubnode1 extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return vVar.tag();
+            }
+        }
+
+        @NodeInfo(description = "TypeVariantMatchSubnode2")
+        private class TypeVariantMatchSubnode2 extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return vVar.value();
+            }
+        }
+    }
+
+    @NodeInfo(description = "Type Meta Node")
+    class TypeMetaNode extends FNCExpressionNode {
+        private final String name;
+
+        public TypeMetaNode(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            final IValueFactory vf = ValueFactory.getInstance();
+            return vf.string(name);
+        }
+    }
+
+    @NodeInfo(description = "Type NomVal Node")
+    class TypeNomValNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode nte;
+
+        @Child
+        private FNCExpressionNode ve;
+
+        public TypeNomValNode(FNCExpressionNode nte, FNCExpressionNode ve) {
+            this.nte = nte;
+            this.ve = ve;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            final IValueFactory vf = ValueFactory.getInstance();
+            return vf.tuple((IValue) nte.executeGeneric(frame), (IValue) ve.executeGeneric(frame));
+        }
+    }
+
+    @NodeInfo(description = "Type Depends Node")
+    class TypeDependsNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode t1e;
+
+        @Child
+        private FNCExpressionNode t2e;
+
+        public TypeDependsNode(FNCExpressionNode t1e, FNCExpressionNode t2e) {
+            this.t1e = t1e;
+            this.t2e = t2e;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            final IValueFactory vf = ValueFactory.getInstance();
+            return vf.tuple((IValue) t1e.executeGeneric(frame), (IValue) t2e.executeGeneric(frame));
         }
     }
 }

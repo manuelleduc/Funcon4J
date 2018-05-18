@@ -1,7 +1,6 @@
 package camllight.algebras.exprs;
 
 import funcons.algebras.entities.AssignAlg;
-import funcons.algebras.functions.*;
 import noa.syntax.Level;
 import noa.syntax.Syntax;
 

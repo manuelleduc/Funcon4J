@@ -15,29 +15,32 @@ import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.truffle.functions.FNCUndefinedNameException;
 import funcons.truffle.functions.FunctionAbsNode;
-import funcons.truffle.nodes.*;
+import funcons.truffle.nodes.FNCBuildAST;
+import funcons.truffle.nodes.FNCExpressionNode;
+import funcons.truffle.nodes.FNCFunction;
+import funcons.truffle.nodes.FNCLanguage;
 import funcons.values.Abs;
 import funcons.values.recursion.Fwd;
 import io.usethesource.vallang.IInteger;
 import io.usethesource.vallang.IValue;
 
 public interface TruffleRecursiveFactory extends
-        NullAlg<FNCExecuteNode>,
-        LogicControlAlg<FNCExecuteNode>,
-        BindingAlg<FNCExecuteNode>,
-        MapAlg<FNCExecuteNode>,
-        ListAlg<FNCExecuteNode>,
-        IntAlg<FNCExecuteNode>,
-        RecursiveAlg<FNCExecuteNode> {
+        NullAlg<FNCBuildAST>,
+        LogicControlAlg<FNCBuildAST>,
+        BindingAlg<FNCBuildAST>,
+        MapAlg<FNCBuildAST>,
+        ListAlg<FNCBuildAST>,
+        IntAlg<FNCBuildAST>,
+        RecursiveAlg<FNCBuildAST> {
 
     @Override
-    default FNCExecuteNode freshFwd() {
+    default FNCBuildAST freshFwd() {
 //        return (env, given) -> new Fwd();
         return new FreshFwd();
     }
 
     @Override
-    default FNCExecuteNode freshFwds(FNCExecuteNode idList) {
+    default FNCBuildAST freshFwds(FNCBuildAST idList) {
         /*return (env, given) -> {
             IEval envEval = environment();
             IValue idListVal = idList.eval(env, given);
@@ -80,10 +83,10 @@ public interface TruffleRecursiveFactory extends
         private FNCExpressionNode idListe;
 
         @Child
-        private FNCExpressionNode idExec; // projectList(lit(i), (e,g)->idListVal).eval(env, given)
+        private FNCExpressionNode idExec;
 
         @Child
-        private FNCExpressionNode fwdExec; //freshFwd().eval(env, given)
+        private FNCExpressionNode fwdExec;
 
         @Child
         private FNCExpressionNode envEvalN;
@@ -125,43 +128,45 @@ public interface TruffleRecursiveFactory extends
 
         public FNCExpressionNode buildL() {
 
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return isListVal;
-                }
-            };
+            return new FreshFwdSubnode1();
+        }
+
+        private class FreshFwdSubnode1 extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return isListVal;
+            }
         }
     }
 
     @Override
-    default FNCExecuteNode setForwards(FNCExecuteNode idFwdMap) {
+    default FNCBuildAST setForwards(FNCBuildAST idFwdMap) {
         return new SetForwards(idFwdMap);
     }
 
     @Override
-    default FNCExecuteNode reclose(FNCExecuteNode map, FNCExecuteNode decl) {
+    default FNCBuildAST reclose(FNCBuildAST map, FNCBuildAST decl) {
         return new Reclose(map, decl, this);
     }
 
     @Override
-    default FNCExecuteNode recursive(FNCExecuteNode idList, FNCExecuteNode decl) {
+    default FNCBuildAST recursive(FNCBuildAST idList, FNCBuildAST decl) {
         return reclose(freshFwds(idList), decl);
     }
 
     @Override
-    default FNCExecuteNode recursiveTyped(FNCExecuteNode idTypeMap, FNCExecuteNode decl) {
+    default FNCBuildAST recursiveTyped(FNCBuildAST idTypeMap, FNCBuildAST decl) {
         return recursive(mapDomain(idTypeMap), decl);
     }
 
     @Override
-    default FNCExecuteNode followFwd(FNCExecuteNode fwd) {
+    default FNCBuildAST followFwd(FNCBuildAST fwd) {
 //        return (env, given) -> ((Fwd)fwd.eval(env, given)).follow();
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default FNCExecuteNode followIfFwd(FNCExecuteNode fwd) {
+    default FNCBuildAST followIfFwd(FNCBuildAST fwd) {
 //        return (env, given) -> {
 //            IValue v = fwd.eval(env, given);
 //            if (v instanceof Fwd) {
@@ -172,61 +177,21 @@ public interface TruffleRecursiveFactory extends
 //        return new FollowIfFwd(fwd);
         return language -> {
             final FNCExpressionNode fwde = fwd.buildAST(language);
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    final Object v = fwde.executeGeneric(frame);
-                    if (v instanceof Fwd) {
-                        return ((Fwd) v).follow();
-                    } else if (v instanceof FNCFunction) {
-                        try {
-                            final RootCallTarget callTarget = ((FNCFunction) v).getCallTarget();
-
-                            final VirtualFrame virtualFrame = Truffle.getRuntime().createVirtualFrame(
-                                    frame.getArguments(), frame.getFrameDescriptor());
-
-                            try {
-                                for (FrameSlot s : frame.getFrameDescriptor().getSlots()) {
-                                    final Object val = frame.getObject(s);
-                                    final FrameSlot s2 = virtualFrame.getFrameDescriptor().findOrAddFrameSlot(s.getIdentifier());
-                                    virtualFrame.setObject(s2, val);
-                                }
-                            } catch (FrameSlotTypeException e) {
-                                e.printStackTrace();
-                            }
-
-
-                            final Object execute = callTarget.getRootNode().execute(virtualFrame);
-                            if (execute instanceof Abs) {
-                                return ((Abs) execute).body();
-                            }
-                            return execute;
-                        } catch (FNCUndefinedNameException e) {
-                            return null;
-                        }
-                    } else if(v instanceof FunctionAbsNode) {
-                        // FIXME: hack
-                        return ((FunctionAbsNode) v).executeGeneric(frame);
-                    } else if (v instanceof Abs) {
-                        return ((Abs)v).body();
-                    }
-                    return v;
-                }
-            };
+            return new RecursiveFollowIfFwdNode(fwde);
         };
     }
 
-    class FreshFwd implements FNCExecuteNode {
+    class FreshFwd implements FNCBuildAST {
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new RecursiveFwdNode();
         }
     }
 
-    class FreshFwds implements FNCExecuteNode {
-        private final FNCExecuteNode idList;
+    class FreshFwds implements FNCBuildAST {
+        private final FNCBuildAST idList;
 
-        public FreshFwds(FNCExecuteNode idList) {
+        public FreshFwds(FNCBuildAST idList) {
             this.idList = idList;
         }
 
@@ -236,10 +201,10 @@ public interface TruffleRecursiveFactory extends
         }
     }
 
-    class SetForwards implements FNCExecuteNode {
-        private final FNCExecuteNode idFwdMap;
+    class SetForwards implements FNCBuildAST {
+        private final FNCBuildAST idFwdMap;
 
-        public SetForwards(FNCExecuteNode idFwdMap) {
+        public SetForwards(FNCBuildAST idFwdMap) {
             this.idFwdMap = idFwdMap;
         }
 
@@ -249,13 +214,13 @@ public interface TruffleRecursiveFactory extends
         }
     }
 
-    class Reclose implements FNCExecuteNode {
-        private final FNCExecuteNode map;
-        private final FNCExecuteNode decl;
+    class Reclose implements FNCBuildAST {
+        private final FNCBuildAST map;
+        private final FNCBuildAST decl;
         private final TruffleRecursiveFactory alg;
 
 
-        public Reclose(FNCExecuteNode map, FNCExecuteNode decl, TruffleRecursiveFactory alg) {
+        public Reclose(FNCBuildAST map, FNCBuildAST decl, TruffleRecursiveFactory alg) {
             this.map = map;
             this.decl = decl;
             this.alg = alg;
@@ -268,4 +233,54 @@ public interface TruffleRecursiveFactory extends
     }
 
 
+    @NodeInfo(description = "Recursive FollowIfFwd Node")
+    class RecursiveFollowIfFwdNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode fwde;
+
+        public RecursiveFollowIfFwdNode(FNCExpressionNode fwde) {
+            this.fwde = fwde;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            final Object v = fwde.executeGeneric(frame);
+            if (v instanceof Fwd) {
+                return ((Fwd) v).follow();
+            } else if (v instanceof FNCFunction) {
+                try {
+                    final RootCallTarget callTarget = ((FNCFunction) v).getCallTarget();
+
+                    final VirtualFrame virtualFrame = Truffle.getRuntime().createVirtualFrame(
+                            frame.getArguments(), frame.getFrameDescriptor());
+
+                    try {
+                        for (FrameSlot s : frame.getFrameDescriptor().getSlots()) {
+                            final Object val = frame.getObject(s);
+                            final FrameSlot s2 = virtualFrame.getFrameDescriptor().findOrAddFrameSlot(s.getIdentifier());
+                            virtualFrame.setObject(s2, val);
+                        }
+                    } catch (FrameSlotTypeException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    final Object execute = callTarget.getRootNode().execute(virtualFrame);
+                    if (execute instanceof Abs) {
+                        return ((Abs) execute).body();
+                    }
+                    return execute;
+                } catch (FNCUndefinedNameException e) {
+                    return null;
+                }
+            } else if (v instanceof FunctionAbsNode) {
+                // FIXME: hack
+                return ((FunctionAbsNode) v).executeGeneric(frame);
+            } else if (v instanceof Abs) {
+                return ((Abs) v).body();
+            }
+            return v;
+        }
+    }
 }

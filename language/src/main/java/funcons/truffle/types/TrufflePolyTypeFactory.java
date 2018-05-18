@@ -1,37 +1,37 @@
 package funcons.truffle.types;
 
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.algebras.types.PolyTypeAlg;
 
-public interface TrufflePolyTypeFactory extends PolyTypeAlg<FNCExecuteNode> {
+public interface TrufflePolyTypeFactory extends PolyTypeAlg<FNCBuildAST> {
 
     @Override
-    default FNCExecuteNode instantiatePoly(FNCExecuteNode x) {
+    default FNCBuildAST instantiatePoly(FNCBuildAST x) {
         return x;
     }
 
     @Override
-    default FNCExecuteNode instantiateIfPoly(FNCExecuteNode x) {
+    default FNCBuildAST instantiateIfPoly(FNCBuildAST x) {
         return x;
     }
 
     @Override
-    default FNCExecuteNode generalise(FNCExecuteNode x) {
+    default FNCBuildAST generalise(FNCBuildAST x) {
         return x;
     }
 
     @Override
-    default FNCExecuteNode generaliseIfPoly(FNCExecuteNode x) {
+    default FNCBuildAST generaliseIfPoly(FNCBuildAST x) {
         return x;
     }
 
     @Override
-    default FNCExecuteNode generaliseDecl(FNCExecuteNode x) {
+    default FNCBuildAST generaliseDecl(FNCBuildAST x) {
         return x;
     }
 
     @Override
-    default FNCExecuteNode generaliseMap(FNCExecuteNode x) {
+    default FNCBuildAST generaliseMap(FNCBuildAST x) {
         return x;
     }
 }

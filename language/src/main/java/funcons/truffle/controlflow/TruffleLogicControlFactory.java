@@ -1,59 +1,56 @@
 package funcons.truffle.controlflow;
 
-import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IBool;
 
 public interface TruffleLogicControlFactory extends
-        NullAlg<FNCExecuteNode>,
-        FunctionAlg<FNCExecuteNode>,
-        BindingAlg<FNCExecuteNode>,
-        MapAlg<FNCExecuteNode>,
-        BoolAlg<FNCExecuteNode>,
-        LogicControlAlg<FNCExecuteNode> {
+        NullAlg<FNCBuildAST>,
+        FunctionAlg<FNCBuildAST>,
+        BindingAlg<FNCBuildAST>,
+        MapAlg<FNCBuildAST>,
+        BoolAlg<FNCBuildAST>,
+        LogicControlAlg<FNCBuildAST> {
 
     @Override
-    default FNCExecuteNode effect(FNCExecuteNode e) {
+    default FNCBuildAST effect(FNCBuildAST e) {
         return l -> new LogicControlEffectNode(e.buildAST(l), null_().buildAST(l));
     }
 
     @Override
-    default FNCExecuteNode seq(FNCExecuteNode c, FNCExecuteNode t) {
+    default FNCBuildAST seq(FNCBuildAST c, FNCBuildAST t) {
         return new Seq(c, t);
     }
 
     @Override
-    default FNCExecuteNode ifTrue(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
+    default FNCBuildAST ifTrue(FNCBuildAST e, FNCBuildAST c1, FNCBuildAST c2) {
         return new IfTrue(e, c1, c2);
     }
 
     @Override
-    default FNCExecuteNode whileTrue(FNCExecuteNode e, FNCExecuteNode c) {
+    default FNCBuildAST whileTrue(FNCBuildAST e, FNCBuildAST c) {
         return new WhileTrue(e, c);
     }
 
     @Override
-    default FNCExecuteNode for_(FNCExecuteNode condl, FNCExecuteNode incrl, FNCExecuteNode expl) {
+    default FNCBuildAST for_(FNCBuildAST condl, FNCBuildAST incrl, FNCBuildAST expl) {
 
         return new For_(z -> null_().buildAST(z), condl, incrl, expl);
     }
 
-    class IfTrue implements FNCExecuteNode {
-        private final FNCExecuteNode e;
-        private final FNCExecuteNode c1;
-        private final FNCExecuteNode c2;
+    class IfTrue implements FNCBuildAST {
+        private final FNCBuildAST e;
+        private final FNCBuildAST c1;
+        private final FNCBuildAST c2;
 
-        public IfTrue(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
+        public IfTrue(FNCBuildAST e, FNCBuildAST c1, FNCBuildAST c2) {
             this.e = e;
             this.c1 = c1;
             this.c2 = c2;
@@ -68,11 +65,11 @@ public interface TruffleLogicControlFactory extends
         }
     }
 
-    class Seq implements FNCExecuteNode {
-        private final FNCExecuteNode c;
-        private final FNCExecuteNode t;
+    class Seq implements FNCBuildAST {
+        private final FNCBuildAST c;
+        private final FNCBuildAST t;
 
-        public Seq(FNCExecuteNode c, FNCExecuteNode t) {
+        public Seq(FNCBuildAST c, FNCBuildAST t) {
             this.c = c;
             this.t = t;
         }
@@ -83,11 +80,11 @@ public interface TruffleLogicControlFactory extends
         }
     }
 
-    class WhileTrue implements FNCExecuteNode {
-        private final FNCExecuteNode e;
-        private final FNCExecuteNode c;
+    class WhileTrue implements FNCBuildAST {
+        private final FNCBuildAST e;
+        private final FNCBuildAST c;
 
-        public WhileTrue(FNCExecuteNode e, FNCExecuteNode c) {
+        public WhileTrue(FNCBuildAST e, FNCBuildAST c) {
             this.e = e;
             this.c = c;
         }
@@ -98,13 +95,13 @@ public interface TruffleLogicControlFactory extends
         }
     }
 
-    class For_ implements FNCExecuteNode {
-        private final FNCExecuteNode a;
-        private final FNCExecuteNode condl;
-        private final FNCExecuteNode incrl;
-        private final FNCExecuteNode expl;
+    class For_ implements FNCBuildAST {
+        private final FNCBuildAST a;
+        private final FNCBuildAST condl;
+        private final FNCBuildAST incrl;
+        private final FNCBuildAST expl;
 
-        public For_(FNCExecuteNode a, FNCExecuteNode condl, FNCExecuteNode incrl, FNCExecuteNode expl) {
+        public For_(FNCBuildAST a, FNCBuildAST condl, FNCBuildAST incrl, FNCBuildAST expl) {
             this.a = a;
             this.condl = condl;
             this.incrl = incrl;

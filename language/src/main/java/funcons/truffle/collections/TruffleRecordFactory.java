@@ -6,7 +6,7 @@ import funcons.algebras.collections.RecordAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.values.IntAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.values.signals.RunTimeFunconException;
@@ -14,18 +14,18 @@ import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleRecordFactory extends
-        PatternAlg<FNCExecuteNode>,
-        BindingAlg<FNCExecuteNode>,
-        MapAlg<FNCExecuteNode>,
-        ListAlg<FNCExecuteNode>,
-        IntAlg<FNCExecuteNode>,
-        RecordAlg<FNCExecuteNode> {
+        PatternAlg<FNCBuildAST>,
+        BindingAlg<FNCBuildAST>,
+        MapAlg<FNCBuildAST>,
+        ListAlg<FNCBuildAST>,
+        IntAlg<FNCBuildAST>,
+        RecordAlg<FNCBuildAST> {
 
 
     IValueFactory vf = ValueFactory.getInstance();
 
     @Override
-    default FNCExecuteNode record(FNCExecuteNode field, FNCExecuteNode val) {
+    default FNCBuildAST record(FNCBuildAST field, FNCBuildAST val) {
 //        return (env, given) -> {
 //            IMapWriter mw = vf.mapWriter();
 //            mw.put(field.eval(env, given),
@@ -36,12 +36,12 @@ public interface TruffleRecordFactory extends
     }
 
     @Override
-    default FNCExecuteNode field(java.lang.String name) {
+    default FNCBuildAST field(java.lang.String name) {
         return new Field(name);
     }
 
     @Override
-    default FNCExecuteNode recordSelect(FNCExecuteNode record, FNCExecuteNode field) {
+    default FNCBuildAST recordSelect(FNCBuildAST record, FNCBuildAST field) {
 //        return (env, given) ->
 //                ((IMap) record.eval(env, given))
 //                        .get(field.eval(env, given));
@@ -49,19 +49,19 @@ public interface TruffleRecordFactory extends
     }
 
     @Override
-    default FNCExecuteNode recordOver(FNCExecuteNode rec1, FNCExecuteNode rec2) {
+    default FNCBuildAST recordOver(FNCBuildAST rec1, FNCBuildAST rec2) {
 //        return recordUnion(rec2, rec1);
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default FNCExecuteNode recordUnion(FNCExecuteNode rec1, FNCExecuteNode rec2) {
+    default FNCBuildAST recordUnion(FNCBuildAST rec1, FNCBuildAST rec2) {
 
         return new RecordUnion(rec1, rec2);
     }
 
     @Override
-    default FNCExecuteNode recordMatch(FNCExecuteNode rec, FNCExecuteNode pattMap) {
+    default FNCBuildAST recordMatch(FNCBuildAST rec, FNCBuildAST pattMap) {
 //        return (env, given) -> {
 //            IMap recVal = (IMap) rec.eval(env, given);
 //            IValue pattMapVal = pattMap.eval(env, given);
@@ -91,13 +91,13 @@ public interface TruffleRecordFactory extends
         };
     }
 
-    class RecordMatch implements FNCExecuteNode {
+    class RecordMatch implements FNCBuildAST {
 
 
-        private final FNCExecuteNode rec;
-        private final FNCExecuteNode pattMap;
+        private final FNCBuildAST rec;
+        private final FNCBuildAST pattMap;
 
-        public RecordMatch(FNCExecuteNode rec, FNCExecuteNode pattMap) {
+        public RecordMatch(FNCBuildAST rec, FNCBuildAST pattMap) {
             this.rec = rec;
             this.pattMap = pattMap;
         }
@@ -108,7 +108,7 @@ public interface TruffleRecordFactory extends
         }
     }
 
-    class Field implements FNCExecuteNode {
+    class Field implements FNCBuildAST {
         private final String name;
 
         public Field(String name) {
@@ -121,11 +121,11 @@ public interface TruffleRecordFactory extends
         }
     }
 
-    class Record implements FNCExecuteNode {
-        private final FNCExecuteNode field;
-        private final FNCExecuteNode val;
+    class Record implements FNCBuildAST {
+        private final FNCBuildAST field;
+        private final FNCBuildAST val;
 
-        public Record(FNCExecuteNode field, FNCExecuteNode val) {
+        public Record(FNCBuildAST field, FNCBuildAST val) {
             this.field = field;
             this.val = val;
         }
@@ -136,11 +136,11 @@ public interface TruffleRecordFactory extends
         }
     }
 
-    class RecordUnion implements FNCExecuteNode {
-        private final FNCExecuteNode rec1;
-        private final FNCExecuteNode rec2;
+    class RecordUnion implements FNCBuildAST {
+        private final FNCBuildAST rec1;
+        private final FNCBuildAST rec2;
 
-        public RecordUnion(FNCExecuteNode rec1, FNCExecuteNode rec2) {
+        public RecordUnion(FNCBuildAST rec1, FNCBuildAST rec2) {
             this.rec1 = rec1;
             this.rec2 = rec2;
         }

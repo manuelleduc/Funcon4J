@@ -1,26 +1,24 @@
 package funcons.truffle.entities;
 
-import com.oracle.truffle.api.frame.FrameDescriptor;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleBindingFactory extends
-        MapAlg<FNCExecuteNode>,
-        BindingAlg<FNCExecuteNode> {
+        MapAlg<FNCBuildAST>,
+        BindingAlg<FNCBuildAST> {
 
 
     @Override
-    default FNCExecuteNode id(java.lang.String s) {
+    default FNCBuildAST id(java.lang.String s) {
         return new Id(s);
     }
 
     @Override
-    default FNCExecuteNode nameId(java.lang.String namespace, java.lang.String id) {
+    default FNCBuildAST nameId(java.lang.String namespace, java.lang.String id) {
         throw new RuntimeException("Not implemented");
     }
 
@@ -32,12 +30,12 @@ public interface TruffleBindingFactory extends
      * @return
      */
     @Override
-    default FNCExecuteNode bindValue(FNCExecuteNode id, FNCExecuteNode exp) {
+    default FNCBuildAST bindValue(FNCBuildAST id, FNCBuildAST exp) {
         return new BindValue(id, exp);
     }
 
     @Override
-    default FNCExecuteNode boundValue(FNCExecuteNode id) {
+    default FNCBuildAST boundValue(FNCBuildAST id) {
         return new BoundValue(id);
     }
 
@@ -53,38 +51,38 @@ public interface TruffleBindingFactory extends
      * @return
      */
     @Override
-    default FNCExecuteNode scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
+    default FNCBuildAST scope(FNCBuildAST localBindings, FNCBuildAST exp) {
         return new Scope(localBindings, exp);
     }
 
     @Override
-    default FNCExecuteNode closure(FNCExecuteNode x, FNCExecuteNode environment) {
+    default FNCBuildAST closure(FNCBuildAST x, FNCBuildAST environment) {
         return new Closure(x, environment);
     }
 
     @Override
-    default FNCExecuteNode environment() {
+    default FNCBuildAST environment() {
         return new Environment();
     }
 
     @Override
-    default FNCExecuteNode accum(FNCExecuteNode environment, FNCExecuteNode decl) {
+    default FNCBuildAST accum(FNCBuildAST environment, FNCBuildAST decl) {
         return new Accum(environment, decl, this);
     }
 
 
-    class Environment implements FNCExecuteNode {
+    class Environment implements FNCBuildAST {
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BindingEnvironmentNode();
         }
     }
 
-    class Closure implements FNCExecuteNode {
-        private final FNCExecuteNode x;
-        private final FNCExecuteNode environment;
+    class Closure implements FNCBuildAST {
+        private final FNCBuildAST x;
+        private final FNCBuildAST environment;
 
-        public Closure(FNCExecuteNode x, FNCExecuteNode environment) {
+        public Closure(FNCBuildAST x, FNCBuildAST environment) {
             this.x = x;
             this.environment = environment;
         }
@@ -95,11 +93,11 @@ public interface TruffleBindingFactory extends
         }
     }
 
-    class Scope implements FNCExecuteNode {
-        private final FNCExecuteNode localBindings;
-        private final FNCExecuteNode exp;
+    class Scope implements FNCBuildAST {
+        private final FNCBuildAST localBindings;
+        private final FNCBuildAST exp;
 
-        public Scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
+        public Scope(FNCBuildAST localBindings, FNCBuildAST exp) {
             this.localBindings = localBindings;
             this.exp = exp;
         }
@@ -110,10 +108,10 @@ public interface TruffleBindingFactory extends
         }
     }
 
-    class BoundValue implements FNCExecuteNode {
-        private final FNCExecuteNode id;
+    class BoundValue implements FNCBuildAST {
+        private final FNCBuildAST id;
 
-        public BoundValue(FNCExecuteNode id) {
+        public BoundValue(FNCBuildAST id) {
             this.id = id;
         }
 
@@ -123,11 +121,11 @@ public interface TruffleBindingFactory extends
         }
     }
 
-    class BindValue implements FNCExecuteNode {
-        private final FNCExecuteNode id;
-        private final FNCExecuteNode exp;
+    class BindValue implements FNCBuildAST {
+        private final FNCBuildAST id;
+        private final FNCBuildAST exp;
 
-        public BindValue(FNCExecuteNode id, FNCExecuteNode exp) {
+        public BindValue(FNCBuildAST id, FNCBuildAST exp) {
             this.id = id;
             this.exp = exp;
         }
@@ -139,7 +137,7 @@ public interface TruffleBindingFactory extends
         }
     }
 
-    class Id implements FNCExecuteNode {
+    class Id implements FNCBuildAST {
         private final String s;
 
         public Id(String s) {
@@ -152,12 +150,12 @@ public interface TruffleBindingFactory extends
         }
     }
 
-    class Accum implements FNCExecuteNode {
-        private final FNCExecuteNode environment;
-        private final FNCExecuteNode decl;
+    class Accum implements FNCBuildAST {
+        private final FNCBuildAST environment;
+        private final FNCBuildAST decl;
         private final TruffleBindingFactory alg;
 
-        public Accum(FNCExecuteNode environment, FNCExecuteNode decl, TruffleBindingFactory alg) {
+        public Accum(FNCBuildAST environment, FNCBuildAST decl, TruffleBindingFactory alg) {
             this.environment = environment;
             this.decl = decl;
             this.alg = alg;
@@ -166,7 +164,7 @@ public interface TruffleBindingFactory extends
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             final FNCExpressionNode currentEnv = environment.buildAST(l);
-            final FNCExecuteNode scope = alg.scope((n) -> currentEnv, alg.mapOver(decl, (m) -> currentEnv));
+            final FNCBuildAST scope = alg.scope((n) -> currentEnv, alg.mapOver(decl, (m) -> currentEnv));
             return scope.buildAST(l);
         }
     }

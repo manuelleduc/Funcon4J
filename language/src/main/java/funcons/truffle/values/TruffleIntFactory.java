@@ -1,32 +1,31 @@
 package funcons.truffle.values;
 
 import funcons.algebras.values.IntAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
-public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
+public interface TruffleIntFactory extends IntAlg<FNCBuildAST> {
 
 
     @Override
-    default FNCExecuteNode lit(Integer i) {
+    default FNCBuildAST lit(Integer i) {
         return new Lit(i);
     }
 
     @Override
-    default FNCExecuteNode intAdd(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST intAdd(FNCBuildAST a, FNCBuildAST b) {
         return new IntAdd(a, b);
     }
 
     @Override
-    default FNCExecuteNode intNegate(FNCExecuteNode x) {
+    default FNCBuildAST intNegate(FNCBuildAST x) {
         return new IntNegate(x);
     }
 
     @Override
-    default FNCExecuteNode intSubtract(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST intSubtract(FNCBuildAST a, FNCBuildAST b) {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .subtract(((INumber) b.eval(env, given)).toInteger());
@@ -34,7 +33,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode intMultiply(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST intMultiply(FNCBuildAST a, FNCBuildAST b) {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .multiply(((INumber) b.eval(env, given)).toInteger());
@@ -42,7 +41,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode intDivide(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST intDivide(FNCBuildAST a, FNCBuildAST b) {
 //        return (env, given) ->
 //                ((INumber) a.eval(env, given)).toInteger()
 //                        .divide(((INumber) b.eval(env, given)).toInteger());
@@ -50,7 +49,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode intModulo(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST intModulo(FNCBuildAST a, FNCBuildAST b) {
 //        return (env, given) -> {
 //            IInteger aNumber = ((INumber) a.eval(env, given)).toInteger();
 //            IInteger bNumber = ((INumber) b.eval(env, given)).toInteger();
@@ -59,11 +58,11 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         return l -> IntIntModuloNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
-    class IntAdd implements FNCExecuteNode {
-        private final FNCExecuteNode a;
-        private final FNCExecuteNode b;
+    class IntAdd implements FNCBuildAST {
+        private final FNCBuildAST a;
+        private final FNCBuildAST b;
 
-        public IntAdd(FNCExecuteNode a, FNCExecuteNode b) {
+        public IntAdd(FNCBuildAST a, FNCBuildAST b) {
             this.a = a;
             this.b = b;
         }
@@ -76,7 +75,7 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
     }
 
-    class Lit implements FNCExecuteNode {
+    class Lit implements FNCBuildAST {
         private final Integer i;
 
         public Lit(Integer i) {
@@ -89,11 +88,11 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
     }
 
-    class IntSubstract implements FNCExecuteNode {
-        private final FNCExecuteNode a;
-        private final FNCExecuteNode b;
+    class IntSubstract implements FNCBuildAST {
+        private final FNCBuildAST a;
+        private final FNCBuildAST b;
 
-        public IntSubstract(FNCExecuteNode a, FNCExecuteNode b) {
+        public IntSubstract(FNCBuildAST a, FNCBuildAST b) {
             this.a = a;
             this.b = b;
         }
@@ -104,10 +103,10 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
     }
 
-    class IntNegate implements FNCExecuteNode {
-        private final FNCExecuteNode x;
+    class IntNegate implements FNCBuildAST {
+        private final FNCBuildAST x;
 
-        public IntNegate(FNCExecuteNode x) {
+        public IntNegate(FNCBuildAST x) {
             this.x = x;
         }
 
@@ -117,11 +116,11 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
     }
 
-    class IntMultiply implements FNCExecuteNode {
-        private final FNCExecuteNode a;
-        private final FNCExecuteNode b;
+    class IntMultiply implements FNCBuildAST {
+        private final FNCBuildAST a;
+        private final FNCBuildAST b;
 
-        public IntMultiply(FNCExecuteNode a, FNCExecuteNode b) {
+        public IntMultiply(FNCBuildAST a, FNCBuildAST b) {
             this.a = a;
             this.b = b;
         }
@@ -132,11 +131,11 @@ public interface TruffleIntFactory extends IntAlg<FNCExecuteNode> {
         }
     }
 
-    class IntDivide implements FNCExecuteNode {
-        private final FNCExecuteNode a;
-        private final FNCExecuteNode b;
+    class IntDivide implements FNCBuildAST {
+        private final FNCBuildAST a;
+        private final FNCBuildAST b;
 
-        public IntDivide(FNCExecuteNode a, FNCExecuteNode b) {
+        public IntDivide(FNCBuildAST a, FNCBuildAST b) {
             this.a = a;
             this.b = b;
         }
