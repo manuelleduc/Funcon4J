@@ -63,7 +63,7 @@ public interface TruffleExceptionFactory extends
 
             final FNCExpressionNode xe = x.buildAST(l);
             final FNCExpressionNode abse = abs.buildAST(l);
-            ExceptionCatchNode catchNode = new ExceptionCatchNode(xe);
+            final ExceptionCatchNode catchNode = new ExceptionCatchNode(xe);
             final FNCExpressionNode excpt = apply(abs, z -> catchNode.buildA()).buildAST(l);
             catchNode.excpt = excpt;
             return catchNode;
@@ -102,7 +102,9 @@ public interface TruffleExceptionFactory extends
             final FNCExpressionNode a1e = a1.buildAST(l);
             final FNCExpressionNode a2e = a2.buildAST(l);
 
-            return abs(else_(language -> new ExceptionPrefereOverNode(a1e), language -> new ExceptionPreferOver2Node(a2e))).buildAST(l);
+            final FNCBuildAST fncBuildAST = language -> new ExceptionPrefereOverNode(a1e);
+            final FNCBuildAST fncBuildAST1 = language -> new ExceptionPreferOver2Node(a2e);
+            return abs(else_(fncBuildAST, fncBuildAST1)).buildAST(l);
         };
 
 //        return new PrefereOver(a1, a2, this);

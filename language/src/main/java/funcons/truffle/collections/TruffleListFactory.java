@@ -54,7 +54,9 @@ public interface TruffleListFactory extends
 //                x1.eval(env, given),
 //                x2.eval(env, given));
         return l -> {
-            return new ListList3Node(x1.buildAST(l), x2.buildAST(l));
+            final FNCExpressionNode xe1 = x1.buildAST(l);
+            final FNCExpressionNode xe2 = x2.buildAST(l);
+            return new ListList3Node(xe1, xe2);
         };
     }
 
@@ -271,7 +273,7 @@ public interface TruffleListFactory extends
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            IList listVal = ((IList) list2.executeGeneric(frame));
+            final IList listVal = ((IList) list2.executeGeneric(frame));
             if (listVal.length() <= 1) {
                 return ValueFactory.getInstance().list();
             }

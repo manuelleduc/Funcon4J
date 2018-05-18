@@ -22,6 +22,7 @@ public class PrintPrintNode extends FNCExpressionNode {
     @Child
     private FNCExpressionNode x;
 
+
     public PrintPrintNode(FNCExpressionNode x, FNCLanguage l) {
         this.x = x;
         this.l = l;
@@ -34,7 +35,7 @@ public class PrintPrintNode extends FNCExpressionNode {
         if (o instanceof Abs) {
             // FIXME: hack!
             data = String.valueOf(((Abs) o).body());
-        } else if(o instanceof Variable) {
+        } else if (o instanceof Variable) {
             data = String.valueOf(((Variable) o).value());
         } else {
             data = String.valueOf(o);

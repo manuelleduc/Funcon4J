@@ -35,7 +35,10 @@ public interface TruffleCurryFactory extends
 
     @Override
     default FNCBuildAST curry(FNCBuildAST a) {
-        return l -> abs(m -> partialApp(a, n -> new SupplyGivenGivenNode()).buildAST(l)).buildAST(l);
+        return l -> abs(m -> {
+            FNCBuildAST fncBuildAST = n -> new SupplyGivenGivenNode();
+            return partialApp(a, fncBuildAST).buildAST(l);
+        }).buildAST(l);
     }
 
     @Override

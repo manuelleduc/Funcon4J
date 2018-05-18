@@ -37,7 +37,7 @@ public abstract class BoolGreaterNode extends FNCExpressionNode {
 
     @Specialization
     public IBool greateEqual(Object a, Object b) {
-        IValue aVal = (IValue) a;
+        final IValue aVal = (IValue) a;
         IValue bVal = (IValue) b;
         return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
     }

@@ -67,7 +67,7 @@ public interface TruffleAssignFactory extends NullAlg<FNCBuildAST>, AssignAlg<FN
     @Override
     default FNCBuildAST alloc(FNCBuildAST x) {
         return l -> {
-            FNCExpressionNode xe = x.buildAST(l);
+            final FNCExpressionNode xe = x.buildAST(l);
             return new AssignAllocNode(xe);
         };
     }

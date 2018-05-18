@@ -54,7 +54,7 @@ public interface TruffleFunctionFactory extends
                 ((funcons.values.Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);*/
 
         return l -> {
-            FNCExpressionNode abse = abs.buildAST(l);
+            final FNCExpressionNode abse = abs.buildAST(l);
             return supply(arg, z -> new FunctionApplyNode(abse)).buildAST(l);
         };
     }
@@ -74,9 +74,9 @@ return (env, given) -> {
  */
 
         return lo -> {
-            FNCExpressionNode le = l.buildAST(lo);
+            final FNCExpressionNode le = l.buildAST(lo);
 
-            FunctionApplyToEachNode applyToEachNpde = new FunctionApplyToEachNode(le);
+            final FunctionApplyToEachNode applyToEachNpde = new FunctionApplyToEachNode(le);
             applyToEachNpde.e1 = apply(a, listHead(applyToEachNpde.createE1())).buildAST(lo);
             applyToEachNpde.e2 = listTail(applyToEachNpde.createE1()).buildAST(lo);
             return applyToEachNpde;
@@ -178,7 +178,13 @@ return (env, given) -> {
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            return ((funcons.values.Abs<Object>) patte.executeGeneric(frame)).body();
+            final Object o = patte.executeGeneric(frame);
+            if (o instanceof funcons.values.Abs) {
+                return ((funcons.values.Abs<Object>) o).body();
+            } else {
+                return o;
+            }
+
         }
     }
 
@@ -195,7 +201,7 @@ return (env, given) -> {
         @Override
         public Object executeGeneric(VirtualFrame frame) {
 
-            Object o = abse.executeGeneric(frame);
+            final Object o = abse.executeGeneric(frame);
             if (o instanceof funcons.values.Abs)
                 return ((funcons.values.Abs) o).body();
             else return o;

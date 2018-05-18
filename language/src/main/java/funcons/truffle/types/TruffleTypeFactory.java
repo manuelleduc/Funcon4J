@@ -85,10 +85,10 @@ public interface TruffleTypeFactory extends
 //        };
 //        throw new RuntimeException("Not implemented");
         return l -> {
-            FNCExpressionNode nve = nomVal.buildAST(l);
-            TypeNomValSelectNode ret = new TypeNomValSelectNode(nve);
+            final FNCExpressionNode nve = nomVal.buildAST(l);
+            final TypeNomValSelectNode ret = new TypeNomValSelectNode(nve);
 
-            FNCExpressionNode subnode = whenTrue(equal(nomTag, z -> ret.buildA()), (z) -> ret.buildB()).buildAST(l);
+            final FNCExpressionNode subnode = whenTrue(equal(nomTag, z -> ret.buildA()), (z) -> ret.buildB()).buildAST(l);
             ret.subnode = subnode;
             return ret;
         };
@@ -162,13 +162,13 @@ public interface TruffleTypeFactory extends
 //            return fail().eval(env, given);
 //        };
         return l -> {
-            FNCExpressionNode z = fail().buildAST(l);
-            FNCExpressionNode ve = variant.buildAST(l);
+            final FNCExpressionNode z = fail().buildAST(l);
+            final FNCExpressionNode ve = variant.buildAST(l);
 
             final TypeVariantMatchNode variantMatch = new TypeVariantMatchNode(ve, z);
 
 
-            FNCExpressionNode alte = whenTrue(equal(tag, (lo) -> variantMatch.buildA()), match(lo -> variantMatch.buildB(), patt)).buildAST(l);
+            final FNCExpressionNode alte = whenTrue(equal(tag, (lo) -> variantMatch.buildA()), match(lo -> variantMatch.buildB(), patt)).buildAST(l);
 
             variantMatch.alte = alte;
 
@@ -277,7 +277,7 @@ public interface TruffleTypeFactory extends
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            IValue v = (IValue) ve.executeGeneric(frame);
+            final IValue v = (IValue) ve.executeGeneric(frame);
             if (v instanceof CLVariant) {
                 this.vVar = (CLVariant) v;
                 return alte.executeGeneric(frame);

@@ -55,7 +55,11 @@ public interface TrufflePatternFactory extends
         return l -> {
             final FNCExpressionNode pate1 = pat1.buildAST(l);
             final FNCExpressionNode pate2 = pat2.buildAST(l);
-            return abs(z -> mapUnion(lo -> new PatternPattUnion1Node(pate1), lo -> new PatternPattUnion2Node(pate2)).buildAST(l)).buildAST(l);
+            return abs(z -> {
+                FNCBuildAST fncBuildAST = lo -> new PatternPattUnion1Node(pate1);
+                FNCBuildAST fncBuildAST1 = lo -> new PatternPattUnion2Node(pate2);
+                return mapUnion(fncBuildAST, fncBuildAST1).buildAST(l);
+            }).buildAST(l);
         };
     }
 
@@ -85,7 +89,10 @@ public interface TrufflePatternFactory extends
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            return ((Abs) pate1.executeGeneric(frame)).body();
+            final Object o = pate1.executeGeneric(frame);
+            if (o instanceof Abs)
+                return ((Abs) o).body();
+            else return o;
         }
     }
 
@@ -101,7 +108,10 @@ public interface TrufflePatternFactory extends
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            return ((Abs) pate2.executeGeneric(frame)).body();
+            final Object o = pate2.executeGeneric(frame);
+            if (o instanceof Abs)
+                return ((Abs) o).body();
+            else return o;
         }
     }
 
@@ -121,7 +131,11 @@ public interface TrufflePatternFactory extends
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            final Object body = ((Abs) patte.executeGeneric(frame)).body();
+            final Object o = patte.executeGeneric(frame);
+            if (o instanceof Abs) {
+                final Object body = ((Abs) o).body();
+                System.out.println(">>>> " + body);
+            }
             return enve.executeGeneric(frame);
         }
     }

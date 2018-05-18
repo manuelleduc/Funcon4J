@@ -26,9 +26,9 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public <X> X parse(String s, camllight.algebras.AllAlg alg) {
-        CLLexer lexer = new CLLexer(new ANTLRInputStream(s));
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        CLParser parser = new CLParser(tokens);
+        final CLLexer lexer = new CLLexer(new ANTLRInputStream(s));
+        final CommonTokenStream tokens = new CommonTokenStream(lexer);
+        final CLParser parser = new CLParser(tokens);
         parser.setBuilder(alg);
         return (X) parser.prog()._prog;
     }
@@ -36,7 +36,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
     @Override
     protected FNCContext createContext(Env env) {
-        FNCContext fncContext = new FNCContext(this, env);
+        final FNCContext fncContext = new FNCContext(this, env);
         fncContext.initRegistry(this);
         return fncContext;
     }
@@ -70,9 +70,9 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
 
     public FNCStatementNode importStandardLibrary() throws FunconException {
-        funcons.algebras.AllAlg<FNCBuildAST> alg = new TruffleAllFactory() {
+        final funcons.algebras.AllAlg<FNCBuildAST> alg = new TruffleAllFactory() {
         };
-        StandardLibrary<FNCBuildAST> lib = () -> alg;
+        final StandardLibrary<FNCBuildAST> lib = () -> alg;
 
         FNCExpressionNode ret = new NullNullNode();
         for (Method m : lib.getClass().getMethods()) {

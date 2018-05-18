@@ -20,7 +20,7 @@ public class BindingScopeNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        Object tmp = this.localBinding.executeGeneric(frame);
+        final Object tmp = this.localBinding.executeGeneric(frame);
         return exp.executeGeneric(frame);
     }
 

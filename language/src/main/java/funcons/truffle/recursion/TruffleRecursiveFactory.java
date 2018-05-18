@@ -15,6 +15,7 @@ import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
 import funcons.truffle.functions.FNCUndefinedNameException;
 import funcons.truffle.functions.FunctionAbsNode;
+import funcons.truffle.functions.TruffleFunctionFactory;
 import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCFunction;
@@ -110,13 +111,13 @@ public interface TruffleRecursiveFactory extends
         public Object executeGeneric(VirtualFrame frame) {
             Object envEval = fwde.executeGeneric(frame);
             this.isListVal = (IValue) idListe.executeGeneric(frame);
-            int length = ((IInteger) lengthNode.executeGeneric(frame)).intValue();
-            IValue undefined = (IValue) undef.executeGeneric(frame);
+            final int length = ((IInteger) lengthNode.executeGeneric(frame)).intValue();
+            final IValue undefined = (IValue) undef.executeGeneric(frame);
 
 
             for (int i = 0; i < length; i++) {
-                IValue id = (IValue) idExec.executeGeneric(frame);
-                Fwd fwd = (Fwd) fwdExec.executeGeneric(frame);
+                final IValue id = (IValue) idExec.executeGeneric(frame);
+                final Fwd fwd = (Fwd) fwdExec.executeGeneric(frame);
                 fwd.add(undefined);
 
                 envEval = envEvalN.executeGeneric(frame);
@@ -277,6 +278,8 @@ public interface TruffleRecursiveFactory extends
             } else if (v instanceof FunctionAbsNode) {
                 // FIXME: hack
                 return ((FunctionAbsNode) v).executeGeneric(frame);
+            } else if (v instanceof TruffleFunctionFactory.FunctionAbsNode) {
+                return ((TruffleFunctionFactory.FunctionAbsNode) v).executeGeneric(frame);
             } else if (v instanceof Abs) {
                 return ((Abs) v).body();
             }

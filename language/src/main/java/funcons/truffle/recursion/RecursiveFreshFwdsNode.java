@@ -20,7 +20,7 @@ public class RecursiveFreshFwdsNode extends FNCExpressionNode {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
 
-        Object res = this.idList.executeGeneric(frame);
+        final Object res = this.idList.executeGeneric(frame);
 
         final long current = freshCptr;
         freshCptr = freshCptr + 1;
