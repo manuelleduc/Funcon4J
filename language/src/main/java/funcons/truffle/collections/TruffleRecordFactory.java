@@ -1,6 +1,5 @@
 package funcons.truffle.collections;
 
-import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.collections.RecordAlg;
@@ -12,9 +11,6 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IInteger;
-import io.usethesource.vallang.IMap;
-import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
@@ -37,7 +33,7 @@ public interface TruffleRecordFactory extends
 //                    val.eval(env, given));
 //            return mw.done();
 //        };
-        throw new RuntimeException("Not implemented");
+        return new Record(field, val);
     }
 
     @Override
@@ -50,7 +46,7 @@ public interface TruffleRecordFactory extends
 //        return (env, given) ->
 //                ((IMap) record.eval(env, given))
 //                        .get(field.eval(env, given));
-        throw new RuntimeException("Not implemented");
+        return l -> new RecordRecordSelectNode((FNCExpressionNode) record.buildAST(l), (FNCExpressionNode) field.buildAST(l));
     }
 
     @Override
@@ -61,10 +57,8 @@ public interface TruffleRecordFactory extends
 
     @Override
     default FNCExecuteNode recordUnion(FNCExecuteNode rec1, FNCExecuteNode rec2) {
-//        return (env, given) ->
-//                ((IMap) rec1.eval(env, given))
-//                        .join(((IMap) rec2.eval(env, given)));
-        throw new RuntimeException("Not implemented");
+
+        return new RecordUnion(rec1, rec2);
     }
 
     @Override
@@ -121,6 +115,36 @@ public interface TruffleRecordFactory extends
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new RecordFieldNode(name);
+        }
+    }
+
+    class Record implements FNCExecuteNode {
+        private final FNCExecuteNode field;
+        private final FNCExecuteNode val;
+
+        public Record(FNCExecuteNode field, FNCExecuteNode val) {
+            this.field = field;
+            this.val = val;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new RecordRecordNode((FNCExpressionNode) this.field.buildAST(l), (FNCExpressionNode) this.val.buildAST(l));
+        }
+    }
+
+    class RecordUnion implements FNCExecuteNode {
+        private final FNCExecuteNode rec1;
+        private final FNCExecuteNode rec2;
+
+        public RecordUnion(FNCExecuteNode rec1, FNCExecuteNode rec2) {
+            this.rec1 = rec1;
+            this.rec2 = rec2;
+        }
+
+        @Override
+        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new RecordRecordUnionNode((FNCExpressionNode) this.rec1.buildAST(l), (FNCExpressionNode) this.rec2.buildAST(l));
         }
     }
 }

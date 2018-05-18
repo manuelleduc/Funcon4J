@@ -119,8 +119,8 @@ public interface TruffleVectorFactory extends AssignAlg<FNCExecuteNode>, VectorA
 //        };
 
 
-            final FNCExecuteNode vectorVectorAssignNode = z -> new VectorVectorAssignNode((FNCExpressionNode) vector.buildAST(z), (FNCExpressionNode) index.buildAST(z));
-            return alg.assign(vectorVectorAssignNode, val).buildAST(l);
+            return new VectorVectorAssignNode((FNCExpressionNode) vector.buildAST(l), (FNCExpressionNode) index.buildAST(l));
+//            return alg.assign(vectorVectorAssignNode, val).buildAST(l);
         }
     }
 

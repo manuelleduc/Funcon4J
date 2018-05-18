@@ -8,3 +8,5 @@ target/
 
 *.pdf
 *.class
+
+*.log

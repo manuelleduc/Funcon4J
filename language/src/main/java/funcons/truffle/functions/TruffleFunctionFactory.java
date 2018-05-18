@@ -1,5 +1,6 @@
 package funcons.truffle.functions;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
@@ -8,12 +9,10 @@ import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.IntAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.carriers.IEval;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.Abs;
 import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleFunctionFactory extends
@@ -39,7 +38,17 @@ public interface TruffleFunctionFactory extends
 
     @Override
     default FNCExecuteNode abs(FNCExecuteNode patt, FNCExecuteNode exp) {
-        return new Abs2(patt, exp);
+
+        return l -> {
+            final FNCExpressionNode patte = (FNCExpressionNode) patt.buildAST(l);
+
+            return scope(language -> new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return ((funcons.values.Abs<Object>) patte.executeGeneric(frame)).body();
+                }
+            }, exp).buildAST(l);
+        };
     }
 
     @Override
@@ -50,23 +59,31 @@ public interface TruffleFunctionFactory extends
 
     @Override
     default FNCExecuteNode applyToEach(FNCExecuteNode a, FNCExecuteNode l) {
-//        return (env, given) -> {
-//            IValue listVal = l.eval(env, given);
-//            CLExecuteNode cachedListEval = (e, g) -> listVal;
-//            return ifTrue(
-//                    equal(listLength(cachedListEval), lit(0)),
-//                    null_(),
-//                    seq(apply(a, listHead(cachedListEval)), applyToEach(a, listTail(cachedListEval)))
-//            ).eval(env, given);
-//        };
 
-        throw new RuntimeException("Not implemented");
+
+        return m -> {
+
+            final FNCExpressionNode l2 = (FNCExpressionNode) l.buildAST(m);
+
+            // TODO: extract to its own class
+            final FNCExecuteNode cachedListEval = n -> new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return l2.executeGeneric(frame);
+                }
+            };
+
+            return ifTrue(
+                    equal(listLength(cachedListEval), lit(0)),
+                    null_(),
+                    seq(apply(a, listHead(cachedListEval)), applyToEach(a, listTail(cachedListEval)))
+            ).buildAST(m);
+        };
     }
 
     @Override
     default FNCExecuteNode compose(FNCExecuteNode f, FNCExecuteNode g) {
-//        return abs(apply(f, apply(g, given())));
-        throw new RuntimeException("Not implemented");
+        return abs(apply(f, apply(g, given())));
     }
 
     @Override

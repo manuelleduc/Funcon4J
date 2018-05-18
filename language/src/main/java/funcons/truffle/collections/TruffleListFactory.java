@@ -1,5 +1,6 @@
 package funcons.truffle.collections;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.ExceptionAlg;
@@ -11,6 +12,8 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.IList;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleListFactory extends
         PatternAlg<FNCExecuteNode>,
@@ -68,7 +71,15 @@ public interface TruffleListFactory extends
 //            IList tail = list.delete(0);
 //            return mapOver(match((e, g) -> head, p1), match((e, g) -> tail, p2)).eval(env, given);
 //        };
-        throw new RuntimeException("Not implemented");
+
+
+        return m -> {
+            final FNCExpressionNode l1 = (FNCExpressionNode) l.buildAST(m);
+            final ListListPrefixMatchNode listListPrefixMatchNode = new ListListPrefixMatchNode(l1, (FNCExpressionNode) fail().buildAST(m));
+            final FNCExpressionNode g = (FNCExpressionNode) mapOver(match((z) -> listListPrefixMatchNode.buildE1(), p1), match((z) -> listListPrefixMatchNode.buildE2(), p2)).buildAST(m);
+            listListPrefixMatchNode.setG(g);
+            return listListPrefixMatchNode;
+        };
     }
 
     @Override
@@ -87,13 +98,13 @@ public interface TruffleListFactory extends
 //            }
 //            return lw.done();
 //        };
-        throw new RuntimeException("Not implemented");
+        return l -> new ListIntCloseIntervalNode((FNCExpressionNode) m.buildAST(l), (FNCExpressionNode) n.buildAST(l));
     }
 
     @Override
     default FNCExecuteNode listReverse(FNCExecuteNode l) {
 //        return (env, given) -> ((IList) l.eval(env, given)).reverse();
-        throw new RuntimeException("Not implemented");
+        return m -> new ListListReverseNode((FNCExpressionNode) l.buildAST(m));
     }
 
     @Override
@@ -108,20 +119,37 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCExecuteNode listHead(FNCExecuteNode list) {
-//        return (env, given) -> ((IList) list.eval(env, given)).get(0);
-        throw new RuntimeException("Not implemented");
+//        return (env, given) -> ;
+        return l -> {
+            FNCExpressionNode list2 = (FNCExpressionNode) list.buildAST(l);
+
+            // TODO: extract to its own class
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    return ((IList) list2.executeGeneric(frame)).get(0);
+                }
+            };
+        };
     }
 
     @Override
     default FNCExecuteNode listTail(FNCExecuteNode list) {
-//        return (env, given) -> {
-//            IList listVal = ((IList) list.eval(env, given));
-//            if (listVal.length() <= 1) {
-//                return vf.list();
-//            }
-//            return listVal.sublist(1, listVal.length() - 1);
-//        };
-        throw new RuntimeException("Not implemented");
+        return l -> {
+            FNCExpressionNode list2 = (FNCExpressionNode) list.buildAST(l);
+
+            // TODO: extract to its own class
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    IList listVal = ((IList) list2.executeGeneric(frame));
+                    if (listVal.length() <= 1) {
+                        return ValueFactory.getInstance().list();
+                    }
+                    return listVal.sublist(1, listVal.length() - 1);
+                }
+            };
+        };
     }
 
     @Override
@@ -156,7 +184,7 @@ public interface TruffleListFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new ListListLengthNode((FNCExpressionNode) list);
+            return new ListListLengthNode((FNCExpressionNode) list.buildAST(l));
         }
     }
 

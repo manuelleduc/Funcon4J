@@ -1,5 +1,6 @@
 package funcons.truffle.controlflow;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
@@ -8,6 +9,7 @@ import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.nodes.FNCStatementNode;
+import funcons.values.Abs;
 import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleExceptionFactory extends
@@ -62,8 +64,8 @@ public interface TruffleExceptionFactory extends
 
     @Override
     default FNCExecuteNode catchElseRethrow(FNCExecuteNode x, FNCExecuteNode abs) {
-//        return catch_(x, preferOver(abs, abs(throw_(given()))));
-        throw new RuntimeException("Not implemented");
+        return catch_(x, preferOver(abs, abs(throw_(given()))));
+//        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -81,14 +83,47 @@ public interface TruffleExceptionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCExecuteNode preferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
-        return new PrefereOver(a1, a2, this);
+//        (env, given) ->
+//                abs(else_(
+//                        ((Abs<IEval>)a1.eval(env, given)).body(),
+//                        ((Abs<IEval>)a2.eval(env, given)).body()
+//                )).eval(env, given);
+
+
+        return l -> {
+            final FNCExpressionNode a1e = (FNCExpressionNode) a1.buildAST(l);
+            final FNCExpressionNode a2e = (FNCExpressionNode) a2.buildAST(l);
+
+            return abs(else_(language -> new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    final Object o = a1e.executeGeneric(frame);
+                    if(o instanceof Abs) {
+                        return ((Abs<Object>) o).body();
+                    } else {
+                        return o;
+                    }
+                }
+            }, language -> new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    final Object o = a2e.executeGeneric(frame);
+                    if(o instanceof Abs) {
+                        return ((Abs<Object>) o).body();
+                    } else {
+                        return o;
+                    }
+                }
+            })).buildAST(l);
+        };
+
+//        return new PrefereOver(a1, a2, this);
     }
 
 
     @Override
     default FNCExecuteNode whenTrue(FNCExecuteNode exp, FNCExecuteNode x) {
-//        return ifTrue(exp, x, fail());
-        throw new RuntimeException("Not implemented");
+        return ifTrue(exp, x, fail());
     }
 
     class MatchFailure implements FNCExecuteNode {

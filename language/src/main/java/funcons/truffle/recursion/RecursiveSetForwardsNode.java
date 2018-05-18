@@ -22,10 +22,10 @@ public class RecursiveSetForwardsNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        idFwdMap.executeGeneric(frame);
-        IValue mapVal = (IValue) idFwdMap.executeGeneric(frame);
-        IValue mapKeys = null; //new MapMapDomainNode(mapVal).executeGeneric(frame);
-        int length = 0;
+//        idFwdMap.executeGeneric(frame);
+//        IValue mapVal = (IValue) idFwdMap.executeGeneric(frame);
+//        IValue mapKeys = null; //new MapMapDomainNode(mapVal).executeGeneric(frame);
+//        int length = 0;
 
 //        for (int i = 0; i < length; i++) {
 //            IValue id = projectList(lit(i), (e,g)->mapKeys).eval(env, given);

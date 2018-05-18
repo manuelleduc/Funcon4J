@@ -9,12 +9,19 @@ let rec fib n =
 loop 100;;*)
 
 
+let loop0 n =
+	for i = 0 to n do
+		((print_int (fib i)); (print_newline ()))
+	done;;
+
 
 let loop n = 
 	for i = 0 to n do 
-		((print_int (fib 50)); (print_newline ()))
+		((print_int (fib 40)); (print_newline ()))
 	done;;
 
+
+loop0 20;;
 loop 100;;
 
 (*let time f x =
