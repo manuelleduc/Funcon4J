@@ -6,6 +6,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.values.NullNullNode;
 import funcons.values.Abs;
+import funcons.values.Variable;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class PrintPrintNode extends FNCExpressionNode {
         if (o instanceof Abs) {
             // FIXME: hack!
             data = String.valueOf(((Abs) o).body());
+        } else if(o instanceof Variable) {
+            data = String.valueOf(((Variable) o).value());
         } else {
             data = String.valueOf(o);
         }

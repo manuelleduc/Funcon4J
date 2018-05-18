@@ -12,8 +12,9 @@ import funcons.algebras.values.NullAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.values.NullNullNode;
 import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.IList;
 
 public interface TruffleFunctionFactory extends
         IntAlg<FNCExecuteNode>,
@@ -62,7 +63,11 @@ public interface TruffleFunctionFactory extends
             return supply(arg, z -> new FNCExpressionNode() {
                 @Override
                 public Object executeGeneric(VirtualFrame frame) {
-                    return ((funcons.values.Abs) abse.executeGeneric(frame)).body();
+
+                    Object o = abse.executeGeneric(frame);
+                    if (o instanceof funcons.values.Abs)
+                        return ((funcons.values.Abs) o).body();
+                    else return o;
                 }
             }).buildAST(l);
         };
@@ -83,12 +88,12 @@ return (env, given) -> {
  */
 
         return lo -> {
+            FNCExpressionNode le = l.buildAST(lo);
 
-            final FNCExpressionNode le = l.buildAST(lo);
-            final ApplyToEachNode applyToEachNode = new ApplyToEachNode(le);
-            final FNCExecuteNode cache = la -> applyToEachNode.getA();
-            applyToEachNode.continuation = ifTrue(equal(listLength(cache), lit(0)), null_(), seq(apply(a, listLength(cache)), applyToEach(a, listTail(cache)))).buildAST(lo);
-            return applyToEachNode;
+            ApplyToEachNode applyToEachNpde = new ApplyToEachNode(le);
+            applyToEachNpde.e1 = apply(a, listHead(applyToEachNpde.createE1())).buildAST(lo);
+            applyToEachNpde.e2 = listTail(applyToEachNpde.createE1()).buildAST(lo);
+            return applyToEachNpde;
         };
     }
 
@@ -121,21 +126,6 @@ return (env, given) -> {
         }
     }
 
-    class Abs2 implements FNCExecuteNode {
-        private final FNCExecuteNode patt;
-        private final FNCExecuteNode exp;
-
-        public Abs2(FNCExecuteNode patt, FNCExecuteNode exp) {
-            this.patt = patt;
-            this.exp = exp;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new FunctionAbsNode2(patt.buildAST(l), exp.buildAST(l));
-        }
-    }
-
     class Close implements FNCExecuteNode {
         private final FNCExecuteNode abs;
 
@@ -149,30 +139,12 @@ return (env, given) -> {
         }
     }
 
-    class Apply implements FNCExecuteNode {
-        private final FNCExecuteNode abs;
-        private final FNCExecuteNode arg;
-        private final TruffleFunctionFactory f;
-
-        public Apply(FNCExecuteNode abs, FNCExecuteNode arg, TruffleFunctionFactory f) {
-            this.abs = abs;
-            this.arg = arg;
-            this.f = f;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-//            return (env, given) -> supply(arg,
-//                    ((funcons.values.Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);
-
-            return null;
-        }
-    }
-
     class ApplyToEachNode extends FNCExpressionNode {
         private final FNCExpressionNode le;
-        private IValue listVal;
-        private FNCExpressionNode continuation;
+
+        private FNCExpressionNode e1;
+        private FNCExpressionNode e2;
+        private IList listVal;
 
         public ApplyToEachNode(FNCExpressionNode le) {
             this.le = le;
@@ -180,12 +152,16 @@ return (env, given) -> {
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            this.listVal = (IValue) le.executeGeneric(frame);
-            return continuation.executeGeneric(frame);
+            this.listVal = (IList) le.executeGeneric(frame);
+            while (listVal.length() != 0) {
+                this.e1.executeGeneric(frame);
+                listVal = (IList) this.e2.executeGeneric(frame);
+            }
+            return new NullNullNode().executeGeneric(frame);
         }
 
-        public FNCExpressionNode getA() {
-            return new FNCExpressionNode() {
+        public FNCExecuteNode createE1() {
+            return language -> new FNCExpressionNode() {
                 @Override
                 public Object executeGeneric(VirtualFrame frame) {
                     return listVal;

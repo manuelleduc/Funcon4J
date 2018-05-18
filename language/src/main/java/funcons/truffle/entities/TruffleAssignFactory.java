@@ -6,7 +6,6 @@ import funcons.algebras.values.NullAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.Variable;
 import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.IValue;
@@ -15,13 +14,33 @@ public interface TruffleAssignFactory extends NullAlg<FNCExecuteNode>, AssignAlg
 
     @Override
     default FNCExecuteNode assign(final FNCExecuteNode var, final FNCExecuteNode x) {
-        return l -> {
+        /*return l -> {
             FNCExpressionNode vare = var.buildAST(l);
             FNCExpressionNode nulle = null_().buildAST(l);
             return new FNCExpressionNode() {
                 @Override
                 public Object executeGeneric(VirtualFrame frame) {
                     return nulle.executeGeneric(frame);
+                }
+            };
+        };*/
+
+
+        //((Variable)var.eval(env, given)).store(x.eval(env, given));
+        //            return null_().eval(env, given);
+
+
+        return l -> {
+
+            final FNCExpressionNode ne = null_().buildAST(l);
+            final FNCExpressionNode vare = var.buildAST(l);
+            final FNCExpressionNode xe = x.buildAST(l);
+
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    ((Variable) vare.executeGeneric(frame)).store((IValue) xe.executeGeneric(frame));
+                    return ne;
                 }
             };
         };

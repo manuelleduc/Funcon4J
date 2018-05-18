@@ -9,7 +9,6 @@ import funcons.algebras.values.IntAlg;
 import funcons.truffle.nodes.FNCExecuteNode;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
@@ -87,7 +86,8 @@ public interface TruffleRecordFactory extends
 //        };
         // TODO
         return l -> {
-            return null;
+            // TODO: implement
+            throw new RuntimeException("Not Implemented");
         };
     }
 

@@ -267,18 +267,5 @@ public interface TruffleRecursiveFactory extends
         }
     }
 
-    class FollowIfFwd implements FNCExecuteNode {
-        private final FNCExecuteNode fwd;
-
-        public FollowIfFwd(FNCExecuteNode fwd) {
-            this.fwd = fwd;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new RecursiveFollowIfFwdNode(fwd.buildAST(l));
-        }
-    }
-
 
 }

@@ -99,21 +99,6 @@ public interface TruffleTupleFactory extends
         }
     }
 
-    class TuplePrefixMatch implements FNCExecuteNode {
-        private final FNCExecuteNode p1;
-        private final FNCExecuteNode p2;
-
-        public TuplePrefixMatch(FNCExecuteNode p1, FNCExecuteNode p2) {
-            this.p1 = p1;
-            this.p2 = p2;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new TupleTuplePrefixMatchNode(p1.buildAST(l), p2.buildAST(l));
-        }
-    }
-
     class TuplePrefix implements FNCExecuteNode {
         private final FNCExecuteNode x;
         private final FNCExecuteNode tup;

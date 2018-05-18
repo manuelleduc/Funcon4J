@@ -76,16 +76,4 @@ public interface TruffleCurryFactory extends
         }
     }
 
-    class Curry implements FNCExecuteNode {
-        private final FNCExecuteNode a;
-
-        public Curry(FNCExecuteNode a) {
-            this.a = a;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new CurryCurryNode(a.buildAST(l));
-        }
-    }
 }
