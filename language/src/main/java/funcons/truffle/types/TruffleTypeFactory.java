@@ -43,7 +43,8 @@ public interface TruffleTypeFactory extends
     @Override
     default FNCBuildAST tag(java.lang.String name) {
 //        return (env, given) -> vf.string(name);
-        return l -> new TypeTagNode(name);
+        TypeTagNode typeTagNode = new TypeTagNode(name);
+        return l -> typeTagNode;
     }
 
     @Override
@@ -59,7 +60,9 @@ public interface TruffleTypeFactory extends
 
     @Override
     default FNCBuildAST meta(java.lang.String name) {
-        return l -> new TypeMetaNode(name);
+        return l -> {
+            return new TypeMetaNode(name);
+        };
     }
 
     @Override

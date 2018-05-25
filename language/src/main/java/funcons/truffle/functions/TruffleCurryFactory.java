@@ -1,5 +1,8 @@
 package funcons.truffle.functions;
 
+import com.oracle.truffle.api.frame.FrameSlot;
+import com.oracle.truffle.api.frame.FrameSlotTypeException;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.TupleAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
@@ -12,6 +15,7 @@ import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.IValue;
 
 public interface TruffleCurryFactory extends
         FunctionAlg<FNCBuildAST>,
@@ -35,9 +39,11 @@ public interface TruffleCurryFactory extends
 
     @Override
     default FNCBuildAST curry(FNCBuildAST a) {
+        SupplyGivenGivenNode supplyGivenGivenNode = new SupplyGivenGivenNode();
         return l -> abs(m -> {
-            FNCBuildAST fncBuildAST = n -> new SupplyGivenGivenNode();
-            return partialApp(a, fncBuildAST).buildAST(l);
+            return partialApp(a, n -> {
+                return supplyGivenGivenNode;
+            }).buildAST(l);
         }).buildAST(l);
     }
 
@@ -55,7 +61,24 @@ public interface TruffleCurryFactory extends
 //                    .eval(env, given);
 //        };
 
-        return new CurryN(n, a);
+//        return new CurryN(n, a);
+        return l -> {
+
+            // null3 = curryN(
+            //                            intSubtract(n, lit(1)),
+            //                            partialAppN(a, (u) -> null))
+            //                            .eval(env, given)
+
+            CurryNNode curryNNode = new CurryNNode(n.buildAST(l));
+            FNCExpressionNode fncExpressionNode1 = new CurryNSubnode1();
+            FNCExpressionNode fncExpressionNode = curryNNode.buildA();
+            curryNNode.child = ifTrue(
+                    equal(z -> fncExpressionNode, lit(0)),
+                    apply(a, tuple()),
+                    abs((p) -> abs(q -> curryN(intSubtract(n, lit(1)), partialApp(a, r -> fncExpressionNode)).buildAST(q)).buildAST(p)))
+                    .buildAST(l);
+            return curryNNode;
+        };
     }
 
     @Override
@@ -78,4 +101,45 @@ public interface TruffleCurryFactory extends
         }
     }
 
+    class CurryNNode extends FNCExpressionNode {
+        @Child
+        private FNCExpressionNode n;
+        @Child
+        public FNCExpressionNode child;
+        private IValue index;
+
+        public CurryNNode(FNCExpressionNode n) {
+            this.n = n;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            this.index = (IValue) n.executeGeneric(frame);
+            return child.executeGeneric(frame);
+        }
+
+        public FNCExpressionNode buildA() {
+            return new CurryNSubnode();
+        }
+
+        private class CurryNSubnode extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return index;
+            }
+        }
+    }
+
+    class CurryNSubnode1 extends FNCExpressionNode {
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot("given");
+            try {
+                return frame.getObject(given);
+            } catch (FrameSlotTypeException e) {
+                throw new RuntimeException("Given not found", e);
+
+            }
+        }
+    }
 }

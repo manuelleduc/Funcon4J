@@ -31,15 +31,15 @@ public interface RecursiveFactory extends
         return (env, given) -> {
             IEval envEval = environment();
             IValue idListVal = idList.eval(env, given);
-            int length = ((IInteger)listLength((e,g)->idListVal).eval(env, given)).intValue();
+            int length = ((IInteger) listLength((e, g) -> idListVal).eval(env, given)).intValue();
             IValue undefined = undefined().eval(env, given);
 
             for (int i = 0; i < length; i++) {
-                IValue id = projectList(lit(i), (e,g)->idListVal).eval(env, given);
-                Fwd fwd = (Fwd)freshFwd().eval(env, given);
+                IValue id = projectList(lit(i), (e, g) -> idListVal).eval(env, given);
+                Fwd fwd = (Fwd) freshFwd().eval(env, given);
                 fwd.add(undefined);
 
-                envEval = mapUpdate(envEval, (e,g) -> id, (e,g) -> fwd);
+                envEval = mapUpdate(envEval, (e, g) -> id, (e, g) -> fwd);
             }
 
             return envEval.eval(env, given);
@@ -50,16 +50,16 @@ public interface RecursiveFactory extends
     default IEval setForwards(IEval idFwdMap) {
         return (env, given) -> {
             IValue mapVal = idFwdMap.eval(env, given);
-            IValue mapKeys = mapDomain((e,g)->mapVal).eval(env, given);
-            int length = ((IInteger)listLength((e,g)->mapKeys).eval(env, given)).intValue();
+            IValue mapKeys = mapDomain((e, g) -> mapVal).eval(env, given);
+            int length = ((IInteger) listLength((e, g) -> mapKeys).eval(env, given)).intValue();
 
             for (int i = 0; i < length; i++) {
-                IValue id = projectList(lit(i), (e,g)->mapKeys).eval(env, given);
-                IValue v = boundValue((e,g)->id).eval(env, given);
+                IValue id = projectList(lit(i), (e, g) -> mapKeys).eval(env, given);
+                IValue v = boundValue((e, g) -> id).eval(env, given);
                 if (v == null) {
                     v = undefined().eval(env, given);
                 }
-                Fwd fwd = (Fwd)mapGet((e,g)->mapVal, (e,g)->id).eval(env, given);
+                Fwd fwd = (Fwd) mapGet((e, g) -> mapVal, (e, g) -> id).eval(env, given);
                 fwd.add(v);
             }
 
@@ -71,7 +71,7 @@ public interface RecursiveFactory extends
     default IEval reclose(IEval map, IEval decl) {
         return (env, given) -> {
             final IValue m = map.eval(env, given);
-            return accum(scope((e,g) -> m, decl), seq(setForwards((e,g) -> m), environment())).eval(env, given);
+            return accum(scope((e, g) -> m, decl), seq(setForwards((e, g) -> m), environment())).eval(env, given);
         };
     }
 
@@ -87,7 +87,7 @@ public interface RecursiveFactory extends
 
     @Override
     default IEval followFwd(IEval fwd) {
-        return (env, given) -> ((Fwd)fwd.eval(env, given)).follow();
+        return (env, given) -> ((Fwd) fwd.eval(env, given)).follow();
     }
 
     @Override
@@ -95,7 +95,7 @@ public interface RecursiveFactory extends
         return (env, given) -> {
             IValue v = fwd.eval(env, given);
             if (v instanceof Fwd) {
-                return ((Fwd)v).follow();
+                return ((Fwd) v).follow();
             }
             return v;
         };

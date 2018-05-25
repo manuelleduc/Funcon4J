@@ -1,5 +1,6 @@
 package funcons.truffle.entities;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.truffle.nodes.FNCBuildAST;
@@ -67,7 +68,22 @@ public interface TruffleBindingFactory extends
 
     @Override
     default FNCBuildAST accum(FNCBuildAST environment, FNCBuildAST decl) {
-        return new Accum(environment, decl, this);
+//        return new Accum(environment, decl, this);
+
+        /*return (env, given) -> {
+            IValue currentEnv = environment.eval(env, given);
+            IEval scope = scope((e, g) -> currentEnv, mapOver(decl, (e, g) -> currentEnv));
+            return scope.eval(env, given);
+        };*/
+
+        return l -> {
+            FNCExpressionNode ee = environment.buildAST(l);
+            BindingAccumNode bindingAccumNode = new BindingAccumNode(ee);
+            FNCExpressionNode fncExpressionNode = bindingAccumNode.buildA();
+            FNCExpressionNode se = scope((z) -> fncExpressionNode, mapOver(decl, (z) -> fncExpressionNode)).buildAST(l);
+            bindingAccumNode.se = se;
+            return bindingAccumNode;
+        };
     }
 
 
@@ -166,6 +182,37 @@ public interface TruffleBindingFactory extends
             final FNCExpressionNode currentEnv = environment.buildAST(l);
             final FNCBuildAST scope = alg.scope((n) -> currentEnv, alg.mapOver(decl, (m) -> currentEnv));
             return scope.buildAST(l);
+        }
+    }
+
+    class BindingAccumNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode ee;
+
+        @Child
+        private FNCExpressionNode se;
+        private Object v;
+
+        public BindingAccumNode(FNCExpressionNode ee) {
+            this.ee = ee;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            this.v = ee.executeGeneric(frame);
+            return se.executeGeneric(frame);
+        }
+
+        public FNCExpressionNode buildA() {
+            return new BindingAccumNodeSubnode();
+        }
+
+        private class BindingAccumNodeSubnode extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return v;
+            }
         }
     }
 }

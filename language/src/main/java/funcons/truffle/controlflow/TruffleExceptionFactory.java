@@ -100,10 +100,16 @@ public interface TruffleExceptionFactory extends
 
         return l -> {
             final FNCExpressionNode a1e = a1.buildAST(l);
+            ExceptionPrefereOverNode exceptionPrefereOverNode = new ExceptionPrefereOverNode(a1e);
             final FNCExpressionNode a2e = a2.buildAST(l);
+            ExceptionPreferOver2Node exceptionPreferOver2Node = new ExceptionPreferOver2Node(a2e);
 
-            final FNCBuildAST fncBuildAST = language -> new ExceptionPrefereOverNode(a1e);
-            final FNCBuildAST fncBuildAST1 = language -> new ExceptionPreferOver2Node(a2e);
+            final FNCBuildAST fncBuildAST = language -> {
+                return exceptionPrefereOverNode;
+            };
+            final FNCBuildAST fncBuildAST1 = language -> {
+                return exceptionPreferOver2Node;
+            };
             return abs(else_(fncBuildAST, fncBuildAST1)).buildAST(l);
         };
 

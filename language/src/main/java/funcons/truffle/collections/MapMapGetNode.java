@@ -3,6 +3,8 @@ package funcons.truffle.collections;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
+import io.usethesource.vallang.IMap;
+import io.usethesource.vallang.IValue;
 
 @NodeInfo(description = "Map MapGet Node")
 public class MapMapGetNode extends FNCExpressionNode {
@@ -20,7 +22,13 @@ public class MapMapGetNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        throw new RuntimeException("Not implemented");
+        Object o = map.executeGeneric(frame);
+        if (o instanceof IMap) {
+            IMap m = (IMap) o;
+            return m.get((IValue) key.executeGeneric(frame));
+        } else {
+            return null;
+        }
     }
 
 }

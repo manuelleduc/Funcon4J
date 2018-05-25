@@ -99,7 +99,7 @@ public interface TruffleIntFactory extends IntAlg<FNCBuildAST> {
 
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new IntIntSubstractNode(a.buildAST(l), b.buildAST(l));
+            return IntIntSubstractNodeGen.create(a.buildAST(l), b.buildAST(l));
         }
     }
 

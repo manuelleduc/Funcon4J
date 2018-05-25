@@ -47,6 +47,7 @@ public abstract class TestStub {
     }
 
     public void test(String input, String expectedOutput) throws IOException {
+
         engine.eval(Source.newBuilder("fnc", input, "FNC").build());
         String res = getAndFlush();
         assertEquals(expectedOutput, res);

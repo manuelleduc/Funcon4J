@@ -76,7 +76,9 @@ public interface TruffleLogicControlFactory extends
 
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new LogicControlSeqNode(c.buildAST(l), t.buildAST(l));
+            FNCExpressionNode c = this.c.buildAST(l);
+            FNCExpressionNode t = this.t.buildAST(l);
+            return new LogicControlSeqNode(c, t);
         }
     }
 

@@ -12,6 +12,7 @@ public class LogicControlSeqNode extends FNCExpressionNode {
     private FNCExpressionNode t;
 
     public LogicControlSeqNode(FNCExpressionNode c, FNCExpressionNode t) {
+        //System.out.println("Seq node build with c=" + c + " and t=" + t);
         this.c = c;
         this.t = t;
     }

@@ -1,10 +1,16 @@
 package funcons.truffle.recursion;
 
+import com.oracle.truffle.api.Assumption;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.Truffle;
+import com.oracle.truffle.api.dsl.*;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.FrameSlotTypeException;
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.interop.*;
+import com.oracle.truffle.api.nodes.DirectCallNode;
+import com.oracle.truffle.api.nodes.IndirectCallNode;
+import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
@@ -16,14 +22,11 @@ import funcons.algebras.values.NullAlg;
 import funcons.truffle.functions.FNCUndefinedNameException;
 import funcons.truffle.functions.FunctionAbsNode;
 import funcons.truffle.functions.TruffleFunctionFactory;
-import funcons.truffle.nodes.FNCBuildAST;
-import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCFunction;
-import funcons.truffle.nodes.FNCLanguage;
+import funcons.truffle.nodes.*;
 import funcons.values.Abs;
 import funcons.values.recursion.Fwd;
-import io.usethesource.vallang.IInteger;
-import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.*;
+import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 public interface TruffleRecursiveFactory extends
         NullAlg<FNCBuildAST>,
@@ -68,7 +71,10 @@ public interface TruffleRecursiveFactory extends
             return freshFwdsNode;
         };*/
 
-        throw new RuntimeException("Not implemented");
+        return l -> {
+            FNCExpressionNode idListe = idList.buildAST(l);
+            return new FreshFwdsSubnode(idListe);
+        };
     }
 
     @NodeInfo(description = "FreshFwdsNode")
@@ -142,12 +148,157 @@ public interface TruffleRecursiveFactory extends
 
     @Override
     default FNCBuildAST setForwards(FNCBuildAST idFwdMap) {
-        return new SetForwards(idFwdMap);
+//        return (env, given) -> {
+//            IValue mapVal = idFwdMap.eval(env, given);
+//            IValue mapKeys = mapDomain((e,g)->mapVal).eval(env, given);
+//            int length = ((IInteger)listLength((e,g)->mapKeys).eval(env, given)).intValue();
+//
+//            for (int i = 0; i < length; i++) {
+//                IValue id = projectList(lit(i), (e,g)->mapKeys).eval(env, given);
+//                IValue v = boundValue((e,g)->id).eval(env, given);
+//                if (v == null) {
+//                    v = undefined().eval(env, given);
+//                }
+//                Fwd fwd = (Fwd)mapGet((e,g)->mapVal, (e,g)->id).eval(env, given);
+//                fwd.add(v);
+//            }
+//
+//            return null_().eval(env, given);
+//        };
+
+        return l -> {
+            FNCExpressionNode idFwMape = idFwdMap.buildAST(l);
+            FNCExpressionNode undefe = undefined().buildAST(l);
+            FNCExpressionNode nullz = null_().buildAST(l);
+            SetForwardsNode setForwardsNode = new SetForwardsNode(idFwMape, undefe, nullz);
+            FNCExpressionNode a = setForwardsNode.getA();
+            FNCExpressionNode b = setForwardsNode.getB();
+            setForwardsNode.mapDomain = mapDomain(l2 -> a).buildAST(l);
+            setForwardsNode.mapGet = mapGet(z -> a, z -> b).buildAST(l);
+            //            int length = ((IInteger)listLength((e,g)->mapKeys).eval(env, given)).intValue();
+            FNCExpressionNode c = setForwardsNode.getC();
+            setForwardsNode.lengthNode = listLength(n -> c).buildAST(l);
+            return setForwardsNode;
+        };
+    }
+
+
+    class SetForwardsNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode idFwMape;
+
+        @Child
+        private FNCExpressionNode undef;
+
+        @Child
+        private FNCExpressionNode nullz;
+
+        @Child
+        public FNCExpressionNode mapDomain;
+
+        @Child
+        public FNCExpressionNode mapGet;
+
+        @Child
+        public FNCExpressionNode lengthNode;
+        private IValue mapVal;
+        private IValue id;
+        private IValue mapKeys;
+
+        public SetForwardsNode(FNCExpressionNode idFwMape, FNCExpressionNode undefe, FNCExpressionNode nullz) {
+            this.idFwMape = idFwMape;
+            this.undef = undefe;
+            this.nullz = nullz;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            this.mapVal = (IList) idFwMape.executeGeneric(frame);
+            this.mapKeys = (IValue) mapDomain.executeGeneric(frame);
+            int length = ((IInteger) lengthNode.executeGeneric(frame)).intValue();
+            for (int i = 0; i < length; i++) {
+//                IValue id = projectList(lit(i), (e,g)->mapKeys).eval(env, given);
+//                IValue v = boundValue((e,g)->id).eval(env, given);
+//                if (v == null) {
+//                    v = undefined().eval(env, given);
+//                }
+//                Fwd fwd = (Fwd)mapGet((e,g)->mapVal, (e,g)->id).eval(env, given);
+//                fwd.add(v);
+//                if (this.mapVal instanceof IMap)
+//                    this.id = ((IMap) mapVal).get(i);
+//                else if (this.mapVal instanceof IList)
+                this.id = ((IList) mapVal).get(i);
+
+                final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot(id);
+                IValue v = null;
+                try {
+                    v = (IValue) frame.getObject(given);
+                } catch (FrameSlotTypeException e) {
+                    e.printStackTrace();
+                }
+
+                if (v == null) {
+                    v = (IValue) undef.executeGeneric(frame);
+                }
+
+                Fwd fwd = (Fwd) this.mapGet.executeGeneric(frame);
+                if (fwd != null)
+                    fwd.add(v);
+            }
+            return nullz.executeGeneric(frame);
+        }
+
+        public FNCExpressionNode getA() {
+            return new SetForwardsSubnode();
+        }
+
+        public FNCExpressionNode getB() {
+            return new SetForwardsSubnode2();
+        }
+
+        public FNCExpressionNode getC() {
+            return new SetForwardsSubnode3();
+        }
+
+        private class SetForwardsSubnode extends FNCExpressionNode {
+
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return mapVal;
+            }
+        }
+
+        private class SetForwardsSubnode2 extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return id;
+            }
+        }
+
+        private class SetForwardsSubnode3 extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return mapKeys;
+            }
+        }
     }
 
     @Override
     default FNCBuildAST reclose(FNCBuildAST map, FNCBuildAST decl) {
-        return new Reclose(map, decl, this);
+//        return new Reclose(map, decl, this);
+        return l -> {
+            /*
+            *  final IValue m = map.eval(env, given);
+            return accum(scope((e, g) -> m, decl), seq(setForwards((e, g) -> m), environment())).eval(env, given);
+            * */
+
+            FNCExpressionNode mape = map.buildAST(l);
+            Recrec recrec = new Recrec(mape);
+            FNCExpressionNode m = recrec.buildM();
+            recrec.acc = accum(scope((aaa) -> m, decl), seq(setForwards((aa) -> m), environment())).buildAST(l);
+            return recrec;
+        };
     }
 
     @Override
@@ -202,19 +353,6 @@ public interface TruffleRecursiveFactory extends
         }
     }
 
-    class SetForwards implements FNCBuildAST {
-        private final FNCBuildAST idFwdMap;
-
-        public SetForwards(FNCBuildAST idFwdMap) {
-            this.idFwdMap = idFwdMap;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new RecursiveSetForwardsNode(idFwdMap.buildAST(l));
-        }
-    }
-
     class Reclose implements FNCBuildAST {
         private final FNCBuildAST map;
         private final FNCBuildAST decl;
@@ -234,14 +372,18 @@ public interface TruffleRecursiveFactory extends
     }
 
 
+
+
     @NodeInfo(description = "Recursive FollowIfFwd Node")
     class RecursiveFollowIfFwdNode extends FNCExpressionNode {
 
+        private final FNCDispatchNode dispatchNode;
         @Child
         private FNCExpressionNode fwde;
 
         public RecursiveFollowIfFwdNode(FNCExpressionNode fwde) {
             this.fwde = fwde;
+            this.dispatchNode = FNCDispatchNodeGen.create();
         }
 
         @Override
@@ -258,9 +400,9 @@ public interface TruffleRecursiveFactory extends
 
                     try {
                         for (FrameSlot s : frame.getFrameDescriptor().getSlots()) {
+//                            System.out.println("FNCFONCTION");
                             final Object val = frame.getObject(s);
-                            final FrameSlot s2 = virtualFrame.getFrameDescriptor().findOrAddFrameSlot(s.getIdentifier());
-                            virtualFrame.setObject(s2, val);
+                            virtualFrame.setObject(s, val);
                         }
                     } catch (FrameSlotTypeException e) {
                         e.printStackTrace();
@@ -284,6 +426,63 @@ public interface TruffleRecursiveFactory extends
                 return ((Abs) v).body();
             }
             return v;
+        }
+    }
+
+    class Recrec extends FNCExpressionNode {
+        @Child
+        private FNCExpressionNode mape;
+
+        @Child
+        public FNCExpressionNode acc;
+        private IValue m;
+
+        public Recrec(FNCExpressionNode mape) {
+            this.mape = mape;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            this.m = (IValue) mape.executeGeneric(frame);
+            return acc.executeGeneric(frame);
+        }
+
+        public FNCExpressionNode buildM() {
+            return new RecrecSubnode();
+        }
+
+        private class RecrecSubnode extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return m;
+            }
+        }
+    }
+
+    class FreshFwdsSubnode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode idListe;
+
+        public FreshFwdsSubnode(FNCExpressionNode idListe) {
+            this.idListe = idListe;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            final IList idListVal = (IList) idListe.executeGeneric(frame);
+            int listLength = idListVal.length();
+            Fwd fwd = null;
+            final IValueFactory vf = ValueFactory.getInstance();
+            IListWriter lw = vf.listWriter();
+            for (int i = 0; i < listLength; i++) {
+                IValue id = idListVal.get(i);
+                fwd = new Fwd();
+                final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot(id);
+                frame.setObject(given, fwd);
+                lw.append(fwd);
+            }
+            return lw.done();
         }
     }
 }

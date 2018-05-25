@@ -20,7 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 
-@TruffleLanguage.Registration(id = "fnc", name = "FNC", version = "0.12", mimeType = FNCLanguage.MIME_TYPE)
+@TruffleLanguage.Registration(id = "fnc", name = "fnc   ", version = "0.12", mimeType = FNCLanguage.MIME_TYPE)
 public class FNCLanguage extends TruffleLanguage<FNCContext> {
     public static final String MIME_TYPE = "application/x-fnc";
 
@@ -49,7 +49,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         };
         final camllight.algebras.AllAlg alg = () -> evalAlg;
         final FNCBuildAST eval = builder.build(alg);
-        final FNCStatementNode libs = importStandardLibrary();
+        final FNCExpressionNode libs = importStandardLibrary();
 //        this.getContextReference().initRegistry(this);
 
         final FNCExpressionNode clExecuteNode = eval.buildAST(this);
@@ -69,7 +69,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     }
 
 
-    public FNCStatementNode importStandardLibrary() throws FunconException {
+    public FNCExpressionNode importStandardLibrary() throws FunconException {
         final funcons.algebras.AllAlg<FNCBuildAST> alg = new TruffleAllFactory() {
         };
         final StandardLibrary<FNCBuildAST> lib = () -> alg;

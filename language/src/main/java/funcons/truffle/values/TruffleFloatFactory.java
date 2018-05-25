@@ -25,7 +25,7 @@ public interface TruffleFloatFactory extends FloatAlg<FNCBuildAST> {
 
     @Override
     default FNCBuildAST floatSubtract(FNCBuildAST a, FNCBuildAST b) {
-        return l -> new FloatFloatSubstractNode(a.buildAST(l), b.buildAST(l));
+        return l -> FloatFloatSubstractNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     @Override

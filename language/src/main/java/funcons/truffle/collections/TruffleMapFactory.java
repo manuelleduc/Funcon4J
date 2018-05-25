@@ -129,7 +129,7 @@ public interface TruffleMapFactory extends MapAlg<FNCBuildAST> {
 
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new MapMapGetNode((FNCExpressionNode) map, (FNCExpressionNode) key);
+            return new MapMapGetNode((FNCExpressionNode) map.buildAST(l), (FNCExpressionNode) key.buildAST(l));
         }
     }
 

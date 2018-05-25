@@ -12,10 +12,10 @@ import io.usethesource.vallang.IInteger;
 public abstract class FNCExpressionNode extends FNCStatementNode {
     public abstract Object executeGeneric(VirtualFrame frame);
 
-    @Override
-    public void executeVoid(VirtualFrame frame) {
-        executeGeneric(frame);
-    }
+//    @Override
+//    public void executeVoid(VirtualFrame frame) {
+//        executeGeneric(frame);
+//    }
 
     public IInteger executeIInteger(VirtualFrame frame) throws UnexpectedResultException {
         return FNCTypesGen.expectIInteger(executeGeneric(frame));

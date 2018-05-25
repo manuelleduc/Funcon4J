@@ -54,10 +54,16 @@ public interface TrufflePatternFactory extends
 //        });
         return l -> {
             final FNCExpressionNode pate1 = pat1.buildAST(l);
+            PatternPattUnion1Node patternPattUnion1Node = new PatternPattUnion1Node(pate1);
             final FNCExpressionNode pate2 = pat2.buildAST(l);
+            PatternPattUnion2Node patternPattUnion2Node = new PatternPattUnion2Node(pate2);
             return abs(z -> {
-                FNCBuildAST fncBuildAST = lo -> new PatternPattUnion1Node(pate1);
-                FNCBuildAST fncBuildAST1 = lo -> new PatternPattUnion2Node(pate2);
+                FNCBuildAST fncBuildAST = lo -> {
+                    return patternPattUnion1Node;
+                };
+                FNCBuildAST fncBuildAST1 = lo -> {
+                    return patternPattUnion2Node;
+                };
                 return mapUnion(fncBuildAST, fncBuildAST1).buildAST(l);
             }).buildAST(l);
         };
@@ -73,7 +79,10 @@ public interface TrufflePatternFactory extends
         return l -> {
             final FNCExpressionNode patte = patt.buildAST(l);
             final FNCExpressionNode enve = environment().buildAST(l);
-            return abs(x -> new PatternPattNonBindingNode(patte, enve)).buildAST(l);
+            PatternPattNonBindingNode patternPattNonBindingNode = new PatternPattNonBindingNode(patte, enve);
+            return abs(x -> {
+                return patternPattNonBindingNode;
+            }).buildAST(l);
         };
     }
 

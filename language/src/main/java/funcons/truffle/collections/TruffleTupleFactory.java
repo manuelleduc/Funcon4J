@@ -79,10 +79,15 @@ public interface TruffleTupleFactory extends
     @Override
     default FNCBuildAST tuplePrefixMatch(FNCBuildAST tup, FNCBuildAST p1, FNCBuildAST p2) {
 
-        return l -> mapUnion(
-                match(tupleHead(tup), p1),
-                match(tupleTail(tup), p2)
-        ).buildAST(l);
+        return new FNCBuildAST() {
+            @Override
+            public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+                return mapUnion(
+                        match(tupleHead(tup), p1),
+                        match(tupleTail(tup), p2)
+                ).buildAST(l);
+            }
+        };
 
     }
 

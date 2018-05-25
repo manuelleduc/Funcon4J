@@ -121,7 +121,7 @@ public interface TruffleAssignFactory extends NullAlg<FNCBuildAST>, AssignAlg<FN
         @Override
         public Object executeGeneric(VirtualFrame frame) {
             ((Variable) vare.executeGeneric(frame)).store((IValue) xe.executeGeneric(frame));
-            return ne;
+            return ne.executeGeneric(frame);
         }
     }
 

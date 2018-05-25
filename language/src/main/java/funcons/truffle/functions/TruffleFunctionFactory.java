@@ -14,6 +14,7 @@ import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.values.NullNullNode;
+import funcons.values.signals.RunTimeFunconException;
 import io.usethesource.vallang.IList;
 
 public interface TruffleFunctionFactory extends
@@ -40,10 +41,14 @@ public interface TruffleFunctionFactory extends
     @Override
     default FNCBuildAST abs(FNCBuildAST patt, FNCBuildAST exp) {
 
-        return l -> {
-            final FNCExpressionNode patte = patt.buildAST(l);
+        return new FNCBuildAST() {
+            @Override
+            public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+                final FNCExpressionNode patte = patt.buildAST(l);
 
-            return scope(language -> new FunctionAbsNode(patte), exp).buildAST(l);
+                FunctionAbsNode functionAbsNode = new FunctionAbsNode(patte);
+                return scope(language -> functionAbsNode, exp).buildAST(l);
+            }
         };
     }
 
@@ -53,9 +58,13 @@ public interface TruffleFunctionFactory extends
         /*return (env, given) -> supply(arg,
                 ((funcons.values.Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);*/
 
-        return l -> {
-            final FNCExpressionNode abse = abs.buildAST(l);
-            return supply(arg, z -> new FunctionApplyNode(abse)).buildAST(l);
+        return new FNCBuildAST() {
+            @Override
+            public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+                final FNCExpressionNode abse = abs.buildAST(l);
+                FunctionApplyNode functionApplyNode = new FunctionApplyNode(abse);
+                return supply(arg, z -> functionApplyNode).buildAST(l);
+            }
         };
     }
 
@@ -73,13 +82,16 @@ return (env, given) -> {
         };
  */
 
-        return lo -> {
-            final FNCExpressionNode le = l.buildAST(lo);
+        return new FNCBuildAST() {
+            @Override
+            public FNCExpressionNode buildAST(FNCLanguage lo) throws RunTimeFunconException {
+                final FNCExpressionNode le = l.buildAST(lo);
 
-            final FunctionApplyToEachNode applyToEachNpde = new FunctionApplyToEachNode(le);
-            applyToEachNpde.e1 = apply(a, listHead(applyToEachNpde.createE1())).buildAST(lo);
-            applyToEachNpde.e2 = listTail(applyToEachNpde.createE1()).buildAST(lo);
-            return applyToEachNpde;
+                final FunctionApplyToEachNode applyToEachNpde = new FunctionApplyToEachNode(le);
+                applyToEachNpde.e1 = apply(a, listHead(applyToEachNpde.createE1())).buildAST(lo);
+                applyToEachNpde.e2 = listTail(applyToEachNpde.createE1()).buildAST(lo);
+                return applyToEachNpde;
+            }
         };
     }
 

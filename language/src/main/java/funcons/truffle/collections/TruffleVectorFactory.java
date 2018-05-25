@@ -55,7 +55,10 @@ public interface TruffleVectorFactory extends AssignAlg<FNCBuildAST>, VectorAlg<
         return l -> {
             final FNCExpressionNode ve = vector.buildAST(l);
             final FNCExpressionNode ie = index.buildAST(l);
-            final FNCBuildAST var = language -> new VectorVectorAssignNode(ve, ie);
+            VectorVectorAssignNode vectorVectorAssignNode = new VectorVectorAssignNode(ve, ie);
+            final FNCBuildAST var = language -> {
+                return vectorVectorAssignNode;
+            };
             return assign(var, val).buildAST(l);
         };
     }
