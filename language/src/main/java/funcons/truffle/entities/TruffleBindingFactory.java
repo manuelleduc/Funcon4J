@@ -68,13 +68,6 @@ public interface TruffleBindingFactory extends
 
     @Override
     default FNCBuildAST accum(FNCBuildAST environment, FNCBuildAST decl) {
-//        return new Accum(environment, decl, this);
-
-        /*return (env, given) -> {
-            IValue currentEnv = environment.eval(env, given);
-            IEval scope = scope((e, g) -> currentEnv, mapOver(decl, (e, g) -> currentEnv));
-            return scope.eval(env, given);
-        };*/
 
         return l -> {
             FNCExpressionNode ee = environment.buildAST(l);
@@ -166,24 +159,6 @@ public interface TruffleBindingFactory extends
         }
     }
 
-    class Accum implements FNCBuildAST {
-        private final FNCBuildAST environment;
-        private final FNCBuildAST decl;
-        private final TruffleBindingFactory alg;
-
-        public Accum(FNCBuildAST environment, FNCBuildAST decl, TruffleBindingFactory alg) {
-            this.environment = environment;
-            this.decl = decl;
-            this.alg = alg;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            final FNCExpressionNode currentEnv = environment.buildAST(l);
-            final FNCBuildAST scope = alg.scope((n) -> currentEnv, alg.mapOver(decl, (m) -> currentEnv));
-            return scope.buildAST(l);
-        }
-    }
 
     class BindingAccumNode extends FNCExpressionNode {
 

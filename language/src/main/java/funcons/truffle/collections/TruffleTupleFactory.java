@@ -48,9 +48,6 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCBuildAST tuplePrefix(FNCBuildAST x, FNCBuildAST tup) {
-//        return (env, given) ->
-//                ((IList) tup.eval(env, given))
-//                        .insert(x.eval(env, given));
         return new TuplePrefix(x, tup);
     }
 
@@ -61,13 +58,6 @@ public interface TruffleTupleFactory extends
 
     @Override
     default FNCBuildAST tupleTail(FNCBuildAST tup) {
-//        return (env, given) -> {
-//            IList tupVal = ((IList) tup.eval(env, given));
-//            if (tupVal.length() <= 1) {
-//                return vf.list();
-//            }
-//            return tupVal.sublist(1, tupVal.length() - 1);
-//        };
         return new TupleTail(tup);
     }
 

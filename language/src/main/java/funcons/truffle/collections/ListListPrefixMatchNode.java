@@ -26,8 +26,7 @@ public class ListListPrefixMatchNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        final IList list = (IList) l.executeGeneric(frame);
-        this.list = list;
+        this.list = (IList) l.executeGeneric(frame);
         if (list.length() == 0) {
             return f.executeGeneric(frame);
         }

@@ -47,11 +47,6 @@ public interface TrufflePatternFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCBuildAST pattUnion(FNCBuildAST pat1, FNCBuildAST pat2) {
-//        return abs((env, given) -> {
-//            CLExecuteNode env1 = ((Abs<CLExecuteNode>) pat1.eval(env, given)).body();
-//            CLExecuteNode env2 = ((Abs<CLExecuteNode>) pat2.eval(env, given)).body();
-//            return mapUnion(env1, env2).eval(env, given);
-//        });
         return l -> {
             final FNCExpressionNode pate1 = pat1.buildAST(l);
             PatternPattUnion1Node patternPattUnion1Node = new PatternPattUnion1Node(pate1);
@@ -72,10 +67,6 @@ public interface TrufflePatternFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCBuildAST pattNonBinding(FNCBuildAST patt) {
-//        return abs((env, given) -> {
-//            ((Abs<CLExecuteNode>) patt.eval(env, given)).body().eval(env, given);
-//            return environment().eval(env, given);
-//        });
         return l -> {
             final FNCExpressionNode patte = patt.buildAST(l);
             final FNCExpressionNode enve = environment().buildAST(l);
@@ -98,10 +89,7 @@ public interface TrufflePatternFactory extends
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            final Object o = pate1.executeGeneric(frame);
-            if (o instanceof Abs)
-                return ((Abs) o).body();
-            else return o;
+            return pate1.executeGeneric(frame);
         }
     }
 
@@ -117,10 +105,7 @@ public interface TrufflePatternFactory extends
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            final Object o = pate2.executeGeneric(frame);
-            if (o instanceof Abs)
-                return ((Abs) o).body();
-            else return o;
+            return pate2.executeGeneric(frame);
         }
     }
 
@@ -141,10 +126,6 @@ public interface TrufflePatternFactory extends
         @Override
         public Object executeGeneric(VirtualFrame frame) {
             final Object o = patte.executeGeneric(frame);
-            if (o instanceof Abs) {
-                final Object body = ((Abs) o).body();
-                System.out.println(">>>> " + body);
-            }
             return enve.executeGeneric(frame);
         }
     }

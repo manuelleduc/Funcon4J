@@ -49,26 +49,7 @@ public interface TruffleCurryFactory extends
 
     @Override
     default FNCBuildAST curryN(FNCBuildAST n, FNCBuildAST a) {
-//        return (env, given) -> {
-//            IValue index = n.eval(env, given);
-//            return ifTrue(
-//                    equal((e,g)->index, lit(0)),
-//                    apply(a, tuple()),
-//                    abs((localEnv, localGiven) -> curryN(
-//                            intSubtract(n, lit(1)),
-//                            partialAppN(a, (e,g) -> localGiven))
-//                            .eval(env, given)))
-//                    .eval(env, given);
-//        };
-
-//        return new CurryN(n, a);
         return l -> {
-
-            // null3 = curryN(
-            //                            intSubtract(n, lit(1)),
-            //                            partialAppN(a, (u) -> null))
-            //                            .eval(env, given)
-
             CurryNNode curryNNode = new CurryNNode(n.buildAST(l));
             FNCExpressionNode fncExpressionNode1 = new CurryNSubnode1();
             FNCExpressionNode fncExpressionNode = curryNNode.buildA();
@@ -84,21 +65,6 @@ public interface TruffleCurryFactory extends
     @Override
     default FNCBuildAST uncurry(FNCBuildAST f) {
         return abs(apply(apply(f, project(lit(0), given())), project(lit(1), given())));
-    }
-
-    class CurryN implements FNCBuildAST {
-        private final FNCBuildAST n;
-        private final FNCBuildAST a;
-
-        public CurryN(FNCBuildAST n, FNCBuildAST a) {
-            this.n = n;
-            this.a = a;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new CurryCurryNNode(n.buildAST(l), a.buildAST(l));
-        }
     }
 
     class CurryNNode extends FNCExpressionNode {

@@ -10,7 +10,6 @@ public interface TruffleTupleTypeFactory extends TupleTypeAlg<FNCBuildAST> {
 
     @Override
     default FNCBuildAST tupleType() {
-//        return (env, given) -> vf.list();
         return new TupleType();
     }
 

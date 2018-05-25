@@ -1,7 +1,6 @@
 package funcons.truffle.nodes;
 
 import com.oracle.truffle.api.TruffleLanguage;
-import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import com.oracle.truffle.api.nodes.RootNode;
@@ -14,11 +13,6 @@ public class FNCRootNode extends RootNode {
 
     public FNCRootNode(TruffleLanguage<?> language, FNCExpressionNode child) {
         super(language);
-        this.child = child;
-    }
-
-    public FNCRootNode(TruffleLanguage<?> language, FrameDescriptor frameDescriptor, FNCExpressionNode child) {
-        super(language, frameDescriptor);
         this.child = child;
     }
 

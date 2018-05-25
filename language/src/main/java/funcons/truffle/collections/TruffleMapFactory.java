@@ -31,23 +31,11 @@ public interface TruffleMapFactory extends MapAlg<FNCBuildAST> {
 
     @Override
     default FNCBuildAST mapUpdate(FNCBuildAST map, FNCBuildAST key, FNCBuildAST val) {
-//        return (env, given) -> {
-//            IValue k = (IValue) key.eval(env, given);
-//            IValue v = (IValue) val.eval(env, given);
-//            IMap m = (IMap) map.eval(env, given);
-//            return m.put(k, v);
-//        };
         return new MapUpdate(map, key, val);
     }
 
     @Override
     default FNCBuildAST mapDomain(FNCBuildAST map) {
-//        return (env, given) -> {
-//            IMap m = (IMap) map.eval(env, given);
-//            IListWriter lw = vf.listWriter();
-//            m.forEach(lw::append);
-//            return lw.done();
-//        };
         return new MapDomain(map);
     }
 
@@ -63,10 +51,6 @@ public interface TruffleMapFactory extends MapAlg<FNCBuildAST> {
 
     @Override
     default FNCBuildAST mapGet(FNCBuildAST map, FNCBuildAST key) {
-//        return (env, given) -> {
-//            IMap m = (IMap) map.eval(env, given);
-//            return m.get((IValue) key.eval(env, given));
-//        };
         return new MapGet(map, key);
 
     }

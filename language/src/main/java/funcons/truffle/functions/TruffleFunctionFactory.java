@@ -190,13 +190,7 @@ return (env, given) -> {
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            final Object o = patte.executeGeneric(frame);
-            if (o instanceof funcons.values.Abs) {
-                return ((funcons.values.Abs<Object>) o).body();
-            } else {
-                return o;
-            }
-
+            return patte.executeGeneric(frame);
         }
     }
 
@@ -212,11 +206,7 @@ return (env, given) -> {
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-
-            final Object o = abse.executeGeneric(frame);
-            if (o instanceof funcons.values.Abs)
-                return ((funcons.values.Abs) o).body();
-            else return o;
+            return abse.executeGeneric(frame);
         }
     }
 }

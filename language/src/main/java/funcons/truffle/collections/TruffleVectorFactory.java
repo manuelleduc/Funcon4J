@@ -25,11 +25,6 @@ public interface TruffleVectorFactory extends AssignAlg<FNCBuildAST>, VectorAlg<
 
     @Override
     default FNCBuildAST vectorSelect(FNCBuildAST vector, FNCBuildAST index) {
-//        return (env, given) -> {
-//            IList vectorVal = (IList)vector.eval(env, given);
-//            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
-//            return assignedValue((e,g)->var).eval(env, given);
-//        };
         return new VectorSelect(vector, index, this);
     }
 
@@ -45,13 +40,6 @@ public interface TruffleVectorFactory extends AssignAlg<FNCBuildAST>, VectorAlg<
 
     @Override
     default FNCBuildAST vectorAssign(FNCBuildAST vector, FNCBuildAST index, FNCBuildAST val) {
-//        return (env, given) -> {
-//            IList vectorVal = (IList)vector.eval(env, given);
-//            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
-//            return assign((e,g)->var, val).eval(env, given);
-//        };
-
-
         return l -> {
             final FNCExpressionNode ve = vector.buildAST(l);
             final FNCExpressionNode ie = index.buildAST(l);
@@ -113,35 +101,6 @@ public interface TruffleVectorFactory extends AssignAlg<FNCBuildAST>, VectorAlg<
         }
     }
 
-  /*  class VectorAssign implements FNCExecuteNode {
-        private final FNCExecuteNode vector;
-        private final FNCExecuteNode index;
-        private final FNCExecuteNode val;
-        private final TruffleVectorFactory alg;
-
-        public VectorAssign(FNCExecuteNode vector, FNCExecuteNode index, FNCExecuteNode val, TruffleVectorFactory alg) {
-            this.vector = vector;
-            this.index = index;
-            this.val = val;
-            this.alg = alg;
-        }
-
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-
-            //        return (env, given) -> {
-//            IList vectorVal = (IList)vector.eval(env, given);
-//            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
-//            return assign((e,g)->var, val).eval(env, given);
-//        };
-
-
-            return new VectorVectorAssignNode((FNCExpressionNode) vector.buildAST(l), (FNCExpressionNode) index.buildAST(l));
-//            return alg.assign(vectorVectorAssignNode, val).buildAST(l);
-        }
-    }*/
-
     class VectorSelect implements FNCBuildAST {
         private final FNCBuildAST vector;
         private final FNCBuildAST index;
@@ -158,12 +117,6 @@ public interface TruffleVectorFactory extends AssignAlg<FNCBuildAST>, VectorAlg<
 
             return alg.assignedValue(z -> new VectorVectorSelectNode(vector.buildAST(z), index.buildAST(z))).buildAST(l);
         }
-
-        //        return (env, given) -> {
-//            IList vectorVal = (IList)vector.eval(env, given);
-//            IValue var = vectorVal.get(((IInteger)index.eval(env, given)).intValue());
-//            return assignedValue((e,g)->var).eval(env, given);
-//        };
     }
 
     @NodeInfo(description = "Vector VectorAssign Node")

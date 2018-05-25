@@ -26,12 +26,6 @@ public interface TruffleRecordFactory extends
 
     @Override
     default FNCBuildAST record(FNCBuildAST field, FNCBuildAST val) {
-//        return (env, given) -> {
-//            IMapWriter mw = vf.mapWriter();
-//            mw.put(field.eval(env, given),
-//                    val.eval(env, given));
-//            return mw.done();
-//        };
         return new Record(field, val);
     }
 
@@ -42,9 +36,6 @@ public interface TruffleRecordFactory extends
 
     @Override
     default FNCBuildAST recordSelect(FNCBuildAST record, FNCBuildAST field) {
-//        return (env, given) ->
-//                ((IMap) record.eval(env, given))
-//                        .get(field.eval(env, given));
         return l -> new RecordRecordSelectNode(record.buildAST(l), field.buildAST(l));
     }
 
@@ -56,7 +47,6 @@ public interface TruffleRecordFactory extends
 
     @Override
     default FNCBuildAST recordUnion(FNCBuildAST rec1, FNCBuildAST rec2) {
-
         return new RecordUnion(rec1, rec2);
     }
 
@@ -91,22 +81,6 @@ public interface TruffleRecordFactory extends
         };
     }
 
-    class RecordMatch implements FNCBuildAST {
-
-
-        private final FNCBuildAST rec;
-        private final FNCBuildAST pattMap;
-
-        public RecordMatch(FNCBuildAST rec, FNCBuildAST pattMap) {
-            this.rec = rec;
-            this.pattMap = pattMap;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new RecordRecordMatchNode(this.rec.buildAST(l), this.pattMap.buildAST(l));
-        }
-    }
 
     class Field implements FNCBuildAST {
         private final String name;

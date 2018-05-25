@@ -50,16 +50,12 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         final camllight.algebras.AllAlg alg = () -> evalAlg;
         final FNCBuildAST eval = builder.build(alg);
         final FNCExpressionNode libs = importStandardLibrary();
-//        this.getContextReference().initRegistry(this);
 
         final FNCExpressionNode clExecuteNode = eval.buildAST(this);
 
 
-        // TODO: write a visitor that register callables with name?
-
         // useless so far, just to avoir an ugly runtime exception when the execution ends.
         final FNCRootNode rootNode = new FNCMainRootNode(this, clExecuteNode, libs);
-//        System.out.println(clExecuteNode);
         return Truffle.getRuntime().createCallTarget(rootNode);
     }
 
@@ -89,7 +85,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
                     alg.bindValue(alg.id(methodName), language -> {
 
                         try {
-                            FNCStatementNode abcd = ((FNCBuildAST) m.invoke(lib)).buildAST(language);
+                            FNCExpressionNode abcd = ((FNCBuildAST) m.invoke(lib)).buildAST(language);
                             return new WrapperNode(abcd);
                         } catch (IllegalAccessException | InvocationTargetException e) {
                             e.printStackTrace();
@@ -107,9 +103,9 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     @NodeInfo(description = "Library Import wrapper")
     public static class WrapperNode extends FNCExpressionNode {
         @Child
-        private FNCStatementNode abcd;
+        private FNCExpressionNode abcd;
 
-        public WrapperNode(FNCStatementNode abcd) {
+        public WrapperNode(FNCExpressionNode abcd) {
             this.abcd = abcd;
         }
 

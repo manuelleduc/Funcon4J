@@ -42,7 +42,6 @@ public interface TruffleTypeFactory extends
 
     @Override
     default FNCBuildAST tag(java.lang.String name) {
-//        return (env, given) -> vf.string(name);
         TypeTagNode typeTagNode = new TypeTagNode(name);
         return l -> typeTagNode;
     }
@@ -54,7 +53,6 @@ public interface TruffleTypeFactory extends
 
     @Override
     default FNCBuildAST clVariant(java.lang.String tagName, FNCBuildAST exp) {
-//        return (env, given) -> new CLVariant(vf.string(tagName), exp.eval(env, given));
         return l -> new TypeClVariantNode(tagName, exp.buildAST(l));
     }
 
@@ -82,11 +80,6 @@ public interface TruffleTypeFactory extends
 
     @Override
     default FNCBuildAST nomValSelect(FNCBuildAST nomTag, FNCBuildAST nomVal) {
-//        return (env, given) -> {
-//            ITuple nVal = (ITuple) nomVal.eval(env, given);
-//            return whenTrue(equal(nomTag, (e, g) -> nVal.get(0)), (e, g) -> nVal.get(1)).eval(env, given);
-//        };
-//        throw new RuntimeException("Not implemented");
         return l -> {
             final FNCExpressionNode nve = nomVal.buildAST(l);
             final TypeNomValSelectNode ret = new TypeNomValSelectNode(nve);
@@ -104,11 +97,6 @@ public interface TruffleTypeFactory extends
 
     @Override
     default FNCBuildAST depends(FNCBuildAST type1, FNCBuildAST type2) {
-//        return (env, given) ->
-//                vf.tuple(
-//                        type1.eval(env, given),
-//                        type2.eval(env, given));
-//        throw new RuntimeException("Not implemented");
         return l -> {
             return new TypeDependsNode(type1.buildAST(l), type2.buildAST(l));
         };
@@ -156,14 +144,6 @@ public interface TruffleTypeFactory extends
 
     @Override
     default FNCBuildAST variantMatch(FNCBuildAST tag, FNCBuildAST variant, FNCBuildAST patt) {
-//        return (env, given) -> {
-//            IValue v = variant.eval(env, given);
-//            if (v instanceof CLVariant) {
-//                CLVariant vVar = (CLVariant) v;
-//                return whenTrue(equal(tag, (e, g) -> vVar.tag()), match((e, g) -> vVar.value(), patt)).eval(env, given);
-//            }
-//            return fail().eval(env, given);
-//        };
         return l -> {
             final FNCExpressionNode z = fail().buildAST(l);
             final FNCExpressionNode ve = variant.buildAST(l);

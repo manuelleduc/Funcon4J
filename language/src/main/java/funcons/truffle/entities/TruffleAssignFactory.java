@@ -15,22 +15,6 @@ public interface TruffleAssignFactory extends NullAlg<FNCBuildAST>, AssignAlg<FN
 
     @Override
     default FNCBuildAST assign(final FNCBuildAST var, final FNCBuildAST x) {
-        /*return l -> {
-            FNCExpressionNode vare = var.buildAST(l);
-            FNCExpressionNode nulle = null_().buildAST(l);
-            return new FNCExpressionNode() {
-                @Override
-                public Object executeGeneric(VirtualFrame frame) {
-                    return nulle.executeGeneric(frame);
-                }
-            };
-        };*/
-
-
-        //((Variable)var.eval(env, given)).store(x.eval(env, given));
-        //            return null_().eval(env, given);
-
-
         return l -> {
 
             final FNCExpressionNode ne = null_().buildAST(l);
@@ -48,15 +32,6 @@ public interface TruffleAssignFactory extends NullAlg<FNCBuildAST>, AssignAlg<FN
 
     @Override
     default FNCBuildAST assignedValueIfVar(FNCBuildAST v) {
-//        return (env, given) -> {
-//            IValue val = v.eval(env, given);
-//            if (val instanceof Variable) {
-//                return ((Variable)val).value();
-//            }
-//            return val;
-//        };
-
-
         return l -> {
             final FNCExpressionNode ve = v.buildAST(l);
             return new AssignAssignedValueIfVarNode(ve);
@@ -70,21 +45,6 @@ public interface TruffleAssignFactory extends NullAlg<FNCBuildAST>, AssignAlg<FN
             final FNCExpressionNode xe = x.buildAST(l);
             return new AssignAllocNode(xe);
         };
-    }
-
-    class Assign implements FNCBuildAST {
-        private final FNCBuildAST var;
-        private final FNCBuildAST x;
-
-        public Assign(FNCBuildAST var, FNCBuildAST x) {
-            this.var = var;
-            this.x = x;
-        }
-
-        @Override
-        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new AssignAssignNode(var.buildAST(l), x.buildAST(l));
-        }
     }
 
     class AssignedValue implements FNCBuildAST {

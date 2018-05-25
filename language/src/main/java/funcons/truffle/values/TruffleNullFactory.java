@@ -15,8 +15,6 @@ public interface TruffleNullFactory extends NullAlg<FNCBuildAST> {
 
     @Override
     default FNCBuildAST undefined() {
-
-        // return (env, given) -> new Undefined();
         return new Undefined();
     }
 

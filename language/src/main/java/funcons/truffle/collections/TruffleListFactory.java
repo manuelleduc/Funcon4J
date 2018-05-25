@@ -27,12 +27,6 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCBuildAST projectList(FNCBuildAST index, FNCBuildAST list) {
-//        return (env, given) -> {
-//            IInteger i = (IInteger) index.eval(env, given);
-//            IList l = (IList) list.eval(env, given);
-//            return l.get(i.intValue());
-//        };
-
         return new ProjectList(index, list);
     }
 
@@ -50,9 +44,6 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCBuildAST list(FNCBuildAST x1, FNCBuildAST x2) {
-//        return (env, given) -> vf.list(
-//                x1.eval(env, given),
-//                x2.eval(env, given));
         return l -> {
             final FNCExpressionNode xe1 = x1.buildAST(l);
             final FNCExpressionNode xe2 = x2.buildAST(l);
@@ -68,15 +59,6 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCBuildAST listPrefixMatch(FNCBuildAST l, FNCBuildAST p1, FNCBuildAST p2) {
-//        return (env, given) -> {
-//            IList list = (IList) l.eval(env, given);
-//            if (list.length() == 0) {
-//                return fail().eval(env, given);
-//            }
-//            IValue head = list.get(0);
-//            IList tail = list.delete(0);
-//            return mapOver(match((e, g) -> head, p1), match((e, g) -> tail, p2)).eval(env, given);
-//        };
 
 
         return m -> {
@@ -95,31 +77,16 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCBuildAST intClosedInterval(FNCBuildAST m, FNCBuildAST n) {
-//        return (env, given) -> {
-//            int start = ((IInteger) m.eval(env, given)).intValue();
-//            int finish = ((IInteger) n.eval(env, given)).intValue();
-//            IListWriter lw = vf.listWriter();
-//            for (int i = start; i <= finish; i++) {
-//                lw.append(vf.integer(i));
-//            }
-//            return lw.done();
-//        };
         return l -> new ListIntCloseIntervalNode(m.buildAST(l), n.buildAST(l));
     }
 
     @Override
     default FNCBuildAST listReverse(FNCBuildAST l) {
-//        return (env, given) -> ((IList) l.eval(env, given)).reverse();
         return m -> new ListListReverseNode(l.buildAST(m));
     }
 
     @Override
     default FNCBuildAST listAppend(FNCBuildAST list1, FNCBuildAST list2) {
-//        return (env, given) -> {
-//            IList l1 = (IList) list1.eval(env, given);
-//            IList l2 = (IList) list2.eval(env, given);
-//            return l1.concat(l2);
-//        };
         return new ListAppend(list1, list2);
     }
 
@@ -139,8 +106,6 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCBuildAST listLength(FNCBuildAST list) {
-//        return (env, given) ->
-//                vf.integer(((IList) list.eval(env, given)).length());
         return new ListLength(list);
     }
 

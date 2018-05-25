@@ -19,13 +19,6 @@ public class BindingBoundValueNode extends FNCExpressionNode {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
 
-//        IMapWriter mw = vf.mapWriter();
-//
-//        IValue eval = id.eval(env, given);
-//        IValue eval1 = exp.eval(env, given);
-//        mw.put(eval, eval1);
-//        return mw.done();
-
         final Object functionName = id.executeGeneric(frame);
 
         try {

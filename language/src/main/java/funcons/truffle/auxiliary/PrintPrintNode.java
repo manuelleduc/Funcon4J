@@ -5,7 +5,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.values.NullNullNode;
-import funcons.values.Abs;
 import funcons.values.Variable;
 import org.apache.commons.io.IOUtils;
 
@@ -32,10 +31,7 @@ public class PrintPrintNode extends FNCExpressionNode {
     public Object executeGeneric(VirtualFrame frame) {
         final Object o = x.executeGeneric(frame);
         final String data;
-        if (o instanceof Abs) {
-            // FIXME: hack!
-            data = String.valueOf(((Abs) o).body());
-        } else if (o instanceof Variable) {
+        if (o instanceof Variable) {
             data = String.valueOf(((Variable) o).value());
         } else {
             data = String.valueOf(o);
