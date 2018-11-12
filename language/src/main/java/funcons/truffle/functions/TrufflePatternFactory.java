@@ -12,7 +12,6 @@ import funcons.algebras.functions.PatternAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.values.Abs;
 
 public interface TrufflePatternFactory extends
         BoolAlg<FNCBuildAST>,
@@ -51,16 +50,13 @@ public interface TrufflePatternFactory extends
             final FNCExpressionNode pate1 = pat1.buildAST(l);
             PatternPattUnion1Node patternPattUnion1Node = new PatternPattUnion1Node(pate1);
             final FNCExpressionNode pate2 = pat2.buildAST(l);
-            PatternPattUnion2Node patternPattUnion2Node = new PatternPattUnion2Node(pate2);
-            return abs(z -> {
-                FNCBuildAST fncBuildAST = lo -> {
-                    return patternPattUnion1Node;
-                };
-                FNCBuildAST fncBuildAST1 = lo -> {
-                    return patternPattUnion2Node;
-                };
-                return mapUnion(fncBuildAST, fncBuildAST1).buildAST(l);
+            final PatternPattUnion2Node patternPattUnion2Node = new PatternPattUnion2Node(pate2);
+            final FNCExpressionNode fncExpressionNode = mapUnion(lo -> {
+                return patternPattUnion1Node;
+            }, lo1 -> {
+                return patternPattUnion2Node;
             }).buildAST(l);
+            return abs(z -> fncExpressionNode).buildAST(l);
         };
     }
 
@@ -71,9 +67,7 @@ public interface TrufflePatternFactory extends
             final FNCExpressionNode patte = patt.buildAST(l);
             final FNCExpressionNode enve = environment().buildAST(l);
             PatternPattNonBindingNode patternPattNonBindingNode = new PatternPattNonBindingNode(patte, enve);
-            return abs(x -> {
-                return patternPattNonBindingNode;
-            }).buildAST(l);
+            return abs(x -> patternPattNonBindingNode).buildAST(l);
         };
     }
 

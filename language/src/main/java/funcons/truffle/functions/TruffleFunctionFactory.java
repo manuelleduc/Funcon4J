@@ -35,7 +35,11 @@ public interface TruffleFunctionFactory extends
      */
     @Override
     default FNCBuildAST abs(FNCBuildAST exp) {
-        return new Abs(exp);
+        /*TruffleFunctionFactory c = this;
+        System.out.println("abs " + this + " called");*/
+        return l -> {
+            return new FunctionAbsNode(exp.buildAST(l));
+        };
     }
 
     @Override
@@ -45,8 +49,7 @@ public interface TruffleFunctionFactory extends
             @Override
             public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
                 final FNCExpressionNode patte = patt.buildAST(l);
-
-                FunctionAbsNode functionAbsNode = new FunctionAbsNode(patte);
+                final FunctionAbsNode functionAbsNode = new FunctionAbsNode(patte);
                 return scope(language -> functionAbsNode, exp).buildAST(l);
             }
         };
@@ -55,42 +58,27 @@ public interface TruffleFunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default FNCBuildAST apply(FNCBuildAST abs, FNCBuildAST arg) {
-        /*return (env, given) -> supply(arg,
-                ((funcons.values.Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);*/
 
-        return new FNCBuildAST() {
-            @Override
-            public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-                final FNCExpressionNode abse = abs.buildAST(l);
-                FunctionApplyNode functionApplyNode = new FunctionApplyNode(abse);
-                return supply(arg, z -> functionApplyNode).buildAST(l);
-            }
+        return l -> {
+            final FNCExpressionNode abse = abs.buildAST(l);
+            final FunctionApplyNode functionApplyNode = new FunctionApplyNode(abse);
+            return supply(arg, z -> functionApplyNode).buildAST(l);
         };
     }
 
     @Override
     default FNCBuildAST applyToEach(FNCBuildAST a, FNCBuildAST l) {
-/*
-return (env, given) -> {
-            IValue listVal = l.eval(env, given);
-            IEval cachedListEval = (e,g) -> listVal;
-            return ifTrue(
-                    equal(listLength(cachedListEval), lit(0)),
-                    null_(),
-                    seq(apply(a, listHead(cachedListEval)), applyToEach(a, listTail(cachedListEval)))
-            ).eval(env, given);
-        };
- */
+
 
         return new FNCBuildAST() {
             @Override
             public FNCExpressionNode buildAST(FNCLanguage lo) throws RunTimeFunconException {
                 final FNCExpressionNode le = l.buildAST(lo);
 
-                final FunctionApplyToEachNode applyToEachNpde = new FunctionApplyToEachNode(le);
-                applyToEachNpde.e1 = apply(a, listHead(applyToEachNpde.createE1())).buildAST(lo);
-                applyToEachNpde.e2 = listTail(applyToEachNpde.createE1()).buildAST(lo);
-                return applyToEachNpde;
+                final FunctionApplyToEachNode applyToEachNode = new FunctionApplyToEachNode(le);
+                applyToEachNode.e1 = apply(a, listHead(applyToEachNode.createE1())).buildAST(lo);
+                applyToEachNode.e2 = listTail(applyToEachNode.createE1()).buildAST(lo);
+                return applyToEachNode;
             }
         };
     }
@@ -111,18 +99,18 @@ return (env, given) -> {
         return abs(bindValue(id, given()));
     }
 
-    class Abs implements FNCBuildAST {
-        private final FNCBuildAST exp;
+    /*class Abs implements FNCBuildAST {
+        private final FNCExpressionNode exp;
 
-        public Abs(FNCBuildAST exp) {
+        public Abs(FNCExpressionNode exp) {
             this.exp = exp;
         }
 
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new FunctionAbsNode(exp.buildAST(l));
+            return new FunctionAbsNode(exp);
         }
-    }
+    }*/
 
     class Close implements FNCBuildAST {
         private final FNCBuildAST abs;
@@ -133,7 +121,8 @@ return (env, given) -> {
 
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new FunctionCloseNode(abs.buildAST(l), l);
+            FNCExpressionNode abs = this.abs.buildAST(l);
+            return new FunctionCloseNode(abs, l);
         }
     }
 

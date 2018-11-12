@@ -35,7 +35,6 @@ public interface TruffleRecursiveFactory extends
 
     @Override
     default FNCBuildAST freshFwd() {
-//        return (env, given) -> new Fwd();
         return new FreshFwd();
     }
 
@@ -43,8 +42,7 @@ public interface TruffleRecursiveFactory extends
     default FNCBuildAST freshFwds(FNCBuildAST idList) {
 
         return l -> {
-            FNCExpressionNode idListe = idList.buildAST(l);
-            return new FreshFwdsSubnode(idListe);
+            return new FreshFwdsSubnode(idList.buildAST(l));
         };
     }
 
@@ -53,15 +51,15 @@ public interface TruffleRecursiveFactory extends
     default FNCBuildAST setForwards(FNCBuildAST idFwdMap) {
 
         return l -> {
-            FNCExpressionNode idFwMape = idFwdMap.buildAST(l);
-            FNCExpressionNode undefe = undefined().buildAST(l);
-            FNCExpressionNode nullz = null_().buildAST(l);
-            SetForwardsNode setForwardsNode = new SetForwardsNode(idFwMape, undefe, nullz);
-            FNCExpressionNode a = setForwardsNode.getA();
-            FNCExpressionNode b = setForwardsNode.getB();
+            final FNCExpressionNode idFwMape = idFwdMap.buildAST(l);
+            final FNCExpressionNode undefe = undefined().buildAST(l);
+            final FNCExpressionNode nullz = null_().buildAST(l);
+            final SetForwardsNode setForwardsNode = new SetForwardsNode(idFwMape, undefe, nullz);
+            final FNCExpressionNode a = setForwardsNode.getA();
+            final FNCExpressionNode b = setForwardsNode.getB();
             setForwardsNode.mapDomain = mapDomain(l2 -> a).buildAST(l);
             setForwardsNode.mapGet = mapGet(z -> a, z -> b).buildAST(l);
-            FNCExpressionNode c = setForwardsNode.getC();
+            final FNCExpressionNode c = setForwardsNode.getC();
             setForwardsNode.lengthNode = listLength(n -> c).buildAST(l);
             return setForwardsNode;
         };
@@ -99,6 +97,7 @@ public interface TruffleRecursiveFactory extends
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
+         /*   // TODO: inspect for recursive error
             this.mapVal = (IList) idFwMape.executeGeneric(frame);
             this.mapKeys = (IValue) mapDomain.executeGeneric(frame);
             int length = ((IInteger) lengthNode.executeGeneric(frame)).intValue();
@@ -121,7 +120,10 @@ public interface TruffleRecursiveFactory extends
                 if (fwd != null)
                     fwd.add(v);
             }
-            return nullz.executeGeneric(frame);
+            return nullz.executeGeneric(frame);*/
+
+
+         return null;
         }
 
         public FNCExpressionNode getA() {
@@ -162,10 +164,9 @@ public interface TruffleRecursiveFactory extends
     @Override
     default FNCBuildAST reclose(FNCBuildAST map, FNCBuildAST decl) {
         return l -> {
-            FNCExpressionNode mape = map.buildAST(l);
-            Recrec recrec = new Recrec(mape);
-            FNCExpressionNode m = recrec.buildM();
-            recrec.acc = accum(scope((aaa) -> m, decl), seq(setForwards((aa) -> m), environment())).buildAST(l);
+            final Recrec recrec = new Recrec(map.buildAST(l));
+            final FNCExpressionNode m = recrec.buildM();
+            recrec.acc = accum(scope(aaa -> m, decl), seq(setForwards(aa -> m), environment())).buildAST(l);
             return recrec;
         };
     }
@@ -182,7 +183,6 @@ public interface TruffleRecursiveFactory extends
 
     @Override
     default FNCBuildAST followFwd(FNCBuildAST fwd) {
-//        return (env, given) -> ((Fwd)fwd.eval(env, given)).follow();
         throw new RuntimeException("Not implemented");
     }
 
@@ -288,7 +288,8 @@ public interface TruffleRecursiveFactory extends
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            final IList idListVal = (IList) idListe.executeGeneric(frame);
+            // TODO: Inspect in details
+          /*  final IList idListVal = (IList) idListe.executeGeneric(frame);
             int listLength = idListVal.length();
             Fwd fwd = null;
             final IValueFactory vf = ValueFactory.getInstance();
@@ -300,7 +301,9 @@ public interface TruffleRecursiveFactory extends
                 frame.setObject(given, fwd);
                 lw.append(fwd);
             }
-            return lw.done();
+            return lw.done();*/
+
+          return null;
         }
     }
 }

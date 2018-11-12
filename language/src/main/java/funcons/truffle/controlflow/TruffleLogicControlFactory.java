@@ -58,27 +58,24 @@ public interface TruffleLogicControlFactory extends
 
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            final FNCExpressionNode e1 = e.buildAST(l);
-            final FNCExpressionNode c11 = c1.buildAST(l);
-            final FNCExpressionNode c21 = c2.buildAST(l);
-            return new LogicControlIfTrueNode(e1, c11, c21);
+            return new LogicControlIfTrueNode(e.buildAST(l), c1.buildAST(l), c2.buildAST(l));
         }
     }
 
     class Seq implements FNCBuildAST {
-        private final FNCBuildAST c;
-        private final FNCBuildAST t;
+        private final FNCBuildAST lhs;
+        private final FNCBuildAST rhs;
 
-        public Seq(FNCBuildAST c, FNCBuildAST t) {
-            this.c = c;
-            this.t = t;
+        public Seq(FNCBuildAST lhs, FNCBuildAST rhs) {
+            this.lhs = lhs;
+            this.rhs = rhs;
         }
 
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            FNCExpressionNode c = this.c.buildAST(l);
-            FNCExpressionNode t = this.t.buildAST(l);
-            return new LogicControlSeqNode(c, t);
+            FNCExpressionNode lhs = this.lhs.buildAST(l);
+            FNCExpressionNode rhs = this.rhs.buildAST(l);
+            return new LogicControlSeqNode(lhs, rhs);
         }
     }
 
@@ -93,7 +90,9 @@ public interface TruffleLogicControlFactory extends
 
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new LogicControlWhileTrueNode(e.buildAST(l), c.buildAST(l));
+            FNCExpressionNode e = this.e.buildAST(l);
+            FNCExpressionNode c = this.c.buildAST(l);
+            return new LogicControlWhileTrueNode(e, c);
         }
     }
 

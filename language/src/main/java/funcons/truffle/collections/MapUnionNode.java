@@ -20,7 +20,7 @@ public class MapUnionNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        map1.executeGeneric(frame);
+        Object res = map1.executeGeneric(frame);
         return map2.executeGeneric(frame);
     }
 

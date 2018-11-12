@@ -16,6 +16,7 @@ public class IntLitNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
+        System.err.println("Int value " + i);
         return vf.integer(i);
     }
 }

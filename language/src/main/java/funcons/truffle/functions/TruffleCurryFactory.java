@@ -13,9 +13,7 @@ import funcons.algebras.values.IntAlg;
 import funcons.truffle.entities.SupplyGivenGivenNode;
 import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCLanguage;
-import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IValue;
+import io.usethesource.vallang.IInteger;
 
 public interface TruffleCurryFactory extends
         FunctionAlg<FNCBuildAST>,
@@ -48,16 +46,20 @@ public interface TruffleCurryFactory extends
     }
 
     @Override
-    default FNCBuildAST curryN(FNCBuildAST n, FNCBuildAST a) {
+    default FNCBuildAST curryN(FNCBuildAST value, FNCBuildAST fct) {
         return l -> {
-            CurryNNode curryNNode = new CurryNNode(n.buildAST(l));
-            FNCExpressionNode fncExpressionNode1 = new CurryNSubnode1();
+
+            FNCExpressionNode vn = value.buildAST(l);
+            FNCExpressionNode vfct = fct.buildAST(l);
+
+            CurryNNode curryNNode = new CurryNNode(vn, vfct);
+            /*FNCExpressionNode fncExpressionNode1 = new CurryNSubnode1();
             FNCExpressionNode fncExpressionNode = curryNNode.buildA();
             curryNNode.child = ifTrue(
                     equal(z -> fncExpressionNode, lit(0)),
-                    apply(a, tuple()),
-                    abs((p) -> abs(q -> curryN(intSubtract(n, lit(1)), partialApp(a, r -> fncExpressionNode)).buildAST(q)).buildAST(p)))
-                    .buildAST(l);
+                    apply(fct, tuple()),
+                    abs((p) -> abs(q -> curryN(intSubtract(value, lit(1)), partialApp(fct, r -> fncExpressionNode)).buildAST(q)).buildAST(p)))
+                    .buildAST(l);*/
             return curryNNode;
         };
     }
@@ -68,43 +70,51 @@ public interface TruffleCurryFactory extends
     }
 
     class CurryNNode extends FNCExpressionNode {
-        @Child
-        private FNCExpressionNode n;
-        @Child
-        public FNCExpressionNode child;
-        private IValue index;
 
-        public CurryNNode(FNCExpressionNode n) {
-            this.n = n;
+        /**
+         * Number of parameters of the function
+         */
+        @Child
+        private FNCExpressionNode patternSize;
+        @Child
+        public FNCExpressionNode fct;
+
+
+        public CurryNNode(FNCExpressionNode patternSize, FNCExpressionNode vfct) {
+            this.patternSize = patternSize;
+            this.fct = vfct;
         }
+
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            this.index = (IValue) n.executeGeneric(frame);
-            return child.executeGeneric(frame);
-        }
-
-        public FNCExpressionNode buildA() {
-            return new CurryNSubnode();
-        }
-
-        private class CurryNSubnode extends FNCExpressionNode {
-            @Override
-            public Object executeGeneric(VirtualFrame frame) {
-                return index;
+            Object res = patternSize.executeGeneric(frame);
+            int nb = ((IInteger) res).intValue();
+            for (int i = 0; i < nb; i++) {
+                Object tmp = fct.executeGeneric(frame);
+                System.out.println(tmp);
             }
-        }
-    }
 
-    class CurryNSubnode1 extends FNCExpressionNode {
-        @Override
-        public Object executeGeneric(VirtualFrame frame) {
             final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot("given");
             try {
                 return frame.getObject(given);
             } catch (FrameSlotTypeException e) {
-                throw new RuntimeException("Given not found", e);
+                e.printStackTrace();
+            }
 
+            return null;
+        }
+
+        class CurryNSubnode1 extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot("given");
+                try {
+                    return frame.getObject(given);
+                } catch (FrameSlotTypeException e) {
+                    throw new RuntimeException("Given not found", e);
+
+                }
             }
         }
     }

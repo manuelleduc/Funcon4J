@@ -64,7 +64,7 @@ public interface TruffleListFactory extends
         return m -> {
             final FNCExpressionNode l1 = l.buildAST(m);
             final ListListPrefixMatchNode listListPrefixMatchNode = new ListListPrefixMatchNode(l1, fail().buildAST(m));
-            final FNCExpressionNode g = mapOver(match((z) -> listListPrefixMatchNode.buildE1(), p1), match((z) -> listListPrefixMatchNode.buildE2(), p2)).buildAST(m);
+            final FNCExpressionNode g = mapOver(match(z -> listListPrefixMatchNode.buildE1(), p1), match(z -> listListPrefixMatchNode.buildE2(), p2)).buildAST(m);
             listListPrefixMatchNode.setG(g);
             return listListPrefixMatchNode;
         };
@@ -92,16 +92,12 @@ public interface TruffleListFactory extends
 
     @Override
     default FNCBuildAST listHead(FNCBuildAST list) {
-        return l -> {
-            return new ListListHeadNode(list.buildAST(l));
-        };
+        return l -> new ListListHeadNode(list.buildAST(l));
     }
 
     @Override
     default FNCBuildAST listTail(FNCBuildAST list) {
-        return l -> {
-            return new ListListTailNode(list.buildAST(l));
-        };
+        return l -> new ListListTailNode(list.buildAST(l));
     }
 
     @Override

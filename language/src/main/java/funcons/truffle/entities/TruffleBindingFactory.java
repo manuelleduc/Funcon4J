@@ -70,12 +70,15 @@ public interface TruffleBindingFactory extends
     default FNCBuildAST accum(FNCBuildAST environment, FNCBuildAST decl) {
 
         return l -> {
-            FNCExpressionNode ee = environment.buildAST(l);
+            /*FNCExpressionNode ee = environment.buildAST(l);
             BindingAccumNode bindingAccumNode = new BindingAccumNode(ee);
             FNCExpressionNode fncExpressionNode = bindingAccumNode.buildA();
             FNCExpressionNode se = scope((z) -> fncExpressionNode, mapOver(decl, (z) -> fncExpressionNode)).buildAST(l);
             bindingAccumNode.se = se;
-            return bindingAccumNode;
+            return bindingAccumNode;*/
+
+
+            return (FNCExpressionNode) new BindingAccumNode(environment.buildAST(l), decl.buildAST(l));
         };
     }
 
@@ -113,7 +116,9 @@ public interface TruffleBindingFactory extends
 
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new BindingScopeNode(localBindings.buildAST(l), exp.buildAST(l));
+            FNCExpressionNode letDefinition = localBindings.buildAST(l);
+            FNCExpressionNode expr = exp.buildAST(l);
+            return new BindingScopeNode(letDefinition, expr);
         }
     }
 
@@ -142,7 +147,9 @@ public interface TruffleBindingFactory extends
         @Override
         public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
 
-            return new BindingBindValueNode(id.buildAST(l), exp.buildAST(l));
+            FNCExpressionNode id = this.id.buildAST(l);
+            FNCExpressionNode exp = this.exp.buildAST(l);
+            return new BindingBindValueNode(id, exp);
         }
     }
 
@@ -160,26 +167,31 @@ public interface TruffleBindingFactory extends
     }
 
 
+    /**
+     * execute left hand side, then pass the environment to this right hand side.
+     *
+     */
     class BindingAccumNode extends FNCExpressionNode {
 
         @Child
-        private FNCExpressionNode ee;
+        private FNCExpressionNode lhs;
 
         @Child
-        private FNCExpressionNode se;
-        private Object v;
+        private FNCExpressionNode rhs;
 
-        public BindingAccumNode(FNCExpressionNode ee) {
-            this.ee = ee;
+
+        public BindingAccumNode(FNCExpressionNode lhs, FNCExpressionNode rhs) {
+            this.lhs = lhs;
+            this.rhs = rhs;
         }
 
         @Override
         public Object executeGeneric(VirtualFrame frame) {
-            this.v = ee.executeGeneric(frame);
-            return se.executeGeneric(frame);
+            lhs.executeGeneric(frame);
+            return rhs.executeGeneric(frame);
         }
 
-        public FNCExpressionNode buildA() {
+        /*public FNCExpressionNode buildA() {
             return new BindingAccumNodeSubnode();
         }
 
@@ -188,6 +200,6 @@ public interface TruffleBindingFactory extends
             public Object executeGeneric(VirtualFrame frame) {
                 return v;
             }
-        }
+        }*/
     }
 }

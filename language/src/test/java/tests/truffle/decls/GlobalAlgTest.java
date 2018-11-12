@@ -50,7 +50,7 @@ public class GlobalAlgTest extends TestStub {
 
     @Test
     public void testDeclConstrException() throws Exception {
-        test("exception Foo of int;;", "");
+        //test("exception Foo of int;;", "");
         test("exception Foo of int;; Foo 3;;", "Variant(\"Foo\",3)");
         test("exception Foo of int and Bar of string;; Foo 3;; Bar \"hello\";;", "Variant(\"Foo\",3)Variant(\"Bar\",\"hello\")");
         test("exception Foo of int and Bar;; Foo 3;; Bar;;", "Variant(\"Foo\",3)Variant(\"Bar\",NULL)");

@@ -22,9 +22,10 @@ public class TupleTupleHeadNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        final IListWriter lw = vf.listWriter();
+        //final IListWriter lw = vf.listWriter();
         final Object o = tupl.executeGeneric(frame);
-        lw.append((IValue) o);
-        return lw.done();
+        //lw.append((IValue) o);
+        //return lw.done();
+        return o;
     }
 }

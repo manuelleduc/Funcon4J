@@ -7,19 +7,20 @@ import funcons.truffle.nodes.FNCExpressionNode;
 @NodeInfo(description = "LogicControl Seq Node")
 public class LogicControlSeqNode extends FNCExpressionNode {
     @Child
-    private FNCExpressionNode c;
+    private FNCExpressionNode lhs;
     @Child
-    private FNCExpressionNode t;
+    private FNCExpressionNode rhs;
 
-    public LogicControlSeqNode(FNCExpressionNode c, FNCExpressionNode t) {
+    public LogicControlSeqNode(FNCExpressionNode lhs, FNCExpressionNode rhs) {
         //System.out.println("Seq node build with c=" + c + " and t=" + t);
-        this.c = c;
-        this.t = t;
+        this.lhs = lhs;
+        this.rhs = rhs;
     }
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        this.c.executeGeneric(frame);
-        return this.t.executeGeneric(frame);
+        Object o1 = this.lhs.executeGeneric(frame);
+        Object o = this.rhs.executeGeneric(frame);
+        return o1;
     }
 }
