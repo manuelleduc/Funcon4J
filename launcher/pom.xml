@@ -13,9 +13,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.graalvm</groupId>
+            <groupId>org.graalvm.truffle</groupId>
             <artifactId>graal-sdk</artifactId>
-            <version>1.0.0-rc1</version>
+            <version>1.0.0-rc9</version>
         </dependency>
         <dependency>
             <groupId>com.github</groupId>
