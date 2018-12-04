@@ -1,27 +1,30 @@
 package funcons.truffle.controlflow;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.ExplodeLoop;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCFunctionRegistry;
-import funcons.truffle.nodes.FNCLanguage;
-import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "LogicControl Seq Node")
 public class LogicControlSeqNode extends FNCExpressionNode {
-    @Child
-    private FNCExpressionNode c;
-    @Child
-    private FNCExpressionNode t;
+    @Children
+    private final FNCExpressionNode[] c;
+//    @Child
+//    private FNCExpressionNode t;
 
-    public LogicControlSeqNode(FNCExpressionNode c, FNCExpressionNode t) {
+    public LogicControlSeqNode(FNCExpressionNode... c) {
+//        this.c = c;
         this.c = c;
-        this.t = t;
     }
 
     @Override
+    @ExplodeLoop
     public Object executeGeneric(VirtualFrame frame) {
-        this.c.executeGeneric(frame);
-        return this.t.executeGeneric(frame);
+        Object ret = null;
+        for (int i = 0; i < c.length; i++) {
+            ret = c[i].executeGeneric(frame);
+        }
+
+        return ret;
     }
 }
