@@ -41,7 +41,7 @@ java -XX:-UseJVMCIClassLoader -Dgraal.Dump= -Dgraal.MethodFilter=* \
 -Dgraal.TraceTruffleCompilationDetails=true camllight.CamlLightTruffle
 ```
 
-During the execution, if hotspot compilation are triggered by Truffle, a dumps directory will be created with the dumps sorted, and idealgraphvisualizer will display the nodes of the intermediate representation
+During the execution, if hotspot compilation are triggered by Truffle, a dumps directory will be created, and idealgraphvisualizer will display the nodes of the intermediate representation
 
 
 **Complementary jvm options**
