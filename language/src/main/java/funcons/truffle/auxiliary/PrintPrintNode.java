@@ -1,5 +1,6 @@
 package funcons.truffle.auxiliary;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
@@ -30,12 +31,17 @@ public class PrintPrintNode extends FNCExpressionNode {
         final Object o = x.executeGeneric(frame);
         final String data = String.valueOf(o);
         final OutputStream out = l.getContextReference().get().getEnv().out();
+        print(data, out);
+
+        return new NullNullNode().executeGeneric(frame);
+    }
+
+    @CompilerDirectives.TruffleBoundary // (allowInlining = true)
+    private void print(String data, OutputStream out) {
         try {
             IOUtils.write(data, out, Charset.defaultCharset());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return new NullNullNode().executeGeneric(frame);
     }
 }

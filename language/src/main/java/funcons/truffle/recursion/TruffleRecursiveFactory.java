@@ -130,7 +130,7 @@ public interface TruffleRecursiveFactory extends
 
         @Override
         public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new RecursiveFollowIfFwdNode((FNCExpressionNode) fwd.buildAST(l));
+            return RecursiveFollowIfFwdNodeGen.create((FNCExpressionNode) fwd.buildAST(l));
         }
     }
 }

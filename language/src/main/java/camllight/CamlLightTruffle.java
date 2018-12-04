@@ -24,7 +24,6 @@ public class CamlLightTruffle {
     }
 
 
-
     private void exec() throws IOException {
         //        for (int i = 0; i < 1000000; i++)
 //            interpret("1 + if true then 2 else 2 + 3;;");
@@ -72,7 +71,8 @@ loop 100;;
         }
 //        System.out.println("fastest time: " + Collections.min(BenchTool.timings));
         System.out.println("Timez");
-        BenchTool.timings.forEach(System.out::println);
+//        BenchTool.timings.forEach(System.out::println);
+        System.out.println(BenchTool.timings);
     }
 
     private void runAll(String folderLoc) throws IOException {

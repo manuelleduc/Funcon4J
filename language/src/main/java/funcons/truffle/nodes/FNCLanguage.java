@@ -4,6 +4,7 @@ import camllight.lib.StandardLibrary;
 import camllight.parser.CLLexer;
 import camllight.parser.CLParser;
 import com.oracle.truffle.api.CallTarget;
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.TruffleLanguage;
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -16,6 +17,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.io.IOUtils;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
@@ -43,9 +45,16 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
     @Override
     protected CallTarget parse(ParsingRequest request) throws Exception {
+        final FNCRootNode rootNode = getFncRootNode(request);
+//        System.out.println(clExecuteNode);
+        return Truffle.getRuntime().createCallTarget(rootNode);
+    }
+
+    @CompilerDirectives.TruffleBoundary
+    private FNCRootNode getFncRootNode(ParsingRequest request) throws IOException, FunconException {
         final String program = IOUtils.toString(request.getSource().getInputStream(), Charset.defaultCharset());
         final Recorder builder = parse(program, Recorder.create(camllight.algebras.AllAlg.class));
-        final funcons.algebras.AllAlg<FNCExecuteNode> evalAlg = new funcons.truffle.TruffleAllFactory() {
+        final funcons.algebras.AllAlg<FNCExecuteNode> evalAlg = new TruffleAllFactory() {
         };
         final camllight.algebras.AllAlg alg = () -> evalAlg;
         final FNCExecuteNode eval = builder.build(alg);
@@ -58,9 +67,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
         // TODO: write a visitor that register callables with name?
 
         // useless so far, just to avoir an ugly runtime exception when the execution ends.
-        final FNCRootNode rootNode = new FNCMainRootNode(this, clExecuteNode, libs);
-//        System.out.println(clExecuteNode);
-        return Truffle.getRuntime().createCallTarget(rootNode);
+        return new FNCMainRootNode(this, clExecuteNode, libs);
     }
 
     @Override
