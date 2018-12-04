@@ -11,6 +11,9 @@ public class SupplyGivenGivenNode extends FNCExpressionNode {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
         final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot("given");
+
+        System.err.println("get given @" + this);
+
         try {
             return frame.getObject(given);
         } catch (FrameSlotTypeException e) {

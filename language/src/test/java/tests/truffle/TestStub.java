@@ -3,6 +3,7 @@ package tests.truffle;
 import org.apache.commons.io.output.WriterOutputStream;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
+import org.junit.Assert;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -48,9 +49,19 @@ public abstract class TestStub {
 
     public void test(String input, String expectedOutput) throws IOException {
 
-        engine.eval(Source.newBuilder("fnc", input, "FNC").build());
-        String res = getAndFlush();
-        assertEquals(expectedOutput, res);
+        try {
+            engine.eval(Source.newBuilder("fnc", input, "FNC").build());
+            String res = getAndFlush();
+            assertEquals(expectedOutput, res);
+        } catch (Exception e) {
+            System.err.println("Failed with exception");
+            String res = getAndFlush();
+            System.err.println("Output was:\n" + res);
+            e.printStackTrace();
+            Assert.fail();
+
+
+        }
     }
 
     public void testFirstCharOutput(String input, String expectedOutput, int nChar) throws IOException {

@@ -1,20 +1,27 @@
 package tests.truffle.patts;
 
+import org.junit.Assert;
 import org.junit.Test;
 import tests.truffle.TestStub;
-
-import static org.junit.Assert.assertTrue;
 
 public class TuplePattAlgTest extends TestStub {
 
     @Test
-    public void testPattTuple() throws Exception {
+    public void testPattTuple1() throws Exception {
         test("match (1) with (1) -> true;;", "true");
-        test("match (1,2,3,4) with (1,2,3,4) -> true;;", "true");
-//        try {
+    }
+
+    @Test
+    public void testPattTuple2() throws Exception {
+        test("match (1,2,3,4) with (10,2,3,4) -> true;;", "true");
+    }
+
+    @Test
+    public void testPattTuple() throws Exception {
+        try {
             test("match (1,2,3,4) with (1,2,5,4) -> true;;", "false");
-//            assertTrue(false);
-//        } catch (Exception ignore) {
-//        }
+            Assert.fail();
+        } catch (Exception ignore) {
+        }
     }
 }

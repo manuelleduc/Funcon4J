@@ -109,7 +109,7 @@ public interface TruffleTypeFactory extends
 
     @Override
     default FNCBuildAST boundType(FNCBuildAST id) {
-        return null_(); // TODO evaluated statically?
+        return null_(); // TODO.executeGenericd statically?
     }
 
     @Override

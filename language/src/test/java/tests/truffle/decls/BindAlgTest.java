@@ -32,8 +32,23 @@ public class BindAlgTest extends TestStub {
     }
 
     @Test
+    public void testDeclBindMonoFunc0() throws Exception {
+        test("let f 20 = true in f 20;;", "true");
+    }
+
+    @Test
+    public void testDeclBindMonoFunc01() throws Exception {
+        test("let f 20 30 = true in f 20 30;;", "true");
+    }
+
+    @Test
     public void testDeclBindMonoFunc() throws Exception {
         test("let f 20 30 40 = true in (f 20) 30 40;;", "true");
+
+    }
+
+    @Test
+    public void testDeclBindMonoFunc2() throws Exception {
         test("let f _ 3 = true in f 1 3;;", "true");
         test("let f x y z = z in f 1 2 3;;", "3");
 

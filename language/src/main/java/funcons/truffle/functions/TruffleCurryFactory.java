@@ -96,6 +96,8 @@ public interface TruffleCurryFactory extends
             }
 
             final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot("given");
+
+            System.err.println("get given @" + this);
             try {
                 return frame.getObject(given);
             } catch (FrameSlotTypeException e) {
@@ -109,6 +111,7 @@ public interface TruffleCurryFactory extends
             @Override
             public Object executeGeneric(VirtualFrame frame) {
                 final FrameSlot given = frame.getFrameDescriptor().findOrAddFrameSlot("given");
+                System.err.println("get given @" + this);
                 try {
                     return frame.getObject(given);
                 } catch (FrameSlotTypeException e) {

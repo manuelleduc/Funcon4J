@@ -93,7 +93,7 @@ public interface TypeFactory extends
 
         @Override
         default IEval boundType(IEval id) {
-            return null_(); // TODO evaluated statically?
+            return null_(); // TODO.executeGenericd statically?
         }
 
         @Override

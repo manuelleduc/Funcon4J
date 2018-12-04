@@ -8,6 +8,8 @@ import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import io.usethesource.vallang.IBool;
 import io.usethesource.vallang.IInteger;
 
+import java.util.Map;
+
 @TypeSystemReference(FNCTypes.class)
 @NodeInfo(description = "Abstract expression node")
 public abstract class FNCExpressionNode extends Node {
@@ -21,5 +23,11 @@ public abstract class FNCExpressionNode extends Node {
         return FNCTypesGen.expectIBool(executeGeneric(frame));
     }
 
+    public Map<String, Object> defineValues() {
+        throw new RuntimeException("Not implemented and/or wrong execution path.");
+    }
 
+    public Map<String, Object> defineValuesNonRec() {
+        throw new RuntimeException("Not implemented and/or wrong execution path.");
+    }
 }

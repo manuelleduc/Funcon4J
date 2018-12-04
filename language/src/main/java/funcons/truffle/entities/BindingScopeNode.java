@@ -1,8 +1,11 @@
 package funcons.truffle.entities;
 
+import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
+
+import java.util.Map;
 
 
 /**
@@ -34,7 +37,12 @@ public class BindingScopeNode extends FNCExpressionNode {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
         System.err.println("Binding " + letDefinition + " --- " + expr);
-        this.letDefinition.executeGeneric(frame);
+        Map<String, Object> map = this.letDefinition.defineValues();
+//        frame.getFrameDescriptor().
+        map.entrySet().forEach(es -> {
+            final FrameSlot frameSlot = frame.getFrameDescriptor().findOrAddFrameSlot(es.getKey());
+            frame.setObject(frameSlot, es.getValue());
+        });
         return expr.executeGeneric(frame);
     }
 

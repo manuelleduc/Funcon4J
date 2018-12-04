@@ -21,6 +21,6 @@ public class LogicControlSeqNode extends FNCExpressionNode {
     public Object executeGeneric(VirtualFrame frame) {
         Object o1 = this.lhs.executeGeneric(frame);
         Object o = this.rhs.executeGeneric(frame);
-        return o1;
+        return o;
     }
 }

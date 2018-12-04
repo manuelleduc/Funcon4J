@@ -4,7 +4,7 @@ public interface LogicControlAlg<E> {
     E effect(E e);
 
     /*
-    The computation $seq(Comm,X)$ first evaluates $Comm$, and then $X$ is evaluated to a result.
+    The computation $seq(Comm,X)$ first.executeGenerics $Comm$, and then $X$ is.executeGenericd to a result.
      */
     E seq(E c, E x);
 

@@ -1,5 +1,6 @@
 package funcons.truffle.collections;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.ListAlg;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.collections.RecordAlg;
@@ -10,6 +11,8 @@ import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.values.signals.RunTimeFunconException;
+import io.usethesource.vallang.IMap;
+import io.usethesource.vallang.IValue;
 import io.usethesource.vallang.IValueFactory;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
@@ -76,8 +79,23 @@ public interface TruffleRecordFactory extends
 //        };
         // TODO
         return l -> {
-            // TODO: implement
-            throw new RuntimeException("Not Implemented");
+            FNCExpressionNode recb = rec.buildAST(l);
+            FNCExpressionNode pattMapb = pattMap.buildAST(l);
+
+            return new FNCExpressionNode() {
+                @Override
+                public Object executeGeneric(VirtualFrame frame) {
+                    FNCExpressionNode recl = recb;
+                    FNCExpressionNode pattMapl = pattMapb;
+
+                    IMap resrec = (IMap) recb.executeGeneric(frame);
+                    IMap respatt = (IMap) pattMapl.executeGeneric(frame);
+
+                    IValue next = respatt.iterator().next();
+                    IValue iValue = resrec.get(next);
+                    return iValue;
+                }
+            }  ;
         };
     }
 
