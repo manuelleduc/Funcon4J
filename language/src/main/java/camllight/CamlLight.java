@@ -82,7 +82,7 @@ public class CamlLight {
             timings.add(end - start);
             System.out.println("time taken: " + (end - start));
         }
-        System.out.println("fastest time: " + Collections.min(timings));
+        System.out.println("fastest time: " + timings + " " + timings.size());
     }
 
     private static void runAll(String folderLoc) throws IOException, FunconException {
@@ -163,7 +163,7 @@ public class CamlLight {
 
     private static void runPerformanceTests() throws IOException, FunconException {
         //runPerformance("performanceTests/mandelbrot.ml", 10); // FunCaml: Xs, Ocaml: 75.5s, Py: 170.2s
-        runPerformance("performanceTests/fib.ml", 10); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s
+        runPerformance("performanceTests/fib.ml", 50); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s
 //        runPerformance("performanceTests/ack.ml", 10); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
 //        runPerformance("performanceTests/harmonic.ml", 10); // FunCaml: 38.7s, Ocaml: 0.2s, FunCamlOnRascal: 7.2s
 //        runPerformance("performanceTests/tak.ml", 10); // FunCaml: 406.7s, Ocaml: 5.9s
