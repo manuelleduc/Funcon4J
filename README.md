@@ -1,28 +1,11 @@
 # FunCon4j: Executable Funcons through Object Algebras
 
-This repo is an artifact of my thesis on creating reusable language implementations. FunCon4J is a library of FunCons build with the Object Algebra design pattern. On basis of FunCon4J extensible and reusable programming languages can be defined. To showcase this the entire dynamic semantics of Caml Light is implemented on FunCon4J. 
+## Import
 
-## How to build
+This is a standard maven project.
 
-Import the project through maven
+**Remark** Graal JVM RC9 is required to run the Truffle parts (see https://www.graalvm.org/downloads/).
 
-## How to use
+## Execution
 
-* `camllight.CamlLight` how to run Caml Light programs (albeit with somewhat different syntax, and brackets to force correct precedence)
-* `camllight.parser.CLPgen` how to generate a parser for Caml Light
-* `camllightnocollections.CamlLightNoCollections` demonstrates a language variant of Caml Light with no collections.
-* `camllightnorecursion.CamlLightNoRecursion` demonstrates a language variant of Caml Light with no recursion.
-* `camllightnosideeffects.CamlLightNoSideEffects` demonstrates a language variant of Caml Light with no side effects.
-
-## Benchs
-
-**Compilation**
-
-```bash
-mvn package -DskipTests -f pom.xml
-```
-
-**Execution**
-
-Options: 
-- `-Dtruffle.class.path.append=./language/target/language-1.0-SNAPSHOT-jar-with-dependencies.jar`
+All the unit test are located in [language/src/test/java](language's maven test directory).
