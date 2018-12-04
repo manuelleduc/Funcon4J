@@ -8,4 +8,4 @@ This is a standard maven project.
 
 ## Execution
 
-All the unit test are located in [language's maven test directory](./language/src/test/java).
+All the unit test are located in [language's maven test directory](./language/src/test/java/).
