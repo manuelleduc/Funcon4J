@@ -1,5 +1,19 @@
 # FunCon4j: Executable Funcons through Object Algebras
 
+## Work in Progress
+
+- Performance programs:
+  - mandelbrot
+  - ack
+  - tak
+
+### Done
+- Unit tests
+- Performance programs:
+  - fib
+  - harmonic
+
+
 ## Import
 
 This is a standard maven project.
