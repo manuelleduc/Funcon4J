@@ -2,6 +2,7 @@ package funcons.truffle.controlflow;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCStatementNode;
 
@@ -21,7 +22,15 @@ public class LogicControlWhileTrueNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        throw new RuntimeException("Not implemented");
+        Object tmp = null;
+        try {
+            while (c.executeIBool(frame).getValue()) {
+                tmp = e.executeGeneric(frame);
+            }
+        } catch (UnexpectedResultException e) {
+
+        }
+        return tmp;
     }
 
 }

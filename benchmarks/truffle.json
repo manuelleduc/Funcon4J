@@ -1,0 +1,170 @@
+[
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "com.github.BenchmarkTruffle.testMethod",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 5,
+        "jvm" : "/home/manuel/jdk/graalvm-ee-1.0.0-rc16/bin/java",
+        "jvmArgs" : [
+            "-Dtruffle.class.path.append=/home/manuel/dev/java/Funcon4J/language/target/language-1.0-SNAPSHOT-jar-with-dependencies.jar"
+        ],
+        "jdkVersion" : "1.8.0_202",
+        "vmName" : "Java HotSpot(TM) GraalVM EE 1.0.0-rc16",
+        "vmVersion" : "25.202-b08-jvmci-0.59",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "fileLoc" : "performanceTests/fib.ml"
+        },
+        "primaryMetric" : {
+            "score" : 0.6162763919404158,
+            "scoreError" : 0.009143831550864394,
+            "scoreConfidence" : [
+                0.6071325603895514,
+                0.6254202234912802
+            ],
+            "scorePercentiles" : {
+                "0.0" : 0.5808900968226509,
+                "50.0" : 0.6161781748697533,
+                "90.0" : 0.6352123017005196,
+                "95.0" : 0.6368131516214509,
+                "99.0" : 0.6371828027454971,
+                "99.9" : 0.6371828027454971,
+                "99.99" : 0.6371828027454971,
+                "99.999" : 0.6371828027454971,
+                "99.9999" : 0.6371828027454971,
+                "100.0" : 0.6371828027454971
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    0.6137166718064299,
+                    0.6169870318107402,
+                    0.6051072857793715,
+                    0.6212388948173835,
+                    0.624294895203009
+                ],
+                [
+                    0.6133416869723406,
+                    0.6371828027454971,
+                    0.6210712723728908,
+                    0.6130644342014744,
+                    0.6359506323320097
+                ],
+                [
+                    0.5941953683716666,
+                    0.6104189592720171,
+                    0.6161119282851039,
+                    0.6194818073355003,
+                    0.6121881384986455
+                ],
+                [
+                    0.6099662364552609,
+                    0.629718681283616,
+                    0.5808900968226509,
+                    0.6347200812795262,
+                    0.6231488030599007
+                ],
+                [
+                    0.6127174352200517,
+                    0.6198550232721634,
+                    0.6164888344692119,
+                    0.6161781748697533,
+                    0.6088746219741783
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "com.github.BenchmarkTruffle.testMethod",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 5,
+        "jvm" : "/home/manuel/jdk/graalvm-ee-1.0.0-rc16/bin/java",
+        "jvmArgs" : [
+            "-Dtruffle.class.path.append=/home/manuel/dev/java/Funcon4J/language/target/language-1.0-SNAPSHOT-jar-with-dependencies.jar"
+        ],
+        "jdkVersion" : "1.8.0_202",
+        "vmName" : "Java HotSpot(TM) GraalVM EE 1.0.0-rc16",
+        "vmVersion" : "25.202-b08-jvmci-0.59",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "fileLoc" : "performanceTests/harmonic.ml"
+        },
+        "primaryMetric" : {
+            "score" : 0.2255506843523169,
+            "scoreError" : 0.0020015933643024912,
+            "scoreConfidence" : [
+                0.2235490909880144,
+                0.2275522777166194
+            ],
+            "scorePercentiles" : {
+                "0.0" : 0.22182186800962003,
+                "50.0" : 0.2259648618082388,
+                "90.0" : 0.22938653922468064,
+                "95.0" : 0.22967851101103762,
+                "99.0" : 0.22973117699785628,
+                "99.9" : 0.22973117699785628,
+                "99.99" : 0.22973117699785628,
+                "99.999" : 0.22973117699785628,
+                "99.9999" : 0.22973117699785628,
+                "100.0" : 0.22973117699785628
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    0.2259648618082388,
+                    0.22851649893323192,
+                    0.2292738162354939,
+                    0.22871914630492643,
+                    0.2289951909680198
+                ],
+                [
+                    0.22750796737413986,
+                    0.22648129092377217,
+                    0.22955562370846072,
+                    0.22681588317488297,
+                    0.22973117699785628
+                ],
+                [
+                    0.22323364470537296,
+                    0.223337765675275,
+                    0.22287790489809026,
+                    0.2238075748498215,
+                    0.22279485945548513
+                ],
+                [
+                    0.22624163438337055,
+                    0.22679460445439317,
+                    0.2240356222924391,
+                    0.22676156566331457,
+                    0.22572663722736053
+                ],
+                [
+                    0.22295692600374975,
+                    0.2223125123083091,
+                    0.22182186800962003,
+                    0.22242818297586187,
+                    0.22207434947643664
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+

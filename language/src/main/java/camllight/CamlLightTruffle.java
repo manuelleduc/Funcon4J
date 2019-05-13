@@ -120,11 +120,11 @@ loop 100;;
     }
 
     private void runPerformanceTests() throws IOException {
-        //runPerformance("performanceTests/mandelbrot.ml", 10); // FunCaml: Xs, Ocaml: 75.5s, Py: 170.2s
-        runPerformance("performanceTests/fib.ml", 50); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s, Truffle: 99.27s
-//        runPerformance("performanceTests/ack.ml", 10); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
-//        runPerformance("performanceTests/harmonic.ml", 10); // FunCaml: 38.7s, Ocaml: 0.2s, FunCamlOnRascal: 7.2s
-//        runPerformance("performanceTests/tak.ml", 10); // FunCaml: 406.7s, Ocaml: 5.9s
+//        runPerformance("performanceTests/mandelbrot.ml", 1); // FunCaml: Xs, Ocaml: 75.5s, Py: 170.2s
+//        runPerformance("performanceTests/fib.ml", 1); // FunCaml: 237.8s, Ocaml: 8.1s, FunCamlOnRascal: 247.6s, Truffle: 99.27s
+//        runPerformance("performanceTests/ack.ml", 1); // FunCaml: 126.s, Ocaml: 1.4s, FunCamlOnRascal: 188.5s
+        runPerformance("performanceTests/harmonic.ml", 1); // FunCaml: 38.7s, Ocaml: 0.2s, FunCamlOnRascal: 7.2s
+//        runPerformance("performanceTests/tak.ml", 1); // FunCaml: 406.7s, Ocaml: 5.9s
     }
 
 

@@ -8,6 +8,7 @@
         <module>language</module>
         <module>launcher</module>
         <module>commons</module>
+        <module>benchmarks</module>
     </modules>
 
     <properties>
