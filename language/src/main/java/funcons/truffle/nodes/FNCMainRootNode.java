@@ -23,6 +23,6 @@ public class FNCMainRootNode extends FNCRootNode {
         Object execute = super.execute(frame);
         long end = System.currentTimeMillis();
         BenchTool.add(end - start);
-        return execute;
+        return 42;
     }
 }
