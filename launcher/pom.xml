@@ -15,7 +15,7 @@
         <dependency>
             <groupId>org.graalvm.sdk</groupId>
             <artifactId>graal-sdk</artifactId>
-            <version>1.0.0-rc8</version>
+            <version>19.3.0</version>
         </dependency>
         <dependency>
             <groupId>com.github</groupId>
