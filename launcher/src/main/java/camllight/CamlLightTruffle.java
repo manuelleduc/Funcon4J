@@ -34,7 +34,7 @@ public class CamlLightTruffle {
 
 //        interpret("1 + \"a\"");
         // run examples found in the examples folder
-        runExamples();
+//        runExamples();
 
         // run tests as provided by Mosses
         //runGivenTests();
@@ -56,13 +56,22 @@ public class CamlLightTruffle {
     private void runPerformance(String fileLoc, int n) throws IOException {
 
         BenchTool.timings.clear();
+        // 20 *
+        /*
+        let loop n =
+	for i = 0 to n do
+		((print_int (fib 30)); (print_newline ()))
+	done;;
+
+loop 100;;
+         */
         for (int i = 0; i < n; i++) {
             final String src = new String(Files.readAllBytes(Paths.get(fileLoc)));
             System.out.print('.');
             this.eval(src, true);
         }
 //        System.out.println("fastest time: " + Collections.min(BenchTool.timings));
-        System.out.println("Times");
+        System.out.println("Timez");
         BenchTool.timings.forEach(System.out::println);
     }
 

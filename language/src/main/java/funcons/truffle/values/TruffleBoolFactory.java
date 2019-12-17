@@ -1,26 +1,25 @@
 package funcons.truffle.values;
 
 import funcons.algebras.values.BoolAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
-public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
+public interface TruffleBoolFactory extends BoolAlg<FNCBuildAST> {
     @Override
-    default FNCExecuteNode bool(Boolean b) {
+    default FNCBuildAST bool(Boolean b) {
 //        return (env, given) -> vf.bool(b);
         return new Bool(b); // TODO
     }
 
     @Override
-    default FNCExecuteNode not(FNCExecuteNode b) {
+    default FNCBuildAST not(FNCBuildAST b) {
         return new Not(b);
     }
 
     @Override
-    default FNCExecuteNode greater(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST greater(FNCBuildAST a, FNCBuildAST b) {
 //        return (env, given) -> {
 //            IValue aVal = (IValue)a.eval(env, given);
 //            IValue bVal = (IValue)b.eval(env, given);
@@ -30,33 +29,33 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode smaller(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST smaller(FNCBuildAST a, FNCBuildAST b) {
         return not(greaterEqual(a, b));
     }
 
     @Override
-    default FNCExecuteNode greaterEqual(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST greaterEqual(FNCBuildAST a, FNCBuildAST b) {
         return new GreaterEqual(a, b);
     }
 
     @Override
-    default FNCExecuteNode smallerEqual(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST smallerEqual(FNCBuildAST a, FNCBuildAST b) {
         return not(greater(a, b));
     }
 
     @Override
-    default FNCExecuteNode equal(FNCExecuteNode e1, FNCExecuteNode e2) {
+    default FNCBuildAST equal(FNCBuildAST e1, FNCBuildAST e2) {
         return new Equal(e1, e2);
     }
 
     @Override
-    default FNCExecuteNode physicalEqual(FNCExecuteNode e1, FNCExecuteNode e2) {
+    default FNCBuildAST physicalEqual(FNCBuildAST e1, FNCBuildAST e2) {
 //        return (env, given) ->
 //                vf.bool(e1.eval(env, given) == e2.eval(env, given));
         throw new RuntimeException("Not implemented");
     }
 
-    class Bool implements FNCExecuteNode {
+    class Bool implements FNCBuildAST {
         private final Boolean b;
 
         public Bool(Boolean b) {
@@ -64,66 +63,66 @@ public interface TruffleBoolFactory extends BoolAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BoolBoolNode(b);
         }
     }
 
-    class Not implements FNCExecuteNode {
-        private final FNCExecuteNode b;
+    class Not implements FNCBuildAST {
+        private final FNCBuildAST b;
 
-        public Not(FNCExecuteNode b) {
+        public Not(FNCBuildAST b) {
             this.b = b;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new BoolNotNode((FNCExpressionNode) b.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new BoolNotNode(b.buildAST(l));
         }
     }
 
-    class Greater implements FNCExecuteNode {
-        private final FNCExecuteNode a;
-        private final FNCExecuteNode b;
+    class Greater implements FNCBuildAST {
+        private final FNCBuildAST a;
+        private final FNCBuildAST b;
 
-        public Greater(FNCExecuteNode a, FNCExecuteNode b) {
+        public Greater(FNCBuildAST a, FNCBuildAST b) {
             this.a = a;
             this.b = b;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return BoolGreaterNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return BoolGreaterNodeGen.create(a.buildAST(l), b.buildAST(l));
         }
     }
 
-    class GreaterEqual implements FNCExecuteNode {
-        private final FNCExecuteNode a;
-        private final FNCExecuteNode b;
+    class GreaterEqual implements FNCBuildAST {
+        private final FNCBuildAST a;
+        private final FNCBuildAST b;
 
-        public GreaterEqual(FNCExecuteNode a, FNCExecuteNode b) {
+        public GreaterEqual(FNCBuildAST a, FNCBuildAST b) {
             this.a = a;
             this.b = b;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return BoolGreaterEqualNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return BoolGreaterEqualNodeGen.create(a.buildAST(l), b.buildAST(l));
         }
     }
 
-    class Equal implements FNCExecuteNode {
-        private final FNCExecuteNode e1;
-        private final FNCExecuteNode e2;
+    class Equal implements FNCBuildAST {
+        private final FNCBuildAST e1;
+        private final FNCBuildAST e2;
 
-        public Equal(FNCExecuteNode e1, FNCExecuteNode e2) {
+        public Equal(FNCBuildAST e1, FNCBuildAST e2) {
             this.e1 = e1;
             this.e2 = e2;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return BoolEqualNodeGen.create((FNCExpressionNode) e1.buildAST(l), (FNCExpressionNode) e2.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return BoolEqualNodeGen.create(e1.buildAST(l), e2.buildAST(l));
         }
     }
 }

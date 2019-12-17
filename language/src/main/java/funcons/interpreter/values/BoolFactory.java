@@ -23,8 +23,8 @@ public interface BoolFactory extends BoolAlg<IEval> {
     @Override
     default IEval greater(IEval a, IEval b) {
         return (env, given) -> {
-            IValue aVal = (IValue)a.eval(env, given);
-            IValue bVal = (IValue)b.eval(env, given);
+            IValue aVal = a.eval(env, given);
+            IValue bVal = b.eval(env, given);
             return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
         };
     }
@@ -52,7 +52,7 @@ public interface BoolFactory extends BoolAlg<IEval> {
     @Override
     default IEval equal(IEval e1, IEval e2) {
         return (env, given) ->
-                vf.bool(((IValue)e1.eval(env, given)).isEqual((IValue)e2.eval(env, given)));
+                vf.bool(e1.eval(env, given).isEqual(e2.eval(env, given)));
     }
 
     @Override

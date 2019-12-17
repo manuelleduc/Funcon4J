@@ -5,6 +5,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.truffle.values.NullNullNode;
+import funcons.values.Variable;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class PrintPrintNode extends FNCExpressionNode {
     @Child
     private FNCExpressionNode x;
 
+
     public PrintPrintNode(FNCExpressionNode x, FNCLanguage l) {
         this.x = x;
         this.l = l;
@@ -28,7 +30,12 @@ public class PrintPrintNode extends FNCExpressionNode {
     @Override
     public Object executeGeneric(VirtualFrame frame) {
         final Object o = x.executeGeneric(frame);
-        final String data = String.valueOf(o);
+        final String data;
+        if (o instanceof Variable) {
+            data = String.valueOf(((Variable) o).value());
+        } else {
+            data = String.valueOf(o);
+        }
         final OutputStream out = l.getContextReference().get().getEnv().out();
         try {
             IOUtils.write(data, out, Charset.defaultCharset());

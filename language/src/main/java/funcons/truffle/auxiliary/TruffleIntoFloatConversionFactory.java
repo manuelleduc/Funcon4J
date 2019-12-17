@@ -1,46 +1,45 @@
 package funcons.truffle.auxiliary;
 
 import funcons.algebras.auxiliary.IntFloatConversionAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
-public interface TruffleIntoFloatConversionFactory extends IntFloatConversionAlg<FNCExecuteNode> {
+public interface TruffleIntoFloatConversionFactory extends IntFloatConversionAlg<FNCBuildAST> {
     @Override
-    default FNCExecuteNode intToFloat(FNCExecuteNode i) {
+    default FNCBuildAST intToFloat(FNCBuildAST i) {
         return new IntToFloat(i);
     }
 
     @Override
-    default FNCExecuteNode floatToInt(FNCExecuteNode f) {
+    default FNCBuildAST floatToInt(FNCBuildAST f) {
         return new FloatToInt(f);
     }
 
-    class IntToFloat implements FNCExecuteNode {
-        private final FNCExecuteNode i;
+    class IntToFloat implements FNCBuildAST {
+        private final FNCBuildAST i;
 
-        public IntToFloat(FNCExecuteNode i) {
+        public IntToFloat(FNCBuildAST i) {
             this.i = i;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return IntoFloatConversionIntToFloatNodeGen.create((FNCExpressionNode) i.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return IntoFloatConversionIntToFloatNodeGen.create(i.buildAST(l));
         }
     }
 
-    class FloatToInt implements FNCExecuteNode {
-        private final FNCExecuteNode f;
+    class FloatToInt implements FNCBuildAST {
+        private final FNCBuildAST f;
 
-        public FloatToInt(FNCExecuteNode f) {
+        public FloatToInt(FNCBuildAST f) {
             this.f = f;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return IntoFloatConversionFloatToIntoNodeGen.create((FNCExpressionNode) f.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return IntoFloatConversionFloatToIntoNodeGen.create(f.buildAST(l));
         }
     }
 }

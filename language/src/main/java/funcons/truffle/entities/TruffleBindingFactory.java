@@ -1,26 +1,25 @@
 package funcons.truffle.entities;
 
-import com.oracle.truffle.api.frame.FrameDescriptor;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.entities.BindingAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleBindingFactory extends
-        MapAlg<FNCExecuteNode>,
-        BindingAlg<FNCExecuteNode> {
+        MapAlg<FNCBuildAST>,
+        BindingAlg<FNCBuildAST> {
 
 
     @Override
-    default FNCExecuteNode id(java.lang.String s) {
+    default FNCBuildAST id(java.lang.String s) {
         return new Id(s);
     }
 
     @Override
-    default FNCExecuteNode nameId(java.lang.String namespace, java.lang.String id) {
+    default FNCBuildAST nameId(java.lang.String namespace, java.lang.String id) {
         throw new RuntimeException("Not implemented");
     }
 
@@ -32,12 +31,12 @@ public interface TruffleBindingFactory extends
      * @return
      */
     @Override
-    default FNCExecuteNode bindValue(FNCExecuteNode id, FNCExecuteNode exp) {
+    default FNCBuildAST bindValue(FNCBuildAST id, FNCBuildAST exp) {
         return new BindValue(id, exp);
     }
 
     @Override
-    default FNCExecuteNode boundValue(FNCExecuteNode id) {
+    default FNCBuildAST boundValue(FNCBuildAST id) {
         return new BoundValue(id);
     }
 
@@ -53,93 +52,108 @@ public interface TruffleBindingFactory extends
      * @return
      */
     @Override
-    default FNCExecuteNode scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
+    default FNCBuildAST scope(FNCBuildAST localBindings, FNCBuildAST exp) {
         return new Scope(localBindings, exp);
     }
 
     @Override
-    default FNCExecuteNode closure(FNCExecuteNode x, FNCExecuteNode environment) {
+    default FNCBuildAST closure(FNCBuildAST x, FNCBuildAST environment) {
         return new Closure(x, environment);
     }
 
     @Override
-    default FNCExecuteNode environment() {
+    default FNCBuildAST environment() {
         return new Environment();
     }
 
     @Override
-    default FNCExecuteNode accum(FNCExecuteNode environment, FNCExecuteNode decl) {
-        return new Accum(environment, decl, this);
+    default FNCBuildAST accum(FNCBuildAST environment, FNCBuildAST decl) {
+
+        return l -> {
+            /*FNCExpressionNode ee = environment.buildAST(l);
+            BindingAccumNode bindingAccumNode = new BindingAccumNode(ee);
+            FNCExpressionNode fncExpressionNode = bindingAccumNode.buildA();
+            FNCExpressionNode se = scope((z) -> fncExpressionNode, mapOver(decl, (z) -> fncExpressionNode)).buildAST(l);
+            bindingAccumNode.se = se;
+            return bindingAccumNode;*/
+
+
+            return (FNCExpressionNode) new BindingAccumNode(environment.buildAST(l), decl.buildAST(l));
+        };
     }
 
 
-    class Environment implements FNCExecuteNode {
+    class Environment implements FNCBuildAST {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BindingEnvironmentNode();
         }
     }
 
-    class Closure implements FNCExecuteNode {
-        private final FNCExecuteNode x;
-        private final FNCExecuteNode environment;
+    class Closure implements FNCBuildAST {
+        private final FNCBuildAST x;
+        private final FNCBuildAST environment;
 
-        public Closure(FNCExecuteNode x, FNCExecuteNode environment) {
+        public Closure(FNCBuildAST x, FNCBuildAST environment) {
             this.x = x;
             this.environment = environment;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BindingClosureNode((FNCExpressionNode) x, (FNCExpressionNode) environment);
         }
     }
 
-    class Scope implements FNCExecuteNode {
-        private final FNCExecuteNode localBindings;
-        private final FNCExecuteNode exp;
+    class Scope implements FNCBuildAST {
+        private final FNCBuildAST localBindings;
+        private final FNCBuildAST exp;
 
-        public Scope(FNCExecuteNode localBindings, FNCExecuteNode exp) {
+        public Scope(FNCBuildAST localBindings, FNCBuildAST exp) {
             this.localBindings = localBindings;
             this.exp = exp;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new BindingScopeNode((FNCExpressionNode) localBindings.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            FNCExpressionNode letDefinition = localBindings.buildAST(l);
+            FNCExpressionNode expr = exp.buildAST(l);
+            return new BindingScopeNode(letDefinition, expr);
         }
     }
 
-    class BoundValue implements FNCExecuteNode {
-        private final FNCExecuteNode id;
+    class BoundValue implements FNCBuildAST {
+        private final FNCBuildAST id;
 
-        public BoundValue(FNCExecuteNode id) {
+        public BoundValue(FNCBuildAST id) {
             this.id = id;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new BindingBoundValueNode((FNCExpressionNode) id.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new BindingBoundValueNode(id.buildAST(l));
         }
     }
 
-    class BindValue implements FNCExecuteNode {
-        private final FNCExecuteNode id;
-        private final FNCExecuteNode exp;
+    class BindValue implements FNCBuildAST {
+        private final FNCBuildAST id;
+        private final FNCBuildAST exp;
 
-        public BindValue(FNCExecuteNode id, FNCExecuteNode exp) {
+        public BindValue(FNCBuildAST id, FNCBuildAST exp) {
             this.id = id;
             this.exp = exp;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
 
-            return new BindingBindValueNode((FNCExpressionNode) id.buildAST(l), (FNCExpressionNode) exp.buildAST(l));
+            FNCExpressionNode id = this.id.buildAST(l);
+            FNCExpressionNode exp = this.exp.buildAST(l);
+            return new BindingBindValueNode(id, exp);
         }
     }
 
-    class Id implements FNCExecuteNode {
+    class Id implements FNCBuildAST {
         private final String s;
 
         public Id(String s) {
@@ -147,27 +161,45 @@ public interface TruffleBindingFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
             return new BindingIdNode(s);
         }
     }
 
-    class Accum implements FNCExecuteNode {
-        private final FNCExecuteNode environment;
-        private final FNCExecuteNode decl;
-        private final TruffleBindingFactory alg;
 
-        public Accum(FNCExecuteNode environment, FNCExecuteNode decl, TruffleBindingFactory alg) {
-            this.environment = environment;
-            this.decl = decl;
-            this.alg = alg;
+    /**
+     * execute left hand side, then pass the environment to this right hand side.
+     *
+     */
+    class BindingAccumNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode lhs;
+
+        @Child
+        private FNCExpressionNode rhs;
+
+
+        public BindingAccumNode(FNCExpressionNode lhs, FNCExpressionNode rhs) {
+            this.lhs = lhs;
+            this.rhs = rhs;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            final FNCStatementNode currentEnv = environment.buildAST(l);
-            final FNCExecuteNode scope = alg.scope((n) -> currentEnv, alg.mapOver(decl, (m) -> currentEnv));
-            return scope.buildAST(l);
+        public Object executeGeneric(VirtualFrame frame) {
+            lhs.executeGeneric(frame);
+            return rhs.executeGeneric(frame);
         }
+
+        /*public FNCExpressionNode buildA() {
+            return new BindingAccumNodeSubnode();
+        }
+
+        private class BindingAccumNodeSubnode extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return v;
+            }
+        }*/
     }
 }

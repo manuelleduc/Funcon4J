@@ -1,110 +1,108 @@
 package funcons.truffle.controlflow;
 
-import com.oracle.truffle.api.frame.VirtualFrame;
 import funcons.algebras.collections.MapAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.BindingAlg;
 import funcons.algebras.functions.FunctionAlg;
 import funcons.algebras.values.BoolAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
-import io.usethesource.vallang.IBool;
 
 public interface TruffleLogicControlFactory extends
-        NullAlg<FNCExecuteNode>,
-        FunctionAlg<FNCExecuteNode>,
-        BindingAlg<FNCExecuteNode>,
-        MapAlg<FNCExecuteNode>,
-        BoolAlg<FNCExecuteNode>,
-        LogicControlAlg<FNCExecuteNode> {
+        NullAlg<FNCBuildAST>,
+        FunctionAlg<FNCBuildAST>,
+        BindingAlg<FNCBuildAST>,
+        MapAlg<FNCBuildAST>,
+        BoolAlg<FNCBuildAST>,
+        LogicControlAlg<FNCBuildAST> {
 
     @Override
-    default FNCExecuteNode effect(FNCExecuteNode e) {
-        return l -> new LogicControlEffectNode(e.buildAST(l), (FNCExpressionNode) null_().buildAST(l));
+    default FNCBuildAST effect(FNCBuildAST e) {
+        return l -> new LogicControlEffectNode(e.buildAST(l), null_().buildAST(l));
     }
 
     @Override
-    default FNCExecuteNode seq(FNCExecuteNode c, FNCExecuteNode t) {
+    default FNCBuildAST seq(FNCBuildAST c, FNCBuildAST t) {
         return new Seq(c, t);
     }
 
     @Override
-    default FNCExecuteNode ifTrue(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
+    default FNCBuildAST ifTrue(FNCBuildAST e, FNCBuildAST c1, FNCBuildAST c2) {
         return new IfTrue(e, c1, c2);
     }
 
     @Override
-    default FNCExecuteNode whileTrue(FNCExecuteNode e, FNCExecuteNode c) {
+    default FNCBuildAST whileTrue(FNCBuildAST e, FNCBuildAST c) {
         return new WhileTrue(e, c);
     }
 
     @Override
-    default FNCExecuteNode for_(FNCExecuteNode condl, FNCExecuteNode incrl, FNCExecuteNode expl) {
+    default FNCBuildAST for_(FNCBuildAST condl, FNCBuildAST incrl, FNCBuildAST expl) {
 
         return new For_(z -> null_().buildAST(z), condl, incrl, expl);
     }
 
-    class IfTrue implements FNCExecuteNode {
-        private final FNCExecuteNode e;
-        private final FNCExecuteNode c1;
-        private final FNCExecuteNode c2;
+    class IfTrue implements FNCBuildAST {
+        private final FNCBuildAST e;
+        private final FNCBuildAST c1;
+        private final FNCBuildAST c2;
 
-        public IfTrue(FNCExecuteNode e, FNCExecuteNode c1, FNCExecuteNode c2) {
+        public IfTrue(FNCBuildAST e, FNCBuildAST c1, FNCBuildAST c2) {
             this.e = e;
             this.c1 = c1;
             this.c2 = c2;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            final FNCExpressionNode e1 = (FNCExpressionNode) e.buildAST(l);
-            final FNCExpressionNode c11 = (FNCExpressionNode) c1.buildAST(l);
-            final FNCExpressionNode c21 = (FNCExpressionNode) c2.buildAST(l);
-            return new LogicControlIfTrueNode(e1, c11, c21);
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            return new LogicControlIfTrueNode(e.buildAST(l), c1.buildAST(l), c2.buildAST(l));
         }
     }
 
-    class Seq implements FNCExecuteNode {
-        private final FNCExecuteNode c;
-        private final FNCExecuteNode t;
+    class Seq implements FNCBuildAST {
+        private final FNCBuildAST lhs;
+        private final FNCBuildAST rhs;
 
-        public Seq(FNCExecuteNode c, FNCExecuteNode t) {
-            this.c = c;
-            this.t = t;
+        public Seq(FNCBuildAST lhs, FNCBuildAST rhs) {
+            this.lhs = lhs;
+            this.rhs = rhs;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new LogicControlSeqNode((FNCExpressionNode) c.buildAST(l), (FNCExpressionNode) t.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            FNCExpressionNode lhs = this.lhs.buildAST(l);
+            FNCExpressionNode rhs = this.rhs.buildAST(l);
+            return new LogicControlSeqNode(lhs, rhs);
         }
     }
 
-    class WhileTrue implements FNCExecuteNode {
-        private final FNCExecuteNode e;
-        private final FNCExecuteNode c;
+    class WhileTrue implements FNCBuildAST {
+        private final FNCBuildAST e;
+        private final FNCBuildAST c;
 
-        public WhileTrue(FNCExecuteNode e, FNCExecuteNode c) {
+        public WhileTrue(FNCBuildAST e, FNCBuildAST c) {
             this.e = e;
             this.c = c;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new LogicControlWhileTrueNode((FNCExpressionNode) e.buildAST(l), (FNCExpressionNode) c.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            FNCExpressionNode e = this.e.buildAST(l);
+            FNCExpressionNode c = this.c.buildAST(l);
+            return new LogicControlWhileTrueNode(e, c);
         }
     }
 
-    class For_ implements FNCExecuteNode {
-        private final FNCExecuteNode a;
-        private final FNCExecuteNode condl;
-        private final FNCExecuteNode incrl;
-        private final FNCExecuteNode expl;
+    class For_ implements FNCBuildAST {
+        private final FNCBuildAST a;
+        private final FNCBuildAST condl;
+        private final FNCBuildAST incrl;
+        private final FNCBuildAST expl;
 
-        public For_(FNCExecuteNode a, FNCExecuteNode condl, FNCExecuteNode incrl, FNCExecuteNode expl) {
+        public For_(FNCBuildAST a, FNCBuildAST condl, FNCBuildAST incrl, FNCBuildAST expl) {
             this.a = a;
             this.condl = condl;
             this.incrl = incrl;
@@ -112,11 +110,11 @@ public interface TruffleLogicControlFactory extends
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            final FNCExpressionNode ret = (FNCExpressionNode) a.buildAST(l);
-            final FNCExpressionNode cond = (FNCExpressionNode) condl.buildAST(l);
-            final FNCExpressionNode incr = (FNCExpressionNode) incrl.buildAST(l);
-            final FNCExpressionNode exp = (FNCExpressionNode) expl.buildAST(l);
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            final FNCExpressionNode ret = a.buildAST(l);
+            final FNCExpressionNode cond = condl.buildAST(l);
+            final FNCExpressionNode incr = incrl.buildAST(l);
+            final FNCExpressionNode exp = expl.buildAST(l);
             return new LogicControlForNode(ret, cond, incr, exp);
         }
     }

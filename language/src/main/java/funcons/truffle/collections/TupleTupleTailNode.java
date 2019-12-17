@@ -2,7 +2,6 @@ package funcons.truffle.collections;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import funcons.truffle.collections.TruffleTupleFactory;
 import funcons.truffle.nodes.FNCExpressionNode;
 import io.usethesource.vallang.IList;
 
@@ -18,10 +17,15 @@ public class TupleTupleTailNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        final IList tupVal = ((IList) tupl.executeGeneric(frame));
-        if (tupVal.length() <= 1) {
-            return TruffleTupleFactory.vf.list();
+        Object raw = tupl.executeGeneric(frame);
+        if (raw instanceof IList) {
+            final IList tupVal = ((IList) raw);
+            if (tupVal.length() <= 1) {
+                return TruffleTupleFactory.vf.list();
+            }
+            return tupVal.sublist(1, tupVal.length() - 1);
+        } else {
+            return raw;
         }
-        return tupVal.sublist(1, tupVal.length() - 1);
     }
 }

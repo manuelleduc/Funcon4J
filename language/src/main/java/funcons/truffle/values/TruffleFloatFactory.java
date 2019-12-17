@@ -1,46 +1,45 @@
 package funcons.truffle.values;
 
 import funcons.algebras.values.FloatAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
-public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
+public interface TruffleFloatFactory extends FloatAlg<FNCBuildAST> {
 
     @Override
-    default FNCExecuteNode lit(Double i) {
+    default FNCBuildAST lit(Double i) {
         return new Lit(i);
     }
 
     @Override
-    default FNCExecuteNode floatAdd(FNCExecuteNode a, FNCExecuteNode b) {
-        return l -> FloatFloatAddNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+    default FNCBuildAST floatAdd(FNCBuildAST a, FNCBuildAST b) {
+        return l -> FloatFloatAddNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     @Override
-    default FNCExecuteNode floatNegate(FNCExecuteNode x) {
-        return l -> FloatFloatNegateNodeGen.create((FNCExpressionNode) x.buildAST(l));
+    default FNCBuildAST floatNegate(FNCBuildAST x) {
+        return l -> FloatFloatNegateNodeGen.create(x.buildAST(l));
     }
 
     @Override
-    default FNCExecuteNode floatSubtract(FNCExecuteNode a, FNCExecuteNode b) {
-        return l -> new FloatFloatSubstractNode((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+    default FNCBuildAST floatSubtract(FNCBuildAST a, FNCBuildAST b) {
+        return l -> FloatFloatSubstractNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     @Override
-    default FNCExecuteNode floatMultiply(FNCExecuteNode a, FNCExecuteNode b) {
-        return l -> FloatFloatMultiplyNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+    default FNCBuildAST floatMultiply(FNCBuildAST a, FNCBuildAST b) {
+        return l -> FloatFloatMultiplyNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     @Override
-    default FNCExecuteNode floatDivide(FNCExecuteNode a, FNCExecuteNode b) {
-        return l -> FloatFloatDivideNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+    default FNCBuildAST floatDivide(FNCBuildAST a, FNCBuildAST b) {
+        return l -> FloatFloatDivideNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
     @Override
-    default FNCExecuteNode floatModulo(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST floatModulo(FNCBuildAST a, FNCBuildAST b) {
 //        return (env, given) -> {
 //            INumber aVal = (INumber) a.eval(env, given);
 //            INumber bVal = (INumber) b.eval(env, given);
@@ -50,16 +49,16 @@ public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
     }
 
     @Override
-    default FNCExecuteNode floatPowerOf(FNCExecuteNode a, FNCExecuteNode b) {
+    default FNCBuildAST floatPowerOf(FNCBuildAST a, FNCBuildAST b) {
 //        return (env, given) -> {
 //            INumber aVal = (INumber) a.eval(env, given);
 //            INumber bVal = (INumber) b.eval(env, given);
 //            return aVal.toReal(5).pow(bVal.toReal(5), 5);
 //        };
-        return l -> FloatFloatPowerOfNodeGen.create((FNCExpressionNode) a.buildAST(l), (FNCExpressionNode) b.buildAST(l));
+        return l -> FloatFloatPowerOfNodeGen.create(a.buildAST(l), b.buildAST(l));
     }
 
-    class Lit implements FNCExecuteNode {
+    class Lit implements FNCBuildAST {
         private final Double i;
 
         public Lit(Double i) {
@@ -67,7 +66,7 @@ public interface TruffleFloatFactory extends FloatAlg<FNCExecuteNode> {
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage language) throws RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage language) throws RunTimeFunconException {
             return new FloatLitNode(i);
         }
     }

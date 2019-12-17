@@ -176,7 +176,7 @@ public class CamlLight {
 
 //        interpret("1 + \"a\"");
         // run examples found in the examples folder
-        runExamples();
+//        runExamples();
 
         // run tests as provided by Mosses
 //        runGivenTests();

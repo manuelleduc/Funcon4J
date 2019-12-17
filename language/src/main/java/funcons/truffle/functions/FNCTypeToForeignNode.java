@@ -16,11 +16,6 @@ public abstract class FNCTypeToForeignNode extends Node {
         return value;
     }
 
-//    @Specialization
-//    static TruffleObject fromObject(BigInteger value) {
-//        return new SLBigNumber(value);
-//    }
-
     @Fallback
     static Object identity(Object value) {
         return value;

@@ -75,7 +75,7 @@ public class RascalValueComperator {
     }
 
     public static int compare(Variable a, Variable b) {
-        return compare((IValue)a.value(), (IValue)b.value());
+        return compare(a.value(), b.value());
     }
 
     public static int compare(IBool a, IBool b) {

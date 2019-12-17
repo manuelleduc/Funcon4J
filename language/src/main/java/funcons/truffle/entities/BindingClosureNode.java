@@ -3,11 +3,9 @@ package funcons.truffle.entities;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
 
 @NodeInfo(description = "Binding Closure Node")
-public class BindingClosureNode extends FNCStatementNode {
+public class BindingClosureNode extends FNCExpressionNode {
 
     @Child
     FNCExpressionNode x;
@@ -21,7 +19,7 @@ public class BindingClosureNode extends FNCStatementNode {
     }
 
     @Override
-    public void executeVoid(VirtualFrame frame) throws funcons.values.signals.RunTimeFunconException {
+    public Object executeGeneric(VirtualFrame frame) {
         throw new RuntimeException("Not Implemented ");
     }
 }

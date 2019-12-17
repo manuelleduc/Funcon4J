@@ -1,6 +1,6 @@
 package funcons.truffle;
 
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.auxiliary.TruffleIntoFloatConversionFactory;
 import funcons.truffle.auxiliary.TrufflePrintFactory;
 import funcons.truffle.collections.*;
@@ -18,7 +18,7 @@ import funcons.truffle.types.TruffleTupleTypeFactory;
 import funcons.truffle.types.TruffleTypeFactory;
 import funcons.truffle.values.*;
 
-public interface TruffleAllFactory extends funcons.algebras.AllAlg<FNCExecuteNode>,
+public interface TruffleAllFactory extends funcons.algebras.AllAlg<FNCBuildAST>,
         TruffleAssignFactory,
         TruffleBindingFactory,
         TruffleSupplyGivenFactory,

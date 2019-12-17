@@ -3,18 +3,17 @@ package funcons.truffle.values;
 import com.oracle.truffle.api.dsl.NodeChild;
 import com.oracle.truffle.api.dsl.NodeChildren;
 import com.oracle.truffle.api.dsl.Specialization;
-import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import com.oracle.truffle.api.nodes.UnexpectedResultException;
+import funcons.helper.RascalValueComperator;
 import funcons.truffle.nodes.FNCExpressionNode;
-import io.usethesource.vallang.IBool;
-import io.usethesource.vallang.IInteger;
-import io.usethesource.vallang.IReal;
+import io.usethesource.vallang.*;
 import io.usethesource.vallang.impl.persistent.ValueFactory;
 
 @NodeInfo(description = "Bool Greater Node ")
 @NodeChildren({@NodeChild("a"), @NodeChild("b")})
 public abstract class BoolGreaterNode extends FNCExpressionNode {
+
+    private IValueFactory vf = ValueFactory.getInstance();
 
     @Specialization
     public IBool greateEqual(IInteger a, IInteger b) {
@@ -34,5 +33,12 @@ public abstract class BoolGreaterNode extends FNCExpressionNode {
     @Specialization
     public IBool greateEqual(IReal a, IInteger b) {
         return a.greater(b);
+    }
+
+    @Specialization
+    public IBool greateEqual(Object a, Object b) {
+        final IValue aVal = (IValue) a;
+        IValue bVal = (IValue) b;
+        return vf.bool(RascalValueComperator.compare(aVal, bVal) == 1);
     }
 }

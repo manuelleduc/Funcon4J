@@ -23,23 +23,23 @@ public interface TupleTypeFactory extends TupleTypeAlg<IEval> {
     @Override
     default IEval tupleType(IEval x1, IEval x2) {
         return (env, given) -> vf.list(
-                (IValue)x1.eval(env, given),
-                (IValue)x2.eval(env, given));
+                x1.eval(env, given),
+                x2.eval(env, given));
     }
 
     @Override
     default IEval tupleType(IEval x1, IEval x2, IEval x3) {
         return (env, given) -> vf.list(
-                (IValue)x1.eval(env, given),
-                (IValue)x2.eval(env, given),
-                (IValue)x3.eval(env, given));
+                x1.eval(env, given),
+                x2.eval(env, given),
+                x3.eval(env, given));
     }
 
     @Override
     default IEval tupleTypePrefix(IEval x, IEval tup) {
         return (env, given) ->
                 ((IList)tup.eval(env, given))
-                        .insert((IValue)x.eval(env, given));
+                        .insert(x.eval(env, given));
     }
 
     @Override

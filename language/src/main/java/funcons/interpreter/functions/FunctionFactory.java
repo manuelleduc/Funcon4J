@@ -39,8 +39,10 @@ public interface FunctionFactory extends
     @Override
     @SuppressWarnings("unchecked")
     default IEval apply(IEval abs, IEval arg) {
-        return (env, given) -> supply(arg,
-                ((Abs<IEval>)abs.eval(env, given)).body()).eval(env, given);
+        return (env, given) -> {
+            IEval body = ((Abs<IEval>) abs.eval(env, given)).body();
+            return supply(arg, body).eval(env, given);
+        };
     }
 
     @Override

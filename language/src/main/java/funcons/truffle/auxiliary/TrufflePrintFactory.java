@@ -2,28 +2,28 @@ package funcons.truffle.auxiliary;
 
 import funcons.algebras.auxiliary.PrintAlg;
 import funcons.algebras.values.NullAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
 import funcons.values.signals.RunTimeFunconException;
 
-public interface TrufflePrintFactory extends NullAlg<FNCExecuteNode>, PrintAlg<FNCExecuteNode> {
+public interface TrufflePrintFactory extends NullAlg<FNCBuildAST>, PrintAlg<FNCBuildAST> {
     @Override
-    default FNCExecuteNode print(FNCExecuteNode x) {
+    default FNCBuildAST print(FNCBuildAST x) {
         return new Print(x);
     }
 
-    class Print implements FNCExecuteNode {
-        private final FNCExecuteNode x;
+    class Print implements FNCBuildAST {
+        private final FNCBuildAST x;
 
-        public Print(FNCExecuteNode x) {
+        public Print(FNCBuildAST x) {
             this.x = x;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return new PrintPrintNode((FNCExpressionNode) x.buildAST(l), l);
+        public FNCExpressionNode buildAST(FNCLanguage l) throws RunTimeFunconException {
+            FNCExpressionNode x = this.x.buildAST(l);
+            return new PrintPrintNode(x, l);
         }
     }
 }

@@ -1,29 +1,22 @@
 package funcons.truffle.values;
 
-import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.dsl.NodeChild;
+import com.oracle.truffle.api.dsl.NodeChildren;
+import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.truffle.nodes.FNCExpressionNode;
-import io.usethesource.vallang.INumber;
+import io.usethesource.vallang.IReal;
 
 @NodeInfo(description = "Int IntSubstract Node")
-public class FloatFloatSubstractNode extends FNCExpressionNode {
 
-    @Child
-    private FNCExpressionNode a;
+@NodeChildren({@NodeChild("a"), @NodeChild("b")})
+public abstract class FloatFloatSubstractNode extends FNCExpressionNode {
 
-    @Child
-    private FNCExpressionNode b;
 
-    public FloatFloatSubstractNode(FNCExpressionNode a, FNCExpressionNode b) {
-        this.a = a;
-        this.b = b;
+    @Specialization
+    public IReal add(IReal a, IReal b) {
+        return a.subtract(b);
     }
 
-    @Override
-    public Object executeGeneric(VirtualFrame frame) {
-        final INumber na = (INumber) a.executeGeneric(frame);
-        final INumber nb = (INumber) b.executeGeneric(frame);
-        return na.subtract(nb);
-    }
 
 }

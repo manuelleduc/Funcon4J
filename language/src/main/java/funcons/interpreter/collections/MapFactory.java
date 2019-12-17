@@ -15,8 +15,8 @@ public interface MapFactory extends MapAlg<IEval> {
     @Override
     default IEval map(IEval key, IEval val) {
         return (env, given) -> {
-            IValue k = (IValue)key.eval(env, given);
-            IValue v = (IValue)val.eval(env, given);
+            IValue k = key.eval(env, given);
+            IValue v = val.eval(env, given);
             IMapWriter mw = vf.mapWriter();
             mw.put(k, v);
             return mw.done();
@@ -26,8 +26,8 @@ public interface MapFactory extends MapAlg<IEval> {
     @Override
     default IEval mapUpdate(IEval map, IEval key, IEval val) {
         return (env, given) -> {
-            IValue k = (IValue)key.eval(env, given);
-            IValue v = (IValue)val.eval(env, given);
+            IValue k = key.eval(env, given);
+            IValue v = val.eval(env, given);
             IMap m = (IMap)map.eval(env, given);
             return m.put(k, v);
         };
@@ -68,7 +68,7 @@ public interface MapFactory extends MapAlg<IEval> {
     default IEval mapGet(IEval map, IEval key) {
         return (env, given) -> {
             IMap m = (IMap)map.eval(env, given);
-            return m.get((IValue)key.eval(env, given));
+            return m.get(key.eval(env, given));
         };
     }
 }

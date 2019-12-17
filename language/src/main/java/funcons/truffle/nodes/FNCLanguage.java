@@ -20,15 +20,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 
-@TruffleLanguage.Registration(id = "fnc", name = "FNC", version = "0.12", mimeType = FNCLanguage.MIME_TYPE)
+@TruffleLanguage.Registration(id = "fnc", name = "fnc   ", version = "0.12", mimeType = FNCLanguage.MIME_TYPE)
 public class FNCLanguage extends TruffleLanguage<FNCContext> {
     public static final String MIME_TYPE = "application/x-fnc";
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public <X> X parse(String s, camllight.algebras.AllAlg alg) {
-        CLLexer lexer = new CLLexer(new ANTLRInputStream(s));
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
-        CLParser parser = new CLParser(tokens);
+        final CLLexer lexer = new CLLexer(new ANTLRInputStream(s));
+        final CommonTokenStream tokens = new CommonTokenStream(lexer);
+        final CLParser parser = new CLParser(tokens);
         parser.setBuilder(alg);
         return (X) parser.prog()._prog;
     }
@@ -36,7 +36,7 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
     @Override
     protected FNCContext createContext(Env env) {
-        FNCContext fncContext = new FNCContext(this, env);
+        final FNCContext fncContext = new FNCContext(this, env);
         fncContext.initRegistry(this);
         return fncContext;
     }
@@ -45,21 +45,17 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     protected CallTarget parse(ParsingRequest request) throws Exception {
         final String program = IOUtils.toString(request.getSource().getInputStream(), Charset.defaultCharset());
         final Recorder builder = parse(program, Recorder.create(camllight.algebras.AllAlg.class));
-        final funcons.algebras.AllAlg<FNCExecuteNode> evalAlg = new funcons.truffle.TruffleAllFactory() {
+        final funcons.algebras.AllAlg<FNCBuildAST> evalAlg = new funcons.truffle.TruffleAllFactory() {
         };
         final camllight.algebras.AllAlg alg = () -> evalAlg;
-        final FNCExecuteNode eval = builder.build(alg);
-        final FNCStatementNode libs = importStandardLibrary();
-//        this.getContextReference().initRegistry(this);
+        final FNCBuildAST eval = builder.build(alg);
+        final FNCExpressionNode libs = importStandardLibrary();
 
-        final FNCExpressionNode clExecuteNode = (FNCExpressionNode) eval.buildAST(this);
+        final FNCExpressionNode clExecuteNode = eval.buildAST(this);
 
-
-        // TODO: write a visitor that register callables with name?
 
         // useless so far, just to avoir an ugly runtime exception when the execution ends.
         final FNCRootNode rootNode = new FNCMainRootNode(this, clExecuteNode, libs);
-//        System.out.println(clExecuteNode);
         return Truffle.getRuntime().createCallTarget(rootNode);
     }
 
@@ -69,12 +65,12 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
     }
 
 
-    public FNCStatementNode importStandardLibrary() throws FunconException {
-        funcons.algebras.AllAlg<FNCExecuteNode> alg = new TruffleAllFactory() {
+    public FNCExpressionNode importStandardLibrary() throws FunconException {
+        final funcons.algebras.AllAlg<FNCBuildAST> alg = new TruffleAllFactory() {
         };
-        StandardLibrary<FNCExecuteNode> lib = () -> alg;
+        final StandardLibrary<FNCBuildAST> lib = () -> alg;
 
-        FNCStatementNode ret = new NullNullNode();
+        FNCExpressionNode ret = new NullNullNode();
         for (Method m : lib.getClass().getMethods()) {
             java.lang.String methodName = m.getName();
             if (!methodName.endsWith("Fun")) {
@@ -83,13 +79,13 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
             methodName = methodName.substring(0, methodName.length() - 3);
 
 
-            final FNCStatementNode env2 = ret;
+            final FNCExpressionNode env2 = ret;
             ret = alg.mapUnion(
                     l -> env2,
                     alg.bindValue(alg.id(methodName), language -> {
 
                         try {
-                            FNCStatementNode abcd = ((FNCExecuteNode) m.invoke(lib)).buildAST(language);
+                            FNCExpressionNode abcd = ((FNCBuildAST) m.invoke(lib)).buildAST(language);
                             return new WrapperNode(abcd);
                         } catch (IllegalAccessException | InvocationTargetException e) {
                             e.printStackTrace();
@@ -105,11 +101,11 @@ public class FNCLanguage extends TruffleLanguage<FNCContext> {
 
 
     @NodeInfo(description = "Library Import wrapper")
-    private static class WrapperNode extends FNCExpressionNode {
+    public static class WrapperNode extends FNCExpressionNode {
         @Child
-        private FNCStatementNode abcd;
+        private FNCExpressionNode abcd;
 
-        public WrapperNode(FNCStatementNode abcd) {
+        public WrapperNode(FNCExpressionNode abcd) {
             this.abcd = abcd;
         }
 

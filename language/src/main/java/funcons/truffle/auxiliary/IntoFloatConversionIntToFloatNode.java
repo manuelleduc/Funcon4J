@@ -12,19 +12,6 @@ import io.usethesource.vallang.IReal;
 @NodeChildren({@NodeChild("i")})
 public abstract class IntoFloatConversionIntToFloatNode extends FNCExpressionNode {
 
-//    @Child
-//    private FNCExpressionNode i;
-//
-//    public IntoFloatConversionIntToFloatNode(FNCExpressionNode i) {
-//        this.i = i;
-//    }
-
-//    @Override
-//    public Object executeGeneric(VirtualFrame frame) {
-//        IReal iReal = ((IInteger) i.executeGeneric(frame)).toReal(5);
-//        return iReal;
-//    }
-
     @Specialization
     public IReal conversion(IInteger i) {
         return i.toReal(5);

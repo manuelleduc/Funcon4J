@@ -10,9 +10,9 @@ loop 100;;*)
 
 
 
-let loop n = 
-	for i = 0 to n do 
-		((print_int (fib 50)); (print_newline ()))
+let loop n =
+	for i = 0 to n do
+		((print_int (fib 30)); (print_newline ()))
 	done;;
 
 loop 100;;
@@ -22,10 +22,10 @@ loop 100;;
 	in let res = f x
 	in let stop = Unix.gettimeofday ()
 	in let () = Printf.printf "Execution time: %fs\n%!" (stop -. start)
-	in 
+	in
 		res;;
 
 for i = 0 to 9 do
-	time loop 10
+	time loop 100
 done;;*)
 (*print_float (Sys.time ());;*)

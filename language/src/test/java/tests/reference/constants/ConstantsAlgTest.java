@@ -28,7 +28,6 @@ public class ConstantsAlgTest extends TestStub {
      * @throws Exception
      */
     @Test
-    @Ignore
     public void testString() throws Exception {
         test("\"foo\";;", "\"foo\"");
         test("\"\\\\ \\\" \\n \\r \\t \\b \\065\";;", "\"\\ \" \n \r \t \b A\"");

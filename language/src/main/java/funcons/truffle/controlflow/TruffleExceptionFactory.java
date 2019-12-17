@@ -1,167 +1,205 @@
 package funcons.truffle.controlflow;
 
+import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import funcons.algebras.controlflow.ExceptionAlg;
 import funcons.algebras.controlflow.LogicControlAlg;
 import funcons.algebras.entities.SupplyGivenAlg;
 import funcons.algebras.functions.FunctionAlg;
-import funcons.truffle.nodes.FNCExecuteNode;
+import funcons.truffle.nodes.FNCBuildAST;
 import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCLanguage;
-import funcons.truffle.nodes.FNCStatementNode;
-import funcons.values.signals.RunTimeFunconException;
 
 public interface TruffleExceptionFactory extends
-        LogicControlAlg<FNCExecuteNode>,
-        FunctionAlg<FNCExecuteNode>,
-        SupplyGivenAlg<FNCExecuteNode>,
-        ExceptionAlg<FNCExecuteNode> {
+        LogicControlAlg<FNCBuildAST>,
+        FunctionAlg<FNCBuildAST>,
+        SupplyGivenAlg<FNCBuildAST>,
+        ExceptionAlg<FNCBuildAST> {
 
 
     @Override
-    default FNCExecuteNode fail() {
-//        return (env, given) -> {
-//            throw new FailureTrue();
-//        };
+    default FNCBuildAST fail() {
         return new Fail();
     }
 
     @Override
-    default FNCExecuteNode matchFailure() {
-//        return (env, given) -> new CLMatchFailureException(vf);
+    default FNCBuildAST matchFailure() {
         return new MatchFailure();
     }
 
     @Override
-    default FNCExecuteNode exception(java.lang.String message) {
+    default FNCBuildAST exception(java.lang.String message) {
 //        return (env, given) -> new RunTimeFunconException(message);
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default FNCExecuteNode exception(java.lang.String message, FNCExecuteNode val) {
+    default FNCBuildAST exception(java.lang.String message, FNCBuildAST val) {
 //        return (env, given) -> new RunTimeFunconException(message, val.eval(env, given));
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    default FNCExecuteNode throw_(FNCExecuteNode s) {
+    default FNCBuildAST throw_(FNCBuildAST s) {
         return new Throw_(s);
     }
 
     @Override
-    default FNCExecuteNode catch_(FNCExecuteNode x, FNCExecuteNode abs) {
-//        return (env, given) -> {
-//            try {
-//                return x.eval(env, given);
-//            } catch (RunTimeFunconException e) {
-//                return apply(abs, (env1, given1) -> e).eval(env, given);
-//            }
-//        };
-        throw new RuntimeException("Not implemented");
+    default FNCBuildAST catch_(FNCBuildAST x, FNCBuildAST abs) {
+        return l -> {
+
+            final FNCExpressionNode xe = x.buildAST(l);
+            final FNCExpressionNode abse = abs.buildAST(l);
+            final ExceptionCatchNode catchNode = new ExceptionCatchNode(xe);
+            final FNCExpressionNode excpt = apply(abs, z -> catchNode.buildA()).buildAST(l);
+            catchNode.excpt = excpt;
+            return catchNode;
+        };
     }
 
     @Override
-    default FNCExecuteNode catchElseRethrow(FNCExecuteNode x, FNCExecuteNode abs) {
-//        return catch_(x, preferOver(abs, abs(throw_(given()))));
-        throw new RuntimeException("Not implemented");
+    default FNCBuildAST catchElseRethrow(FNCBuildAST x, FNCBuildAST abs) {
+        return catch_(x, preferOver(abs, abs(throw_(given()))));
     }
 
     @Override
-    default FNCExecuteNode else_(FNCExecuteNode x1, FNCExecuteNode x2) {
-//        return (env, given) -> {
-//            try {
-//                return x1.eval(env, given);
-//            } catch (FailureTrue f) {
-//                return x2.eval(env, given);
-//            }
-//        };
+    default FNCBuildAST else_(FNCBuildAST x1, FNCBuildAST x2) {
         return new Else_(x1, x2);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    default FNCExecuteNode preferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
-        return new PrefereOver(a1, a2, this);
+    default FNCBuildAST preferOver(FNCBuildAST a1, FNCBuildAST a2) {
+        return l -> {
+            final FNCExpressionNode a1e = a1.buildAST(l);
+            ExceptionPrefereOverNode exceptionPrefereOverNode = new ExceptionPrefereOverNode(a1e);
+            final FNCExpressionNode a2e = a2.buildAST(l);
+            ExceptionPreferOver2Node exceptionPreferOver2Node = new ExceptionPreferOver2Node(a2e);
+
+            final FNCBuildAST fncBuildAST = language -> {
+                return exceptionPrefereOverNode;
+            };
+            final FNCBuildAST fncBuildAST1 = language -> {
+                return exceptionPreferOver2Node;
+            };
+            return abs(else_(fncBuildAST, fncBuildAST1)).buildAST(l);
+        };
     }
 
 
     @Override
-    default FNCExecuteNode whenTrue(FNCExecuteNode exp, FNCExecuteNode x) {
-//        return ifTrue(exp, x, fail());
-        throw new RuntimeException("Not implemented");
+    default FNCBuildAST whenTrue(FNCBuildAST exp, FNCBuildAST x) {
+        return ifTrue(exp, x, fail());
     }
 
-    class MatchFailure implements FNCExecuteNode {
+    class MatchFailure implements FNCBuildAST {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new ExceptionMatchFailureNode();
         }
     }
 
-    class Throw_ implements FNCExecuteNode {
-        private final FNCExecuteNode s;
+    class Throw_ implements FNCBuildAST {
+        private final FNCBuildAST s;
 
-        public Throw_(FNCExecuteNode s) {
+        public Throw_(FNCBuildAST s) {
             this.s = s;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new ExceptionThrowNode((FNCExpressionNode) s.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new ExceptionThrowNode(s.buildAST(l));
         }
     }
 
-    class Else_ implements FNCExecuteNode {
-        private final FNCExecuteNode x1;
-        private final FNCExecuteNode x2;
+    class Else_ implements FNCBuildAST {
+        private final FNCBuildAST x1;
+        private final FNCBuildAST x2;
 
-        public Else_(FNCExecuteNode x1, FNCExecuteNode x2) {
+        public Else_(FNCBuildAST x1, FNCBuildAST x2) {
             this.x1 = x1;
             this.x2 = x2;
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-            return new ExceptionElseNode((FNCExpressionNode) x1.buildAST(l), (FNCExpressionNode) x2.buildAST(l));
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+            return new ExceptionElseNode(x1.buildAST(l), x2.buildAST(l));
         }
     }
-//
-//    class PreferOver implements FNCExecuteNode {
-//        private final FNCExecuteNode a1;
-//        private final FNCExecuteNode a2;
-//
-//        public PreferOver(FNCExecuteNode a1, FNCExecuteNode a2) {
-//            this.a1 = a1;
-//            this.a2 = a2;
-//        }
-//
-//        @Override
-//        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
-//            return new ExceptionPrefereOverNode((FNCExpressionNode) a1.buildAST(l), (FNCExpressionNode) a2.buildAST(l));
-//        }
-//    }
 
-    class Fail implements FNCExecuteNode {
+    class Fail implements FNCBuildAST {
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
+        public FNCExpressionNode buildAST(FNCLanguage l) throws funcons.values.signals.RunTimeFunconException {
             return new ExceptionFailNode();
         }
     }
 
-    class PrefereOver implements FNCExecuteNode {
-        private final FNCExecuteNode a1;
-        private final FNCExecuteNode a2;
-        private final TruffleExceptionFactory alg;
+    @NodeInfo(description = "Exception Catch Node")
+    class ExceptionCatchNode extends FNCExpressionNode {
 
-        public PrefereOver(FNCExecuteNode a1, FNCExecuteNode a2, TruffleExceptionFactory truffleExceptionFactory) {
-            this.a1 = a1;
-            this.a2 = a2;
-            this.alg = truffleExceptionFactory;
+        @Child
+        private FNCExpressionNode xe;
+
+        @Child
+        private FNCExpressionNode excpt;
+        private Exception e;
+
+        public ExceptionCatchNode(FNCExpressionNode xe) {
+            this.xe = xe;
+
         }
 
         @Override
-        public FNCStatementNode buildAST(FNCLanguage l) throws RunTimeFunconException {
-            return alg.abs(alg.else_(a1, a2)).buildAST(l);
+        public Object executeGeneric(VirtualFrame frame) {
+            try {
+                return xe.executeGeneric(frame);
+            } catch (Exception e) {
+                this.e = e;
+                return excpt.executeGeneric(frame);
+            }
+        }
+
+        public FNCExpressionNode buildA() {
+            return new ExceptionCatchSubnode1();
+        }
+
+        private class ExceptionCatchSubnode1 extends FNCExpressionNode {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) {
+                return e;
+            }
+        }
+    }
+
+    @NodeInfo(description = "Exception PrefereOver Node")
+    class ExceptionPrefereOverNode extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode a1e;
+
+        public ExceptionPrefereOverNode(FNCExpressionNode a1e) {
+            this.a1e = a1e;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            return a1e.executeGeneric(frame);
+        }
+    }
+
+    @NodeInfo(description = "Exception PreferOver 2 Node")
+    class ExceptionPreferOver2Node extends FNCExpressionNode {
+
+        @Child
+        private FNCExpressionNode a2e;
+
+        public ExceptionPreferOver2Node(FNCExpressionNode a2e) {
+            this.a2e = a2e;
+        }
+
+        @Override
+        public Object executeGeneric(VirtualFrame frame) {
+            return a2e.executeGeneric(frame);
         }
     }
 }
