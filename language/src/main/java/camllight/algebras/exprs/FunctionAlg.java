@@ -42,7 +42,6 @@ public interface FunctionAlg
 
     @Syntax("function = ident")
     default E functionId(E id) {
-        System.err.println("Parsing: function = ident");
         return alg().instantiateIfPoly(alg().followIfFwd(alg().boundValue(id)));
     }
 

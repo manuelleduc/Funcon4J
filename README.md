@@ -26,3 +26,7 @@ mvn package -DskipTests -f pom.xml
 
 Options: 
 - `-Dtruffle.class.path.append=./language/target/language-1.0-SNAPSHOT-jar-with-dependencies.jar`
+
+## Truffle specific documentation
+
+An updated truffle specific documentation can be found [here](./Truffle.md)

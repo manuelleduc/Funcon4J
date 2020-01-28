@@ -33,7 +33,6 @@ public class BindingScopeNode extends FNCExpressionNode {
 
     @Override
     public Object executeGeneric(VirtualFrame frame) {
-        System.err.println("Binding " + letDefinition + " --- " + expr);
         this.letDefinition.executeGeneric(frame);
         return expr.executeGeneric(frame);
     }

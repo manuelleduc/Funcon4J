@@ -20,9 +20,7 @@ import funcons.truffle.nodes.FNCExpressionNode;
 import funcons.truffle.nodes.FNCFunction;
 import funcons.truffle.nodes.FNCLanguage;
 import funcons.values.Abs;
-import funcons.values.recursion.Fwd;
-import io.usethesource.vallang.*;
-import io.usethesource.vallang.impl.persistent.ValueFactory;
+import io.usethesource.vallang.IValue;
 
 public interface TruffleRecursiveFactory extends
         NullAlg<FNCBuildAST>,
@@ -123,7 +121,7 @@ public interface TruffleRecursiveFactory extends
             return nullz.executeGeneric(frame);*/
 
 
-         return null;
+            return null;
         }
 
         public FNCExpressionNode getA() {
@@ -205,13 +203,11 @@ public interface TruffleRecursiveFactory extends
     @NodeInfo(description = "Recursive FollowIfFwd Node")
     class RecursiveFollowIfFwdNode extends FNCExpressionNode {
 
-        private final FNCDispatchNode dispatchNode;
         @Child
         private FNCExpressionNode fwde;
 
         public RecursiveFollowIfFwdNode(FNCExpressionNode fwde) {
             this.fwde = fwde;
-            this.dispatchNode = FNCDispatchNodeGen.create();
         }
 
         @Override
@@ -303,7 +299,7 @@ public interface TruffleRecursiveFactory extends
             }
             return lw.done();*/
 
-          return null;
+            return null;
         }
     }
 }

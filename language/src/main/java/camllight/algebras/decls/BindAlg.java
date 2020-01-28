@@ -75,13 +75,11 @@ public interface BindAlg
 
     @Syntax("decl = 'let' decl") @Level(1)
     default E decl(E decl) {
-        System.err.println("Parsing: decl = 'let' decl");
         return decl;
     }
 
     @Syntax("decl = declmono anddecl+") @Level(0)
     default E andDecl(E decl, List<E> decls) {
-        System.err.println("Parsing: decl = declmono anddecl+");
         for (E otherDecl : decls) {
             decl = alg().mapUnion(decl, otherDecl);
         }
@@ -95,7 +93,6 @@ public interface BindAlg
 
     @Syntax("decl = declmono")
     default E declBind(E d) {
-        System.err.println("Parsing: declmono");
         return d;
     }
 

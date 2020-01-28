@@ -18,7 +18,6 @@ public interface ExpAlg
 
     @Syntax("exp = constant") @Level(2700)
     default E constExp(E e) {
-        System.err.println("Parsing: exp = constant");
         return e;
     }
 
